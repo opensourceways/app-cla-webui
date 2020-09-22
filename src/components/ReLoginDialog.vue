@@ -22,10 +22,15 @@
     export default {
         name: "ReLoginDialog",
         props: ['dialogVisible', 'message', 'title'],
+        data(){
+            return{
+                domain:'clasign.osinfra.cn'
+            }
+        },
         methods: {
             clickGoHome() {
                 let date = new Date();
-                let domain = 'cla.osinfra.cn'
+                let domain = this.domain
                 date.setTime(date.getTime() - 10000);
                 document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${domain}; path=/`;
                 let repoInfo = this.$store.state.repoInfo

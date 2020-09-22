@@ -368,7 +368,7 @@
                 clickRow:0,
                 tableData:'',
                 orgTableData: '',
-                address: 'http://cla.osinfra.cn:60031',
+                address:this.$store.state.domain,
                 url: '',
                 signRouter: '/sign',
                 pdfSrc: '',

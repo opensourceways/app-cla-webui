@@ -21,8 +21,8 @@
                                 </div>
                                 <!--选择仓库-->
                                 <div style="font-size: 1.2rem;padding: .5rem">
-                                    ① Choose a org or repository <span v-if="!user.isAuthorize" @click="authorize()"
-                                                                       style="font-size: .8rem;text-decoration: underline;cursor: pointer">(want to link an org?)</span>
+                                    ① Choose a org or repository
+                                    <!--<span v-if="!user.isAuthorize" @click="authorize()" style="font-size: .8rem;text-decoration: underline;cursor: pointer">(want to link an org?)</span>-->
                                 </div>
                                 <div style="padding: 0 2rem">
                                     <el-row :gutter="20">
@@ -587,24 +587,16 @@
             /*获取组织权限*/
             getOrgPermission() {
                 if (this.platform === 'gitee') {
-                    window.location.href = 'https://gitee.com/oauth/authorize?client_id=2632e89d3dfb17ce941d2d2b45efc6f235afb4941ddb67578adda83aa33ab6a2&redirect_uri=http://139.159.224.207:60031/api/v1/login?platform=gitee&response_type=code&scope';
-
                 } else {
-                    window.location.href = 'https://github.com/login/oauth/authorize?client_id=d86f4915398dad23bffc&redirect_url=http://localhost:8080/home&scope=repo';
                 }
             },
-
-            /*白名单列表翻页*/
             listChangePage(page) {
                 console.log(page);
             },
             newWindow() {
-                // window.open('https://github.com/ouchengle/Test','_black')
-                window.open('https://github.com/ouchengle')
+                // window.open()
             },
-            /*打开确认绑定开源项目的弹框*/
             openLinkDialog() {
-                // this.linkDialogVisible = true
                 console.log(this.orgChoose, this.claChoose, this.isEmail);
                 (this.orgChoose && this.claChoose && this.isEmail) && (this.linkDialogVisible = true)
             },
@@ -619,7 +611,6 @@
                 }
             },
             linkRepository() {
-                // this.linkLoading = true;
                 let obj = {}
                 if (this.repositoryChoose) {
                     obj = {

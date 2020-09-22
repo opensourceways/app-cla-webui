@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 import * as url from '../until/api'
+
 Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
@@ -14,21 +15,16 @@ export default new Vuex.Store({
         orgValue: sessionStorage.getItem('orgValue') || undefined,
         claOptions: sessionStorage.getItem('claOptions') || undefined,
         repositoryOptions: sessionStorage.getItem('repositoryOptions') || undefined,
-        orgOptions: sessionStorage.getItem('orgOptions')|| undefined,
+        orgOptions: sessionStorage.getItem('orgOptions') || undefined,
         showConfigForm: sessionStorage.getItem('showConfigForm') || undefined,
         userLimit: sessionStorage.getItem('userLimit') || undefined,
         loginInfo: JSON.parse(sessionStorage.getItem('loginInfo')) || undefined,
         repoInfo: JSON.parse(sessionStorage.getItem('repoInfo')) || undefined,
         loginType: sessionStorage.getItem('loginType') || undefined,
-        tableData: sessionStorage.getItem('tableData')|| undefined,
+        tableData: sessionStorage.getItem('tableData') || undefined,
         ready: Boolean(sessionStorage.getItem('ready') || undefined),
         platform: sessionStorage.getItem('platform') || undefined,
-        gitee_client_id: '2632e89d3dfb17ce941d2d2b45efc6f235afb4941ddb67578adda83aa33ab6a2',
-        gitee_client_secret: '265ba325522a42a531649d39fa323ce0788238b1c7ea279297443eb52edd18af',
-        gitee_redirect_uri: 'http://139.159.224.207:60031/api/v1/login?platform=gitee',
-        github_client_id: 'd86f4915398dad23bffc',
-        github_client_secret: '7e605a8a1104b78452475264c85df5b73a108c94',
-        github_redirect_uri: 'http://localhost:8080/home',
+        domain: 'clasign.osinfra.cn',
         access_token: sessionStorage.getItem('token') || undefined,
         refresh_token: sessionStorage.getItem('refresh_token') || undefined,
         platform_token: sessionStorage.getItem('platform_token') || undefined,
@@ -231,7 +227,7 @@ export default new Vuex.Store({
                                         cla_language: item.cla_language
                                     },
                                     headers: {
-                                        'Token':data.access_token,
+                                        'Token': data.access_token,
                                         'Access-Token': data.platform_token,
                                         'Refresh-Token': data.refresh_token,
                                         'User': `${data.platform}/${data.userName}`
@@ -255,7 +251,7 @@ export default new Vuex.Store({
                             axios({
                                 url: `/api${url.getClaInfo}/${item.cla_id}`,
                                 headers: {
-                                    'Token':data.access_token,
+                                    'Token': data.access_token,
                                     'Access-Token': data.platform_token,
                                     'Refresh-Token': data.refresh_token,
                                     'User': `${data.platform}/${data.userName}`
@@ -287,7 +283,7 @@ export default new Vuex.Store({
         setTableDataAct({commit}, data) {
             commit('setTableData', data)
         },
-        viewPrivacy(){
+        viewPrivacy() {
             window.open('/privacy')
         },
     },

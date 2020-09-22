@@ -126,6 +126,7 @@
         },
         data() {
             return {
+                domain:this.$store.state.domain,
                 reLoginDialogTitle:'',
                 reLoginDialogVisible: false,
                 reLoginMsg: '',
@@ -317,9 +318,8 @@
                     if (!_mark) {
                         let data = {access_token, refresh_token, platform_token};
                         let date = new Date();
-                        let domain = 'cla.osinfra.cn'
                         date.setTime(date.getTime() - 10000);
-                        document.cookie = `_mark=1; expire=${date.toUTCString()}; Domain=${domain}; path=/`;
+                        document.cookie = `_mark=1; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
                         this.setTokenAct(data);
                     }
 

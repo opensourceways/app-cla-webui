@@ -8,17 +8,10 @@ const routes = [
         path: '/',
         name: 'Index',
         redirect: '/index',
-        /*组件懒加载*/
-        // component: () => import('../views/Index.vue')
     },
-    {
-        path: '/login',
-        /*组件懒加载*/
-        component: () => import('../views/Login.vue')
-    },
+
     {
         path: '/index',
-        /*组件懒加载*/
         component: () => import('../views/Index.vue'),
         children: [
             {
@@ -28,12 +21,10 @@ const routes = [
             },
             {
                 path: '/sign/:platform/:org_id/:repo_id',
-                /*组件懒加载*/
                 component: () => import('../views/SignType.vue')
             },
             {
                 path: '/sign/:platform/:org_id',
-                /*组件懒加载*/
                 component: () => import('../views/SignType.vue')
             },
             {
@@ -169,5 +160,4 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes
 })
-
 export default router
