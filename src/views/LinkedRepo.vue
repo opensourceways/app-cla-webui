@@ -202,7 +202,6 @@
 
                         </el-input>
                     </div>
-                    <!--是否分享-->
                     <div class="dialogDec">
                         <el-checkbox v-model="shareGistChecked"/>
                         Share the Gist
@@ -210,7 +209,6 @@
                               @click="shareDialogVisible=true">(want to share?)</span>
                     </div>
 
-                    <!--文件修改数-->
                     <div class="dialogDec">
                         Minimum File Number Changes
                     </div>
@@ -223,7 +221,6 @@
 
                         </el-input>
                     </div>
-                    <!--行修改数-->
                     <div class="dialogDec">
                         - or -
                     </div>
@@ -308,8 +305,6 @@
                             </el-upload>
                         </el-form-item>
                     </el-form>
-
-
                 </div>
             </div>
 
@@ -456,11 +451,13 @@
             },
             toSignPage(row) {
                 let url = ''
+                console.log(row.repo_id);
                 if (row.repo_id) {
                     url = `${this.address}${this.signRouter}/${row.platform}/${row.org_id}/${row.repo_id}`
                 } else {
                     url = `${this.address}${this.signRouter}/${row.platform}/${row.org_id}`
                 }
+                console.log(url);
                 window.open(url)
             },
             submitUpload() {
