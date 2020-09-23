@@ -82,7 +82,8 @@
                 </el-col>
             </el-row>
         </el-dialog>
-        <ReLoginDialog :dialogVisible="reLoginDialogVisible" :message="reLoginMsg" :title="reLoginDialogTitle"></ReLoginDialog>
+        <ReLoginDialog :dialogVisible="reLoginDialogVisible" :message="reLoginMsg"
+                       :title="reLoginDialogTitle"></ReLoginDialog>
     </el-row>
 </template>
 
@@ -118,11 +119,11 @@
                     return 'corporation'
                 }
             },
-            org(){
+            org() {
                 let org = this.$store.state.repoInfo.org_id
-                if (org.length>1){
-                    return org.charAt(0).toUpperCase()+org.substring(1)
-                } else{
+                if (org.length > 1) {
+                    return org.charAt(0).toUpperCase() + org.substring(1)
+                } else {
                     return org.charAt(0).toUpperCase()
                 }
 
@@ -135,11 +136,11 @@
         },
         data() {
             return {
-                domain:this.$store.state.domain,
-                reLoginDialogTitle:'',
+                domain: this.$store.state.domain,
+                reLoginDialogTitle: '',
                 reLoginDialogVisible: false,
                 reLoginMsg: '',
-                tipsTitle:'',
+                tipsTitle: '',
                 // tipsMessage: 'Signed successfully.We have sent a notification email to your email address. Please check it',
                 tipsMessage: 'Signed successfully',
                 tipsDialogVisible: false,
@@ -199,24 +200,23 @@
                 this.tipsDialogVisible = false;
             },
             async verifyTel(rule, value, callback) {
-                if (!value) {
-                    callback();
-                } else {
-
+                if (value) {
                     let reg = /^1[3456789]\d{9}$/;
                     if (reg.test(value)) {
                         callback();
                     } else {
                         callback(new Error('telephone format error'))
                     }
-                    callback();
+                }else{
+                    callback(new Error('please input telephone'))
                 }
             },
             async verifyAddr(rule, value, callback) {
                 if (!value) {
                     callback(new Error('please input address'))
+                }else{
+                    callback();
                 }
-                callback();
             },
             async verifyFormEmail(rule, value, callback) {
                 let email = value;
@@ -363,15 +363,15 @@
                         }
                     }
                 }).catch(err => {
-                  this.responseCode(err.status)
+                    this.responseCode(err.status)
                 })
             },
-            responseCode(code){
+            responseCode(code) {
                 switch (code) {
                     case 401:
                     case 403:
-                        this.reLoginMsg='token expired, please login again'
-                        this.reLoginDialogTitle = this.$store.state.repoInfo.repo_id?`"${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}" prompt you`:
+                        this.reLoginMsg = 'token expired, please login again'
+                        this.reLoginDialogTitle = this.$store.state.repoInfo.repo_id ? `"${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}" prompt you` :
                             `"${this.$store.state.repoInfo.org_id}" prompt you`
                         this.reLoginDialogVisible = true
                 }
@@ -432,14 +432,22 @@
                         Object.assign(this.myForm, {corporationName: ''})
                         Object.assign(rules, {
                             [item.id]: [
-                                {required: item.required, message: 'please input corporationName', trigger: ['blur', 'change']},
+                                {
+                                    required: item.required,
+                                    message: 'please input corporationName',
+                                    trigger: ['blur', 'change']
+                                },
                             ],
                         })
                     } else if (item.type === 'adminEmail') {
                         Object.assign(this.myForm, {adminEmail: ''})
                         Object.assign(rules, {
                             [item.id]: [
-                                {required: item.required, message: 'please input adminEmail', trigger: ['blur', 'change']},
+                                {
+                                    required: item.required,
+                                    message: 'please input adminEmail',
+                                    trigger: ['blur', 'change']
+                                },
                             ],
                         })
                     } else if (item.type === 'date') {
@@ -532,11 +540,11 @@
             },
             sign(myUrl, obj) {
                 http({
-                    url:  myUrl,
+                    url: myUrl,
                     method: 'post',
                     data: obj,
                 }).then(res => {
-                    this.tipsTitle  = this.$store.state.repoInfo.repo_id?`"${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}" prompt you`:
+                    this.tipsTitle = this.$store.state.repoInfo.repo_id ? `"${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}" prompt you` :
                         `"${this.$store.state.repoInfo.org_id}" prompt you`
                     if (this.$store.state.loginType === 'corporation') {
                         this.tipsMessage = 'We have sent a notification email to your email address. Please check it.And please complete the signature according to the prompt in the email'
@@ -545,7 +553,7 @@
                     }
                     this.tipsDialogVisible = true;
                 }).catch(err => {
-                   this.responseCode(err.status)
+                    this.responseCode(err.status)
                 })
             },
             clearForm() {
