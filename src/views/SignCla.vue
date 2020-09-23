@@ -425,34 +425,34 @@
                         Object.assign(this.myForm, {name: ''})
                         Object.assign(rules, {
                             [item.id]: [
-                                {required: true, message: 'please input name', trigger: ['blur', 'change']},
+                                {required: item.required, message: 'please input name', trigger: ['blur', 'change']},
                             ],
                         })
                     } else if (item.type === 'corporationName') {
                         Object.assign(this.myForm, {corporationName: ''})
                         Object.assign(rules, {
                             [item.id]: [
-                                {required: true, message: 'please input corporationName', trigger: ['blur', 'change']},
+                                {required: item.required, message: 'please input corporationName', trigger: ['blur', 'change']},
                             ],
                         })
                     } else if (item.type === 'adminEmail') {
                         Object.assign(this.myForm, {adminEmail: ''})
                         Object.assign(rules, {
                             [item.id]: [
-                                {required: true, message: 'please input adminEmail', trigger: ['blur', 'change']},
+                                {required: item.required, message: 'please input adminEmail', trigger: ['blur', 'change']},
                             ],
                         })
                     } else if (item.type === 'date') {
                         Object.assign(this.myForm, {date: ''})
                         Object.assign(rules, {
                             [item.id]: [
-                                {required: true, message: 'please input date', trigger: ['blur', 'change']}],
+                                {required: item.required, message: 'please input date', trigger: ['blur', 'change']}],
                         })
                     } else if (item.type === 'email') {
                         Object.assign(this.myForm, {email: ''})
                         Object.assign(rules, {
                             [item.id]: [{
-                                required: true,
+                                required: item.required,
                                 validator: this.verifyFormEmail,
                                 trigger: 'blur'
                             }],
@@ -461,7 +461,7 @@
                         Object.assign(this.myForm, {telephone: ''})
                         Object.assign(rules, {
                             [item.id]: [{
-                                required: true,
+                                required: item.required,
                                 validator: this.verifyTel,
                                 trigger: 'blur'
                             }],
@@ -470,7 +470,7 @@
                         Object.assign(this.myForm, {address: ''})
                         Object.assign(rules, {
                             [item.id]: [{
-                                required: true,
+                                required: item.required,
                                 validator: this.verifyAddr(),
                                 trigger: 'blur'
                             }],

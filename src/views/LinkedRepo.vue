@@ -392,9 +392,7 @@
             }
         },
         created() {
-            // this.getCookieData()
             this.getOrgTableData();
-            // this.getTableData()
         },
         methods: {
             ...mapActions(['setLoginUserAct', 'setTokenAct', 'getLinkedRepoListAct', 'setTableDataAct']),
