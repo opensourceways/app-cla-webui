@@ -423,14 +423,14 @@
                     Object.assign(form, {[item.id]: ''})
                     if (item.type === 'name') {
                         Object.assign(this.myForm, {name: ''})
-                        Object.assign(rules, {
+                        item.required&&Object.assign(rules, {
                             [item.id]: [
                                 {required: item.required, message: 'please input name', trigger: ['blur', 'change']},
                             ],
                         })
                     } else if (item.type === 'corporationName') {
                         Object.assign(this.myForm, {corporationName: ''})
-                        Object.assign(rules, {
+                        item.required&&Object.assign(rules, {
                             [item.id]: [
                                 {
                                     required: item.required,
@@ -441,7 +441,7 @@
                         })
                     } else if (item.type === 'adminEmail') {
                         Object.assign(this.myForm, {adminEmail: ''})
-                        Object.assign(rules, {
+                        item.required&&Object.assign(rules, {
                             [item.id]: [
                                 {
                                     required: item.required,
@@ -452,13 +452,13 @@
                         })
                     } else if (item.type === 'date') {
                         Object.assign(this.myForm, {date: ''})
-                        Object.assign(rules, {
+                        item.required&&Object.assign(rules, {
                             [item.id]: [
                                 {required: item.required, message: 'please input date', trigger: ['blur', 'change']}],
                         })
                     } else if (item.type === 'email') {
                         Object.assign(this.myForm, {email: ''})
-                        Object.assign(rules, {
+                        item.required&&Object.assign(rules, {
                             [item.id]: [{
                                 required: item.required,
                                 validator: this.verifyFormEmail,
@@ -467,7 +467,7 @@
                         })
                     } else if (item.type === 'telephone') {
                         Object.assign(this.myForm, {telephone: ''})
-                        Object.assign(rules, {
+                        item.required&&Object.assign(rules, {
                             [item.id]: [{
                                 required: item.required,
                                 validator: this.verifyTel,
@@ -476,7 +476,7 @@
                         })
                     } else if (item.type === 'address') {
                         Object.assign(this.myForm, {address: ''})
-                        Object.assign(rules, {
+                        item.required&&Object.assign(rules, {
                             [item.id]: [{
                                 required: item.required,
                                 validator: this.verifyAddr,
