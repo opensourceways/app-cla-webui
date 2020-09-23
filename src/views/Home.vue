@@ -579,6 +579,7 @@
                         metadata_id: '',
                     };
                 }
+                console.log(obj);
                 this.$axios({
                     url: '/api' + url.linkRepository,
                     method: 'post',
@@ -820,13 +821,7 @@
                         userEmail: res.data.email
                     }
                     this.setLoginUserAct(data);
-                    let obj = {
-                        platform_token: platform_token,
-                        access_token: access_token,
-                        refresh_token: refresh_token,
-                        userName: res.data.login,
-                        platform: this.platform
-                    }
+
                 }).catch(err => {
                 })
             },

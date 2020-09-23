@@ -67,6 +67,7 @@
                 this.setPlatformAct(platform)
                 let interval = setInterval(() => {
                     if (this.$store.state.platform) {
+                        console.log(this.$store.state.platform);
                         this.$axios({
                             url: `/api${url.getAuthCodeUrl}/${platform}/login`,
                         }).then(res => {
