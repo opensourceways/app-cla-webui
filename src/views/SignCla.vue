@@ -479,7 +479,7 @@
                         Object.assign(rules, {
                             [item.id]: [{
                                 required: item.required,
-                                validator: this.verifyAddr(),
+                                validator: this.verifyAddr,
                                 trigger: 'blur'
                             }],
                         })
