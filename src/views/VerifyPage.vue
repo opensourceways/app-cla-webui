@@ -89,9 +89,7 @@
                         this.verifyCLAClass.height = document.getElementById('verifyPage').offsetHeight
                 })
             },
-            /*截取url上的参数*/
             getParams(){
-                console.log(window.location.href);
                 let params = window.location.href.split('?')[1];
                 let paramsArr = params.split('&');
                 paramsArr.forEach((item,i)=>{
@@ -100,7 +98,6 @@
                     }
                 })
             },
-            /*验证验证码*/
             verify() {
                 this.isVerify = true;
                 let obj = {code: this.verifyCode}
@@ -115,15 +112,12 @@
                     }
 
                 }).then(res => {
-                    console.log(res);
                     if (res.data.code === 200) {
                         this.isVerify = true;
                     } else {
                         this.$message.error('验证码错误')
                     }
                 }).catch(err => {
-                    console.log(err);
-
                 })
             },
         },
@@ -138,7 +132,6 @@
         }
     }
     window.onresize = () => {
-        // console.log(until.getClientHeight());
         if (until.getClientHeight() > document.getElementById('verifyPage').offsetHeight) {
             document.getElementById("verifyPage").style.height = until.getClientHeight() + 'px'
         }

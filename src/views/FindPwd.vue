@@ -40,7 +40,6 @@
                         this.findPwdClass.height = document.getElementById('findPwd').offsetHeight
 
                 })
-                console.log(document.getElementById('findPwd').offsetHeight);
             },
         },
         created() {
@@ -51,7 +50,6 @@
         }
     }
     window.onresize = () => {
-        // console.log(until.getClientHeight());
         if (until.getClientHeight() > document.getElementById('findPwd').offsetHeight) {
             document.getElementById("findPwd").style.height = until.getClientHeight() + 'px'
         }

@@ -299,7 +299,6 @@
 
 
             chooseCla(index) {
-                console.log('chooseCla', index);
                 this.claText = this.claOptions[index].text;
                 this.isEdit = false;
                 this.currentIndex = index;
@@ -318,7 +317,6 @@
                     }
 
                 }).then(res => {
-                    console.log(res);
                     this.claTags.splice(this.claTags.indexOf(tag), 1);
                     if (this.currentIndex === index) {
                         this.claText = '';
@@ -326,16 +324,12 @@
                     }
                     this.getCLA();
                 }).catch(err => {
-                    console.log(err);
                     this.$message.closeAll();
                     this.$message.error('Binding relationship already exists, unable to delete')
                 })
 
             },
-
-            /*获取cla数据*/
             getCLA() {
-                console.log("getCLA");
                 this.$axios({
                     url: '/api' + url.getClaInfo,
                     headers: {
@@ -346,7 +340,6 @@
                     }
 
                 }).then(res => {
-                    console.log(res);
                     if (res.data.data.length) {
                         this.claOptions = [];
                         this.claOptions = [];
@@ -363,13 +356,10 @@
                         })
                     }
                 }).catch(err => {
-                    console.log(err);
                 })
             },
             claTextChange(value) {
-                console.log(value);
             },
-            /*验证newClaFileName和claText不为空*/
             verifyNotNull() {
                 return this.addNewFile ? this.newClaFileName.trim() !== '' && this.claText.trim() !== '' : this.claText.trim() !== '';
             },
@@ -385,11 +375,9 @@
                 return true;
 
             },
-            /*上传cla*/
             uploadCla() {
                 if (this.checkMetadata()) {
                     let fields = [];
-
                     this.metadataArr.forEach((item, index) => {
                         fields.push({
                             id:index+'',
@@ -420,8 +408,8 @@
                                     fields: fields,
 
                                 }
-                                console.log(obj);
-                                this.$axios({
+                            console.log(obj);
+                            this.$axios({
                                     url: '/api' + url.uploadCla,
                                     method: 'post',
                                     data: obj,
@@ -431,27 +419,17 @@
                                         'Refresh-Token': this.refresh_token,
                                         'User': `${this.platform}/${this.user.userName}`
                                     }
-
                                 }).then(res => {
-                                    console.log(res);
-
                                     this.fullscreenLoading = false;
                                     this.$message.success('succeed')
                                     setTimeout(() => {
                                         this.$router.replace('/home')
                                     }, 2000)
-
-
                                 }).catch(err => {
-                                    console.log(err);
                                     this.fullscreenLoading = false;
                                     this.$message.error('failed')
                                 })
                             }
-
-
-
-
                     }
 
                 } else {
@@ -463,24 +441,16 @@
 
             setClientHeight() {
                 this.$nextTick(() => {
-                    console.log(until.getClientHeight());
-                    console.log(document.getElementById('createCLA').offsetHeight);
                     until.getClientHeight() > document.getElementById('createCLA').offsetHeight ?
                         this.createCLAClass.height = until.getClientHeight() + 'px' :
                         this.createCLAClass.height = document.getElementById('createCLA').offsetHeight
-
                 })
             },
             copy() {
-                // this.metaData = this.claText
-                console.log(this.claText);
                 this.init()
             },
             init() {
-
-                var des = this.claText.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ');  //转换格式
-                console.log(des);
-                this.metaData = des
+                this.metaData = this.claText.replace(/\r\n/g, '<br/>').replace(/\n/g, '<br/>').replace(/\s/g, ' ')
 
             },
 

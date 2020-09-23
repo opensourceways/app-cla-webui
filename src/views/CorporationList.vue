@@ -191,13 +191,9 @@
             }
             next();
         },
-
         created() {
-
-            console.log(this.$route.query.item, 'created', sessionStorage.getItem('item'), JSON.parse(sessionStorage.getItem('item')));
             if (JSON.parse(sessionStorage.getItem('item'))) {
                 this.item = JSON.parse(sessionStorage.getItem('item'))
-
             } else {
                 this.tableData = this.$route.query.item.corporationInfo
                 this.item = this.$route.query.item
@@ -206,7 +202,6 @@
             this.uploadUrl = `/api${url.uploadSignature}/${this.item.id}`
             this.getCorporationInfo()
         },
-
         methods: {
             uploadOk() {
                 let fd = new FormData();
@@ -218,17 +213,14 @@
                     data: {fd},
                     headers: {'Token': this.$store.state.access_token}
                 }).then(res => {
-                    console.log(res)
                 })
             },
             previewClaFile(row) {
                 this.docInfo = {
                     type: "pdf",
-                    // href:`/static/pdf/merge.pdf`
                     href:`/api${url.downloadSignature}/${this.item.id}`
                 }
                 this.previewDialogVisible = true
-                console.log('previewClaFil', row);
             },
 
             downloadClaFile(row) {
@@ -244,7 +236,6 @@
             handleSuccess(file, fileList) {
                 console.log(file, fileList);
 
-
             },
             handleRemove(file, fileList) {
                 console.log(file, fileList);
@@ -256,7 +247,7 @@
                 this.$message.warning(`当前限制选择 3 个文件，本次选择了 ${files.length} 个文件，共选择了 ${files.length + fileList.length} 个文件`);
             },
             beforeRemove(file, fileList) {
-                return this.$confirm(`确定移除 ${file.name}？`);
+                return this.$confirm(`Are you sure you want to remove it ${file.name}？`);
             },
             getCorporationInfo() {
                 this.$axios({
@@ -274,10 +265,8 @@
                         'User': `${this.platform}/${this.user.userName}`
                     }
                 }).then(resp => {
-                    console.log(resp);
                     this.tableData = resp.data;
                 }).catch(err => {
-                    console.log(err);
                 })
             },
             createRoot(cla_org_id, email) {
@@ -293,18 +282,15 @@
                         'User': `${this.platform}/${this.user.userName}`
                     }
                 }).then(res => {
-                    console.log(res);
                     this.$message.closeAll()
                     this.$message.success('success')
                     this.getCorporationInfo()
                 }).catch(err => {
-                    console.log(err);
                     this.$message.closeAll()
                     this.$message.error('failed')
                 })
             },
             changeActive(cla_org_id, corporation_name, admin_email, enabled) {
-                console.log('changeActive', cla_org_id, admin_email);
                 let data = {
                     cla_org_id: cla_org_id,
                     corporation_name: corporation_name,
@@ -322,11 +308,8 @@
                         'User': `${this.platform}/${this.user.userName}`
                     }
                 }).then(res => {
-                    console.log(res);
                     this.getCorporationInfo()
-
                 }).catch(err => {
-                    console.log(err);
                 })
             },
         },

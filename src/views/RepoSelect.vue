@@ -85,8 +85,6 @@
         methods:{
             ...mapActions(['setLoginTypeAct','setRepoInfoAct']),
             changeOrg(val){
-                console.log(val);
-
                 this.getRepo()
             },
             changePlatform(){
@@ -99,10 +97,7 @@
                     this.$message.error("please select org or repo")
                 }else {
                     if (!this.repoOption.length) {
-                        console.log('直接绑定的组织');
-
                         this.toSignCla()
-
                     } else {
                         if (this.repo === '') {
                             this.$message.closeAll()
@@ -112,23 +107,16 @@
                         }
                     }
                 }
-
             },
             toSignCla(){
                     this.setRepoInfoAct({platform:this.platform,org_id:this.org,repo_id:this.repo});
                 if (this.platform === 'gitee') {
-                    console.log('gitee');
-
                     if (this.$store.state.loginType==='individual'||this.$store.state.loginType==='employee') {
-                        console.log('individual');
                         this.$axios({
                             url:`/api${url.getAuthCodeUrl}/${this.platform}/sign`,
                         }).then(res=>{
-                            console.log(res);
                             window.location.href =res.data.url
-
                         }).catch(err=>{
-                            console.log(err);
                         })
                         }else if (this.$store.state.loginType === 'corporation') {
                             this.$router.push('/signCla')
@@ -136,8 +124,6 @@
                         this.$router.push('/corporationManagerLogin')
                     }
                     }else if(this.platform === 'github'){
-                    console.log('github');
-
                     if (this.$store.state.loginType==='individual'||this.$store.state.loginType==='employee') {
                             window.location.href = 'https://github.com/login/oauth/authorize?client_id=d86f4915398dad23bffc&redirect_uri=http://localhost:8080/home&scope=user,user:email'  //逗号分隔多个权限
                         }else{
@@ -147,7 +133,6 @@
 
             },
             getOrg(platform){
-                console.log(platform);
                 let applyTo='';
                 if (this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee') {
                     applyTo='individual';
@@ -161,7 +146,6 @@
                             repo_id:'',
                         }
                     }).then(res=>{
-                        console.log(res);
                         this.orgOption=[];
                         this.repoOption=[]
                         this.org=''
@@ -172,27 +156,21 @@
                                 arr.push(item.org_id)
                             })
                             let newSet = new Set(arr)
-                            console.log(newSet);
                             arr = [...newSet];
                             arr.forEach(item=>{
                                 this.orgOption.push({label:item,value:item})
                             })
-
-                            console.log(this.orgOption);
                         }
                     }).catch(err=>{
-                        console.log(err);
                     })
 
             },
             getRepo(){
-                console.log(this.org);
                 let applyTo='';
                 if (this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee') {
                     applyTo='individual';
                 }else{
                     applyTo='corporation';
-
                 }
                 this.$axios({
                     url:`/api${url.getSignPage}/${this.platform}/${this.org}/${applyTo}`,
@@ -200,7 +178,6 @@
                         repo_id:'',
                     }
                 }).then(res=>{
-                    console.log(res);
                     this.repoOption=[];
                     this.repo=''
                     if (res.data.length) {
@@ -209,16 +186,12 @@
                             arr.push(item.repo_id)
                         })
                         let newSet = new Set(arr)
-                        console.log(newSet);
                         arr = [...newSet];
                         arr.forEach(item=>{
                             this.repoOption.push({label:item,value:item})
                         })
-
-                        console.log(this.repoOption);
                     }
                 }).catch(err=>{
-                    console.log(err);
                 })
             },
         },

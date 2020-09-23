@@ -130,14 +130,11 @@
         },
         computed: {
             orgValue() {
-                console.log(this.$store.state.loginInfo.orgValue);
                 return this.$store.state.loginInfo.orgValue
             },
             userInfo() {
-                console.log(this.$store.state.loginInfo.userInfo);
                 return this.$store.state.loginInfo.userInfo
             },
-
         },
         methods: {
             submit(){
@@ -149,10 +146,8 @@
                         token: this.userInfo[this.orgValue].token,
                     }
                 }).then(res => {
-                    console.log(res);
                     this.getEmployee()
                 }).catch(err => {
-                    console.log(err);
                 })
             },
             deleteEmployee(cla_org_id, email, enabled){
@@ -161,10 +156,8 @@
                     email: email,
                     enabled: enabled
                 }
-
             },
             changeActtive(cla_org_id, email, enabled) {
-                console.log(cla_org_id, email, enabled);
                 let data = {
                     cla_org_id: cla_org_id,
                     email: email,
@@ -178,10 +171,8 @@
                         token: this.userInfo[this.orgValue].token,
                     }
                 }).then(res => {
-                    console.log(res);
                     this.getEmployee()
                 }).catch(err => {
-                    console.log(err);
                 })
             },
 
@@ -201,12 +192,10 @@
                 }).then(res => {
                     this.inactiveData = [];
                     this.activeData = [];
-                    console.log(res);
                     res.data.forEach((item, index) => {
                         item.enabled === false ? this.inactiveData.push(item) : this.activeData.push(item)
                     })
                 }).catch(err => {
-                    console.log(err);
                 })
             },
         },

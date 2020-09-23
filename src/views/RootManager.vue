@@ -41,7 +41,6 @@
     import pdfReader from "@components/PdfReader";
 
     window.onresize = () => {
-        // console.log(until.getClientHeight());
         if (until.getClientHeight() > document.getElementById('section').offsetHeight) {
             document.getElementById("section").style.height = until.getClientHeight() + 'px'
         }
@@ -56,7 +55,6 @@
         },
         computed:{
             user(){
-                console.log(this.$store.state.loginInfo);
                 return this.$store.state.loginInfo
             },
         },
@@ -76,7 +74,6 @@
             }
         },
         created() {
-            console.log(this.$store.state.loginInfo);
         },
         mounted() {
             this.setClientHeight();
@@ -85,7 +82,6 @@
         methods: {
 
             clickItem(command) {
-                console.log(command);
                 switch (command) {
                     case 'a':
                         if (this.$route.path !== '/userList') {
@@ -115,14 +111,11 @@
                 sessionStorage.clear();
                 this.$router.push('/')
             },
-            /*设置页面高度*/
             setClientHeight() {
-                // console.log(until.getClientHeight());
                 this.$nextTick(() => {
                     until.getClientHeight() > document.getElementById('section').offsetHeight ?
                         this.section.height = until.getClientHeight() + 'px' :
                         this.section.height = document.getElementById('section').offsetHeight
-
                 })
             },
 

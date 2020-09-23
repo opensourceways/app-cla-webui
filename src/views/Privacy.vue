@@ -22,7 +22,6 @@
     import * as until from '../until/until'
 
     window.onresize = () => {
-        console.log(until.getClientHeight());
         if (until.getClientHeight() > document.getElementById('privacyBox').offsetHeight) {
             document.getElementById("privacyBox").style.height = until.getClientHeight() + 'px';
 
@@ -45,7 +44,6 @@
         methods: {
             setClientHeight() {
                 this.$nextTick(() => {
-                    console.log(until.getClientHeight(), document.getElementById('privacyBox').offsetHeight);
                     if (until.getClientHeight() > document.getElementById('privacyBox').offsetHeight) {
                         this.privacyBox.height = until.getClientHeight() + 'px'
                     }
@@ -55,10 +53,8 @@
                 this.$axios({
                     url: '/api' + url.getPrivacy
                 }).then(res => {
-                    console.log(res);
                     this.privacyText = res.data;
                 }).catch(err => {
-                    console.log(err);
                 })
             },
             init() {

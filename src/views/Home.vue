@@ -19,10 +19,8 @@
                                 <div style="text-align: right;padding: 1rem">
                                     <svg-icon @click="closeConfigForm()" icon-class="close"/>
                                 </div>
-                                <!--选择仓库-->
                                 <div style="font-size: 1.2rem;padding: .5rem">
                                     ① Choose a org or repository
-                                    <!--<span v-if="!user.isAuthorize" @click="authorize()" style="font-size: .8rem;text-decoration: underline;cursor: pointer">(want to link an org?)</span>-->
                                 </div>
                                 <div style="padding: 0 2rem">
                                     <el-row :gutter="20">
@@ -63,7 +61,6 @@
                                     </el-row>
 
                                 </div>
-                                <!--选择协议-->
                                 <div style="font-size: 1.2rem;padding: .5rem">
                                     ② Choose a CLA
                                     <span @click="createCLA()"
@@ -183,8 +180,6 @@
                 width="35%">
             <div style="text-align: left">
                 <p class="dialogDesc">Why link organizations?</p>
-                <!--<p>At <a href="https://gist.github.com/" target="_blank">gist.github.com</a> enter a file name and paste-->
-                <!--the content of your CLA.</p>-->
                 <p>If you link an organization with your CLA, CLA system sets a web hook on your organization and
                     listens to Pull Requests of all repositories in the organization. That means that your CLA becomes
                     active for each existing and future repositories of your organization.</p>
@@ -210,8 +205,6 @@
                 width="35%">
             <div style="text-align: left">
                 <p class="dialogDesc">How can I create a CLA Gist?</p>
-                <!--<p>At <a href="https://gist.github.com/" target="_blank">gist.github.com</a> enter a file name and paste-->
-                <!--the content of your CLA.</p>-->
                 <p>To <span @click="toCreateCLA()" style="cursor: pointer;text-decoration: underline;color: blue">createCLA</span>
                     enter a file name and paste
                     the content of your CLA.</p>
@@ -231,8 +224,6 @@
                 width="35%">
             <div style="text-align: left">
                 <p class="dialogDesc">What happens if I choose to share the gist with multiple repos or orgs?</p>
-                <!--<p>At <a href="https://gist.github.com/" target="_blank">gist.github.com</a> enter a file name and paste-->
-                <!--the content of your CLA.</p>-->
                 <p>Contributors will simply need to sign only once for any of the repos or orgs linked with the same
                     shared gist.</p>
                 <p class="dialogDesc">Are previous CLA signatures still valid after I choose to share the gist with
@@ -259,13 +250,10 @@
                     </el-row>
                     <el-row>
                         <el-col :offset="6" :span="5" v-if="claChoose">
-                            <!--{{this.claOptions[claValue].label}}-->
                         </el-col>
                         <el-col :offset="2" :span="5" v-if="orgChoose&&repositoryChoose">
-                            <!--{{orgOptions[orgValue].label}}/{{this.repositoryOptions[repositoryValue].label}}-->
                         </el-col>
                         <el-col :offset="2" :span="5" v-if="orgChoose&&!repositoryChoose">
-                            <!--{{orgOptions[orgValue].label}}-->
                         </el-col>
                     </el-row>
                 </div>
@@ -297,7 +285,6 @@
 
                     <el-row>
                         <el-col :offset="6" :span="12">
-
                             <el-select
                                     placeholder="Select email type"
                                     size="medium"
@@ -309,15 +296,12 @@
                                         :key="item.value"
                                         :value="item.value"
                                         :label="item.label">
-
                                 </el-option>
                             </el-select>
                         </el-col>
-
                     </el-row>
                 </div>
                 <div style="padding: 0 3rem;color: #409EFF">
-
                 </div>
                 <div style="padding: 2rem 6rem;text-align: left;font-size: 1.3rem">
                     <p style="text-align: center">CLA system will...</p>
@@ -326,13 +310,11 @@
                         <li>Send PDF signature documents to the signer through this email address</li>
                     </ul>
                 </div>
-
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="emailDialogVisible = false">Cancel</el-button>
                     <el-button v-loading.fullscreen.lock="linkLoading" type="primary" @click="authorizeEmail()">Yes,Let's do this!</el-button>
                 </span>
             </div>
-
         </el-dialog>
     </div>
 </template>
@@ -342,8 +324,8 @@
     import Header from '@components/Header'
     import Footer from '@components/Footer'
     import {mapActions} from 'vuex'
+
     window.onresize = () => {
-        console.log(until.getClientHeight(), document.getElementById('home'));
         if (until.getClientHeight() > document.getElementById('home').offsetHeight) {
             document.getElementById("home").style.height = until.getClientHeight() + 'px'
         }
@@ -356,35 +338,28 @@
         },
         computed: {
             orgOptions() {
-                console.log(this.$store.state.orgOptions);
-                    try {
-                        return JSON.parse(this.$store.state.orgOptions)
-                    } catch(e) {
-                        return this.$store.state.orgOptions
-                    }
+                try {
+                    return JSON.parse(this.$store.state.orgOptions)
+                } catch (e) {
+                    return this.$store.state.orgOptions
+                }
             },
             orgChoose() {
-                console.log(this.$store.state.orgChoose);
-                console.log(`${this.$store.state.orgChoose}` === 'true');
                 return `${this.$store.state.orgChoose}` === 'true';
             },
             claChoose() {
-                console.log(this.$store.state.claChoose);
-                console.log(this.$store.state.claChoose === 'true');
                 return `${this.$store.state.claChoose}` === 'true';
             },
             isEmail() {
-                console.log(this.$store.state.isEmail === 'true');
                 return `${this.$store.state.isEmail}` === 'true';
             },
             repositoryChoose() {
-                console.log(this.$store.state.repositoryChoose === 'true');
                 return `${this.$store.state.repositoryChoose}` === 'true'
             },
             repositoryOptions() {
                 try {
                     return JSON.parse(this.$store.state.repositoryOptions)
-                } catch(e) {
+                } catch (e) {
                     return this.$store.state.repositoryOptions
                 }
 
@@ -392,34 +367,27 @@
             claOptions() {
                 try {
                     return JSON.parse(this.$store.state.claOptions)
-                } catch(e) {
+                } catch (e) {
                     return this.$store.state.claOptions
                 }
 
             },
             orgValue() {
-                console.log(this.$store.state.orgValue);
-                console.log(Number(this.$store.state.orgValue));
-                console.log(this.orgOptions);
-
-                if (this.$store.state.orgValue === undefined||this.$store.state.orgValue === '') {
+                if (this.$store.state.orgValue === undefined || this.$store.state.orgValue === '') {
                     return this.$store.state.orgValue
-
-                }else{
+                } else {
                     return Number(this.$store.state.orgValue)
-
                 }
             },
             claValue() {
-                console.log(this.$store.state.claValue);
-                if (this.$store.state.claValue === undefined||this.$store.state.claValue === '') {
+                if (this.$store.state.claValue === undefined || this.$store.state.claValue === '') {
                     return this.$store.state.claValue
-                } else{
+                } else {
                     return Number(this.$store.state.claValue)
                 }
             },
             repositoryValue() {
-                if (this.$store.state.repositoryValue === undefined||this.$store.state.repositoryValue === '') {
+                if (this.$store.state.repositoryValue === undefined || this.$store.state.repositoryValue === '') {
                     return this.$store.state.repositoryValue
                 } else {
                     return Number(this.$store.state.repositoryValue)
@@ -428,7 +396,6 @@
             showConfigForm() {
                 return `${this.$store.state.showConfigForm}` === 'true'
             },
-
         },
         watch: {
             $route(to, from) {
@@ -444,7 +411,6 @@
             return {
                 org_id: '',
                 org: '',
-                // showConfigForm:false,
                 emailTypeArr: [{value: 'Gmail', label: 'Gmail'}],
                 emailType: '',
                 emailDialogVisible: false,
@@ -473,12 +439,6 @@
                 dropdownTitle: 'Linked Repositories',
                 email: '',
                 code: '',
-                gitee_client_id: this.$store.state.gitee_client_id,
-                gitee_client_secret: this.$store.state.gitee_client_secret,
-                gitee_redirect_uri: this.$store.state.gitee_redirect_uri,
-                github_client_id: this.$store.state.github_client_id,
-                github_client_secret: this.$store.state.github_client_secret,
-                github_redirect_uri: this.$store.state.github_redirect_uri,
                 access_token: this.$store.state.access_token,
                 refresh_token: this.$store.state.refresh_token,
                 platform_token: this.$store.state.platform_token,
@@ -528,30 +488,21 @@
                     url: '/api' + myUrl,
                     headers: {'Token': this.$store.state.access_token},
                 }).then(res => {
-                    console.log(res);
                     window.location.href = res.data.data.url;
                 }).catch(err => {
-                    console.log(err);
                 })
-                console.log('authorizeEmail');
             },
             changeEmailType(value) {
-                console.log('changeEmailType', value);
-
             },
             getEmailTypeArr() {
-
                 this.$axios({
                     url: '/api' + url.getEmailTypeArr,
                 }).then(res => {
-                    console.log(res);
                     this.emailTypeArr = res.data
                 }).catch(err => {
-                    console.log(err);
                 })
             },
             toAuthorizedEmail() {
-                // this.getEmailTypeArr()
                 this.emailDialogVisible = true
             },
             resetCla() {
@@ -562,15 +513,12 @@
                 this.getCLA()
             },
             claTypeChange(val) {
-                console.log(val);
                 this.resetCla()
             },
             claLanguageChange(val) {
-                console.log(val);
                 this.resetCla()
             },
             handleChange(val) {
-                console.log(val);
             },
             getPath() {
                 let path = this.$route.path;
@@ -581,23 +529,19 @@
                 }
             },
             tabsHandleClick(tab, event) {
-                console.log(tab, event);
                 tab.index === '0' ? this.$router.push('/linkedRepo') : this.$router.push('/signedRepoLogin')
             },
-            /*获取组织权限*/
             getOrgPermission() {
                 if (this.platform === 'gitee') {
                 } else {
                 }
             },
             listChangePage(page) {
-                console.log(page);
             },
             newWindow() {
                 // window.open()
             },
             openLinkDialog() {
-                console.log(this.orgChoose, this.claChoose, this.isEmail);
                 (this.orgChoose && this.claChoose && this.isEmail) && (this.linkDialogVisible = true)
             },
             verifyEmail() {
@@ -635,7 +579,6 @@
                         metadata_id: '',
                     };
                 }
-                console.log(obj);
                 this.$axios({
                     url: '/api' + url.linkRepository,
                     method: 'post',
@@ -649,7 +592,6 @@
                 }).then(res => {
                     this.linkLoading = false;
                     this.$message.success('success')
-                    console.log(res);
                     this.$store.commit('setClaValue', '')
                     this.$store.commit('setRepositoryValue', '')
                     this.$store.commit('setClaChoose', false)
@@ -665,7 +607,6 @@
                     }
                     this.getLinkedRepoListAct(data)
                 }).catch(err => {
-                    console.log(err);
                     this.linkLoading = false
                     this.$message.closeAll();
                     this.$message.error(err.response.data)
@@ -675,7 +616,6 @@
                 this.$router.push('/checkCla')
             },
             editHandleClick(index) {
-                console.log(index);
                 this.editDialogVisible = true
             },
             toCreateCLA() {
@@ -687,7 +627,6 @@
             },
             claVisibleChange(visible) {
                 if (visible && this.filterChange) {
-                    console.log('claVisibleChange', visible, this.filterChange);
                     this.getCLA();
                     this.filterChange = false;
                 }
@@ -722,7 +661,7 @@
                 if (value === '') {
                     this.org = '';
                     this.org_id = ''
-                }else{
+                } else {
                     this.org = this.orgOptions[value].label;
                     this.org_id = this.orgOptions[value].id
                 }
@@ -738,7 +677,6 @@
             },
             changeRepository(value) {
                 this.$store.commit('setRepositoryValue', value)
-                console.log(this.repositoryValue);
                 if (value !== '') {
                     this.$store.commit('setRepositoryChoose', true)
                 } else {
@@ -770,12 +708,10 @@
             },
             getOrgsInfo() {
                 let obj = {access_token: this.$store.state.platform_token, admin: true, page: 1, per_page: 10};
-                console.log("getOrgsInfo", obj);
                 this.$axios({
                     url: url.getOrgsInfo,
                     params: obj,
                 }).then(res => {
-                    console.log(res);
                     if (res.status === 200) {
                         let orgOptions = [];
                         res.data.forEach((item, index) => {
@@ -784,11 +720,9 @@
                         this.$store.commit('setOrgOption', orgOptions)
                     }
                 }).catch(err => {
-                    console.log(err);
                 })
             },
             getCLA() {
-                console.log("getCLA");
                 this.$axios({
                     url: '/api' + url.getClaInfo,
                     params: {language: this.claLanguageValue, apply_to: this.claTypeValue},
@@ -799,7 +733,6 @@
                         'User': `${this.$store.state.platform}/${this.$store.state.user.userName}`
                     }
                 }).then(res => {
-                    console.log(res);
                     let claOptions = [];
                     if (res.data.data.length) {
                         res.data.data.forEach((item, index) => {
@@ -814,7 +747,6 @@
                         this.$store.commit('setClaOptions', claOptions)
                     }
                 }).catch(err => {
-                    console.log(err);
                 })
             },
             closeConfigForm() {
@@ -836,7 +768,6 @@
                 })
             },
             change(value) {
-                console.log(value);
                 this.value = value;
             },
             openFullScreen() {
@@ -845,7 +776,7 @@
                     background: 'rgba(255, 255, 255, 0.8)'
                 });
                 setInterval(() => {
-                    this.$store.state.user.userName  && loading.close();
+                    this.$store.state.user.userName && loading.close();
                 }, 500)
             },
             clearPageSession() {
@@ -878,12 +809,10 @@
             },
             getUserInfo(access_token, refresh_token, platform_token) {
                 let obj = {access_token: platform_token};
-                console.log(obj);
                 this.$axios({
                     url: url.getUserInfo,
                     params: obj,
                 }).then(res => {
-                    console.log(res);
                     let data = {
                         userId: res.data.id,
                         userName: res.data.login,
@@ -898,9 +827,7 @@
                         userName: res.data.login,
                         platform: this.platform
                     }
-                    console.log(obj);
                 }).catch(err => {
-                    console.log(err);
                 })
             },
         },

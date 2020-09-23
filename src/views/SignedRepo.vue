@@ -4,7 +4,6 @@
         <el-row style="margin-top: 2rem">
             <el-col :offset="4" :span="16">
                 <router-view></router-view>
-
             </el-col>
         </el-row>
 
@@ -47,7 +46,6 @@
     import Footer from '@components/Footer'
 
     window.onresize = () => {
-        // console.log(until.getClientHeight());
         if (until.getClientHeight() > document.getElementById('section').offsetHeight) {
             document.getElementById("section").style.height = until.getClientHeight() + 'px'
         }
@@ -91,19 +89,15 @@
         methods: {
 
             checkPdf() {
-                console.log('checkPdf');
             },
             changeActive(id, active) {
-                console.log('changeActive', id, active);
                 let data = {id: id, active: active}
                 this.$axios({
                     url: `/api${url.changeActive}`,
                     method: 'post',
                     data: data,
                 }).then(res => {
-                    console.log(res);
                 }).catch(err => {
-                    console.log(err);
                     this.$message.closeAll()
                     this.$message.error(err.response.data)
                 })
@@ -114,24 +108,18 @@
             },
 
             deleteContributor() {
-                console.log('deleteContributor');
                 this.$axios({
                     url: `/api${url.deleteCon}/${this.deleteId}`,
                     method: 'delete',
                 }).then(res => {
-                    console.log(res);
                 }).catch(err => {
-                    console.log(err);
                     this.$message.closeAll()
                     this.$message.error(err.response.data)
                 })
             },
             changePage(page) {
-                console.log(page);
             },
-            /*设置页面高度*/
             setClientHeight() {
-                // console.log(until.getClientHeight());
                 this.$nextTick(() => {
                     until.getClientHeight() > document.getElementById('section').offsetHeight ?
                         this.section.height = until.getClientHeight() + 'px' :
@@ -140,7 +128,6 @@
                 })
             },
             clickItem(command) {
-                console.log(command);
                 switch (command) {
                     case 'a':
                         if (this.$route.path !== '/employeeList') {

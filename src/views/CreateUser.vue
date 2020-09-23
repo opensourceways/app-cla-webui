@@ -30,11 +30,9 @@
         name: "CreateUser",
         computed: {
             orgValue() {
-                console.log(this.$store.state.loginInfo.orgValue);
                 return this.$store.state.loginInfo.orgValue
             },
             userInfo() {
-                console.log(this.$store.state.loginInfo.userInfo);
                 return this.$store.state.loginInfo.userInfo
             },
 
@@ -57,7 +55,6 @@
 
             },
             myDeleteRow(index) {
-                console.log(index);
                 if (this.emails.length === 1) {
                     this.emails[0].email =''
 
@@ -79,23 +76,16 @@
                         token: this.userInfo[this.orgValue].token,
                     }
                 }).then(res => {
-                    console.log(res);
                     this.$message.closeAll()
                     this.$message.success('success')
                     this.emails=[{email:''}]
-
-
-
                 }).catch(err => {
-                    console.log(err);
                     this.$message.closeAll()
                     this.$message.error(err.response.data)
-
                 })
             },
         },
         created() {
-
         }
     }
 </script>

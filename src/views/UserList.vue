@@ -78,11 +78,9 @@
         name: "UserList",
         computed:{
             orgValue(){
-                console.log(this.$store.state.loginInfo.orgValue);
                 return this.$store.state.loginInfo.orgValue
             },
             userInfo(){
-                console.log(this.$store.state.loginInfo.userInfo);
                 return this.$store.state.loginInfo.userInfo
             },
 
@@ -120,9 +118,6 @@
                 } else {
                     this.emails.push(row.email)
                 }
-                console.log(row);
-
-                console.log(this.multipleSelection);
                 this.deleteUserVisible = true
 
             },
@@ -137,11 +132,9 @@
                         token:this.userInfo[this.orgValue].token
                     }
                 }).then(res => {
-                    console.log(res);
                     this.tableData = res.data;
                     this.setUserLimitAct(res.data.length)
                 }).catch(err => {
-                    console.log(err);
                 })
             },
             submit() {
@@ -156,12 +149,9 @@
                         token:this.userInfo[this.orgValue].token
                     }
                 }).then(res => {
-                    console.log(res);
                     this.getEmployeeManager();
                     this.deleteUserVisible = false
-
                 }).catch(err => {
-                    console.log(err);
                 })
             },
         },

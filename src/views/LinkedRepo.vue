@@ -405,7 +405,6 @@
                 return '';
             },
             clickOrg(row, column, cell, event){
-                console.log(row, column, cell, event);
                 this.clickRow=row.value
                 this.getLinkedRepoList(row.Organization)
             },
@@ -415,18 +414,14 @@
                     params:{repo_id:'',apply_to:''},
                     headers:this.uploadHeaders
                 }).then(res=>{
-                    console.log(res);
                     let data = res.data.data
                     data.forEach((item,index)=>{
                         new Promise((resolve,reject)=>{
                             let claName = this.getClaName(item.cla_id)
-                            console.log(claName);
                             resolve(claName)
                         }).then(res=>{
-                            console.log(res);
                             Object.assign(data[index],{claName:res})
                             this.tableData=data
-                            console.log(this.tableData);
                         },err=>{
                         })
                     })
@@ -439,18 +434,15 @@
                     url: `/api${url.getClaInfo}/${cla_id}`,
                     headers: this.uploadHeaders
                 }).then(resp => {
-                    console.log(resp);
                     name= resp.data.data.name
 
                 }).catch(err => {
-                    console.log(err);
                 })
                 return name
 
             },
             getOrgTableData() {
                 let obj = {access_token: this.$store.state.platform_token, admin: true, page: 1, per_page: 10};
-                console.log("getOrgsInfo", obj);
                 this.$axios({
                     url: url.getOrgsInfo,
                     params: obj,
@@ -462,11 +454,9 @@
                     this.orgTableData = orgOptions
                     this.getLinkedRepoList(res.data[0].login)
                 }).catch(err => {
-                    console.log(err);
                 })
             },
             toSignPage(row) {
-                console.log(row);
                 let url = ''
                 if (row.repo_id) {
                     url = `${this.address}${this.signRouter}/${row.platform}/${row.org_id}/${row.repo_id}`
@@ -480,8 +470,6 @@
             },
             handleSuccess(file, fileList) {
                 console.log(file, fileList);
-
-
             },
             handleRemove(file, fileList) {
                 console.log(file, fileList);
@@ -497,7 +485,6 @@
             beforeRemove(file, fileList) {
                 return this.$confirm(`Are you sure you want to remove ${file.name}？`);
             },
-            /*======================OriginalSignature======================================*/
             previewOriginalSignature(row) {
 
                 // this.docInfo = {
@@ -589,9 +576,7 @@
                 // $('#container').show();
                 // $('#pop').empty();
                 let pop = document.getElementById('pop');
-                console.log(pop);
                 pop.innerHTML = '';
-                console.log(pop.innerHTML);
                 PDFJS.getDocument(fileContent).promise.then(function getPdfHelloWorld(pdf) {
                     pages = pdf.numPages;
                     for (var i = 1; i < pdf.numPages; i++) {
@@ -622,14 +607,11 @@
                 })
             },
             downloadOrgSignature(row) {
-                console.log('downloadOriginalSignature', row);
                 this.$axios({
                     url: `/api${url.downloadSignature}/${row.id}`,
                     method: 'get',
                 }).then(res => {
-                    console.log(res.data.data.pdf);
                     let URL = this.dataURLtoBlob(res.data.data.pdf);
-                    console.log(URL);
                     var reader = new FileReader();
                     reader.readAsDataURL(URL);
                     reader.onload = function (e) {
@@ -654,7 +636,6 @@
                         }
                     }
                 }).catch(err => {
-                    console.log(err);
                 })
             },
             //base64 转换 blob
@@ -670,11 +651,9 @@
 
 
             getTableData() {
-
                 let interval = setInterval(() => {
                     if (this.$store.state.tableData) {
                         let tableData = this.$store.state.tableData
-                        console.log(tableData);
                         for (let i = 0; i < tableData.length; i++) {
                             for (let j = i + 1; j < tableData.length; j++) {
                                 if (tableData[i].repository === tableData[j].repository) {
@@ -702,17 +681,13 @@
                                 })
                             }
                         })
-                        console.log(tableData);
                         this.setTableDataAct(tableData)
-                        // this.tableData = tableData
-                        console.log(this.tableData);
                         clearInterval(interval)
                     }
                 }, 100)
 
             },
             getCookieData() {
-                console.log('getCookieData');
                 if (document.cookie !== '') {
                     let cookieArr = document.cookie.split('; ')
                     let access_token, refresh_token = '';
@@ -730,15 +705,11 @@
             },
             /*获取用户名并显示*/
             getUserInfo(access_token, refresh_token) {
-                console.log('getUserInfo');
                 let obj = {access_token: access_token};
-                console.log(obj);
                 this.$axios({
                     url: url.getUserInfo,
                     params: obj,
                 }).then(res => {
-                    console.log(res);
-
                     let data = {
                         userId: res.data.id,
                         userName: res.data.login,
@@ -755,39 +726,29 @@
                     this.getLinkedRepoListAct(obj);
 
                 }).catch(err => {
-                    console.log(err);
                     this.$message.closeAll()
                     this.$message.error(err.response.data)
                 })
             },
-
-            /*cla条目编辑*/
             editHandleClick(index) {
-                console.log(index);
                 this.editDialogVisible = true
             },
 
             unlinkHandleClick(scope) {
-                console.log(scope);
                 this.unlinkId = scope.row.id;
                 this.unLinkDialogVisible = true
             },
-            /*查看该组织企业签署列表*/
             checkCorporationList(item) {
-                console.log('checkCorporationList', item);
                 this.$router.push({path: '/corporationList', query: {item: item}})
             },
             /*查看CLA签署状态*/
             checkCla() {
-                console.log("checkCla");
                 this.$router.push('/signCla')
             },
             newWindow(repo) {
                 window.open(`https://gitee.com/${repo}`)
             },
-            /*解绑开源项目*/
             unLinkRepositoryFun() {
-
                 this.$axios({
                     url: `/api${url.unLinkRepository}/${this.unlinkId}`,
                     method: 'delete',
@@ -799,7 +760,6 @@
                     }
 
                 }).then(res => {
-                    console.log(res);
                     this.$message.success('success')
                     this.unLinkDialogVisible = false
                     let data = {
@@ -810,14 +770,11 @@
                     }
                     this.getLinkedRepoListAct(data)
                 }).catch(err => {
-                    console.log(err);
                     this.$message.closeAll()
                     this.$message.error(err.response.data)
                 })
             },
-            /*首页展示项目翻页*/
             changePage(page) {
-                console.log(page);
             },
         },
 

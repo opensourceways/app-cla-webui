@@ -65,7 +65,6 @@
         methods: {
             ...mapActions(['setLoginInfoAct']),
             findPwd() {
-                console.log('findPwd');
             },
             login(userName, pwd) {
                 let obj = {
@@ -77,12 +76,10 @@
                     method: 'post',
                     data: obj,
                 }).then(res => {
-                    console.log(res);
                     new Promise((resolve, reject) => {
                         let userInfo = {userInfo: res.data}
                         Object.assign(userInfo, {userName: userName})
                         this.setLoginInfoAct(userInfo)
-                        console.log(userInfo);
                         if (res.data.length > 1) {
                             this.$router.push('/orgSelect')
                         } else {
@@ -93,17 +90,13 @@
                             } else {
                                 this.$router.push('/signedRepo')
                             }
-
                         }
                         resolve('completed');
                     }).then(res => {
-                        console.log(res);
                     }, err => {
-                        console.log(err);
                     })
 
                 }).catch(err => {
-                    console.log(err);
                     this.$message.closeAll()
                     this.$message.error(err.response.data)
                 })
@@ -113,12 +106,10 @@
                     if (valid) {
                         this.login(this.ruleForm.userName, this.ruleForm.pwd)
                     } else {
-                        console.log('error submit!!');
                         return false;
                     }
                 });
             },
-
         }
     }
 </script>

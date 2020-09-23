@@ -37,14 +37,12 @@ export default new Vuex.Store({
     },
     mutations: {
         setReady(state, data) {
-            console.log(data);
             state.ready = data.ready;
             state.tableData = data.tableData;
             sessionStorage.setItem('ready', data.ready);
             sessionStorage.setItem('tableData', JSON.stringify(data.tableData));
         },
         setToken(state, data) {
-            console.log(data);
             state.access_token = data.access_token;
             state.refresh_token = data.refresh_token;
             state.platform_token = data.platform_token;
@@ -63,117 +61,91 @@ export default new Vuex.Store({
             sessionStorage.setItem('userEmail', data.userEmail);
         },
         setPlatform(state, platform) {
-            console.log(platform);
             state.platform = platform;
             sessionStorage.setItem('platform', platform);
         },
         setLoginType(state, loginType) {
-            console.log(loginType);
             state.loginType = loginType;
             sessionStorage.setItem('loginType', loginType);
         },
         setRepoInfo(state, obj) {
-            console.log(obj);
             state.repoInfo = obj;
             sessionStorage.setItem('repoInfo', JSON.stringify(obj));
         },
         setLoginInfo(state, obj) {
-            console.log(obj);
             state.loginInfo = obj;
             sessionStorage.setItem('loginInfo', JSON.stringify(obj));
         },
         setUserLimit(state, userLimit) {
-            console.log(userLimit);
             state.userLimit = userLimit;
             sessionStorage.setItem('userLimit', userLimit);
         },
         setShowConfigForm(state, showConfigForm) {
-            console.log(showConfigForm);
             state.showConfigForm = showConfigForm;
             sessionStorage.setItem('showConfigForm', showConfigForm);
         },
         setOrgOption(state, orgOptions) {
-            console.log(orgOptions);
             state.orgOptions = orgOptions;
             sessionStorage.setItem('orgOptions', JSON.stringify(orgOptions));
         },
         setRepositoryOptions(state, repositoryOptions) {
-            console.log(repositoryOptions);
             state.repositoryOptions = repositoryOptions;
             sessionStorage.setItem('repositoryOptions', JSON.stringify(repositoryOptions));
         },
         setClaOptions(state, claOptions) {
-            console.log(claOptions);
             state.claOptions = claOptions;
             sessionStorage.setItem('claOptions', JSON.stringify(claOptions));
         },
         setOrgValue(state, orgValue) {
-            console.log(orgValue);
             state.orgValue = orgValue;
             sessionStorage.setItem('orgValue', orgValue);
         },
         setRepositoryValue(state, repositoryValue) {
-            console.log(repositoryValue);
             state.repositoryValue = repositoryValue;
             sessionStorage.setItem('repositoryValue', repositoryValue);
         },
         setClaValue(state, claValue) {
-            console.log(claValue);
             state.claValue = claValue;
             sessionStorage.setItem('claValue', claValue);
         },
         setOrgChoose(state, orgChoose) {
-            console.log(orgChoose);
             state.orgChoose = orgChoose;
             sessionStorage.setItem('orgChoose', orgChoose);
         },
         setClaChoose(state, claChoose) {
-            console.log(claChoose);
             state.claChoose = claChoose;
             sessionStorage.setItem('claChoose', claChoose);
         },
         setRepositoryChoose(state, repositoryChoose) {
-            console.log(repositoryChoose);
             state.repositoryChoose = repositoryChoose;
             sessionStorage.setItem('repositoryChoose', repositoryChoose);
         },
         setIsEmail(state, isEmail) {
-            console.log(isEmail);
             state.isEmail = isEmail;
             sessionStorage.setItem('isEmail', isEmail);
         },
         setTableData(state, data) {
-            console.log(data);
             state.tableData = data;
             sessionStorage.setItem('tableData', JSON.stringify(data));
         },
     },
     actions: {
         setShowConfigFormAct({commit}, showConfigForm) {
-            console.log(showConfigForm);
             commit('setShowConfigForm', showConfigForm);
         },
         setUserLimitAct({commit}, userLimit) {
-            console.log(userLimit);
             commit('setUserLimit', userLimit);
         },
         setLoginInfoAct({commit}, obj) {
-            console.log(obj);
             commit('setLoginInfo', obj);
         },
         setRepoInfoAct({commit}, obj) {
-            console.log(obj);
             commit('setRepoInfo', obj);
-
-
         },
         setLoginTypeAct({commit}, loginType) {
-            console.log(loginType);
             commit('setLoginType', loginType)
-
         },
         setPlatformAct({commit}, platform) {
-            console.log(platform);
             commit('setPlatform', platform)
         },
         setTokenAct({commit}, data) {
@@ -182,9 +154,7 @@ export default new Vuex.Store({
         setLoginUserAct({commit}, data) {
             commit('setLoginUser', data)
         },
-
         getLinkedRepoListAct({commit}, data) {
-            console.log('getLinkedRepoListAct', data);
             axios({
                 url: '/api' + url.getLinkedRepoList,
                 params: {platform: data.platform, enabled: true},
@@ -195,8 +165,6 @@ export default new Vuex.Store({
                     'User': `${data.platform}/${data.userName}`
                 }
             }).then(res => {
-                console.log(res);
-
                 if (res.data.length) {
                     let tableData = [];
                     let count = res.data.length
@@ -233,7 +201,6 @@ export default new Vuex.Store({
                                         'User': `${data.platform}/${data.userName}`
                                     }
                                 }).then(resp => {
-                                    console.log(resp);
                                     Object.assign(tableData[index], {
                                         contributors: resp.data.length,
                                         corporationInfo: resp.data,
@@ -245,7 +212,6 @@ export default new Vuex.Store({
                                     }
                                     console.log(tableData);
                                 }).catch(err => {
-                                    console.log(err);
                                 })
                             }
                             axios({
@@ -257,26 +223,19 @@ export default new Vuex.Store({
                                     'User': `${data.platform}/${data.userName}`
                                 }
                             }).then(resp => {
-                                console.log(resp);
                                 Object.assign(tableData[index], {
                                     claName: resp.data.name,
                                 })
                                 if (--count === 0) {
                                     let obj = {tableData: tableData, ready: true}
-                                    console.log(tableData);
                                     commit('setReady', obj);
                                 }
-
                             }).catch(err => {
-                                console.log(err);
                             })
                         })(index, item, res.data.length, {commit}, tableData)
-
                     })
-
                 }
             }).catch(err => {
-                console.log(err);
             })
 
         },

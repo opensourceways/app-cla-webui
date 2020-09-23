@@ -118,6 +118,15 @@
                     return 'corporation'
                 }
             },
+            org(){
+                let org = this.$store.state.repoInfo.org_id
+                if (org.length>1){
+                    return org.charAt(0).toUpperCase()+org.substring(1)
+                } else{
+                    return org.charAt(0).toUpperCase()
+                }
+
+            },
         },
         components: {
             Header,
@@ -162,7 +171,6 @@
                 dialogVisible: false,
                 repositoryOptions: [],
                 role: '0',
-                org: this.$store.state.repoInfo.org_id,
                 repo: this.$store.state.repoInfo.repo_id,
                 ruleForm: {},
                 myForm: {},
@@ -261,7 +269,6 @@
 
             },
             getNowDate() {
-
                 let date = new Date();
                 let year, month, day
                 year = date.getFullYear()
@@ -411,6 +418,7 @@
                     }
                 }
                 this.fields = this.signPageData[key].fields
+                console.log(this.fields);
                 this.fields.forEach(item => {
                     Object.assign(form, {[item.id]: ''})
                     if (item.type === 'name') {

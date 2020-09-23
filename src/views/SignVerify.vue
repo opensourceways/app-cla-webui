@@ -46,21 +46,16 @@
                     headers: {'Access-Token': this.$store.state.access_token, 'Refresh-Token': this.$store.state.refresh_token,'User':`${this.platform}/${this.$store.state.user.userName}`}
 
                 }).then(res => {
-                    console.log(res);
                     if (res.data.code === 200) {
                         this.$message.success('验证成功')
                     }else{
                         this.$message.error('验证失败')
                     }
                 }).catch(err => {
-                    console.log(err);
-
                 })
             },
             setClientHeight() {
                 this.$nextTick(() => {
-                    console.log(until.getClientHeight());
-                    console.log(document.getElementById('signVerify').offsetHeight);
                     until.getClientHeight() > document.getElementById('signVerify').offsetHeight ?
                         this.checkCLAClass.height = until.getClientHeight() + 'px' :
                         this.checkCLAClass.height = document.getElementById('signVerify').offsetHeight
@@ -77,7 +72,6 @@
         }
     }
     window.onresize = () => {
-        // console.log(until.getClientHeight());
         if (until.getClientHeight() > document.getElementById('signVerify').offsetHeight) {
             document.getElementById("signVerify").style.height = until.getClientHeight() + 'px'
         }

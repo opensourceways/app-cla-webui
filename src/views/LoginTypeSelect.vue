@@ -31,7 +31,6 @@
         methods:{
             ...mapActions(['setLoginTypeAct']),
             submit(loginType){
-                console.log(loginType);
                 this.setLoginTypeAct(loginType)
                 if (loginType==='orgManager') {
                     this.$router.push('/platformSelect')

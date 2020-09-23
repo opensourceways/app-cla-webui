@@ -60,13 +60,9 @@
                     method: 'post',
                     data: obj,
                 }).then(res => {
-                    console.log(res);
                     this.$router.push('/rootManager')
 
-                    // this.$router.push('/signedRepo')
-
                 }).catch(err => {
-                    console.log(err);
                 })
             },
             submitForm(formName) {
@@ -74,7 +70,6 @@
                     if (valid) {
                         this.login(this.ruleForm.userName, this.ruleForm.pwd)
                     } else {
-                        console.log('error submit!!');
                         return false;
                     }
                 });

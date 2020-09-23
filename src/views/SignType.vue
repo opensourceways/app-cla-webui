@@ -77,14 +77,13 @@
                     }
                 } else if (this.platform === 'github') {
                     if (this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee') {
-                        window.location.href = 'https://github.com/login/oauth/authorize?client_id=d86f4915398dad23bffc&redirect_uri=http://localhost:8080/home&scope=user,user:email'  //逗号分隔多个权限
+                        // window.location.href = 'https://github.com/login/oauth/authorize?client_id=d86f4915398dad23bffc&redirect_uri=http://localhost:8080/home&scope=user,user:email'  //逗号分隔多个权限
                     } else {
                         this.$router.push('/signCla')
                     }
                 }
             },
             setCookie(){
-                console.log('setCookie');
                 let date = new Date();
                 date.setTime(date.getTime() - 10000);
                 document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;

@@ -27,11 +27,9 @@
         name: "ResetPassword",
         computed:{
             orgValue(){
-                console.log(this.$store.state.loginInfo.orgValue);
                 return this.$store.state.loginInfo.orgValue
             },
             userInfo(){
-                console.log(this.$store.state.loginInfo.userInfo);
                 return this.$store.state.loginInfo.userInfo
             },
 
@@ -103,12 +101,10 @@
                         token:this.userInfo[this.orgValue].token
                     }
                 }).then(res => {
-                    console.log(res);
                     this.$message.closeAll()
                     this.$message.success('success')
                     this.$router.push('/userList')
                 }).catch(err => {
-                    console.log(err);
                     this.$message.closeAll()
                     this.$message.error('Please enter the correct old password')
                 })
@@ -118,7 +114,6 @@
                     if (valid) {
                         this.resetPassword()
                     } else {
-                        console.log('error submit');
                         return false;
                     }
                 }))

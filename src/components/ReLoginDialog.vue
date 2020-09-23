@@ -24,15 +24,14 @@
         props: ['dialogVisible', 'message', 'title'],
         data(){
             return{
-                domain:'clasign.osinfra.cn'
+                domain:this.$store.state.domain,
             }
         },
         methods: {
             clickGoHome() {
                 let date = new Date();
-                let domain = this.domain
                 date.setTime(date.getTime() - 10000);
-                document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${domain}; path=/`;
+                document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
                 let repoInfo = this.$store.state.repoInfo
                 let path = repoInfo.repo_id ? `/sign/${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `/sign/${repoInfo.platform}/${repoInfo.org_id}`
                 this.$router.replace(path)

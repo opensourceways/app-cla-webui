@@ -62,10 +62,8 @@
         methods: {
             ...mapActions(['setPlatformAct']),
             submit() {
-                console.log('submit');
             },
             login(platform) {
-                console.log(platform);
                 this.setPlatformAct(platform)
                 let interval = setInterval(() => {
                     if (this.$store.state.platform) {
