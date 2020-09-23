@@ -66,6 +66,7 @@
             login(platform) {
                 this.setPlatformAct(platform)
                 let interval = setInterval(() => {
+                    console.log(this.$store.state.platform);
                     if (this.$store.state.platform) {
                         console.log(this.$store.state.platform);
                         this.$axios({
