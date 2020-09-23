@@ -169,7 +169,7 @@ export default new Vuex.Store({
                     let tableData = [];
                     let count = res.data.length
                     res.data.forEach((item, index) => {
-                        console.log(index);
+                        // console.log(index);
                         tableData.push({
                             id: item.id,
                             repository: `${item.org_id}/${item.repo_id}`,
@@ -182,10 +182,10 @@ export default new Vuex.Store({
                             contributors: '0',
                         });
                         ((index, item, length, {commit}, tableData) => {
-                            console.log(index, tableData, item, length);
+                            // console.log(index, tableData, item, length);
                             if (item.apply_to === 'corporation') {
                                 count++
-                                console.log(data);
+                                // console.log(data);
                                 axios({
                                     url: `/api${url.corporation_signing}`,
                                     params: {
@@ -207,10 +207,10 @@ export default new Vuex.Store({
                                     })
                                     if (--count === 0) {
                                         let obj = {tableData: tableData, ready: true}
-                                        console.log(tableData);
+                                        // console.log(tableData);
                                         commit('setReady', obj);
                                     }
-                                    console.log(tableData);
+                                    // console.log(tableData);
                                 }).catch(err => {
                                 })
                             }

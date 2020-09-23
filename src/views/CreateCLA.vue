@@ -280,7 +280,6 @@
 
             },
             myDeleteRow(index) {
-                console.log(index);
                 if (this.customMetadataArr.length===1) {
                     this.customMetadataArr[0].type=''
                     this.customMetadataArr[0].title=''
@@ -408,7 +407,6 @@
                                     fields: fields,
 
                                 }
-                            console.log(obj);
                             this.$axios({
                                     url: '/api' + url.uploadCla,
                                     method: 'post',

@@ -418,7 +418,6 @@
                     }
                 }
                 this.fields = this.signPageData[key].fields
-                console.log(this.fields);
                 this.fields.forEach(item => {
                     Object.assign(form, {[item.id]: ''})
                     if (item.type === 'name') {

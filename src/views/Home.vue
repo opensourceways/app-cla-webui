@@ -579,7 +579,7 @@
                         metadata_id: '',
                     };
                 }
-                console.log(obj);
+                // console.log(obj);
                 this.$axios({
                     url: '/api' + url.linkRepository,
                     method: 'post',
@@ -638,7 +638,7 @@
                 }
             },
             repoVisibleChange(visible) {
-                if (visible) {
+                if (visible&&this.org) {
                     this.getRepositoriesOfOrg(this.org, this.org_id);
                 }
             },
@@ -662,19 +662,17 @@
                 if (value === '') {
                     this.org = '';
                     this.org_id = ''
-                } else {
-                    this.org = this.orgOptions[value].label;
-                    this.org_id = this.orgOptions[value].id
-                }
-                if (value !== '') {
-                    this.$store.commit('setOrgChoose', true)
-                    this.getRepositoriesOfOrg(this.orgOptions[value].label, this.orgOptions[value].id)
-                } else {
                     this.$store.commit('setOrgChoose', false)
                     this.$store.commit('setRepositoryValue', undefined)
                     this.$store.commit('setRepositoryChoose', false)
                     this.$store.commit('setRepositoryOptions', undefined)
+                } else {
+                    this.org = this.orgOptions[value].label;
+                    this.org_id = this.orgOptions[value].id
+                    this.$store.commit('setOrgChoose', true)
+                    this.getRepositoriesOfOrg(this.orgOptions[value].label, this.orgOptions[value].id)
                 }
+
             },
             changeRepository(value) {
                 this.$store.commit('setRepositoryValue', value)
@@ -690,20 +688,19 @@
                     url: `https://gitee.com/api/v5/orgs/${org}/repos`,
                     params: obj,
                 }).then(res => {
-                    if (res.status === 200) {
-                        let repositoryOptions = [];
-                        res.data.forEach((item, index) => {
-                            repositoryOptions.push({
-                                value: index,
-                                org: org,
-                                org_id: org_id,
-                                repoName: item.name,
-                                label: item.name,
-                                id: item.id
-                            });
-                        })
-                        this.$store.commit('setRepositoryOptions', repositoryOptions)
-                    }
+                    let repositoryOptions = [];
+                    res.data.forEach((item, index) => {
+                        repositoryOptions.push({
+                            value: index,
+                            org: org,
+                            org_id: org_id,
+                            repoName: item.name,
+                            label: item.name,
+                            id: item.id
+                        });
+                    })
+                    this.$store.commit('setRepositoryOptions', repositoryOptions)
+
                 }).catch(err => {
                 })
             },
