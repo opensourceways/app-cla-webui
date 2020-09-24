@@ -556,7 +556,7 @@
                     // this.responseCode(err.status)
                     this.reLoginDialogTitle = this.$store.state.repoInfo.repo_id ? `"${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}" prompt you` :
                         `"${this.$store.state.repoInfo.org_id}" prompt you`
-                    this.errorAct({statusCode:err.status,errorCode:err.data.error_code})
+                    this.errorAct({statusCode:err.status,errorCode:err.data.data.error_code})
                 })
             },
             clearForm() {
