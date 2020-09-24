@@ -350,8 +350,7 @@
 
                 }
 
-            }
-            ,
+            },
             getSignPage(argRes) {
                 this.changeDesc('english');
                 let applyTo = '';
@@ -383,33 +382,19 @@
                 }).catch(err => {
                     this.responseCode(err.status)
                 })
-            }
-            ,
-            responseCode(code) {
-                switch (code) {
-                    case 401:
-                    case 403:
-                        this.reLoginMsg = 'token expired, please login again'
-                        this.reLoginDialogTitle = this.$store.state.repoInfo.repo_id ? `"${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}" prompt you` :
-                            `"${this.$store.state.repoInfo.org_id}" prompt you`
-                        this.reLoginDialogVisible = true
-                }
-            }
-            ,
+            },
             changeLanguage(value) {
                 this.changeDesc(this.languageOptions[value].label);
                 this.setClaText(value)
                 this.cla_org_id = value
-            }
-            ,
+            },
             changeDesc(language) {
                 if (language === 'english') {
                     this.desc = this.enDesc;
                 } else if (language === 'chinese') {
                     this.desc = this.cnDesc;
                 }
-            }
-            ,
+            },
             getUserInfo(platform_token) {
                 let obj = {access_token: platform_token};
                 this.$axios({
@@ -578,8 +563,6 @@
                     }
                     this.tipsDialogVisible = true;
                 }).catch(err => {
-                    console.log(err);
-                    // this.responseCode(err.status)
                     this.reLoginDialogTitle = this.$store.state.repoInfo.repo_id ? `"${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}" prompt you` :
                         `"${this.$store.state.repoInfo.org_id}" prompt you`
                     this.errorAct({statusCode: err.status, errorCode: err.data.data.error_code})

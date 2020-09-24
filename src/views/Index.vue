@@ -89,12 +89,14 @@
     .index {
         display: flex;
         flex-direction: column;
-        background-image: url("../assets/images/backgroundx2.png");
-        background-repeat: no-repeat;
-        background-position: 40rem center;
-        background-size: 55rem;
+
         & > #section {
             flex-grow: 1;
+            background-image: url("../assets/images/backgroundx2.png");
+            background-repeat: no-repeat;
+            background-position: 40rem center;
+            background-size: 55rem;
+
         }
     }
 </style>
