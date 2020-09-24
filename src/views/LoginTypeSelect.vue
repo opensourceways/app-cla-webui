@@ -1,10 +1,10 @@
 <template>
     <el-row class="loginTypeSelect" style="height: 100%">
         <el-col  style="height: 100%">
-            <el-row >
+            <el-row style="height: 50%">
 
             </el-row>
-            <el-row >
+            <el-row style="height: 50%">
                 <el-col  align="right" class="buttonBox">
                     <div id="btBox">
                         <div>
