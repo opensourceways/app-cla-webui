@@ -5,18 +5,19 @@
                 <div class="formBack">
                     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="0">
                         <el-form-item label="" prop="account">
-                            <el-input v-model="ruleForm.userName" autocomplete="off" placeholder="account"></el-input>
+                            <el-input v-model="ruleForm.userName" autocomplete="off" placeholder="Account"></el-input>
                         </el-form-item>
                         <el-form-item label="" prop="pass">
                             <el-input type="password" v-model="ruleForm.pwd" autocomplete="off"
-                                      placeholder="password"></el-input>
+                                      placeholder="Password"></el-input>
                         </el-form-item>
-                        <el-form-item style="text-align: left">
+                        <el-form-item style="text-align: right">
                             <span class="pointer" @click="findPwd" id="forgetPwd">Forget the password?</span>
                         </el-form-item>
-                        <el-form-item>
-                            <el-button style="width: 100%" type="primary" @click="submitForm('ruleForm')">LOGIN IN
-                            </el-button>
+                        <el-form-item style="text-align: center">
+                            <button class="button" type="button" @click="submitForm('ruleForm')">
+                                Login in
+                            </button>
                         </el-form-item>
                     </el-form>
 
@@ -114,7 +115,24 @@
     }
 </script>
 
-<style scoped lang="less">
+<style  lang="less">
+    @import "../assets/font/css/Roboto-Regular.css";
+    @import "../assets/font/css/FZLTHJW.css";
+    .button {
+        font-family:Roboto-Regular,sans-serif ;
+        width: 15rem;
+        height: 4rem;
+        border-radius: 2rem;
+        border: none;
+        color: white;
+        font-size: 1.3rem;
+        cursor: pointer;
+        background: linear-gradient(to right, #97DB30, #319E55);
+    }
+
+    .button:focus {
+        outline: none;
+    }
     .formBack_Box{
         width: 100%;
         display: flex;
@@ -122,11 +140,38 @@
        justify-content: flex-end;
     }
     .formBack{
-        width: 16rem;
+        width: 18rem;
         box-shadow: 0 0 20px 10px #F3F3F3;
-        padding: 3rem;
+        padding: 2rem 2rem 0;
         background-color: white;
-        border-radius: 2rem;
+        border-radius: 1rem;
+        & .fontSize12 {
+            font-size: 1.2rem;
+        }
+
+        & .el-input__inner {
+            height: 3rem;
+        }
+
+        & .el-form-item__label {
+            font-size: 1.2rem;
+        }
+
+        & .el-input__inner {
+            background-color: #F3F3F3;
+            border-radius: 1.5rem;
+            border: 1px solid #F3F3F3;
+            font-size: 1.2rem;
+        }
+
+        & .el-form-item:not(:last-child) {
+            margin-bottom: 28px
+        }
+        & .el-form-item:last-child{
+            margin-bottom: -2rem;
+
+        }
+
     }
     .formBox {
         height: 100%;
@@ -138,7 +183,9 @@
     .pointer {
         cursor: pointer;
     }
-
+    #forgetPwd{
+        font-family: FZLTHJW,sans-serif;
+    }
     #forgetPwd:hover {
         text-decoration: underline;
     }
