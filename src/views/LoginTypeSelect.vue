@@ -1,6 +1,6 @@
 <template>
-    <el-row class="loginTypeSelect" style="height: 100%">
-        <el-col >
+    <el-row class="loginTypeSelect" >
+        <el-col style="height: 100%">
             <el-row style="height: 50%">
             </el-row>
             <el-row >
