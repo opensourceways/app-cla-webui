@@ -1,7 +1,8 @@
 <template>
     <el-row class="loginTypeSelect" style="height: 100%">
-        <el-col style="height: 100%">
-            <el-row style="height: 50%">
+        <el-col  style="height: 100%">
+            <el-row >
+
             </el-row>
             <el-row >
                 <el-col  align="right" class="buttonBox">
@@ -48,6 +49,11 @@
     @import "../assets/font/css/Roboto-Regular.css";
     .loginTypeSelect{
         font-family: Roboto-Bold,sans-serif;
+        &>div{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
     }
     .buttonBox {
         height: 100%;
