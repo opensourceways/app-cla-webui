@@ -47,6 +47,9 @@
                     this.$router.push('/signCla')
                 }
             },
+        },
+        mounted() {
+            this.setMinHeight()
         }
     }
 </script>
