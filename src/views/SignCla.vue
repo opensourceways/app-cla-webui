@@ -128,18 +128,25 @@
                 }
 
             },
+            reLoginDialogVisible() {
+                return this.$store.state.dialogVisible
+            }
+            ,
+            reLoginMsg() {
+                return this.$store.state.dialogMessage
+            },
         },
         components: {
             Header,
             Footer,
             ReLoginDialog,
-        },
+        }
+        ,
         data() {
             return {
                 domain: this.$store.state.domain,
                 reLoginDialogTitle: '',
-                reLoginDialogVisible: this.$store.state.dialogVisible,
-                reLoginMsg: this.$store.state.dialogMessage,
+
                 tipsTitle: '',
                 // tipsMessage: 'Signed successfully.We have sent a notification email to your email address. Please check it',
                 tipsMessage: 'Signed successfully',
@@ -191,14 +198,17 @@
                 },
 
             }
-        },
+        }
+        ,
         methods: {
-            ...mapActions(['setTokenAct', 'setRepoInfoAct', 'viewPrivacy','errorAct']),
+            ...
+                mapActions(['setTokenAct', 'setRepoInfoAct', 'viewPrivacy', 'errorAct']),
             clickOk() {
                 let url = `/sign/${this.$store.state.repoInfo.platform}/${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}`
                 this.$router.push(url)
                 this.tipsDialogVisible = false;
-            },
+            }
+            ,
             async verifyTel(rule, value, callback) {
                 if (value) {
                     let reg = /^1[3456789]\d{9}$/;
@@ -207,17 +217,19 @@
                     } else {
                         callback(new Error('telephone format error'))
                     }
-                }else{
+                } else {
                     callback(new Error('please input telephone'))
                 }
-            },
+            }
+            ,
             async verifyAddr(rule, value, callback) {
                 if (!value) {
                     callback(new Error('please input address'))
-                }else{
+                } else {
                     callback();
                 }
-            },
+            }
+            ,
             async verifyFormEmail(rule, value, callback) {
                 let email = value;
                 let reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
@@ -226,10 +238,12 @@
                 } else {
                     callback(new Error('Email format error'))
                 }
-            },
+            }
+            ,
             setMyForm(type, value) {
                 this.myForm[type] = value
-            },
+            }
+            ,
             sendCode() {
                 let reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
                 let email = this.myForm.adminEmail
@@ -267,7 +281,8 @@
                     })
                 }
 
-            },
+            }
+            ,
             getNowDate() {
                 let date = new Date();
                 let year, month, day
@@ -285,7 +300,8 @@
                     this.getEmail(this.platform_token, this.refresh_token)
                     this.getUserInfo(this.platform_token)
                 }
-            },
+            }
+            ,
             getEmail(access_token, refresh_token) {
                 this.$axios({
                     url: url.getEmail,
@@ -309,7 +325,8 @@
                     this.$message.closeAll()
                     this.$message.error(err.response.data)
                 })
-            },
+            }
+            ,
 
             getCookieData() {
                 if (document.cookie !== '') {
@@ -333,7 +350,8 @@
 
                 }
 
-            },
+            }
+            ,
             getSignPage(argRes) {
                 this.changeDesc('english');
                 let applyTo = '';
@@ -365,7 +383,8 @@
                 }).catch(err => {
                     this.responseCode(err.status)
                 })
-            },
+            }
+            ,
             responseCode(code) {
                 switch (code) {
                     case 401:
@@ -375,19 +394,22 @@
                             `"${this.$store.state.repoInfo.org_id}" prompt you`
                         this.reLoginDialogVisible = true
                 }
-            },
+            }
+            ,
             changeLanguage(value) {
                 this.changeDesc(this.languageOptions[value].label);
                 this.setClaText(value)
                 this.cla_org_id = value
-            },
+            }
+            ,
             changeDesc(language) {
                 if (language === 'english') {
                     this.desc = this.enDesc;
                 } else if (language === 'chinese') {
                     this.desc = this.cnDesc;
                 }
-            },
+            }
+            ,
             getUserInfo(platform_token) {
                 let obj = {access_token: platform_token};
                 this.$axios({
@@ -403,7 +425,8 @@
                     }
                 }).catch(err => {
                 })
-            },
+            }
+            ,
             setClaText(key) {
                 let form = {}
                 let rules = {}
@@ -422,14 +445,14 @@
                     Object.assign(form, {[item.id]: ''})
                     if (item.type === 'name') {
                         Object.assign(this.myForm, {name: ''})
-                        item.required&&Object.assign(rules, {
+                        item.required && Object.assign(rules, {
                             [item.id]: [
                                 {required: item.required, message: 'please input name', trigger: ['blur', 'change']},
                             ],
                         })
                     } else if (item.type === 'corporationName') {
                         Object.assign(this.myForm, {corporationName: ''})
-                        item.required&&Object.assign(rules, {
+                        item.required && Object.assign(rules, {
                             [item.id]: [
                                 {
                                     required: item.required,
@@ -440,7 +463,7 @@
                         })
                     } else if (item.type === 'adminEmail') {
                         Object.assign(this.myForm, {adminEmail: ''})
-                        item.required&&Object.assign(rules, {
+                        item.required && Object.assign(rules, {
                             [item.id]: [
                                 {
                                     required: item.required,
@@ -451,13 +474,13 @@
                         })
                     } else if (item.type === 'date') {
                         Object.assign(this.myForm, {date: ''})
-                        item.required&&Object.assign(rules, {
+                        item.required && Object.assign(rules, {
                             [item.id]: [
                                 {required: item.required, message: 'please input date', trigger: ['blur', 'change']}],
                         })
                     } else if (item.type === 'email') {
                         Object.assign(this.myForm, {email: ''})
-                        item.required&&Object.assign(rules, {
+                        item.required && Object.assign(rules, {
                             [item.id]: [{
                                 required: item.required,
                                 validator: this.verifyFormEmail,
@@ -466,7 +489,7 @@
                         })
                     } else if (item.type === 'telephone') {
                         Object.assign(this.myForm, {telephone: ''})
-                        item.required&&Object.assign(rules, {
+                        item.required && Object.assign(rules, {
                             [item.id]: [{
                                 required: item.required,
                                 validator: this.verifyTel,
@@ -475,7 +498,7 @@
                         })
                     } else if (item.type === 'address') {
                         Object.assign(this.myForm, {address: ''})
-                        item.required&&Object.assign(rules, {
+                        item.required && Object.assign(rules, {
                             [item.id]: [{
                                 required: item.required,
                                 validator: this.verifyAddr,
@@ -495,10 +518,12 @@
                 })
                 this.ruleForm = form
                 this.rules = rules
-            },
+            }
+            ,
             toHome() {
                 this.$router.push('/home')
-            },
+            }
+            ,
             signCla() {
                 let info = {}
                 let myUrl = '';
@@ -536,7 +561,8 @@
                 }
 
                 this.sign(myUrl, obj)
-            },
+            }
+            ,
             sign(myUrl, obj) {
                 http({
                     url: myUrl,
@@ -556,9 +582,10 @@
                     // this.responseCode(err.status)
                     this.reLoginDialogTitle = this.$store.state.repoInfo.repo_id ? `"${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}" prompt you` :
                         `"${this.$store.state.repoInfo.org_id}" prompt you`
-                    this.errorAct({statusCode:err.status,errorCode:err.data.data.error_code})
+                    this.errorAct({statusCode: err.status, errorCode: err.data.data.error_code})
                 })
-            },
+            }
+            ,
             clearForm() {
                 if (this.$store.state.loginType === 'employee' || this.$store.state.loginType === 'individual') {
                     for (let key in this.ruleForm) {
@@ -573,7 +600,8 @@
                         }
                     }
                 }
-            },
+            }
+            ,
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
@@ -587,7 +615,8 @@
                         return false;
                     }
                 });
-            },
+            }
+            ,
             getRepositoriesOfOrg(org, org_id) {
                 let obj = {access_token: this.$store.state.access_token, org: org, page: 1, per_page: 10};
                 this.$axios({
@@ -609,18 +638,22 @@
                     this.$message.closeAll()
                     this.$message.error(err.response.data)
                 })
-            },
+            }
+            ,
             resetForm(formName) {
                 this.$refs[formName].resetFields();
-            },
+            }
+            ,
             setClientHeight() {
                 this.$nextTick(() => {
                     until.getClientHeight() > document.getElementById('checkCLA').offsetHeight ?
                         this.checkCLAClass.height = until.getClientHeight() + 'px' :
                         this.checkCLAClass.height = document.getElementById('checkCLA').offsetHeight
                 })
-            },
-        },
+            }
+            ,
+        }
+        ,
         created() {
             this.getCookieData()
             new Promise(resolve => {
@@ -630,7 +663,8 @@
                 this.getNowDate()
             }, err => {
             })
-        },
+        }
+        ,
         mounted() {
             this.setClientHeight();
         }
