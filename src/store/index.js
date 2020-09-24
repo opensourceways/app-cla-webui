@@ -137,6 +137,7 @@ export default new Vuex.Store({
         },
     },
     actions: {
+
         errorAct({commit}, obj) {
             switch (obj.statusCode) {
                 case 400:

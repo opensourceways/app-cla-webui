@@ -1,34 +1,34 @@
 <template>
     <el-row class="signType" style="height: 100%">
-        <el-col style="height: 100%">
+        <el-col id="signType" style="height: 100%">
             <el-row style="height: 50%">
             </el-row>
             <el-row style="height: 50%">
-                <el-col  align="right" class="buttonBox">
-                    <div>
+                <el-col align="right" class="buttonBox">
+                    <div id="btBox">
                         <div>
                             <button class="button" @click="submit('individual')">
                                 Individual
                             </button>
                         </div>
-                      <div>
-                          <el-tooltip class="item" effect="dark" content="Sorry, it's not open yet" placement="right">
-                              <button class="disabledButton">
-                                  Corporation
-                              </button>
-                          </el-tooltip>
+                        <div>
+                            <el-tooltip class="item" effect="dark" content="Sorry, it's not open yet" placement="right">
+                                <button class="disabledButton">
+                                    Corporation
+                                </button>
+                            </el-tooltip>
 
-                          <!--<button class="button" @click="submit('corporation')">-->
-                              <!--Corporation-->
-                          <!--</button>-->
-                      </div>
+                            <!--<button class="button" @click="submit('corporation')">-->
+                            <!--Corporation-->
+                            <!--</button>-->
+                        </div>
                         <el-tooltip class="item" effect="dark" content="Sorry, it's not open yet" placement="right">
-                            <button class="disabledButton" >
+                            <button class="disabledButton">
                                 Employee
                             </button>
                         </el-tooltip>
                         <!--<button class="button" @click="submit('employee')">-->
-                            <!--Employee-->
+                        <!--Employee-->
                         <!--</button>-->
                     </div>
                 </el-col>
@@ -39,6 +39,8 @@
 <script>
     import * as url from '../until/api'
     import {mapActions} from 'vuex'
+    import * as until from '../until/until'
+
     export default {
         name: "SignType",
         data() {
@@ -46,7 +48,7 @@
                 platform: '',
                 org: '',
                 repo: '',
-                domain:this.$store.state.domain,
+                domain: this.$store.state.domain,
             }
         },
         methods: {
@@ -83,7 +85,7 @@
                     }
                 }
             },
-            setCookie(){
+            setCookie() {
                 let date = new Date();
                 date.setTime(date.getTime() - 10000);
                 document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
@@ -93,19 +95,25 @@
         created() {
             this.setCookie();
             this.getRepoInfo();
+        },
+        mounted() {
+            until.setMinHeight('signType', 'btBox')
         }
     }
 </script>
 <style scoped lang="less">
     @import "../assets/font/css/Roboto-Bold.css";
-    .signType{
-        font-family: Roboto-Bold,sans-serif;
+
+    .signType {
+        font-family: Roboto-Bold, sans-serif;
     }
+
     .buttonBox {
         height: 100%;
         display: flex;
         flex-direction: column;
     }
+
     .button {
         width: 15rem;
         height: 4rem;
@@ -117,9 +125,11 @@
         background: linear-gradient(to right, #97DB30, #319E55);
         margin: 1.2rem 0;
     }
+
     .button:focus {
         outline: none;
     }
+
     .disabledButton {
         width: 15rem;
         height: 4rem;
@@ -132,6 +142,7 @@
         background-color: lightgrey;
         margin: 1.2rem 0;
     }
+
     .disabledButton:focus {
         outline: none;
     }

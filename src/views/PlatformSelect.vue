@@ -1,7 +1,6 @@
 <template>
     <el-row style="height: 100%">
         <el-col align="right" class="formBox">
-
             <el-row>
                 <el-col :offset="4" :span="10">
                     <div class="icon_back">
@@ -51,7 +50,6 @@
 <script>
     import {mapActions} from 'vuex'
     import * as url from '../until/api'
-
     export default {
         name: "PlatformSelect",
         data() {
@@ -78,7 +76,7 @@
                 }, 100)
 
             },
-        }
+        },
     }
 </script>
 

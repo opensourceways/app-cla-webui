@@ -2,7 +2,6 @@
     <el-row class="loginTypeSelect" style="height: 100%">
         <el-col id="loginType" style="height: 100%">
             <el-row style="height: 50%">
-
             </el-row>
             <el-row style="height: 50%">
                 <el-col align="right" class="buttonBox">
@@ -23,6 +22,7 @@
 </template>
 <script>
     import {mapActions} from 'vuex'
+    import * as until from '../until/until'
 
     export default {
         name: "RepoSelect",
@@ -31,12 +31,6 @@
         },
         methods: {
             ...mapActions(['setLoginTypeAct']),
-            setMinHeight() {
-                this.$nextTick(() => {
-                    document.getElementById('loginType').style.minHeight = document.getElementById('btBox').clientHeight * 2 + 'px'
-                })
-
-            },
             submit(loginType) {
                 this.setLoginTypeAct(loginType)
                 if (loginType === 'orgManager') {
@@ -49,7 +43,7 @@
             },
         },
         mounted() {
-            this.setMinHeight()
+            until.setMinHeight('loginType','btBox')
         }
     }
 </script>
