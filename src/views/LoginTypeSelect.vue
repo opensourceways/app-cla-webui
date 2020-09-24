@@ -1,6 +1,6 @@
 <template>
     <el-row class="loginTypeSelect" style="height: 100%">
-        <el-col  style="height: 100%">
+        <el-col id="loginType"  style="height: 100%">
             <el-row style="height: 50%">
 
             </el-row>
@@ -31,6 +31,12 @@
         },
         methods:{
             ...mapActions(['setLoginTypeAct']),
+            setMinHeight(){
+
+                console.log(document.getElementById('loginType').style.height);
+                console.log(document.getElementById('btBox').style.height);
+                document.getElementById('loginType').style.minHeight=document.getElementById('btBox').style.height*2+'px'
+            },
             submit(loginType){
                 this.setLoginTypeAct(loginType)
                 if (loginType==='orgManager') {
