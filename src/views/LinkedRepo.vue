@@ -458,7 +458,7 @@
                     url = `${this.address}${this.signRouter}/${row.platform}/${row.org_id}`
                 }
                 console.log(url);
-                // window.open(url)
+                window.open(url)
             },
             submitUpload() {
                 this.$refs.uploadPdf.submit();
