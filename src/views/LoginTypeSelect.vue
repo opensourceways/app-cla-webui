@@ -1,11 +1,11 @@
 <template>
     <el-row class="loginTypeSelect" style="height: 100%">
-        <el-col id="loginType"  style="height: 100%">
+        <el-col id="loginType" style="height: 100%">
             <el-row style="height: 50%">
 
             </el-row>
             <el-row style="height: 50%">
-                <el-col  align="right" class="buttonBox">
+                <el-col align="right" class="buttonBox">
                     <div id="btBox">
                         <div>
                             <button class="button" @click="submit('orgManager')">
@@ -23,27 +23,31 @@
 </template>
 <script>
     import {mapActions} from 'vuex'
+
     export default {
         name: "RepoSelect",
-        data(){
-            return {
-            };
+        data() {
+            return {};
         },
-        methods:{
+        methods: {
             ...mapActions(['setLoginTypeAct']),
-            setMinHeight(){
+            setMinHeight() {
+                this.$nextTick(() => {
+                    console.log(document.getElementById('loginType').style.height);
+                    console.log(document.getElementById('btBox'));
+                    console.log(document.getElementById('btBox').style);
+                    console.log(document.getElementById('btBox').style.height);
+                    document.getElementById('loginType').style.minHeight = document.getElementById('btBox').style.height * 2 + 'px'
+                })
 
-                console.log(document.getElementById('loginType').style.height);
-                console.log(document.getElementById('btBox').style.height);
-                document.getElementById('loginType').style.minHeight=document.getElementById('btBox').style.height*2+'px'
             },
-            submit(loginType){
+            submit(loginType) {
                 this.setLoginTypeAct(loginType)
-                if (loginType==='orgManager') {
+                if (loginType === 'orgManager') {
                     this.$router.push('/platformSelect')
-                }else if (loginType === 'corporationManager') {
+                } else if (loginType === 'corporationManager') {
                     this.$router.push('/corporationManagerLogin')
-                }else{
+                } else {
                     this.$router.push('/signCla')
                 }
             },
@@ -56,20 +60,24 @@
 <style scoped lang="less">
     @import "../assets/font/css/Roboto-Bold.css";
     @import "../assets/font/css/Roboto-Regular.css";
-    .loginTypeSelect{
-        font-family: Roboto-Bold,sans-serif;
-        &>div{
+
+    .loginTypeSelect {
+        font-family: Roboto-Bold, sans-serif;
+
+        & > div {
             display: flex;
             flex-direction: column;
             justify-content: space-between;
         }
     }
+
     .buttonBox {
         height: 100%;
         display: flex;
         flex-direction: column;
         /*justify-content: center;*/
     }
+
     .button {
         /*font-family:Roboto-Regular,sans-serif ;*/
         width: 15rem;
@@ -82,6 +90,7 @@
         background: linear-gradient(to right, #97DB30, #319E55);
         margin: 1.2rem 0;
     }
+
     .button:focus {
         outline: none;
     }
