@@ -1,6 +1,6 @@
 <template>
     <el-row class="signType" style="height: 100%">
-        <el-col id="signType" style="height: 100%">
+        <el-col id="sign" style="height: 100%">
             <el-row style="height: 50%">
             </el-row>
             <el-row style="height: 50%">
@@ -97,7 +97,7 @@
             this.getRepoInfo();
         },
         mounted() {
-            until.setMinHeight('signType', 'btBox')
+            until.setMinHeight('sign', 'btBox')
         }
     }
 </script>
@@ -106,6 +106,11 @@
 
     .signType {
         font-family: Roboto-Bold, sans-serif;
+        & > div {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
     }
 
     .buttonBox {
