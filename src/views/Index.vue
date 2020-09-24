@@ -2,9 +2,9 @@
     <el-row>
         <el-col class="index" id="transparentDiv" :style="transparentDiv">
             <NewHeader></NewHeader>
-            <el-row id="section">
+            <el-row id="section" :style="sectionStyle">
                 <el-col :offset="4" :span="16" style="height: 100%">
-                    <el-row style="height: 100%">
+                    <el-row  style="height: 100%">
                         <el-col :span="14" class="title">
                             <div>
                                 <div class="name">
@@ -48,6 +48,9 @@
             return {
                 transparentDiv: {
                     height: '',
+                },
+                sectionStyle:{
+                    height:'',
                 },
             }
         },

@@ -3,9 +3,9 @@
         <el-col style="height: 100%">
             <el-row style="height: 50%">
             </el-row>
-            <el-row style="height: 50%">
+            <el-row >
                 <el-col  align="right" class="buttonBox">
-                    <div>
+                    <div id="btBox">
                         <div>
                             <button class="button" @click="submit('orgManager')">
                                 Organization Manager
