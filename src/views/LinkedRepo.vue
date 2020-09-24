@@ -451,13 +451,11 @@
             },
             toSignPage(row) {
                 let url = ''
-                console.log(row.repo_id);
                 if (row.repo_id) {
                     url = `${this.address}${this.signRouter}/${row.platform}/${row.org_id}/${row.repo_id}`
                 } else {
                     url = `${this.address}${this.signRouter}/${row.platform}/${row.org_id}`
                 }
-                console.log(url);
                 window.open(url)
             },
             submitUpload() {

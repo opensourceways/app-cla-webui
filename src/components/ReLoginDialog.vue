@@ -11,7 +11,7 @@
             <el-row>
                 <el-col align="center">
                     <p>{{message}}</p>
-                    <button class="dialogBt" @click="clickGoHome()">Go Home</button>
+                    <button class="dialogBt" @click="clickGoHome()">OK</button>
                 </el-col>
             </el-row>
         </el-dialog>

@@ -24,7 +24,7 @@ export default new Vuex.Store({
         tableData: sessionStorage.getItem('tableData') || undefined,
         ready: Boolean(sessionStorage.getItem('ready') || undefined),
         platform: sessionStorage.getItem('platform') || undefined,
-        // domain: 'clasign.osinfra.cn',
+        // domain: 'https://clasign.osinfra.cn',
         domain: 'http://cla.osinfra.cn:60031',
         access_token: sessionStorage.getItem('token') || undefined,
         refresh_token: sessionStorage.getItem('refresh_token') || undefined,
@@ -35,6 +35,8 @@ export default new Vuex.Store({
             userImg: sessionStorage.getItem('userImg') || undefined,
             userEmail: sessionStorage.getItem('userEmail') || undefined,
         },
+        dialogVisible: false,
+        dialogMessage: '',
     },
     mutations: {
         setReady(state, data) {
@@ -129,8 +131,33 @@ export default new Vuex.Store({
             state.tableData = data;
             sessionStorage.setItem('tableData', JSON.stringify(data));
         },
+        errorSet(state,obj){
+            state.dialogVisible=obj.dialogVisible
+            state.dialogMessage=obj.dialogMessage
+        },
     },
     actions: {
+        errorAct({commit}, obj) {
+            switch (obj.statusCode) {
+                case 400:
+                    switch (obj.errorCode) {
+                        case 'cla.0002':
+                            commit('errorSet', {
+                                dialogVisible: true,
+                                dialogMessage: 'You have signed it. Please do not repeat it',
+                            })
+                            break
+                    }
+                    break;
+                case 401:
+                case 403:
+                    commit('errorSet', {
+                        dialogVisible: true,
+                        dialogMessage: 'token expired, please login again',
+                    })
+                    break
+            }
+        },
         setShowConfigFormAct({commit}, showConfigForm) {
             commit('setShowConfigForm', showConfigForm);
         },

@@ -138,8 +138,8 @@
             return {
                 domain: this.$store.state.domain,
                 reLoginDialogTitle: '',
-                reLoginDialogVisible: false,
-                reLoginMsg: '',
+                reLoginDialogVisible: this.$store.state.dialogVisible,
+                reLoginMsg: this.$store.state.dialogMessage,
                 tipsTitle: '',
                 // tipsMessage: 'Signed successfully.We have sent a notification email to your email address. Please check it',
                 tipsMessage: 'Signed successfully',
@@ -193,7 +193,7 @@
             }
         },
         methods: {
-            ...mapActions(['setTokenAct', 'setRepoInfoAct', 'viewPrivacy']),
+            ...mapActions(['setTokenAct', 'setRepoInfoAct', 'viewPrivacy','errorAct']),
             clickOk() {
                 let url = `/sign/${this.$store.state.repoInfo.platform}/${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}`
                 this.$router.push(url)
@@ -552,7 +552,11 @@
                     }
                     this.tipsDialogVisible = true;
                 }).catch(err => {
-                    this.responseCode(err.status)
+                    console.log(err);
+                    // this.responseCode(err.status)
+                    this.reLoginDialogTitle = this.$store.state.repoInfo.repo_id ? `"${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}" prompt you` :
+                        `"${this.$store.state.repoInfo.org_id}" prompt you`
+                    this.errorAct({statusCode:err.status,errorCode:err.data.error_code})
                 })
             },
             clearForm() {
