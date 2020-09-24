@@ -33,11 +33,7 @@
             ...mapActions(['setLoginTypeAct']),
             setMinHeight() {
                 this.$nextTick(() => {
-                    console.log(document.getElementById('loginType').style.height);
-                    console.log(document.getElementById('btBox'));
-                    console.log(document.getElementById('btBox').clientHeight);
-                    console.log(document.getElementById('btBox').style.height);
-                    document.getElementById('loginType').style.minHeight = document.getElementById('btBox').style.height * 2 + 'px'
+                    document.getElementById('loginType').style.minHeight = document.getElementById('btBox').clientHeight * 2 + 'px'
                 })
 
             },
