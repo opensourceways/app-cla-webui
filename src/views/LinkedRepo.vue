@@ -29,7 +29,7 @@
                             <svg-icon icon-class="repository"/>
                             <span class="pointer hoverUnderline"
                                   @click="checkCorporationList(scope.row)"
-                                  style="margin-left: 10px;">{{scope.row.repo_id}}</span>
+                                  style="margin-left: 10px;">{{scope.row.org_id}}<span v-if="scope.row.repo_id">/{{scope.row.repo_id}}</span></span>
                         </template>
                     </el-table-column>
                     <el-table-column
