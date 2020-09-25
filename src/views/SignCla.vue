@@ -539,7 +539,6 @@
                         info: info,
                         verifi_code: this.ruleForm.code,
                     }
-                    console.log(obj);
                 } else if (this.$store.state.loginType === 'employee') {
                     myUrl = `${url.employee_signing}/${this.cla_org_id}`;
                     obj = {
