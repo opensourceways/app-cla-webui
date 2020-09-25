@@ -1,6 +1,6 @@
 <template>
     <div id="section" :style="section">
-        <CorporationHeader @clickItem="clickItem" :user="user"></CorporationHeader>
+        <Header @clickItem="clickItem" :user="user"></Header>
         <el-row style="margin-top: 2rem">
             <el-col :offset="4" :span="16">
                 <el-tabs v-model="active">
@@ -35,8 +35,8 @@
 
 <script>
     import * as url from '../until/api'
-    import CorporationHeader from '@components/CorporationHeader'
-    import Footer from '@components/Footer'
+    import Header from '@components/NewHeader'
+    import Footer from '@components/NewFooter'
     import * as until from '../until/until'
     import pdfReader from "@components/PdfReader";
 
