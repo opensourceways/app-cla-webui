@@ -76,6 +76,7 @@
                         token: this.userInfo[this.orgValue].token,
                     }
                 }).then(res => {
+                    console.log(res);
                     this.$message.closeAll()
                     this.$message.success('success')
                     this.emails=[{email:''}]
