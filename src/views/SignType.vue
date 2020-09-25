@@ -12,15 +12,15 @@
                             </button>
                         </div>
                         <div>
-                            <el-tooltip class="item" effect="dark" content="Sorry, it's not open yet" placement="right">
-                                <button class="disabledButton">
-                                    Corporation
-                                </button>
-                            </el-tooltip>
+                            <!--<el-tooltip class="item" effect="dark" content="Sorry, it's not open yet" placement="right">-->
+                                <!--<button class="disabledButton">-->
+                                    <!--Corporation-->
+                                <!--</button>-->
+                            <!--</el-tooltip>-->
 
-                            <!--<button class="button" @click="submit('corporation')">-->
-                            <!--Corporation-->
-                            <!--</button>-->
+                            <button class="button" @click="submit('corporation')">
+                            Corporation
+                            </button>
                         </div>
                         <!--<el-tooltip class="item" effect="dark" content="Sorry, it's not open yet" placement="right">-->
                             <!--<button class="disabledButton">-->
