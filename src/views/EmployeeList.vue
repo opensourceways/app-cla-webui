@@ -53,23 +53,19 @@
                             :data="activeData"
                             align="center"
                             style="width: 100%;">
-                        <el-table-column
-                                prop="name"
-                                label="Name"
-                        >
-                        </el-table-column>
+                        <!--<el-table-column-->
+                                <!--prop="name"-->
+                                <!--label="Name">-->
+                        <!--</el-table-column>  -->
                         <el-table-column
                                 prop="email"
-                                label="Email"
-                        >
+                                label="Email">
                         </el-table-column>
-
                         <el-table-column
                                 label="status"
                                 align="center">
                             <template slot-scope="scope">
                                 <el-row class="mySwitch">
-
                                     <el-switch
                                             @change="changeActtive(scope.row.cla_org_id,scope.row.email,scope.row.enabled)"
                                             v-model="scope.row.enabled"

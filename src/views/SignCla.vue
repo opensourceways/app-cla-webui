@@ -537,7 +537,7 @@
                         admin_email: this.myForm.adminEmail,
                         enabled: true,
                         info: info,
-                        verifi_code: this.ruleForm.code,
+                        verifi_code: this.ruleForm.code
                     }
                 } else if (this.$store.state.loginType === 'employee') {
                     myUrl = `${url.employee_signing}/${this.cla_org_id}`;
@@ -552,6 +552,7 @@
             }
             ,
             sign(myUrl, obj) {
+                console.log(obj);
                 http({
                     url: myUrl,
                     method: 'post',
