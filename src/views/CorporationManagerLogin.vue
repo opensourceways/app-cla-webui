@@ -78,7 +78,6 @@
                     data: obj,
                 }).then(res => {
                     let data = res.data.data
-                    console.log(data);
                     new Promise((resolve, reject) => {
                         let userInfo = {userInfo: data}
                         Object.assign(userInfo, {userName: userName})
