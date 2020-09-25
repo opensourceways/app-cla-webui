@@ -77,7 +77,7 @@
                     method: 'post',
                     data: obj,
                 }).then(res => {
-                    let data = res.data.data
+                    let data = res.data.data.data
                     new Promise((resolve, reject) => {
                         let userInfo = {userInfo: data}
                         Object.assign(userInfo, {userName: userName})
