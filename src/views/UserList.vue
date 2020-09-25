@@ -18,10 +18,10 @@
                             type="selection"
                             width="55">
                     </el-table-column>
-                    <el-table-column
-                            prop="name"
-                            label="userName">
-                    </el-table-column>
+                    <!--<el-table-column-->
+                            <!--prop="name"-->
+                            <!--label="userName">-->
+                    <!--</el-table-column>-->
                     <el-table-column
                             prop="email"
                             label="email">
