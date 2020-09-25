@@ -136,10 +136,11 @@
         },
         methods: {
             submit(){
+                let obj={enabled:this.deleteData.enabled}
                 this.$axios({
-                    url: `/api${url.enableEmployee}`,
+                    url: `/api${url.enableEmployee}/${this.deleteData.cla_org_id}/${this.deleteData.email}`,
                     method: 'delete',
-                    data: this.deleteData,
+                    data: obj,
                     headers: {
                         token: this.userInfo[this.orgValue].token,
                     }
@@ -154,15 +155,14 @@
                     email: email,
                     enabled: enabled
                 }
+                this.deleteUserVisible=true
             },
             changeActtive(cla_org_id, email, enabled) {
                 let data = {
-                    cla_org_id: cla_org_id,
-                    email: email,
                     enabled: enabled
                 }
                 this.$axios({
-                    url: `/api${url.enableEmployee}`,
+                    url: `/api${url.enableEmployee}/${cla_org_id}/${email}`,
                     method: 'put',
                     data: data,
                     headers: {
