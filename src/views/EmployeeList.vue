@@ -191,9 +191,15 @@
                     console.log(res);
                     this.inactiveData = [];
                     this.activeData = [];
-                    res.data.data.forEach((item, index) => {
-                        item.enabled === false ? this.inactiveData.push(item) : this.activeData.push(item)
-                    })
+                    let data =res.data.data;
+                    for (let key in data){
+                        console.log(key);
+                        console.log(data[key]);
+                        data[key].forEach((item, index) => {
+                            Object.assign(item,{cla_org_id:key})
+                            item.enabled === false ? this.inactiveData.push(item) : this.activeData.push(item)
+                        })
+                    }
                 }).catch(err => {
                 })
             },
