@@ -147,6 +147,8 @@
                 }).then(res => {
                     this.getEmployee()
                     this.deleteUserVisible=false
+                    this.$message.closeAll();
+                    this.$message.success(res.data.data)
                 }).catch(err => {
                 })
             },
