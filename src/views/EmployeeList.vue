@@ -146,6 +146,7 @@
                     }
                 }).then(res => {
                     this.getEmployee()
+                    this.deleteUserVisible=false
                 }).catch(err => {
                 })
             },
