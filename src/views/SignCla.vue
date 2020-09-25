@@ -135,6 +135,10 @@
             reLoginMsg() {
                 return this.$store.state.dialogMessage
             },
+            reLoginDialogTitle(){
+                return this.$store.state.repoInfo.repo_id ? `"${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}" prompt you` :
+                    `"${this.$store.state.repoInfo.org_id}" prompt you`
+            },
         },
         components: {
             Header,
@@ -145,8 +149,6 @@
         data() {
             return {
                 domain: this.$store.state.domain,
-                reLoginDialogTitle: '',
-
                 tipsTitle: '',
                 // tipsMessage: 'Signed successfully.We have sent a notification email to your email address. Please check it',
                 tipsMessage: 'Signed successfully',
@@ -380,7 +382,8 @@
                         }
                     }
                 }).catch(err => {
-                    this.responseCode(err.status)
+                    this.errorAct({statusCode: err.status, errorCode: err.data.data.error_code})
+
                 })
             },
             changeLanguage(value) {
@@ -563,8 +566,6 @@
                     }
                     this.tipsDialogVisible = true;
                 }).catch(err => {
-                    this.reLoginDialogTitle = this.$store.state.repoInfo.repo_id ? `"${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}" prompt you` :
-                        `"${this.$store.state.repoInfo.org_id}" prompt you`
                     this.errorAct({statusCode: err.status, errorCode: err.data.data.error_code})
                 })
             }
