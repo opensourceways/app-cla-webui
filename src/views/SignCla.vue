@@ -439,7 +439,7 @@
                             ],
                         })
                     } else if (item.type === 'corporationName') {
-                        Object.assign(this.myForm, {corporationName: ''})
+                        Object.assign(this.myForm, {corporation_name: ''})
                         item.required && Object.assign(rules, {
                             [item.id]: [
                                 {
@@ -529,10 +529,9 @@
                         info: info,
                     }
                 } else if (this.$store.state.loginType === 'corporation') {
-                    myUrl = url.corporation_signing;
+                    myUrl = `${url.corporation_signing}/${this.cla_org_id}`;
                     obj = {
-                        cla_org_id: this.cla_org_id,
-                        corporation_name: this.myForm.corporationName,
+                        corporation_name: this.myForm.corporation_name,
                         admin_name: this.myForm.name,
                         admin_email: this.myForm.adminEmail,
                         enabled: true,
@@ -552,7 +551,6 @@
             }
             ,
             sign(myUrl, obj) {
-                console.log(obj);
                 http({
                     url: myUrl,
                     method: 'post',
