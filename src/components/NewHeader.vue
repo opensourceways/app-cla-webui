@@ -6,7 +6,7 @@
             </div>
 
             <div>
-                
+
                 <!--<div class="my_select_box">-->
                     <!--<el-row class="my_select" @click="clickSelect()">-->
                         <!--<el-col :span="20" class="select_content">-->

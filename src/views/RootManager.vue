@@ -48,7 +48,7 @@
     export default {
         name: "rootManager",
         components: {
-            CorporationHeader,
+            Header,
             Footer,
             pdfReader
 

@@ -188,6 +188,7 @@
                         token: this.userInfo[this.orgValue].token,
                     }
                 }).then(res => {
+                    console.log(res);
                     this.inactiveData = [];
                     this.activeData = [];
                     res.data.data.forEach((item, index) => {
