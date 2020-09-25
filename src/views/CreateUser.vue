@@ -81,7 +81,7 @@
                     this.emails=[{email:''}]
                 }).catch(err => {
                     this.$message.closeAll()
-                    this.$message.error(err.response.data)
+                    this.$message.error(err.response.data.data)
                 })
             },
         },

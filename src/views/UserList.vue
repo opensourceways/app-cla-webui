@@ -132,8 +132,8 @@
                         token:this.userInfo[this.orgValue].token
                     }
                 }).then(res => {
-                    this.tableData = res.data;
-                    this.setUserLimitAct(res.data.length)
+                    this.tableData = res.data.data;
+                    this.setUserLimitAct(res.data.data.length)
                 }).catch(err => {
                 })
             },

@@ -192,7 +192,7 @@
                 }).then(res => {
                     this.inactiveData = [];
                     this.activeData = [];
-                    res.data.forEach((item, index) => {
+                    res.data.data.forEach((item, index) => {
                         item.enabled === false ? this.inactiveData.push(item) : this.activeData.push(item)
                     })
                 }).catch(err => {

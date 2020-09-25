@@ -77,16 +77,17 @@
                     method: 'post',
                     data: obj,
                 }).then(res => {
+                    let data = res.data.data
                     new Promise((resolve, reject) => {
-                        let userInfo = {userInfo: res.data}
+                        let userInfo = {userInfo: data}
                         Object.assign(userInfo, {userName: userName})
                         this.setLoginInfoAct(userInfo)
-                        if (res.data.length > 1) {
+                        if (data.length > 1) {
                             this.$router.push('/orgSelect')
                         } else {
                             Object.assign(userInfo, {orgValue: 0})
                             this.setLoginInfoAct(userInfo)
-                            if (res.data[0].role === 'admin') {
+                            if (data[0].role === 'admin') {
                                 this.$router.push('/rootManager')
                             } else {
                                 this.$router.push('/signedRepo')
