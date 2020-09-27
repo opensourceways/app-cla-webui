@@ -166,6 +166,7 @@
     }
 
     .tableStyle {
+        border-radius: 1rem;
         margin-bottom: 2rem;
         padding: 3rem;
         background-color: white;

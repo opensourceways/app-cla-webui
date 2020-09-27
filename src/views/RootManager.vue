@@ -124,52 +124,19 @@
 
 <style scoped lang="less">
     @import "../assets/font/css/Roboto-Regular.css";
-
     #section {
         padding-top: 4rem;
         display: flex;
         box-sizing: border-box;
         flex-direction: column;
-
         & > div:nth-of-type(2) {
-            margin-top: 2rem;
             flex-grow: 1;
             background-color: #F0F2F5;
         }
-
         & p {
             font-family: Roboto-Regular, sans-serif;
             font-size: 2rem;
             text-align: left;
         }
     }
-
-    .pointer {
-        cursor: pointer;
-    }
-
-    .tableStyle {
-        margin-bottom: 2rem;
-        padding: 3rem;
-        background-color: white;
-    }
-
-    .borderClass {
-        padding: .5rem 0;
-        border-bottom: 1px solid lightgray;
-        border-top: 1px solid lightgray;
-    }
-
-    .marginTop1rem {
-        margin-top: 1rem;
-    }
-
-    .contentTitle {
-        font-size: 1.2rem;
-    }
-
-    .size_s {
-        font-size: .9rem;
-    }
-
 </style>
