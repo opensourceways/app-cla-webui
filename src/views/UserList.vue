@@ -29,14 +29,16 @@
                     </el-table-column>
                     <el-table-column
                             v-if="!multipleChoice"
+                            column-key="2"
                             width="100">
-                        <template slot-scope="scope" v-if="!multipleChoice">
+                        <template slot-scope="scope">
                             <button  class="deleteBt" @click="deleteUser(scope.row)">
                                 Delete
                             </button>
                         </template>
                     </el-table-column>
                     <el-table-column
+                            column-key="3"
                             v-if="multipleChoice"
                             type="selection"
                             width="100">
