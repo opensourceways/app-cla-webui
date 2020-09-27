@@ -4,8 +4,8 @@
 
         <el-col>
             <el-row>
-                <el-col align="right">
-                    <el-button @click="multipleChoice=true" size="medium">Multiple choice</el-button>
+                <el-col >
+                    <button class="button" @click="multipleChoice=true" >Multiple choice</button>
                 </el-col>
             </el-row>
             <el-row>
@@ -162,6 +162,21 @@
 </script>
 
 <style scoped lang="less">
+    .button {
+        width: 12rem;
+        height: 3rem;
+        border-radius: 1.5rem;
+        border: none;
+        color: white;
+        font-size: 1.5rem;
+        cursor: pointer;
+        background: linear-gradient(to right, #97DB30, #319E55);
+        margin: 1rem 0;
+    }
+
+    .button:focus {
+        outline: none;
+    }
     .tableClass{
         border: 1px solid black;
         border-radius: 1rem;
