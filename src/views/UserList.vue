@@ -166,16 +166,14 @@
         width: 5rem;
         height: 2rem;
         border-radius: 1rem;
-        border: none;
-        outline: 1px solid black;
-        -moz-outline-radius: 1rem;
+        border: 1px solid black;
         color: black;
         font-size: 1rem;
         cursor: pointer;
         background-color: white;
     }
     .deleteBt:focus {
-        outline: 1px solid black;
+        outline: none;
     }
     .deleteBt{
         width: 5rem;
