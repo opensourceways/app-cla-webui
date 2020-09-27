@@ -54,6 +54,11 @@
                 },
             }
         },
+        provide () {
+            return {
+                setClientHeight: this.setClientHeight
+            }
+        },
         methods: {
             ...mapActions(['setPlatformAct']),
             setClientHeight() {
