@@ -76,9 +76,10 @@
                         token: this.userInfo[this.orgValue].token,
                     }
                 }).then(res => {
+
                     this.$message.closeAll()
                     this.$message.success('success')
-                    this.setTimeout(()=>{this.$router.push('/userList')},500)
+                    setTimeout(()=>{this.$router.push('/userList')},500)
                 }).catch(err => {
                     this.$message.closeAll()
                     this.$message.error(err.response.data.data)
