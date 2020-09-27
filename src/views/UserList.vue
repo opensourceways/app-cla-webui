@@ -30,7 +30,7 @@
                     <el-table-column
                             v-if="!multipleChoice"
                             width="100">
-                        <template slot-scope="scope">
+                        <template slot-scope="scope" v-if="!multipleChoice">
                             <button  class="deleteBt" @click="deleteUser(scope.row)">
                                 Delete
                             </button>
@@ -39,7 +39,7 @@
                     <el-table-column
                             v-if="multipleChoice"
                             type="selection"
-                            width="55">
+                            width="100">
                     </el-table-column>
                 </el-table>
             </el-row>
