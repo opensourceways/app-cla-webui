@@ -52,9 +52,11 @@
 
 
         <el-dialog
+                style="border-radius: 1rem"
                 width="20%"
                 title=""
                 align="center"
+                :show-close="false"
                 :visible.sync="deleteUserVisible">
             <el-row align="center">
                 Are you sure to delete ?
