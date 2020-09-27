@@ -1,6 +1,6 @@
 <template>
 
-    <el-row class="marginTop1rem tableStyle">
+    <el-row id="tableStyle" class="marginTop1rem">
 
         <el-col>
             <el-row>
@@ -219,7 +219,7 @@
         margin-top: 1rem;
     }
 
-    .tableStyle {
+    #tableStyle {
         border-radius: 1rem;
         margin-bottom: 2rem;
         padding: 3rem;
