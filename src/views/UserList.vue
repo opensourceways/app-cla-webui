@@ -5,7 +5,7 @@
         <el-col>
             <el-row>
                 <el-col align="left">
-                    <button class="button" @click="multipleChoice=true" >Multiple choice</button>
+                    <button class="button" @click="multipleChoice=true">Multiple choice</button>
                 </el-col>
             </el-row>
             <el-row>
@@ -20,8 +20,8 @@
                             width="55">
                     </el-table-column>
                     <!--<el-table-column-->
-                            <!--prop="name"-->
-                            <!--label="userName">-->
+                    <!--prop="name"-->
+                    <!--label="userName">-->
                     <!--</el-table-column>-->
                     <el-table-column
                             prop="email"
@@ -44,7 +44,7 @@
             </el-row>
             <el-row style="margin-top: 20px" v-if="multipleChoice">
                 <el-col align="left">
-                    <button class="deleteBt"  @click="deleteUser()">Delete</button>
+                    <button class="deleteBt" @click="deleteUser()">Delete</button>
                     <button class="cancelBt" @click="cancel()">Cancel</button>
                 </el-col>
             </el-row>
@@ -52,7 +52,6 @@
 
 
         <el-dialog
-                style="border-radius: 1rem"
                 width="20%"
                 title=""
                 align="center"
@@ -63,8 +62,8 @@
             </el-row>
             <el-row align="center" class="marginTop1rem contentTitle">
 
-                <button class="deleteBt"  @click="submit()">Yes</button>
-                <button class="cancelBt"  @click="deleteUserVisible=false">No</button>
+                <button class="deleteBt" @click="submit()">Yes</button>
+                <button class="cancelBt" @click="deleteUserVisible=false">No</button>
             </el-row>
 
         </el-dialog>
@@ -79,11 +78,11 @@
 
     export default {
         name: "UserList",
-        computed:{
-            orgValue(){
+        computed: {
+            orgValue() {
                 return this.$store.state.loginInfo.orgValue
             },
-            userInfo(){
+            userInfo() {
                 return this.$store.state.loginInfo.userInfo
             },
 
@@ -131,8 +130,8 @@
                 this.$axios({
                     url: '/api' + url.queryEmployeeManager,
                     params: obj,
-                    headers:{
-                        token:this.userInfo[this.orgValue].token
+                    headers: {
+                        token: this.userInfo[this.orgValue].token
                     }
                 }).then(res => {
                     console.log(res);
@@ -149,8 +148,8 @@
                     url: '/api' + url.deleteEmployeeManager,
                     method: 'delete',
                     data: obj,
-                    headers:{
-                        token:this.userInfo[this.orgValue].token
+                    headers: {
+                        token: this.userInfo[this.orgValue].token
                     }
                 }).then(res => {
                     console.log(res);
@@ -164,7 +163,7 @@
 </script>
 
 <style scoped lang="less">
-    .cancelBt{
+    .cancelBt {
         width: 5rem;
         height: 2rem;
         border-radius: 1rem;
@@ -175,10 +174,12 @@
         background-color: white;
         margin-left: 1rem;
     }
+
     .cancelBt:focus {
         outline: none;
     }
-    .deleteBt{
+
+    .deleteBt {
         width: 5rem;
         height: 2rem;
         border-radius: 1rem;
@@ -188,6 +189,7 @@
         cursor: pointer;
         background: linear-gradient(to right, #FF9D58, #E22424);
     }
+
     .deleteBt:focus {
         outline: none;
     }
@@ -207,10 +209,12 @@
     .button:focus {
         outline: none;
     }
-    .tableClass{
+
+    .tableClass {
         border: 1px solid black;
         border-radius: 1rem;
     }
+
     .marginTop1rem {
         margin-top: 1rem;
     }
@@ -220,5 +224,12 @@
         margin-bottom: 2rem;
         padding: 3rem;
         background-color: white;
+
+        & .el-dialog {
+            border-radius: 1rem;
+        }
+        & .el-dialog__body{
+            padding-top: 0;
+        }
     }
 </style>
