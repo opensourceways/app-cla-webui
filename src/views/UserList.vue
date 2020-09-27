@@ -14,11 +14,7 @@
                         @selection-change="handleSelectionChange"
                         ref="multipleTable"
                         :data="tableData">
-                    <el-table-column
-                            v-if="multipleChoice"
-                            type="selection"
-                            width="55">
-                    </el-table-column>
+
                     <!--<el-table-column-->
                     <!--prop="name"-->
                     <!--label="userName">-->
@@ -32,13 +28,18 @@
                             label='role'>
                     </el-table-column>
                     <el-table-column
+                            v-if="!multipleChoice"
                             width="100">
                         <template slot-scope="scope">
-                            <button v-if="!multipleChoice" class="deleteBt" @click="deleteUser(scope.row)">
+                            <button  class="deleteBt" @click="deleteUser(scope.row)">
                                 Delete
                             </button>
                         </template>
-
+                    </el-table-column>
+                    <el-table-column
+                            v-if="multipleChoice"
+                            type="selection"
+                            width="55">
                     </el-table-column>
                 </el-table>
             </el-row>
