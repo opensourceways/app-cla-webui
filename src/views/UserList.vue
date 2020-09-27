@@ -172,7 +172,7 @@
         cursor: pointer;
         background-color: white;
     }
-    .deleteBt:focus {
+    .cancelBt:focus {
         outline: none;
     }
     .deleteBt{
