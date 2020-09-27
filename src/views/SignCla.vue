@@ -222,16 +222,14 @@
                 } else {
                     callback(new Error('please input telephone'))
                 }
-            }
-            ,
+            },
             async verifyAddr(rule, value, callback) {
                 if (!value) {
                     callback(new Error('please input address'))
                 } else {
                     callback();
                 }
-            }
-            ,
+            },
             async verifyFormEmail(rule, value, callback) {
                 let email = value;
                 let reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
@@ -240,10 +238,10 @@
                 } else {
                     callback(new Error('Email format error'))
                 }
-            }
-            ,
+            },
             setMyForm(type, value) {
                 this.myForm[type] = value
+                console.log(this.myForm);
             }
             ,
             sendCode() {
@@ -283,8 +281,7 @@
                     })
                 }
 
-            }
-            ,
+            },
             getNowDate() {
                 let date = new Date();
                 let year, month, day
@@ -302,8 +299,7 @@
                     this.getEmail(this.platform_token, this.refresh_token)
                     this.getUserInfo(this.platform_token)
                 }
-            }
-            ,
+            },
             getEmail(access_token, refresh_token) {
                 this.$axios({
                     url: url.getEmail,
@@ -327,9 +323,7 @@
                     this.$message.closeAll()
                     this.$message.error(err.response.data)
                 })
-            }
-            ,
-
+            },
             getCookieData() {
                 if (document.cookie !== '') {
                     let cookieArr = document.cookie.split('; ')
@@ -413,8 +407,7 @@
                     }
                 }).catch(err => {
                 })
-            }
-            ,
+            },
             setClaText(key) {
                 let form = {}
                 let rules = {}
@@ -506,12 +499,10 @@
                 })
                 this.ruleForm = form
                 this.rules = rules
-            }
-            ,
+            },
             toHome() {
                 this.$router.push('/home')
-            }
-            ,
+            },
             signCla() {
                 let info = {}
                 let myUrl = '';
@@ -529,6 +520,7 @@
                         info: info,
                     }
                 } else if (this.$store.state.loginType === 'corporation') {
+                    console.log(this.myForm);
                     myUrl = `${url.corporation_signing}/${this.cla_org_id}`;
                     obj = {
                         corporation_name: this.myForm.corporation_name,
@@ -548,9 +540,9 @@
                 }
 
                 this.sign(myUrl, obj)
-            }
-            ,
+            },
             sign(myUrl, obj) {
+                console.log(obj);
                 http({
                     url: myUrl,
                     method: 'post',
@@ -567,8 +559,7 @@
                 }).catch(err => {
                     this.errorAct({statusCode: err.status, errorCode: err.data.data.error_code})
                 })
-            }
-            ,
+            },
             clearForm() {
                 if (this.$store.state.loginType === 'employee' || this.$store.state.loginType === 'individual') {
                     for (let key in this.ruleForm) {
@@ -583,8 +574,7 @@
                         }
                     }
                 }
-            }
-            ,
+            },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
@@ -598,8 +588,7 @@
                         return false;
                     }
                 });
-            }
-            ,
+            },
             getRepositoriesOfOrg(org, org_id) {
                 let obj = {access_token: this.$store.state.access_token, org: org, page: 1, per_page: 10};
                 this.$axios({
@@ -621,20 +610,17 @@
                     this.$message.closeAll()
                     this.$message.error(err.response.data)
                 })
-            }
-            ,
+            },
             resetForm(formName) {
                 this.$refs[formName].resetFields();
-            }
-            ,
+            },
             setClientHeight() {
                 this.$nextTick(() => {
                     until.getClientHeight() > document.getElementById('checkCLA').offsetHeight ?
                         this.checkCLAClass.height = until.getClientHeight() + 'px' :
                         this.checkCLAClass.height = document.getElementById('checkCLA').offsetHeight
                 })
-            }
-            ,
+            },
         }
         ,
         created() {
