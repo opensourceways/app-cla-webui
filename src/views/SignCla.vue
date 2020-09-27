@@ -432,7 +432,7 @@
                             ],
                         })
                     } else if (item.type === 'corporationName') {
-                        Object.assign(this.myForm, {corporation_name: ''})
+                        Object.assign(this.myForm, {corporationName: ''})
                         item.required && Object.assign(rules, {
                             [item.id]: [
                                 {
@@ -523,7 +523,7 @@
                     console.log(this.myForm);
                     myUrl = `${url.corporation_signing}/${this.cla_org_id}`;
                     obj = {
-                        corporation_name: this.myForm.corporation_name,
+                        corporation_name: this.myForm.corporationName,
                         admin_name: this.myForm.name,
                         admin_email: this.myForm.adminEmail,
                         enabled: true,
