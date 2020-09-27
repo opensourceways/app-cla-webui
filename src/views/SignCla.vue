@@ -257,9 +257,8 @@
                     this.$message.error('Please fill in Google email in the e-mail column')
                 } else {
                     this.$axios({
-                        url: `/api${url.sendVerifyCode}/${this.cla_org_id}`,
-                        method: 'post',
-                        data: {email: this.myForm.adminEmail},
+                        url: `/api${url.sendVerifyCode}/${this.cla_org_id}/${this.myForm.adminEmail}`,
+                        method: 'put',
                     }).then(res => {
                         this.$message.closeAll()
                         this.$message.success('Please fill in the verification code in the email to continue signing')
