@@ -67,21 +67,21 @@
         </el-row>
 
         <Footer></Footer>
-        <el-dialog
-                :title="tipsTitle"
-                top="5vh"
-                :close-on-press-escape="false"
-                :show-close="false"
-                :close-on-click-modal="false"
-                :visible.sync="tipsDialogVisible"
-                width="30%">
-            <el-row>
-                <el-col align="center">
-                    <p>{{tipsMessage}}</p>
-                    <button class="dialogBt" @click="clickOk()">OK</button>
-                </el-col>
-            </el-row>
-        </el-dialog>
+        <!--<el-dialog-->
+                <!--:title="tipsTitle"-->
+                <!--top="5vh"-->
+                <!--:close-on-press-escape="false"-->
+                <!--:show-close="false"-->
+                <!--:close-on-click-modal="false"-->
+                <!--:visible.sync="tipsDialogVisible"-->
+                <!--width="30%">-->
+            <!--<el-row>-->
+                <!--<el-col align="center">-->
+                    <!--<p>{{tipsMessage}}</p>-->
+                    <!--<button class="dialogBt" @click="clickOk()">OK</button>-->
+                <!--</el-col>-->
+            <!--</el-row>-->
+        <!--</el-dialog>-->
         <ReLoginDialog :dialogVisible="reLoginDialogVisible" :message="reLoginMsg"
                        :title="reLoginDialogTitle"></ReLoginDialog>
     </el-row>

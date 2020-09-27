@@ -6,8 +6,7 @@
                 :close-on-press-escape="false"
                 :show-close="false"
                 :close-on-click-modal="false"
-                width="30%"
-        >
+                width="30%" >
             <el-row>
                 <el-col align="center">
                     <p>{{message}}</p>
