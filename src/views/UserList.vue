@@ -34,9 +34,9 @@
                     <el-table-column
                             width="100">
                         <template slot-scope="scope">
-                            <el-button v-if="!multipleChoice" type="danger" size="mini" @click="deleteUser(scope.row)">
+                            <button v-if="!multipleChoice" class="deleteBt" @click="deleteUser(scope.row)">
                                 Delete
-                            </el-button>
+                            </button>
                         </template>
 
                     </el-table-column>
@@ -61,8 +61,8 @@
             </el-row>
             <el-row align="center" class="marginTop1rem contentTitle">
 
-                <el-button type="primary" size="medium" @click="submit()">Yes</el-button>
-                <el-button size="medium" @click="deleteUserVisible=false">No</el-button>
+                <button class="deleteBt"  @click="submit()">Yes</button>
+                <button class="cancelBt"  @click="deleteUserVisible=false">No</button>
             </el-row>
 
         </el-dialog>
@@ -162,16 +162,45 @@
 </script>
 
 <style scoped lang="less">
+    .cancelBt{
+        width: 5rem;
+        height: 2rem;
+        border-radius: 1rem;
+        border: none;
+        outline: 1px solid black;
+        -moz-outline-radius: 1rem;
+        color: black;
+        font-size: 1rem;
+        cursor: pointer;
+        background-color: white;
+    }
+    .deleteBt:focus {
+        outline: 1px solid black;
+    }
+    .deleteBt{
+        width: 5rem;
+        height: 2rem;
+        border-radius: 1rem;
+        border: none;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        background: linear-gradient(to right, #FF9D58, #E22424);
+    }
+    .deleteBt:focus {
+        outline: none;
+    }
+
     .button {
         width: 10rem;
         height: 2rem;
-        border-radius: 1.5rem;
+        border-radius: 1rem;
         border: none;
         color: white;
         font-size: 1rem;
         cursor: pointer;
         background: linear-gradient(to right, #97DB30, #319E55);
-        margin: 1rem 0;
+        margin-bottom: 1rem;
     }
 
     .button:focus {
