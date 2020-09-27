@@ -57,6 +57,7 @@
                 platform: '',
             };
         },
+        inject:['setClientHeight'],
         methods: {
             ...mapActions(['setPlatformAct']),
             submit() {
@@ -77,6 +78,9 @@
 
             },
         },
+        created() {
+            this.setClientHeight()
+        }
     }
 </script>
 
