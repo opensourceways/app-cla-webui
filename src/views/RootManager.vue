@@ -3,10 +3,8 @@
         <Header @clickItem="clickItem" :user="user"></Header>
         <el-row style="margin-top: 2rem">
             <el-col :offset="4" :span="16">
-                <el-tabs v-model="active">
-                    <el-tab-pane label="User Management" name="first" style="margin-top: 1rem">
-                    </el-tab-pane>
-                </el-tabs>
+                <p>User Management</p>
+
                 <router-view></router-view>
             </el-col>
         </el-row>
@@ -125,8 +123,12 @@
 </script>
 
 <style scoped lang="less">
+    @import "../assets/font/css/Roboto-Regular.css";
     #section {
+        font-family: Roboto-Regular,sans-serif;
+        font-size: 3rem;
         padding-top: 4rem;
+        background-color: #F0F2F5;
         display: flex;
         box-sizing: border-box;
         flex-direction: column;
