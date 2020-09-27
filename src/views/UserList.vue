@@ -10,6 +10,7 @@
             </el-row>
             <el-row>
                 <el-table
+                        class="tableClass"
                         @selection-change="handleSelectionChange"
                         ref="multipleTable"
                         :data="tableData">
@@ -161,6 +162,10 @@
 </script>
 
 <style scoped lang="less">
+    .tableClass{
+        border: 1px solid black;
+        border-radius: 1rem;
+    }
     .marginTop1rem {
         margin-top: 1rem;
     }
