@@ -31,6 +31,7 @@
 
 <script>
     import * as url from '../until/api'
+    import * as until from '../until/until'
     import {mapActions} from 'vuex'
 
     export default {
@@ -49,6 +50,9 @@
                 callback();
             };
             return {
+                myStyle:{
+                    height:'',
+                },
                 rules: {
                     userName: [
                         {validator: validateAccount, trigger: 'blur'}
@@ -63,6 +67,7 @@
                 },
             };
         },
+        inject:['setClientHeight'],
         methods: {
             ...mapActions(['setLoginInfoAct']),
             findPwd() {
@@ -112,6 +117,9 @@
                     }
                 });
             },
+        },
+        created() {
+            this.setClientHeight()
         }
     }
 </script>

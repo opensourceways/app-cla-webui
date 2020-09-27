@@ -241,9 +241,7 @@
             },
             setMyForm(type, value) {
                 this.myForm[type] = value
-                console.log(this.myForm);
-            }
-            ,
+            },
             sendCode() {
                 let reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
                 let email = this.myForm.adminEmail
@@ -520,7 +518,6 @@
                         info: info,
                     }
                 } else if (this.$store.state.loginType === 'corporation') {
-                    console.log(this.myForm);
                     myUrl = `${url.corporation_signing}/${this.cla_org_id}`;
                     obj = {
                         corporation_name: this.myForm.corporationName,
@@ -542,7 +539,6 @@
                 this.sign(myUrl, obj)
             },
             sign(myUrl, obj) {
-                console.log(obj);
                 http({
                     url: myUrl,
                     method: 'post',
