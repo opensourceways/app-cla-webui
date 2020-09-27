@@ -4,7 +4,7 @@
 
         <el-col>
             <el-row>
-                <el-col >
+                <el-col align="left">
                     <button class="button" @click="multipleChoice=true" >Multiple choice</button>
                 </el-col>
             </el-row>
@@ -163,12 +163,12 @@
 
 <style scoped lang="less">
     .button {
-        width: 12rem;
-        height: 3rem;
+        width: 10rem;
+        height: 2rem;
         border-radius: 1.5rem;
         border: none;
         color: white;
-        font-size: 1.5rem;
+        font-size: 1rem;
         cursor: pointer;
         background: linear-gradient(to right, #97DB30, #319E55);
         margin: 1rem 0;
