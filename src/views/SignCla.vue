@@ -135,7 +135,7 @@
             reLoginMsg() {
                 return this.$store.state.dialogMessage
             },
-            reLoginDialogTitle(){
+            reLoginDialogTitle() {
                 return this.$store.state.repoInfo.repo_id ? `"${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}" prompt you` :
                     `"${this.$store.state.repoInfo.org_id}" prompt you`
             },
@@ -257,9 +257,9 @@
                     this.$message.error('Please fill in Google email in the e-mail column')
                 } else {
                     this.$axios({
-                        url: '/api' + url.sendVerifyCode,
+                        url: `/api${url.sendVerifyCode}/${this.cla_org_id}`,
                         method: 'post',
-                        data: {cla_org_id: this.cla_org_id, email: this.myForm.adminEmail},
+                        data: {email: this.myForm.adminEmail},
                     }).then(res => {
                         this.$message.closeAll()
                         this.$message.success('Please fill in the verification code in the email to continue signing')
