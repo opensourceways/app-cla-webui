@@ -35,7 +35,8 @@
 
 <script>
     import * as url from '../until/api'
-    import Header from '@components/NewHeader'
+    // import Header from '@components/NewHeader'
+    import Header from '@components/CorporationHeader'
     import Footer from '@components/NewFooter'
     import * as until from '../until/until'
     import pdfReader from "@components/PdfReader";
@@ -125,7 +126,6 @@
 
 <style scoped lang="less">
     #section {
-        padding-top: 4rem;
         display: flex;
         box-sizing: border-box;
         flex-direction: column;
