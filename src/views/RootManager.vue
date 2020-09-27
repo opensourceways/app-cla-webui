@@ -1,7 +1,7 @@
 <template>
     <div id="section" :style="section">
         <Header @clickItem="clickItem" :user="user"></Header>
-        <el-row style="margin-top: 2rem">
+        <el-row>
             <el-col :offset="4" :span="16">
                 <p>User Management</p>
 
@@ -52,8 +52,8 @@
             pdfReader
 
         },
-        computed:{
-            user(){
+        computed: {
+            user() {
                 return this.$store.state.loginInfo
             },
         },
@@ -98,7 +98,7 @@
                         }
                         break;
                     case 'd':
-                            this.previewDialogVisible=true
+                        this.previewDialogVisible = true
                         break;
 
                     case 'e':
@@ -124,18 +124,21 @@
 
 <style scoped lang="less">
     @import "../assets/font/css/Roboto-Regular.css";
-    #section {
 
+    #section {
         padding-top: 4rem;
-        background-color: #F0F2F5;
         display: flex;
         box-sizing: border-box;
         flex-direction: column;
+
         & > div:nth-of-type(2) {
+            margin-top: 2rem;
             flex-grow: 1;
+            background-color: #F0F2F5;
         }
-        & p{
-            font-family: Roboto-Regular,sans-serif;
+
+        & p {
+            font-family: Roboto-Regular, sans-serif;
             font-size: 2rem;
             text-align: left;
         }
