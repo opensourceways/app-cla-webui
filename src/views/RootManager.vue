@@ -126,6 +126,7 @@
 
 <style scoped lang="less">
     #section {
+        padding-top: 4rem;
         display: flex;
         box-sizing: border-box;
         flex-direction: column;
