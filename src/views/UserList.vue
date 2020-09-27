@@ -162,7 +162,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style  lang="less">
     .cancelBt {
         width: 5rem;
         height: 2rem;
