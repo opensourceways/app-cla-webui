@@ -125,16 +125,19 @@
 <style scoped lang="less">
     @import "../assets/font/css/Roboto-Regular.css";
     #section {
-        font-family: Roboto-Regular,sans-serif;
-        font-size: 3rem;
+
         padding-top: 4rem;
         background-color: #F0F2F5;
         display: flex;
         box-sizing: border-box;
         flex-direction: column;
-
         & > div:nth-of-type(2) {
             flex-grow: 1;
+        }
+        & p{
+            font-family: Roboto-Regular,sans-serif;
+            font-size: 2rem;
+            text-align: left;
         }
     }
 
