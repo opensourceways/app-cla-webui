@@ -44,8 +44,8 @@
             </el-row>
             <el-row style="margin-top: 20px" v-if="multipleChoice">
                 <el-col align="left">
-                    <el-button size="medium" type="danger" @click="deleteUser()">Delete</el-button>
-                    <el-button size="medium" @click="cancel()">Cancel</el-button>
+                    <button class="deleteBt"  @click="deleteUser()">Delete</button>
+                    <button class="cancelBt" @click="cancel()">Cancel</button>
                 </el-col>
             </el-row>
         </el-col>
@@ -171,6 +171,7 @@
         font-size: 1rem;
         cursor: pointer;
         background-color: white;
+        margin-left: 1rem;
     }
     .cancelBt:focus {
         outline: none;
