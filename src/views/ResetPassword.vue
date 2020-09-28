@@ -1,15 +1,15 @@
 <template>
     <el-row>
         <el-col class="formBack" :offset="7" :span="10">
-            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" >
+            <el-form :model="ruleForm"  :rules="rules" ref="ruleForm" label-width="100px" >
                 <el-form-item label="" prop="oldPassword" label-width="0">
-                    <el-input @blur="checkNewPwd" placeholder="please input old password" clearable="" type="password" v-model="ruleForm.oldPassword"></el-input>
+                    <el-input  placeholder="please input old password" clearable="" type="password" v-model="ruleForm.oldPassword"></el-input>
                 </el-form-item>
-                <el-form-item @blur="checkOldPwd" label="" prop="newPassword" label-width="0">
-                    <el-input placeholder="please input new password"  clearable="" v-model="ruleForm.newPassword" autocomplete="off"></el-input>
+                <el-form-item  label="" prop="newPassword" label-width="0">
+                    <el-input placeholder="please input new password"  clearable="" type="password" v-model="ruleForm.newPassword" ></el-input>
                 </el-form-item>
                 <el-form-item label="" prop="checkPwd" label-width="0">
-                    <el-input placeholder="Please enter the new password again" clearable="" type="password" v-model="ruleForm.checkPwd" autocomplete="off"></el-input>
+                    <el-input placeholder="Please enter the new password again" clearable="" type="password" v-model="ruleForm.checkPwd" ></el-input>
                 </el-form-item>
                 <el-form-item label-width="0">
                     <button class="button" @click="submit('ruleForm')">Submit</button>
