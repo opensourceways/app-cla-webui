@@ -1,7 +1,7 @@
 <template>
     <el-row>
         <el-col class="formBack" :offset="7" :span="10">
-            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" >
                 <el-form-item label="" prop="oldPassword" label-width="0">
                     <el-input @blur="checkNewPwd" placeholder="please input old password" clearable="" type="password" v-model="ruleForm.oldPassword"></el-input>
                 </el-form-item>
