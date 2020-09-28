@@ -126,13 +126,8 @@
 
 </script>
 
-<style scoped lang="less">
+<style  lang="less">
     .formBack{
-        width: 18rem;
-        box-shadow: 0 0 20px 10px #F3F3F3;
-        padding: 2rem 2rem 0;
-        background-color: white;
-        border-radius: 1rem;
 
         & .el-input__inner {
             height: 3rem;
