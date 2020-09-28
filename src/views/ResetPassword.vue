@@ -1,6 +1,6 @@
 <template>
     <el-row>
-        <el-col class="resetPwdFormBox" :offset="7" :span="10">
+        <el-col class="resetPwdFormBox" :offset="6" :span="12">
             <p>Reset Password</p>
             <el-form class="resetPwdForm" :model="ruleForm"  :rules="rules" ref="ruleForm" label-width="100px" >
                 <el-form-item label="" prop="oldPassword" label-width="0">

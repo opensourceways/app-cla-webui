@@ -1,6 +1,6 @@
 <template>
     <el-row id="createUser">
-        <el-col :offset="7" :span="10">
+        <el-col :offset="6" :span="12">
             <p>Create User</p>
             <el-row class="createUserBack">
                 <el-row class="emailRow" gutter="20" v-for="(item,index) in emails">
@@ -103,7 +103,7 @@
     #createUser {
         & .createUserBack {
             box-shadow: 0 0 20px 10px #F3F3F3;
-            padding: 2rem 2rem 0;
+            padding: 2rem;
             background-color: white;
             border-radius: 1rem;
         }
