@@ -216,7 +216,7 @@
 
     .tableClass {
         border: 1px solid black;
-        border-radius: 1rem;
+        border-radius: 1.5rem;
     }
 
     .marginTop1rem {
@@ -260,6 +260,7 @@
         }
         & .el-table__body-wrapper, .el-table__footer-wrapper, .el-table__header-wrapper {
             padding: 0;
+            width: auto;
         }
         & .el-table__footer-wrapper, .el-table__header-wrapper{
             border: 1px solid black;
