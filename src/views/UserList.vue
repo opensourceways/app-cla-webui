@@ -246,7 +246,7 @@
             border-color: transparent;
         }
         & .el-checkbox__input.is-focus .el-checkbox__inner{
-            border: none;
+            border: 1px solid #319e55;
         }
         & .el-table__body, .el-table__footer, .el-table__header{
             padding: 0;
