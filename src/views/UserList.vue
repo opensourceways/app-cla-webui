@@ -30,7 +30,8 @@
                     <el-table-column
                             v-if="!multipleChoice"
                             key="2"
-                            width="100">
+                            align="center"
+                            width="200">
                         <template slot-scope="scope">
                             <button  class="deleteBt" @click="deleteUser(scope.row)">
                                 Delete
@@ -223,7 +224,7 @@
     }
 
     #tableStyle {
-        border-radius: 1rem;
+        border-radius: 1.5rem;
         margin-bottom: 2rem;
         padding: 3rem;
         background-color: white;
@@ -248,16 +249,17 @@
             border: none;
         }
         & .el-table__body, .el-table__footer, .el-table__header{
-            padding: 0 1rem;
+            padding: 0;
         }
         & .el-table__body-wrapper{
-            margin: 0 2rem 0 1rem;
+            margin: 0 1rem;
         }
         & .el-table__body-wrapper:not(:last-child){
             border-top: 2px dashed lightgrey;
 
         }
         & .el-table__body-wrapper, .el-table__footer-wrapper, .el-table__header-wrapper {
+            padding: 0;
         }
         & .el-table__footer-wrapper, .el-table__header-wrapper{
             border: 1px solid black;
