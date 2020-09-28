@@ -244,8 +244,26 @@
             background: linear-gradient(to right, #FF9D58, #E22424);
             border-color: transparent;
         }
-        & & .el-checkbox__input.is-focus .el-checkbox__inner{
+        & .el-checkbox__input.is-focus .el-checkbox__inner{
             border: none;
         }
+        & .el-table__body, .el-table__footer, .el-table__header{
+            padding: 0 1rem;
+        }
+        & .el-table__body-wrapper{
+            margin: 0 2rem 0 1rem;
+        }
+        & .el-table__body-wrapper:not(:last-child){
+            border-top: 2px dashed lightgrey;
+
+        }
+        & .el-table__body-wrapper, .el-table__footer-wrapper, .el-table__header-wrapper {
+        }
+        & .el-table__footer-wrapper, .el-table__header-wrapper{
+            border: 1px solid black;
+            border-radius: 1.5rem;
+            padding-left: 1rem;
+        }
+
     }
 </style>
