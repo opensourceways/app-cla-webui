@@ -1,6 +1,6 @@
 <template>
     <el-row>
-        <el-col class="formBack" :offset="7" :span="10">
+        <el-col class="resetPwdForm" :offset="7" :span="10">
             <el-form :model="ruleForm"  :rules="rules" ref="ruleForm" label-width="100px" >
                 <el-form-item label="" prop="oldPassword" label-width="0">
                     <el-input  placeholder="please input old password" clearable="" type="password" v-model="ruleForm.oldPassword"></el-input>
@@ -122,7 +122,7 @@
 </script>
 
 <style  lang="less">
-    .formBack{
+    .resetPwdForm{
 
         & .el-input__inner {
             height: 3rem;
