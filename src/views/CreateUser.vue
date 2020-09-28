@@ -94,7 +94,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style  lang="less">
     @import "../assets/font/css/Roboto-Regular.css";
 
     #createUser {
