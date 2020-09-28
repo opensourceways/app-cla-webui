@@ -6,7 +6,7 @@
                     <el-input @blur="checkNewPwd" placeholder="please input old password" clearable="" type="password" v-model="ruleForm.oldPassword"></el-input>
                 </el-form-item>
                 <el-form-item @blur="checkOldPwd" label="" prop="newPassword" label-width="0">
-                    <el-input placeholder="please input new password" type="password" clearable="" v-model="ruleForm.newPassword" autocomplete="off"></el-input>
+                    <el-input placeholder="please input new password"  clearable="" v-model="ruleForm.newPassword" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="" prop="checkPwd" label-width="0">
                     <el-input placeholder="Please enter the new password again" clearable="" type="password" v-model="ruleForm.checkPwd" autocomplete="off"></el-input>
