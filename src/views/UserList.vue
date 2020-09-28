@@ -234,5 +234,18 @@
         & .el-dialog__body{
             padding-top: 0;
         }
+        & .el-checkbox__inner{
+            border: 1px solid #319E55;
+        }
+        & .el-checkbox__inner:hover{
+            border: 1px solid #319E55;
+        }
+        & .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+            background: linear-gradient(to right, #FF9D58, #E22424);
+            border-color: transparent;
+        }
+        & & .el-checkbox__input.is-focus .el-checkbox__inner{
+            border: none;
+        }
     }
 </style>
