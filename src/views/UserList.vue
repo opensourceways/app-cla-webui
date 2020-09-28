@@ -42,7 +42,7 @@
                             key="3"
                             v-if="multipleChoice"
                             type="selection"
-                            width="100">
+                            width="200">
                     </el-table-column>
                 </el-table>
             </el-row>
@@ -250,6 +250,7 @@
         }
         & .el-table__body, .el-table__footer, .el-table__header{
             padding: 0;
+            width: auto;
         }
         & .el-table__body-wrapper{
             margin: 0 1rem;
@@ -265,7 +266,7 @@
         & .el-table__footer-wrapper, .el-table__header-wrapper{
             border: 1px solid black;
             border-radius: 1.5rem;
-            padding-left: 1rem;
+            padding: 0 1rem;
         }
 
     }
