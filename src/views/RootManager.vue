@@ -3,7 +3,7 @@
         <Header @clickItem="clickItem" :user="user"></Header>
         <el-row>
             <el-col :offset="4" :span="16">
-                <p>User Management</p>
+
 
                 <router-view></router-view>
             </el-col>
@@ -123,7 +123,6 @@
 </script>
 
 <style scoped lang="less">
-    @import "../assets/font/css/Roboto-Regular.css";
     #section {
         padding-top: 4rem;
         display: flex;
@@ -133,10 +132,6 @@
             flex-grow: 1;
             background-color: #F0F2F5;
         }
-        & p {
-            font-family: Roboto-Regular, sans-serif;
-            font-size: 2rem;
-            text-align: left;
-        }
+
     }
 </style>

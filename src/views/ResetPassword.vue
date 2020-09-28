@@ -1,6 +1,7 @@
 <template>
     <el-row>
         <el-col class="resetPwdForm" :offset="7" :span="10">
+            <p>Reset Password</p>
             <el-form :model="ruleForm"  :rules="rules" ref="ruleForm" label-width="100px" >
                 <el-form-item label="" prop="oldPassword" label-width="0">
                     <el-input  placeholder="please input old password" clearable="" type="password" v-model="ruleForm.oldPassword"></el-input>
@@ -122,8 +123,14 @@
 </script>
 
 <style  lang="less">
-    .resetPwdForm{
+    @import "../assets/font/css/Roboto-Regular.css";
 
+    .resetPwdForm{
+        & p {
+            font-family: Roboto-Regular, sans-serif;
+            font-size: 2rem;
+            text-align: left;
+        }
         & .el-input__inner {
             height: 3rem;
         }

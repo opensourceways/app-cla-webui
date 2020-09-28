@@ -3,6 +3,7 @@
     <el-row id="tableStyle" class="marginTop1rem">
 
         <el-col>
+            <p>User Management</p>
             <el-row>
                 <el-col align="left">
                     <button class="button" @click="multipleChoice=true">Multiple choice</button>
@@ -168,6 +169,7 @@
 </script>
 
 <style  lang="less">
+    @import "../assets/font/css/Roboto-Regular.css";
     .cancelBt {
         width: 5rem;
         height: 2rem;
@@ -229,7 +231,11 @@
         margin-bottom: 2rem;
         padding: 3rem;
         background-color: white;
-
+        & p {
+            font-family: Roboto-Regular, sans-serif;
+            font-size: 2rem;
+            text-align: left;
+        }
         & .el-dialog {
             border-radius: 1rem;
         }

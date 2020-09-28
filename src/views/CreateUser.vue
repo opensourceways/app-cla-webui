@@ -1,6 +1,7 @@
 <template>
     <el-row>
         <el-col :offset="7" :span="10">
+            <p>Create User</p>
             <el-row class="emailRow" gutter="20" v-for="(item,index) in emails">
                 <el-col :span="16">
                     <el-input
@@ -92,6 +93,12 @@
 </script>
 
 <style scoped lang="less">
+    @import "../assets/font/css/Roboto-Regular.css";
+     p {
+        font-family: Roboto-Regular, sans-serif;
+        font-size: 2rem;
+        text-align: left;
+    }
     .emailRow {
         margin-bottom: 1rem;
     }
