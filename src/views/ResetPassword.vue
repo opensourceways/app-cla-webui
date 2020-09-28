@@ -1,6 +1,6 @@
 <template>
     <el-row>
-        <el-col :offset="7" :span="10">
+        <el-col class="formBack" :offset="7" :span="10">
             <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="" prop="oldPassword" label-width="0">
                     <el-input @blur="checkNewPwd" placeholder="please input old password" type="password" v-model="ruleForm.oldPassword" autocomplete="off"></el-input>
@@ -12,8 +12,8 @@
                     <el-input placeholder="Please enter the new password again" type="password" v-model="ruleForm.checkPwd" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label-width="0">
-                    <el-button type="primary" @click="submit('ruleForm')">提交</el-button>
-                    <el-button @click="reset('ruleForm')">重置</el-button>
+                    <button class="button" @click="submit('ruleForm')">Submit</button>
+                    <button class="cancelBt" @click="reset('ruleForm')">Reset</button>
                 </el-form-item>
             </el-form>
         </el-col>
@@ -126,6 +126,61 @@
 
 </script>
 
-<style scoped>
+<style scoped lang="less">
+    .formBack{
+        width: 18rem;
+        box-shadow: 0 0 20px 10px #F3F3F3;
+        padding: 2rem 2rem 0;
+        background-color: white;
+        border-radius: 1rem;
 
+        & .el-input__inner {
+            height: 3rem;
+        }
+
+        & .el-form-item__label {
+            font-size: 1.2rem;
+        }
+
+        & .el-input__inner {
+            background-color: #F3F3F3;
+            border-radius: 1.5rem;
+            border: 1px solid #F3F3F3;
+            font-size: 1.2rem;
+        }
+
+        & .el-form-item{
+            margin-bottom: 28px
+        }
+
+
+    }
+    .button {
+        width: 5rem;
+        height: 2rem;
+        border-radius: 1rem;
+        border: none;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        background: linear-gradient(to right, #97DB30, #319E55);
+        margin-bottom: 1rem;
+    }
+    .button:focus {
+        outline: none;
+    }
+    .cancelBt {
+        width: 5rem;
+        height: 2rem;
+        border-radius: 1rem;
+        border: 1px solid black;
+        color: black;
+        font-size: 1rem;
+        cursor: pointer;
+        background-color: white;
+        margin-left: 1rem;
+    }
+    .cancelBt:focus {
+        outline: none;
+    }
 </style>

@@ -42,6 +42,7 @@
                             key="3"
                             v-if="multipleChoice"
                             type="selection"
+                            align="center"
                             width="200">
                     </el-table-column>
                 </el-table>

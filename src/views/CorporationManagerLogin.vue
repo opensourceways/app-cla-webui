@@ -154,9 +154,6 @@
         padding: 2rem 2rem 0;
         background-color: white;
         border-radius: 1rem;
-        & .fontSize12 {
-            font-size: 1.2rem;
-        }
 
         & .el-input__inner {
             height: 3rem;
