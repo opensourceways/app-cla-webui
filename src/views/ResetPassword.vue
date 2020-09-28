@@ -3,7 +3,7 @@
         <el-col class="formBack" :offset="7" :span="10">
             <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="" prop="oldPassword" label-width="0">
-                    <el-input @blur="checkNewPwd" placeholder="please input old password" clearable="" type="password" v-model="ruleForm.oldPassword" autocomplete="off"></el-input>
+                    <el-input @blur="checkNewPwd" placeholder="please input old password" clearable="" type="password" v-model="ruleForm.oldPassword"></el-input>
                 </el-form-item>
                 <el-form-item @blur="checkOldPwd" label="" prop="newPassword" label-width="0">
                     <el-input placeholder="please input new password" type="password" clearable="" v-model="ruleForm.newPassword" autocomplete="off"></el-input>
