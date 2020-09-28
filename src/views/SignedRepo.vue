@@ -129,23 +129,23 @@
             },
             clickItem(command) {
                 switch (command) {
-                    case 'a':
+                    case 'b':
                         if (this.$route.path !== '/employeeList') {
                             this.$router.push('/employeeList');
                         }
                         break;
-                    case 'b':
+                    case 'c':
                         if (this.$route.path !== '/createUser') {
                             this.$router.push('/createUser');
                         }
                         break;
-                    case 'c':
-                        if (this.$route.path !== '/resetPassword') {
-                            this.$router.push('/resetPassword');
+                    case 'd':
+                        if (this.$route.path !== '/signedRepo/resetPassword') {
+                            this.$router.push('/signedRepo/resetPassword');
                         }
                         break;
 
-                    case 'e':
+                    case 'f':
                         this.loginOut()
                         break;
                 }

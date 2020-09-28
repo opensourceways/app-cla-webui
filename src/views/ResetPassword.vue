@@ -12,8 +12,8 @@
                     <el-input placeholder="Please enter the new password again" clearable="" type="password" v-model="ruleForm.checkPwd" ></el-input>
                 </el-form-item>
                 <el-form-item label-width="0">
-                    <button class="button" @click="submit('ruleForm')">Submit</button>
-                    <button class="cancelBt" @click="reset('ruleForm')">Reset</button>
+                    <button class="button" type="button" @click="submit('ruleForm')">Submit</button>
+                    <button class="cancelBt" type="reset" @click="reset('ruleForm')">Reset</button>
                 </el-form-item>
             </el-form>
         </el-col>
@@ -85,12 +85,7 @@
             }
         },
         methods: {
-            checkNewPwd(){
 
-            },
-            checkOldPwd(){
-
-            },
             resetPassword() {
                 let obj ={cla_org_id:this.cla_org_id,email:this.email,old_password:this.ruleForm.oldPassword,new_password:this.ruleForm.newPassword}
                 this.$axios({

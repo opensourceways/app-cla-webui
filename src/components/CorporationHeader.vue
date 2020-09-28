@@ -23,12 +23,12 @@
   </span>
                     <el-dropdown-menu slot="dropdown">
                         <el-dropdown-item v-if="userInfo[orgValue].role==='admin'" command="a">user</el-dropdown-item>
-                        <el-dropdown-item v-else command="a">employee</el-dropdown-item>
-                        <el-dropdown-item v-if="userInfo[orgValue].role==='admin'" command="b">create user
+                        <el-dropdown-item v-else command="b">employee</el-dropdown-item>
+                        <el-dropdown-item v-if="userInfo[orgValue].role==='admin'" command="c">create user
                         </el-dropdown-item>
-                        <el-dropdown-item command="c">reset password</el-dropdown-item>
-                        <el-dropdown-item v-if="userInfo[orgValue].role==='admin'" command="d">my cla</el-dropdown-item>
-                        <el-dropdown-item command="e">login out</el-dropdown-item>
+                        <el-dropdown-item command="d">reset password</el-dropdown-item>
+                        <el-dropdown-item v-if="userInfo[orgValue].role==='admin'" command="e">my cla</el-dropdown-item>
+                        <el-dropdown-item command="f">login out</el-dropdown-item>
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
@@ -72,13 +72,13 @@
                 this.$router.push('/home')
             },
             loginOut() {
-                /*清空缓存，服务器改变登录状态。成功则跳转到登录页面*/
+
                 this.$router.push('/')
 
             },
             newWindow() {
                 // window.open('https://github.com/ouchengle/Test','_black')
-                window.open('https://github.com/ouchengle')
+                // window.open('https://github.com/ouchengle')
             },
         },
     }

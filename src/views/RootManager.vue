@@ -87,21 +87,21 @@
                             this.$router.push('/userList');
                         }
                         break;
-                    case 'b':
+                    case 'c':
                         if (this.$route.path !== '/createUser') {
                             this.$router.push('/createUser');
                         }
                         break;
-                    case 'c':
-                        if (this.$route.path !== '/resetPassword') {
-                            this.$router.push('/resetPassword');
+                    case 'd':
+                        if (this.$route.path !== '/rootManager/resetPassword') {
+                            this.$router.push('/rootManager/resetPassword');
                         }
                         break;
-                    case 'd':
+                    case 'e':
                         this.previewDialogVisible = true
                         break;
 
-                    case 'e':
+                    case 'f':
                         this.loginOut()
                         break;
                 }
