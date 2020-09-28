@@ -152,7 +152,7 @@
             },
             loginOut() {
                 sessionStorage.clear()
-                this.$router.push('/')
+                this.$router.push('/index')
 
             },
         },

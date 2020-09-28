@@ -131,15 +131,13 @@
             font-size: 2rem;
             text-align: left;
         }
-        & .el-input__inner {
-            height: 3rem;
-        }
 
         & .el-form-item__label {
             font-size: 1.2rem;
         }
 
         & .el-input__inner {
+            height: 3rem;
             background-color: #F3F3F3;
             border-radius: 1.5rem;
             border: 1px solid #F3F3F3;

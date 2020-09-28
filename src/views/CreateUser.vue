@@ -1,5 +1,5 @@
 <template>
-    <el-row>
+    <el-row id="createUser">
         <el-col :offset="7" :span="10">
             <p>Create User</p>
             <el-row class="emailRow" gutter="20" v-for="(item,index) in emails">
@@ -9,14 +9,14 @@
                     </el-input>
                 </el-col>
                 <el-col :span="8" align="right">
-                    <el-button @click="addRow(index)" size="medium">+</el-button>
-                    <el-button @click="myDeleteRow(index)" size="medium">-</el-button>
+                    <button class="deleteBt" @click="myDeleteRow(index)">-</button>
+                    <button class="button" @click="addRow(index)">+</button>
                 </el-col>
             </el-row>
 
             <el-row align="middle">
                 <el-col align="center">
-                    <el-button type="primary" size="medium" @click="createUser()">Submit</el-button>
+                    <button class="button" @click="createUser()">Submit</button>
                 </el-col>
             </el-row>
 
@@ -57,7 +57,7 @@
             },
             myDeleteRow(index) {
                 if (this.emails.length === 1) {
-                    this.emails[0].email =''
+                    this.emails[0].email = ''
 
                 } else {
                     this.emails.splice(index, 1);
@@ -80,7 +80,9 @@
 
                     this.$message.closeAll()
                     this.$message.success('success')
-                    setTimeout(()=>{this.$router.push('/userList')},500)
+                    setTimeout(() => {
+                        this.$router.push('/userList')
+                    }, 500)
                 }).catch(err => {
                     this.$message.closeAll()
                     this.$message.error(err.response.data.data)
@@ -94,12 +96,55 @@
 
 <style scoped lang="less">
     @import "../assets/font/css/Roboto-Regular.css";
-     p {
-        font-family: Roboto-Regular, sans-serif;
-        font-size: 2rem;
-        text-align: left;
+
+    #createUser {
+        & .el-input__inner {
+            height: 3rem;
+            background-color: #F3F3F3;
+            border-radius: 1.5rem;
+            border: 1px solid #F3F3F3;
+            font-size: 1.2rem;
+        }
+        & p {
+            font-family: Roboto-Regular, sans-serif;
+            font-size: 2rem;
+            text-align: left;
+        }
+
+        & .emailRow {
+            margin-bottom: 1rem;
+        }
+
+        & .button {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 1.5rem;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            background: linear-gradient(to right, #97DB30, #319E55);
+        }
+
+        & .button:focus {
+            outline: none;
+        }
+
+        & .deleteBt {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 1.5rem;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            background: linear-gradient(to right, #FF9D58, #E22424);
+            margin-right: 1rem;
+        }
+
+        & .deleteBt:focus {
+            outline: none;
+        }
     }
-    .emailRow {
-        margin-bottom: 1rem;
-    }
+
 </style>
