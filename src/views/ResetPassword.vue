@@ -3,13 +3,13 @@
         <el-col class="formBack" :offset="7" :span="10">
             <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
                 <el-form-item label="" prop="oldPassword" label-width="0">
-                    <el-input @blur="checkNewPwd" placeholder="please input old password" type="password" v-model="ruleForm.oldPassword" autocomplete="off"></el-input>
+                    <el-input @blur="checkNewPwd" placeholder="please input old password" clearable="" type="password" v-model="ruleForm.oldPassword" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item @blur="checkOldPwd" label="" prop="newPassword" label-width="0">
-                    <el-input placeholder="please input new password" type="password" v-model="ruleForm.newPassword" autocomplete="off"></el-input>
+                    <el-input placeholder="please input new password" type="password" clearable="" v-model="ruleForm.newPassword" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label="" prop="checkPwd" label-width="0">
-                    <el-input placeholder="Please enter the new password again" type="password" v-model="ruleForm.checkPwd" autocomplete="off"></el-input>
+                    <el-input placeholder="Please enter the new password again" clearable="" type="password" v-model="ruleForm.checkPwd" autocomplete="off"></el-input>
                 </el-form-item>
                 <el-form-item label-width="0">
                     <button class="button" @click="submit('ruleForm')">Submit</button>
@@ -145,15 +145,15 @@
         }
 
         & .el-form-item{
-            margin-bottom: 28px
+            margin-bottom: 2rem
         }
 
 
     }
     .button {
-        width: 5rem;
-        height: 2rem;
-        border-radius: 1rem;
+        width: 6rem;
+        height: 3rem;
+        border-radius: 1.5rem;
         border: none;
         color: white;
         font-size: 1rem;
@@ -165,9 +165,9 @@
         outline: none;
     }
     .cancelBt {
-        width: 5rem;
-        height: 2rem;
-        border-radius: 1rem;
+        width: 6rem;
+        height: 3rem;
+        border-radius: 1.5rem;
         border: 1px solid black;
         color: black;
         font-size: 1rem;
