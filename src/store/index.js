@@ -243,14 +243,14 @@ export default new Vuex.Store({
                         })
                         break
                     case 'cla.system_error':
-                        commit('errorSet', {
+                        commit('errorCodeSet', {
                             reTryDialogVisible: true,
                             dialogMessage: 'System error, please try again',
                         })
                         break
                 }
             }else{
-                commit('errorSet', {
+                commit('errorCodeSet', {
                     reTryDialogVisible: true,
                     dialogMessage: 'System error, please try again',
                 })
