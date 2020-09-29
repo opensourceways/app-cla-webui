@@ -140,7 +140,7 @@ export default new Vuex.Store({
 
         errorAct({commit}, err) {
             if (err.data.data.error_code) {
-                switch (obj.errorCode) {
+                switch (err.data.data.error_code) {
                     case 'cla.no_cla_binding':
                         commit('errorSet', {
                             dialogVisible: true,
