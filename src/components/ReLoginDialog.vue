@@ -29,7 +29,7 @@
         methods: {
             clickGoHome() {
                 this.$store.commit('errorSet', {
-                    dialogVisible: true,
+                    dialogVisible: false,
                     dialogMessage: '',
                 })
                 let date = new Date();
