@@ -552,7 +552,7 @@
                     }
                     this.tipsDialogVisible = true;
                 }).catch(err => {
-                    this.errorAct({statusCode: err.status, errorCode: err.data.data.error_code})
+                    this.errorAct(err)
                 })
             },
             clearForm() {

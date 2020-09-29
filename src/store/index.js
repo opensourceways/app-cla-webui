@@ -131,44 +131,113 @@ export default new Vuex.Store({
             state.tableData = data;
             sessionStorage.setItem('tableData', JSON.stringify(data));
         },
-        errorSet(state,obj){
-            state.dialogVisible=obj.dialogVisible
-            state.dialogMessage=obj.dialogMessage
+        errorSet(state, obj) {
+            state.dialogVisible = obj.dialogVisible
+            state.dialogMessage = obj.dialogMessage
         },
     },
     actions: {
 
-        errorAct({commit}, obj) {
-            switch (obj.statusCode) {
-                case 400:
-                    switch (obj.errorCode) {
-                        case 'cla.0001':
-                            // commit('errorSet', {
-                                // dialogVisible: true,
-                                // dialogMessage: 'You have signed it. Please do not repeat it',
-                            // })
-                            break;
-                        case 'cla.0002':
-                            commit('errorSet', {
-                                dialogVisible: true,
-                                dialogMessage: 'You have signed it. Please do not repeat it',
-                            })
-                            break
-                        case 'cla.0003':
-                            // commit('errorSet', {
-                            //     dialogVisible: true,
-                            //     dialogMessage: 'You have signed it. Please do not repeat it',
-                            // })
-                            break
-                    }
-                    break;
-                case 401:
-                case 403:
-                    commit('errorSet', {
-                        dialogVisible: true,
-                        dialogMessage: 'token expired, please login again',
-                    })
-                    break
+        errorAct({commit}, err) {
+            if (err.data.data.error_code) {
+                switch (obj.errorCode) {
+                    case 'cla.no_cla_binding':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'Individual signature CLA is not bound, unable to sign',
+                        })
+                        break;
+                    case 'cla.has_signed':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'You have signed it. Please do not repeat it',
+                        })
+                        break
+                    case 'cla.invalid_parameter':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                        })
+                        break
+                    case 'cla.has_not_signed':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                        })
+                        break
+                    case 'cla.invalid_token':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'token expired, please login again',
+                        })
+                        break
+                    case 'cla.missing_token':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'Token does not exist, please try again',
+                        })
+                        break
+                    case 'cla.unknown_token':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'token unknown, please login again',
+                        })
+                        break
+                    case 'cla.uncompleted_signing':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                        })
+                        break
+                    case 'cla.unknown_email_platform':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                        })
+                        break
+                    case 'cla.failed_to_send_email':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                        })
+                        break
+                    case 'cla.wrong_verification_code':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                        })
+                        break
+                    case 'cla.expired_verification_code':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                        })
+                        break
+                    case 'cla.pdf_has_not_uploaded':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                        })
+                        break
+                    case 'cla.num_of_corp_managers_exceeded':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                        })
+                        break
+                    case 'cla.corp_manager_exists':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                        })
+                        break
+                    case 'cla.not_same_corp':
+                        commit('errorSet', {
+                            dialogVisible: true,
+                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                        })
+                        break
+                }
             }
         },
         setShowConfigFormAct({commit}, showConfigForm) {
