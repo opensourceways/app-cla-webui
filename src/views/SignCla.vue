@@ -359,7 +359,7 @@
                 } else {
                     applyTo = 'corporation';
                 }
-                http({
+                this.$axios({
                     url: `${url.getSignPage}/${this.$store.state.repoInfo.platform}/${this.$store.state.repoInfo.org_id}/${applyTo}`,
                     params: {
                         repo_id: this.$store.state.repoInfo.repo_id,
