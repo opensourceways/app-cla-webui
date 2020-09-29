@@ -144,7 +144,7 @@ export default new Vuex.Store({
     actions: {
 
         errorAct({commit}, err) {
-            if (err.data.data.error_code!==undefined) {
+            if (err.hasOwnProperty('data')) {
                 switch (err.data.data.error_code) {
                     case 'cla.no_cla_binding':
                         commit('errorSet', {
