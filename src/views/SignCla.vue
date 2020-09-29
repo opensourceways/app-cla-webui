@@ -84,6 +84,8 @@
         </el-dialog>
         <ReLoginDialog :dialogVisible="reLoginDialogVisible" :message="reLoginMsg"
                        :title="reLoginDialogTitle"></ReLoginDialog>
+        <ReTryDialog :dialogVisible="reTryDialogVisible" :message="reLoginMsg"
+                     :title="reLoginDialogTitle"></ReTryDialog>
     </el-row>
 </template>
 
@@ -95,6 +97,7 @@
     import {mapActions} from 'vuex'
     import http from '../until/http'
     import ReLoginDialog from '../components/ReLoginDialog'
+    import ReTryDialog from '../components/ReTryDialog'
 
     export default {
 
@@ -139,11 +142,15 @@
                 return this.$store.state.repoInfo.repo_id ? `"${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}" prompt you` :
                     `"${this.$store.state.repoInfo.org_id}" prompt you`
             },
+            reTryDialogVisible(){
+                return this.$store.state.reTryDialogVisible
+            },
         },
         components: {
             Header,
             Footer,
             ReLoginDialog,
+            ReTryDialog,
         }
         ,
         data() {
@@ -209,8 +216,8 @@
                 let url = `/sign/${this.$store.state.repoInfo.platform}/${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}`
                 this.$router.push(url)
                 this.tipsDialogVisible = false;
-            }
-            ,
+            },
+
             async verifyTel(rule, value, callback) {
                 if (value) {
                     let reg = /^1[3456789]\d{9}$/;

@@ -37,6 +37,7 @@ export default new Vuex.Store({
         },
         dialogVisible: false,
         dialogMessage: '',
+        reTryDialogVisible:false,
     },
     mutations: {
         setReady(state, data) {
@@ -133,6 +134,10 @@ export default new Vuex.Store({
         },
         errorSet(state, obj) {
             state.dialogVisible = obj.dialogVisible
+            state.dialogMessage = obj.dialogMessage
+        },
+        errorCodeSet(state, obj) {
+            state.reTryDialogVisible = obj.reTryDialogVisible
             state.dialogMessage = obj.dialogMessage
         },
     },
@@ -235,6 +240,12 @@ export default new Vuex.Store({
                         commit('errorSet', {
                             dialogVisible: true,
                             dialogMessage: 'The parameter is invalid and cannot be signed',
+                        })
+                        break
+                    case 'cla.system_error':
+                        commit('errorSet', {
+                            reTryDialogVisible: true,
+                            dialogMessage: 'System error, please try again',
                         })
                         break
                 }
