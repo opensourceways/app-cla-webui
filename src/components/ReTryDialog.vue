@@ -31,7 +31,7 @@
         methods: {
             reTry() {
                 this.$store.commit('errorCodeSet', {
-                    reTryDialogVisible: false,
+                    dialogVisible: false,
                     dialogMessage: 'System error, please try again',
                 })
 

@@ -137,7 +137,7 @@ export default new Vuex.Store({
             state.dialogMessage = obj.dialogMessage
         },
         errorCodeSet(state, obj) {
-            state.reTryDialogVisible = obj.reTryDialogVisible
+            state.reTryDialogVisible = obj.dialogVisible
             state.dialogMessage = obj.dialogMessage
         },
     },
@@ -167,7 +167,7 @@ export default new Vuex.Store({
                     case 'cla.has_not_signed':
                         commit('errorSet', {
                             dialogVisible: true,
-                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                            dialogMessage: 'The company has not yet signed',
                         })
                         break
                     case 'cla.invalid_token':
@@ -191,67 +191,67 @@ export default new Vuex.Store({
                     case 'cla.uncompleted_signing':
                         commit('errorSet', {
                             dialogVisible: true,
-                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                            dialogMessage: 'The enterprise has not completed the signing process',
                         })
                         break
                     case 'cla.unknown_email_platform':
-                        commit('errorSet', {
+                        commit('errorCodeSet', {
                             dialogVisible: true,
-                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                            dialogMessage: 'This type of mailbox is not supported at the moment',
                         })
                         break
                     case 'cla.failed_to_send_email':
-                        commit('errorSet', {
+                        commit('errorCodeSet', {
                             dialogVisible: true,
-                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                            dialogMessage: 'Failed to send mail,please try again',
                         })
                         break
                     case 'cla.wrong_verification_code':
-                        commit('errorSet', {
+                        commit('errorCodeSet', {
                             dialogVisible: true,
-                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                            dialogMessage: 'Verification code error, please try again',
                         })
                         break
                     case 'cla.expired_verification_code':
-                        commit('errorSet', {
+                        commit('errorCodeSet', {
                             dialogVisible: true,
-                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                            dialogMessage: 'Verification code expired, please try again',
                         })
                         break
                     case 'cla.pdf_has_not_uploaded':
                         commit('errorSet', {
                             dialogVisible: true,
-                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                            dialogMessage: 'The organization has not uploaded the PDF signature page',
                         })
                         break
                     case 'cla.num_of_corp_managers_exceeded':
-                        commit('errorSet', {
+                        commit('errorCodeSet', {
                             dialogVisible: true,
-                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                            dialogMessage: 'The added administrator exceeds the limit',
                         })
                         break
                     case 'cla.corp_manager_exists':
-                        commit('errorSet', {
+                        commit('errorCodeSet', {
                             dialogVisible: true,
-                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                            dialogMessage: 'The added administrator already exists',
                         })
                         break
                     case 'cla.not_same_corp':
-                        commit('errorSet', {
+                        commit('errorCodeSet', {
                             dialogVisible: true,
-                            dialogMessage: 'The parameter is invalid and cannot be signed',
+                            dialogMessage: 'The company has signed',
                         })
                         break
                     case 'cla.system_error':
                         commit('errorCodeSet', {
-                            reTryDialogVisible: true,
+                            dialogVisible: true,
                             dialogMessage: 'System error, please try again',
                         })
                         break
                 }
             }else{
                 commit('errorCodeSet', {
-                    reTryDialogVisible: true,
+                    dialogVisible: true,
                     dialogMessage: 'System error, please try again',
                 })
             }
