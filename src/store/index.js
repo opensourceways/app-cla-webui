@@ -144,7 +144,7 @@ export default new Vuex.Store({
     actions: {
 
         errorAct({commit}, err) {
-            if (err.data.data.error_code) {
+            if (err.data.data.error_code!==undefined) {
                 switch (err.data.data.error_code) {
                     case 'cla.no_cla_binding':
                         commit('errorSet', {
@@ -249,6 +249,11 @@ export default new Vuex.Store({
                         })
                         break
                 }
+            }else{
+                commit('errorSet', {
+                    reTryDialogVisible: true,
+                    dialogMessage: 'System error, please try again',
+                })
             }
         },
         setShowConfigFormAct({commit}, showConfigForm) {
