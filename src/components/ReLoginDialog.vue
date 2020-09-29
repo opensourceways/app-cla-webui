@@ -6,7 +6,7 @@
                 :close-on-press-escape="false"
                 :show-close="false"
                 :close-on-click-modal="false"
-                width="30%" >
+                width="30%">
             <el-row>
                 <el-col align="center">
                     <p>{{message}}</p>
@@ -21,19 +21,24 @@
     export default {
         name: "ReLoginDialog",
         props: ['dialogVisible', 'message', 'title'],
-        data(){
-            return{
-                domain:this.$store.state.domain,
+        data() {
+            return {
+                domain: this.$store.state.domain,
             }
         },
         methods: {
             clickGoHome() {
+                this.$store.commit('errorSet', {
+                    dialogVisible: true,
+                    dialogMessage: '',
+                })
                 let date = new Date();
                 date.setTime(date.getTime() - 10000);
                 document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
                 let repoInfo = this.$store.state.repoInfo
                 let path = repoInfo.repo_id ? `/sign/${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `/sign/${repoInfo.platform}/${repoInfo.org_id}`
                 this.$router.replace(path)
+
             },
         },
     }
