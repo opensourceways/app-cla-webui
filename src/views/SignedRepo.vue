@@ -43,7 +43,7 @@
     import * as url from '../until/api'
     import * as until from '../until/until'
     import CorporationHeader from '@components/CorporationHeader'
-    import Footer from '@components/Footer'
+    import Footer from '@components/NewFooter'
 
     window.onresize = () => {
         if (until.getClientHeight() > document.getElementById('section').offsetHeight) {

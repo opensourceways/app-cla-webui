@@ -142,11 +142,23 @@ export default new Vuex.Store({
             switch (obj.statusCode) {
                 case 400:
                     switch (obj.errorCode) {
+                        case 'cla.0001':
+                            // commit('errorSet', {
+                                // dialogVisible: true,
+                                // dialogMessage: 'You have signed it. Please do not repeat it',
+                            // })
+                            break;
                         case 'cla.0002':
                             commit('errorSet', {
                                 dialogVisible: true,
                                 dialogMessage: 'You have signed it. Please do not repeat it',
                             })
+                            break
+                        case 'cla.0003':
+                            // commit('errorSet', {
+                            //     dialogVisible: true,
+                            //     dialogMessage: 'You have signed it. Please do not repeat it',
+                            // })
                             break
                     }
                     break;
