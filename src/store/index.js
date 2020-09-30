@@ -240,7 +240,7 @@ export default new Vuex.Store({
                     case 'cla.not_same_corp':
                         commit('errorCodeSet', {
                             dialogVisible: true,
-                            dialogMessage: 'The company has signed',
+                            dialogMessage: 'The mailbox does not belong to the company mailbox',
                         })
                         break
                     case 'cla.system_error':

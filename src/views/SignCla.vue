@@ -22,7 +22,10 @@
                                               :label="item.title"
                                               :required="item.required"
                                               :prop="item.id">
-
+                                    <el-tooltip class="item" effect="dark" content="Right Center 提示文字"
+                                                placement="right">
+                                        <el-button>右边</el-button>
+                                    </el-tooltip>
                                     <el-input v-if="item.type==='email'" :readonly="loginType!=='corporation'"
                                               v-model="ruleForm[item.id]"
                                               size="small" @blur="setMyForm(item.type,ruleForm[item.id])"></el-input>
@@ -142,7 +145,7 @@
                 return this.$store.state.repoInfo.repo_id ? `"${this.$store.state.repoInfo.org_id}/${this.$store.state.repoInfo.repo_id}" prompt you` :
                     `"${this.$store.state.repoInfo.org_id}" prompt you`
             },
-            reTryDialogVisible(){
+            reTryDialogVisible() {
                 return this.$store.state.reTryDialogVisible
             },
         },
