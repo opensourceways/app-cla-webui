@@ -8,7 +8,7 @@
             <div>
 
                 <div class="my_select_box">
-                    <el-row class="my_select" @click="clickSelect()">
+                    <el-row class="my_select" @click.native="clickSelect()">
                         <el-col :span="20" class="select_content">
                             {{language}}
                         </el-col>

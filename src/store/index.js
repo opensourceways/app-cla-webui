@@ -133,11 +133,11 @@ export default new Vuex.Store({
             sessionStorage.setItem('tableData', JSON.stringify(data));
         },
         errorSet(state, obj) {
-            state.dialogVisible = obj.dialogVisible
+            state.dialogVisible = obj.dialogVisible;
             state.dialogMessage = obj.dialogMessage
         },
         errorCodeSet(state, obj) {
-            state.reTryDialogVisible = obj.dialogVisible
+            state.reTryDialogVisible = obj.dialogVisible;
             state.dialogMessage = obj.dialogMessage
         },
     },
@@ -151,110 +151,110 @@ export default new Vuex.Store({
                         commit('errorSet', {
                             dialogVisible: true,
                             dialogMessage: 'Individual signature CLA is not bound, unable to sign',
-                        })
+                        });
                         break;
                     case 'cla.has_signed':
                         commit('errorSet', {
                             dialogVisible: true,
                             dialogMessage: 'You have signed it. Please do not repeat it',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.invalid_parameter':
                         commit('errorSet', {
                             dialogVisible: true,
                             dialogMessage: 'The parameter is invalid and cannot be signed',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.has_not_signed':
                         commit('errorSet', {
                             dialogVisible: true,
                             dialogMessage: 'The company has not yet signed',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.invalid_token':
                         commit('errorSet', {
                             dialogVisible: true,
                             dialogMessage: 'token expired, please login again',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.missing_token':
                         commit('errorSet', {
                             dialogVisible: true,
                             dialogMessage: 'Token does not exist, please try again',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.unknown_token':
                         commit('errorSet', {
                             dialogVisible: true,
                             dialogMessage: 'token unknown, please login again',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.uncompleted_signing':
                         commit('errorSet', {
                             dialogVisible: true,
                             dialogMessage: 'The enterprise has not completed the signing process',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.unknown_email_platform':
                         commit('errorCodeSet', {
                             dialogVisible: true,
                             dialogMessage: 'This type of mailbox is not supported at the moment',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.failed_to_send_email':
                         commit('errorCodeSet', {
                             dialogVisible: true,
                             dialogMessage: 'Failed to send mail,please try again',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.wrong_verification_code':
                         commit('errorCodeSet', {
                             dialogVisible: true,
                             dialogMessage: 'Verification code error, please try again',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.expired_verification_code':
                         commit('errorCodeSet', {
                             dialogVisible: true,
                             dialogMessage: 'Verification code expired, please try again',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.pdf_has_not_uploaded':
                         commit('errorSet', {
                             dialogVisible: true,
                             dialogMessage: 'The organization has not uploaded the PDF signature page',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.num_of_corp_managers_exceeded':
                         commit('errorCodeSet', {
                             dialogVisible: true,
                             dialogMessage: 'The added administrator exceeds the limit',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.corp_manager_exists':
                         commit('errorCodeSet', {
                             dialogVisible: true,
                             dialogMessage: 'The added administrator already exists',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.not_same_corp':
                         commit('errorCodeSet', {
                             dialogVisible: true,
                             dialogMessage: 'The mailbox does not belong to the company mailbox',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla."not_ready_to_sign':
                         commit('errorSet', {
                             dialogVisible: true,
                             dialogMessage: 'The organization is not ready',
-                        })
-                        break
+                        });
+                        break;
                     case 'cla.system_error':
                         commit('errorCodeSet', {
                             dialogVisible: true,
                             dialogMessage: 'System error, please try again',
-                        })
-                        break
+                        });
+                        break;
                 }
             }else{
                 commit('errorCodeSet', {
@@ -300,7 +300,7 @@ export default new Vuex.Store({
             }).then(res => {
                 if (res.data.length) {
                     let tableData = [];
-                    let count = res.data.length
+                    let count = res.data.length;
                     res.data.forEach((item, index) => {
                         // console.log(index);
                         tableData.push({
@@ -317,7 +317,7 @@ export default new Vuex.Store({
                         ((index, item, length, {commit}, tableData) => {
                             // console.log(index, tableData, item, length);
                             if (item.apply_to === 'corporation') {
-                                count++
+                                count++;
                                 // console.log(data);
                                 axios({
                                     url: `/api${url.corporation_signing}`,
@@ -337,9 +337,9 @@ export default new Vuex.Store({
                                     Object.assign(tableData[index], {
                                         contributors: resp.data.length,
                                         corporationInfo: resp.data,
-                                    })
+                                    });
                                     if (--count === 0) {
-                                        let obj = {tableData: tableData, ready: true}
+                                        let obj = {tableData: tableData, ready: true};
                                         // console.log(tableData);
                                         commit('setReady', obj);
                                     }
@@ -358,9 +358,9 @@ export default new Vuex.Store({
                             }).then(resp => {
                                 Object.assign(tableData[index], {
                                     claName: resp.data.name,
-                                })
+                                });
                                 if (--count === 0) {
-                                    let obj = {tableData: tableData, ready: true}
+                                    let obj = {tableData: tableData, ready: true};
                                     commit('setReady', obj);
                                 }
                             }).catch(err => {

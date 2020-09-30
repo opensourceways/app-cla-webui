@@ -262,7 +262,7 @@
                     this.$message.closeAll()
                     this.$message.error('Please fill in Google email in the e-mail column')
                 } else {
-                    this.$axios({
+                    http({
                         url: `/api${url.sendVerifyCode}/${this.cla_org_id}/${this.myForm.adminEmail}`,
                         method: 'put',
                     }).then(res => {
@@ -279,8 +279,7 @@
                             }
                         }, 1000)
                     }).catch(err => {
-                        this.$message.closeAll()
-                        this.$message.error(err.response.data)
+                        this.errorAct(err)
                     })
                 }
 
