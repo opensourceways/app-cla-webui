@@ -22,13 +22,10 @@
                                               :label="item.title"
                                               :required="item.required"
                                               :prop="item.id">
-                                    <el-tooltip class="item" effect="dark" content="Right Center 提示文字"
-                                                placement="right">
-                                        <el-input v-if="item.type==='email'" :readonly="loginType!=='corporation'"
-                                                  v-model="ruleForm[item.id]"
-                                                  size="small"
-                                                  @blur="setMyForm(item.type,ruleForm[item.id])"></el-input>
-                                    </el-tooltip>
+                                    <el-input v-if="item.type==='email'" :readonly="loginType!=='corporation'"
+                                              v-model="ruleForm[item.id]"
+                                              size="small" @blur="setMyForm(item.type,ruleForm[item.id])"></el-input>
+
                                     <el-input v-else-if="item.type==='date'" readonly="" v-model="ruleForm[item.id]"
                                               size="small" @blur="setMyForm(item.type,ruleForm[item.id])"></el-input>
                                     <el-input v-else v-model="ruleForm[item.id]" size="small"
