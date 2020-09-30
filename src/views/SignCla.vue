@@ -266,15 +266,15 @@
                         url: `/api${url.sendVerifyCode}/${this.cla_org_id}/${this.myForm.adminEmail}`,
                         method: 'put',
                     }).then(res => {
-                        this.$message.closeAll()
-                        this.$message.success('Please fill in the verification code in the email to continue signing')
-                        let second = 60
+                        this.$message.closeAll();
+                        this.$message.success('Please fill in the verification code in the email to continue signing');
+                        let second = 60;
                         let codeInterval = setInterval(() => {
                             if (second !== 0) {
-                                second--
+                                second--;
                                 this.sendBtText = second + 's'
                             } else {
-                                this.sendBtText = 'send code'
+                                this.sendBtText = 'send code';
                                 clearInterval(codeInterval)
                             }
                         }, 1000)
@@ -282,7 +282,6 @@
                         this.errorAct(err)
                     })
                 }
-
             },
             getNowDate() {
                 let date = new Date();

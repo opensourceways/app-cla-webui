@@ -7,35 +7,35 @@
 
             <div>
 
-                <div class="my_select_box">
-                    <el-row class="my_select" @click.native="clickSelect()">
-                        <el-col :span="20" class="select_content">
-                            {{language}}
-                        </el-col>
-                        <el-col :span="4" class="select_content">
-                            <svg-icon icon-class="arrow" ></svg-icon>
-                        </el-col>
-                    </el-row>
-                    <div id="my_option">
-                        <div
-                                v-for="item in options"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                            <div style="width: 100%">
-                                <div>
-                                    <div class="mark">
-                                    </div>
-                                </div>
+                <!--<div class="my_select_box">-->
+                    <!--<el-row class="my_select" @click.native="clickSelect()">-->
+                        <!--<el-col :span="20" class="select_content">-->
+                            <!--{{language}}-->
+                        <!--</el-col>-->
+                        <!--<el-col :span="4" class="select_content">-->
+                            <!--<svg-icon icon-class="arrow" ></svg-icon>-->
+                        <!--</el-col>-->
+                    <!--</el-row>-->
+                    <!--<div id="my_option" :class="visible">-->
+                        <!--<div-->
+                                <!--v-for="item in options"-->
+                                <!--:key="item.value"-->
+                                <!--:label="item.label"-->
+                                <!--:value="item.value">-->
+                            <!--<div style="width: 100%">-->
+                                <!--<div>-->
+                                    <!--<div class="mark">-->
+                                    <!--</div>-->
+                                <!--</div>-->
 
-                                <div>
-                                    {{item.label}}
-                                </div>
+                                <!--<div>-->
+                                    <!--{{item.label}}-->
+                                <!--</div>-->
 
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
             </div>
         </el-col>
     </el-row>
@@ -49,6 +49,9 @@
                 language: 'English',
                 value:0,
                 options: [{value: 0, label: 'English'}, {value: 1, label: '中文'}, {value: 2, label: '日语'}],
+                visible:{
+                    visibility:'hidden',
+                },
             }
         },
         methods:{
@@ -113,7 +116,7 @@
     }
 
     #my_option {
-        visibility: hidden;
+        z-index: 1;
         position: absolute;
         background-color: white;
         top: 0;
