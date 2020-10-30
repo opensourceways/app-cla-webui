@@ -7,6 +7,10 @@
                 :show-close="false"
                 :close-on-click-modal="false"
                 width="30%">
+            <div class="titleBox">
+                <svg-icon icon-class="chenggong" class="dialogIcon"></svg-icon>
+                <span>Successfully</span>
+            </div>
             <el-row>
                 <el-col align="center">
                     <p>{{message}}</p>
@@ -54,7 +58,7 @@
     }
 </script>
 
-<style scoped>
+<style scoped lang="less">
     .dialogBt {
         margin-top: 3rem;
         width: 8rem;
@@ -65,5 +69,14 @@
         color: white;
         cursor: pointer;
         outline: none;
+    }
+    .titleBox {
+       text-align: center;
+
+    .dialogIcon {
+        width: 2rem;
+        height: 2rem;
+        margin-right: 1rem;
+    }
     }
 </style>

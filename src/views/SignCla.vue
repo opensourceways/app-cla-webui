@@ -370,6 +370,9 @@
                             this.cla_org_id = key
                             this.setClaText(key)
                             argRes('complete')
+                        }else{
+                            this.$message.closeAll()
+                            this.$message.error('Language wrong')
                         }
                         this.languageOptions.push({value: key, label: data[key].language})
                     }

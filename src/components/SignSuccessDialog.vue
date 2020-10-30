@@ -7,6 +7,10 @@
                 :show-close="false"
                 :close-on-click-modal="false"
                 width="30%">
+            <div class="titleBox">
+                <svg-icon icon-class="chenggong" class="dialogIcon"></svg-icon>
+                <span>Successfully</span>
+            </div>
             <el-row>
                 <el-col align="center">
                     <p>{{message}}</p>
@@ -19,13 +23,14 @@
 
 <script>
     import * as until from '../until/until'
+
     export default {
         name: "SignSuccessDialog",
         props: ['dialogVisible', 'message', 'title'],
         data() {
             return {
                 domain: this.$store.state.domain,
-                signRouter:this.$store.state.signRouter,
+                signRouter: this.$store.state.signRouter,
             }
         },
         methods: {
@@ -36,16 +41,16 @@
                 })
 
 
-                    if(until.base64ToStr(sessionStorage.getItem('orgAddress'))){
-                        window.location.href=until.base64ToStr(sessionStorage.getItem('orgAddress'))
-                    }
+                if (until.base64ToStr(sessionStorage.getItem('orgAddress'))) {
+                    window.location.href = until.base64ToStr(sessionStorage.getItem('orgAddress'))
+                }
 
             },
         },
     }
 </script>
 
-<style scoped>
+<style scoped lang="less">
     .dialogBt {
         margin-top: 3rem;
         width: 8rem;
@@ -57,4 +62,15 @@
         cursor: pointer;
         outline: none;
     }
+
+    .titleBox {
+       text-align: center;
+
+        .dialogIcon {
+            width: 2rem;
+            height: 2rem;
+            margin-right: 1rem;
+        }
+    }
+
 </style>
