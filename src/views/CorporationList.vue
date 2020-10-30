@@ -62,7 +62,7 @@
                                 <!--inactive-color="#EBEEF5">-->
                                 <!--</el-switch>-->
                                 <!--</div>-->
-                                <el-button :disabled="scope.row.administrator_enabled" style="margin-left: 1rem" type="primary"
+                                <el-button :disabled="scope.row.admin_added" style="margin-left: 1rem" type="primary"
                                            size="mini"
                                            @click="createRoot(scope.row.admin_email)">Create Administrator
                                 </el-button>

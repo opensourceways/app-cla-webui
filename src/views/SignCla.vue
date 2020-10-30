@@ -5,8 +5,7 @@
         <el-row id="section">
             <el-row v-if="!isSendCode" class="content">
                 <el-col :offset="5" :span="14">
-                    <p class="contentTitle">"<span>{{org}}</span><span
-                            v-if="repo">/{{repo}}</span><span>" {{apply_to}} </span>Contributor License Agreement</p>
+                    <p class="contentTitle"><span>{{apply_to}} </span>Contributor License Agreement</p>
                     <el-row class="marginTop3rem" id="claBox">
                     </el-row>
                     <el-row class="marginTop3rem form">
@@ -104,9 +103,9 @@
             },
             apply_to() {
                 if (this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee') {
-                    return 'individual'
+                    return 'Individual'
                 } else if (this.$store.state.loginType === 'corporation') {
-                    return 'corporation'
+                    return 'Corporation'
                 }
             },
             org() {
