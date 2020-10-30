@@ -448,7 +448,7 @@
         },
         watch: {
             $route(){
-                this.$refs.transparentDiv.scrollTop
+                this.$refs.transparentDiv.scrollTo(0,0)
             }
         },
         computed: {
