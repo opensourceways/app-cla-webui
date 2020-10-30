@@ -245,7 +245,8 @@
                                 <el-row class="stepBox">
                                     <el-col :span="10" class="textCol">
                                         <div class="leftText">
-                                            Agree to access your Gitee account on the CLA signing platform and go to the employee CLA signing page.
+                                            Agree to access your Gitee account on the CLA signing platform and go to the
+                                            employee CLA signing page.
                                         </div>
                                     </el-col>
                                     <el-col class="iconBox" :span="4">
@@ -289,7 +290,8 @@
                                 <el-row class="stepBox">
                                     <el-col :span="10" class="textCol">
                                         <div class="leftText">
-                                            Wait for the administrator of your enterprise in the community to activate the signed CLA file you submitted.
+                                            Wait for the administrator of your enterprise in the community to activate
+                                            the signed CLA file you submitted.
                                         </div>
                                     </el-col>
                                     <el-col :span="4">
@@ -357,7 +359,8 @@
                                 <el-row class="stepBox">
                                     <el-col :span="10" class="textCol">
                                         <div class="leftText">
-                                            Agree to access your Gitee account on the CLA signing platform and go to the individual CLA signing page.
+                                            Agree to access your Gitee account on the CLA signing platform and go to the
+                                            individual CLA signing page.
                                         </div>
                                     </el-col>
                                     <el-col class="iconBox" :span="4">
@@ -447,117 +450,119 @@
             ReTryDialog,
         },
         watch: {
-            $route(){
-                this.$refs.transparentDiv.scrollTo(0,0)
-            }
-        },
-        computed: {
-            reTryDialogVisible() {
-                return this.$store.state.reTryDialogVisible
-            },
-            reLoginMsg() {
-                return this.$store.state.dialogMessage
-            },
-        },
-        data() {
-            return {
-                reLoginDialogTitle: '',
-                platform: '',
-                org: '',
-                repo: '',
-                domain: this.$store.state.domain,
-                signType: 'corporation',
-                transparentDiv: {
-                    height: '',
-                },
-                sectionStyle: {
-                    height: '',
-                },
-            }
-        },
-        provide() {
-            return {
-                setClientHeight: this.setClientHeight
-            }
-        },
-        methods: {
-            ...mapActions(['setPlatformAct', 'setLoginTypeAct', 'setRepoInfoAct', 'errorAct']),
-            getRepoInfo() {
-                let params = window.location.href.split('/sign/')[1]
-                let repoInfoParams = ''
-                if (params.indexOf('/') !== -1) {
-                    repoInfoParams = params.substring(0, params.indexOf('/'));
-                    let orgAddress = params.substring(params.indexOf('/') + 1);
-                    sessionStorage.setItem('orgAddress', orgAddress)
-                } else {
-                    sessionStorage.removeItem('orgAddress')
-                    repoInfoParams = params
+            watch: {
+                '$route': function (to, from) {
+                    document.body.scrollTop = 0
+                    document.documentElement.scrollTop = 0;
                 }
-                let arg = until.base64ToStr(repoInfoParams)
-                if (arg) {
-                    let args = arg.split('/');
-                    if (args.length < 2) {
-                        this.$router.push({name: 'ErrorPath'})
+            },
+            computed: {
+                reTryDialogVisible() {
+                    return this.$store.state.reTryDialogVisible
+                },
+                reLoginMsg() {
+                    return this.$store.state.dialogMessage
+                },
+            },
+            data() {
+                return {
+                    reLoginDialogTitle: '',
+                    platform: '',
+                    org: '',
+                    repo: '',
+                    domain: this.$store.state.domain,
+                    signType: 'corporation',
+                    transparentDiv: {
+                        height: '',
+                    },
+                    sectionStyle: {
+                        height: '',
+                    },
+                }
+            },
+            provide() {
+                return {
+                    setClientHeight: this.setClientHeight
+                }
+            },
+            methods: {
+                ...mapActions(['setPlatformAct', 'setLoginTypeAct', 'setRepoInfoAct', 'errorAct']),
+                getRepoInfo() {
+                    let params = window.location.href.split('/sign/')[1]
+                    let repoInfoParams = ''
+                    if (params.indexOf('/') !== -1) {
+                        repoInfoParams = params.substring(0, params.indexOf('/'));
+                        let orgAddress = params.substring(params.indexOf('/') + 1);
+                        sessionStorage.setItem('orgAddress', orgAddress)
                     } else {
-                        this.platform = args[0];
-                        this.org = args[1];
-                        if (args[2]) {
-                            this.repo = args[2]
+                        sessionStorage.removeItem('orgAddress')
+                        repoInfoParams = params
+                    }
+                    let arg = until.base64ToStr(repoInfoParams)
+                    if (arg) {
+                        let args = arg.split('/');
+                        if (args.length < 2) {
+                            this.$router.push({name: 'ErrorPath'})
                         } else {
-                            this.repo = ''
+                            this.platform = args[0];
+                            this.org = args[1];
+                            if (args[2]) {
+                                this.repo = args[2]
+                            } else {
+                                this.repo = ''
+                            }
+                            this.setRepoInfoAct({platform: this.platform, org_id: this.org, repo_id: this.repo});
                         }
-                        this.setRepoInfoAct({platform: this.platform, org_id: this.org, repo_id: this.repo});
-                    }
-                } else {
-                    this.$router.push({name: 'ErrorPath'})
-                }
-            },
-            submit(loginType) {
-                this.setLoginTypeAct(loginType)
-                if (this.platform === 'gitee') {
-                    if (loginType === 'individual' || loginType === 'employee') {
-                        http({
-                            url: `${url.getAuthCodeUrl}/${this.platform}/sign`,
-                        }).then(res => {
-                            window.location.href = res.data.data.url
-                        }).catch(err => {
-                            this.errorAct(err)
-                        })
                     } else {
-                        this.$router.push('/sign-cla')
+                        this.$router.push({name: 'ErrorPath'})
                     }
-                } else if (this.platform === 'github') {
-                    if (this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee') {
-                    } else {
-                        this.$router.push('/signCla')
+                },
+                submit(loginType) {
+                    this.setLoginTypeAct(loginType)
+                    if (this.platform === 'gitee') {
+                        if (loginType === 'individual' || loginType === 'employee') {
+                            http({
+                                url: `${url.getAuthCodeUrl}/${this.platform}/sign`,
+                            }).then(res => {
+                                window.location.href = res.data.data.url
+                            }).catch(err => {
+                                this.errorAct(err)
+                            })
+                        } else {
+                            this.$router.push('/sign-cla')
+                        }
+                    } else if (this.platform === 'github') {
+                        if (this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee') {
+                        } else {
+                            this.$router.push('/signCla')
+                        }
                     }
-                }
+                },
+                setCookie() {
+                    let date = new Date();
+                    date.setTime(date.getTime() - 10000);
+                    document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
+                },
+                clickSignTypeGuide(type) {
+                    this.signType = type;
+                },
+                setClientHeight() {
+                    this.$nextTick(() => {
+                        if (until.getClientHeight() > document.getElementById('transparentDiv').offsetHeight) {
+                            this.transparentDiv.height = until.getClientHeight() + 'px'
+                        }
+                    })
+                },
             },
-            setCookie() {
-                let date = new Date();
-                date.setTime(date.getTime() - 10000);
-                document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
+            created() {
+                this.setCookie();
+                this.getRepoInfo();
             },
-            clickSignTypeGuide(type) {
-                this.signType = type;
-            },
-            setClientHeight() {
-                this.$nextTick(() => {
-                    if (until.getClientHeight() > document.getElementById('transparentDiv').offsetHeight) {
-                        this.transparentDiv.height = until.getClientHeight() + 'px'
-                    }
-                })
-            },
-        },
-        created() {
-            this.setCookie();
-            this.getRepoInfo();
-        },
-        mounted() {
-            until.setMinHeight('sign', 'btBox')
-            this.setClientHeight();
+            mounted() {
+                until.setMinHeight('sign', 'btBox')
+                this.setClientHeight();
+            }
         }
-    }
 </script>
 <style scoped lang="less">
     @import "../assets/font/css/Roboto-Bold.css";
@@ -647,7 +652,8 @@
             padding-top: 4rem;
             padding-bottom: 10rem;
             position: relative;
-            .stepCoverBox{
+
+            .stepCoverBox {
                 position: absolute;
                 width: 100%;
                 height: 20px;
@@ -671,7 +677,8 @@
             justify-content: center;
             flex-direction: column;
             position: relative;
-            .coverBox{
+
+            .coverBox {
                 width: 100%;
                 height: 40px;
                 position: absolute;
@@ -696,7 +703,7 @@
         }
 
         .guideTitle {
-            font-family: Roboto-Regular,sans-serif;
+            font-family: Roboto-Regular, sans-serif;
             font-size: 2.5rem;
             color: #565656;
             margin: 5rem 0;
@@ -769,8 +776,9 @@
         color: #424242;
         font-size: 5rem;
         line-height: 30px;
-        p{
-            span{
+
+        p {
+            span {
                 font-family: Roboto-Bold, sans-serif;
                 font-weight: bold;
             }
