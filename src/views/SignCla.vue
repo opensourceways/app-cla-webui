@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="marginTop1rem fontSize12">
                                     <el-checkbox v-model="isRead"><span>I have read the <span
-                                            class="privacy" @click="viewPrivacy">Privacy Policy</span> and hereby consent to
+                                            class="privacy" @click="">Privacy Policy</span> and hereby consent to
                                         the processing of my data by <span class="privacy" @click="toIndex()">CLA signing platform</span> in {{serverAddress}}.</span>
                                     </el-checkbox>
                                 </div>
