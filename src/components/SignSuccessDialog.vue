@@ -1,5 +1,5 @@
 <template>
-    <el-row>
+    <el-row id="signSuccessDialog">
         <el-dialog
                 title=""
                 :visible.sync="dialogVisible"
@@ -51,26 +51,37 @@
 </script>
 
 <style scoped lang="less">
-    .dialogBt {
-        margin-top: 3rem;
-        width: 8rem;
-        height: 3rem;
-        background: linear-gradient(to right, #97DB30, #319E55);
-        border-radius: 1.5rem;
-        border: none;
-        color: white;
-        cursor: pointer;
-        outline: none;
-    }
+    #signSuccessDialog{
+        .dialogBt {
+            margin-top: 3rem;
+            width: 8rem;
+            height: 3rem;
+            background: linear-gradient(to right, #97DB30, #319E55);
+            border-radius: 1.5rem;
+            border: none;
+            color: white;
+            cursor: pointer;
+            outline: none;
+        }
 
-    .titleBox {
-       text-align: center;
-
-        .dialogIcon {
-            width: 2rem;
-            height: 2rem;
-            margin-right: 1rem;
+        .el-dialog__header{
+            padding: 0;
+        }
+        .el-dialog__body{
+         padding: 20px;
+        }
+        .titleBox {
+            text-align: left;
+            font-size: 1.5rem;
+            color: #319E55;
+            margin-bottom: 1rem;
+            .dialogIcon {
+                width: 1.5rem;
+                height: 1.5rem;
+                margin-right: 1rem;
+            }
         }
     }
+
 
 </style>

@@ -7,10 +7,15 @@
                 :show-close="false"
                 :close-on-click-modal="false"
                 width="30%">
-            <div class="titleBox">
-                <svg-icon icon-class="chenggong" class="dialogIcon"></svg-icon>
-                <span>Successfully</span>
-            </div>
+            <el-row class="titleBox" align="middle">
+                <el-col :span="4">
+                    <svg-icon icon-class="chenggong" class="dialogIcon"></svg-icon>
+                </el-col>
+                <el-col :span="20">
+                    <span>Successfully</span>
+                </el-col>
+
+            </el-row>
             <el-row>
                 <el-col align="center">
                     <p>{{message}}</p>
@@ -23,13 +28,14 @@
 
 <script>
     import * as until from '../until/until'
+
     export default {
         name: "ReLoginDialog",
         props: ['dialogVisible', 'message', 'title'],
         data() {
             return {
                 domain: this.$store.state.domain,
-                signRouter:this.$store.state.signRouter,
+                signRouter: this.$store.state.signRouter,
             }
         },
         methods: {
@@ -44,10 +50,10 @@
                 document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
                 let repoInfo = this.$store.state.repoInfo
                 let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`
-                let path='';
+                let path = '';
                 if (sessionStorage.getItem('orgAddress')) {
-                     path = `${this.signRouter}/${until.strToBase64(params)}/${sessionStorage.getItem('orgAddress')}`
-                }else{
+                    path = `${this.signRouter}/${until.strToBase64(params)}/${sessionStorage.getItem('orgAddress')}`
+                } else {
                     path = `${this.signRouter}/${until.strToBase64(params)}`
                 }
 
@@ -70,13 +76,26 @@
         cursor: pointer;
         outline: none;
     }
-    .titleBox {
-       text-align: center;
 
-    .dialogIcon {
-        width: 2rem;
-        height: 2rem;
-        margin-right: 1rem;
+    .el-dialog__header {
+        padding: 0;
     }
+
+    .el-dialog__body {
+        padding: 20px;
+    }
+
+    .titleBox {
+        text-align: left;
+        font-size: 1rem;
+        color: #319E55;
+        margin-bottom: 1rem;
+
+        .dialogIcon {
+            width: 1.5rem;
+            height: 1.5rem;
+            margin-right: .5rem;
+        }
+
     }
 </style>
