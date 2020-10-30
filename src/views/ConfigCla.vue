@@ -469,49 +469,54 @@
                             })
                         }
                     }
-
+                    return fields
                 } else {
-                    this.$message.closeAll();
-                    this.$message.error('Same titles or types are filled.')
+                   return false
                 }
-                return fields
+
             },
             binding() {
                 let obj = {}
-                let cla = {url: this.cla_Link, language: this.claLanguageValue, fields: this.editMetadata()}
-                if (this.repositoryChoose) {
-                    obj = {
-                        repo_id: `${this.repositoryOptions[this.repositoryValue].repoName}`,
-                        org_email: this.email,
-                        platform: this.platform,
-                        org_id: `${this.orgOptions[this.orgValue].label}`,
-                        apply_to: this.metadataType,
-                        submitter: `${this.platform}/${this.$store.state.user.userName}`,
-                        cla: cla,
-                    };
-                } else {
-                    obj = {
-                        repo_id: '',
-                        org_email: this.email,
-                        platform: this.platform,
-                        org_id: `${this.orgOptions[this.orgValue].label}`,
-                        apply_to: this.metadataType,
-                        submitter: `${this.platform}/${this.$store.state.user.userName}`,
-                        cla: cla,
-                    };
+                if (this.editMetadata()) {
+                    let cla = {url: this.cla_Link, language: this.claLanguageValue, fields: this.editMetadata()}
+                    if (this.repositoryChoose) {
+                        obj = {
+                            repo_id: `${this.repositoryOptions[this.repositoryValue].repoName}`,
+                            org_email: this.email,
+                            platform: this.platform,
+                            org_id: `${this.orgOptions[this.orgValue].label}`,
+                            apply_to: this.metadataType,
+                            submitter: `${this.platform}/${this.$store.state.user.userName}`,
+                            cla: cla,
+                        };
+                    } else {
+                        obj = {
+                            repo_id: '',
+                            org_email: this.email,
+                            platform: this.platform,
+                            org_id: `${this.orgOptions[this.orgValue].label}`,
+                            apply_to: this.metadataType,
+                            submitter: `${this.platform}/${this.$store.state.user.userName}`,
+                            cla: cla,
+                        };
+                    }
+                    http({
+                        url: url.linkRepository,
+                        method: 'post',
+                        data: obj,
+                    }).then(res => {
+                        this.$message.closeAll();
+                        this.$message.success('success')
+                        this.$router.push('/home')
+                    }).catch(err => {
+                        this.$message.closeAll();
+                        this.$message.error(err.data.error_message)
+                    })
+                }else{
+                    this.$message.closeAll();
+                    this.$message.error('Same titles or types are filled.')
                 }
-                http({
-                    url: url.linkRepository,
-                    method: 'post',
-                    data: obj,
-                }).then(res => {
-                    this.$message.closeAll();
-                    this.$message.success('success')
-                    this.$router.push('/home')
-                }).catch(err => {
-                    this.$message.closeAll();
-                    this.$message.error(err.data.error_message)
-                })
+
             },
             addRow(index) {
                 this.customMetadataArr.splice(index + 1, 0, {
