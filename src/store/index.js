@@ -176,49 +176,49 @@ export default new Vuex.Store({
                         });
                         break;
                     case 'cla.has_signed':
-                        commit('errorSet', {
+                        commit('setSignReLogin', {
                             dialogVisible: true,
                             dialogMessage: 'The CLA has been signed before.',
                         });
                         break;
                     case 'cla.invalid_parameter':
-                        commit('errorSet', {
+                        commit('setSignReLogin', {
                             dialogVisible: true,
                             dialogMessage: 'The parameter is invalid and cannot be signed',
                         });
                         break;
                     case 'cla.no_corp_manager':
-                        commit('errorSet', {
+                        commit('setSignReLogin', {
                             dialogVisible: true,
                             dialogMessage: 'Your company has not added any managers for this project.You can\'t sign',
                         });
                         break;
                     case 'cla.has_not_signed':
-                        commit('errorSet', {
+                        commit('setSignReLogin', {
                             dialogVisible: true,
                             dialogMessage: 'Your corporation has not signed.',
                         });
                         break;
                     case 'cla.invalid_token':
-                        commit('errorSet', {
+                        commit('setSignReLogin', {
                             dialogVisible: true,
                             dialogMessage: 'Token expired, please login again.',
                         });
                         break;
                     case 'cla.missing_token':
-                        commit('errorSet', {
+                        commit('setSignReLogin', {
                             dialogVisible: true,
                             dialogMessage: 'Token invalid, please login again.',
                         });
                         break;
                     case 'cla.unknown_token':
-                        commit('errorSet', {
+                        commit('setSignReLogin', {
                             dialogVisible: true,
                             dialogMessage: 'Token invalid, please login again.',
                         });
                         break;
                     case 'cla.uncompleted_signing':
-                        commit('errorSet', {
+                        commit('setSignReLogin', {
                             dialogVisible: true,
                             dialogMessage: 'The signing process of corporation is not finish yet.',
                         });
@@ -248,7 +248,7 @@ export default new Vuex.Store({
                         });
                         break;
                     case 'cla.pdf_has_not_uploaded':
-                        commit('errorSet', {
+                        commit('setSignReLogin', {
                             dialogVisible: true,
                             dialogMessage: 'Signature of organization is not uploaded.',
                         });
@@ -272,7 +272,7 @@ export default new Vuex.Store({
                         });
                         break;
                     case 'cla.not_ready_to_sign':
-                        commit('errorSet', {
+                        commit('setSignReLogin', {
                             dialogVisible: true,
                             dialogMessage: 'The organization is not ready.',
                         });

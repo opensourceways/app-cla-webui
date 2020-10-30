@@ -320,7 +320,7 @@
                         }
                     }
                     if (this.myForm.email === '') {
-                        this.$store.commit('errorSet', {
+                        this.$store.commit('setSignReLogin', {
                             dialogVisible: true,
                             dialogMessage: `Sorry, it is failed to fetch your email from ${this.platform}. Please set the primary email on setting page of ${this.platform}.`,
                         })
@@ -538,9 +538,6 @@
                 })
                 this.ruleForm = form
                 this.rules = rules
-            },
-            toHome() {
-                this.$router.push('/home')
             },
             signCla() {
                 let info = {}
