@@ -546,11 +546,11 @@
             },
         },
         created() {
-            this.$refs.transparentDiv.scrollTop = 0
             this.setCookie();
             this.getRepoInfo();
         },
         mounted() {
+            this.$refs.transparentDiv.scrollTop = 0
             until.setMinHeight('sign', 'btBox')
             this.setClientHeight();
         }
