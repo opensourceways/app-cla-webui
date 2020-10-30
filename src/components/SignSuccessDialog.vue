@@ -35,7 +35,10 @@
                     dialogMessage: '',
                 })
 
-                window.location.href=until.base64ToStr(sessionStorage.getItem('orgAddress'))
+
+                    if(until.base64ToStr(sessionStorage.getItem('orgAddress'))){
+                        window.location.href=until.base64ToStr(sessionStorage.getItem('orgAddress'))
+                    }
 
             },
         },

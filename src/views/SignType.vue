@@ -1,5 +1,5 @@
 <template>
-    <el-row class="index" id="transparentDiv" :style="transparentDiv">
+    <el-row class="index" id="transparentDiv" ref="transparentDiv" :style="transparentDiv">
         <NewHeader></NewHeader>
         <el-row id="section" :style="sectionStyle">
             <el-col :offset="5" :span="14">
@@ -546,6 +546,7 @@
             },
         },
         created() {
+            this.$refs.transparentDiv.scrollTop = 0
             this.setCookie();
             this.getRepoInfo();
         },
