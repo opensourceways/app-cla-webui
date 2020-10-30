@@ -7,15 +7,10 @@
                 :show-close="false"
                 :close-on-click-modal="false"
                 width="30%">
-            <el-row class="titleBox" align="middle">
-                <el-col :span="4">
+            <div class="titleBox" align="middle">
                     <svg-icon icon-class="chenggong" class="dialogIcon"></svg-icon>
-                </el-col>
-                <el-col :span="20">
                     <span>Successfully</span>
-                </el-col>
-
-            </el-row>
+            </div>
             <el-row>
                 <el-col align="center">
                     <p>{{message}}</p>
