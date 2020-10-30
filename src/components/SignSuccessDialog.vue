@@ -40,18 +40,31 @@
                     dialogMessage: '',
                 })
 
-
-                if (until.base64ToStr(sessionStorage.getItem('orgAddress'))) {
-                    window.location.href = until.base64ToStr(sessionStorage.getItem('orgAddress'))
+                if (sessionStorage.getItem('orgAddress')) {
+                    window.location.href = sessionStorage.getItem('orgAddress')
+                }else{
+                    let date = new Date();
+                    date.setTime(date.getTime() - 10000);
+                    document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
+                    let repoInfo = this.$store.state.repoInfo
+                    let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`
+                    let path = '';
+                    if (sessionStorage.getItem('orgAddress')) {
+                        path = `${this.signRouter}/${until.strToBase64(params)}/${sessionStorage.getItem('orgAddress')}`
+                    } else {
+                        path = `${this.signRouter}/${until.strToBase64(params)}`
+                    }
+                    this.$router.replace(path)
                 }
+
 
             },
         },
     }
 </script>
 
-<style  lang="less">
-    #signSuccessDialog{
+<style lang="less">
+    #signSuccessDialog {
         .dialogBt {
             margin-top: 3rem;
             width: 8rem;
@@ -64,17 +77,20 @@
             outline: none;
         }
 
-        .el-dialog__header{
+        .el-dialog__header {
             padding: 0;
         }
-        .el-dialog__body{
-         padding: 20px;
+
+        .el-dialog__body {
+            padding: 20px;
         }
+
         .titleBox {
             text-align: left;
             font-size: 1.5rem;
             color: #319E55;
             margin-bottom: 1rem;
+
             .dialogIcon {
                 width: 1.5rem;
                 height: 1.5rem;

@@ -588,17 +588,10 @@
                     } else if (this.$store.state.loginType === 'employee') {
                         this.tipsMessage = 'An email has been sent to you. Please take a look to review the signing.'
                     }
-                    if (sessionStorage.getItem('orgAddress')) {
                         this.$store.commit('setSignSuccess', {
                             dialogVisible: true,
                             dialogMessage: this.tipsMessage,
                         });
-                    }else{
-                        this.$store.commit('setSignReLogin', {
-                            dialogVisible: true,
-                            dialogMessage: this.tipsMessage,
-                        });
-                    }
 
                 }).catch(err => {
                     this.errorAct(err)

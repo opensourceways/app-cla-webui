@@ -170,7 +170,7 @@ export default new Vuex.Store({
             if (err.data.hasOwnProperty('data')) {
                 switch (err.data.data.error_code) {
                     case 'cla.no_cla_binding':
-                        commit('errorSet', {
+                        commit('setSignReLogin', {
                             dialogVisible: true,
                             dialogMessage: 'There is no CLA to sign for organization.',
                         });

@@ -8,7 +8,7 @@
                 :close-on-click-modal="false"
                 width="30%">
             <div class="titleBox" align="middle">
-                    <svg-icon icon-class="chenggong" class="dialogIcon"></svg-icon>
+                    <svg-icon icon-class="fail_icon" class="dialogIcon"></svg-icon>
                     <span>Successfully</span>
             </div>
             <el-row>
@@ -84,7 +84,7 @@
         .titleBox {
             text-align: left;
             font-size: 1rem;
-            color: #319E55;
+            color: #E22424;
             margin-bottom: 1rem;
 
             .dialogIcon {
