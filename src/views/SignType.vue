@@ -448,7 +448,7 @@
         },
         watch: {
             $route(){
-                // this.$refs.transparentDiv.scrollTop
+                this.$refs.transparentDiv.scrollTop
             }
         },
         computed: {
@@ -554,7 +554,6 @@
             this.getRepoInfo();
         },
         mounted() {
-            this.$refs.transparentDiv.scrollTo(0,0)
             until.setMinHeight('sign', 'btBox')
             this.setClientHeight();
         }
