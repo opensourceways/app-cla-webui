@@ -449,12 +449,7 @@
             NewFooter,
             ReTryDialog,
         },
-        watch: {
-                '$route': function (to, from) {
-                    document.body.scrollTop = 0
-                    document.documentElement.scrollTop = 0;
-                }
-            },
+      
             computed: {
                 reTryDialogVisible() {
                     return this.$store.state.reTryDialogVisible
