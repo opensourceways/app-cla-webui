@@ -606,7 +606,7 @@
                 return array
             },
 
-            /*将解码后的值传给PDFJS.getDocument(),交给pdf.js处理*/
+
             showPdfFile(data) {
                 PDFJS.GlobalWorkerOptions.workerSrc = '../until/pdf/pdf.worker.js';
                 var fileContent = this.converData(data);
@@ -663,9 +663,8 @@
                             var blob = new Blob([u8arr]);
                             window.navigator.msSaveOrOpenBlob(blob, 'Signature.pdf');
                         } else {
-                            // 转换完成，创建一个a标签用于下载
                             const a = document.createElement('a');
-                            a.download = 'Signature.pdf'; // 这里写你的文件名
+                            a.download = 'Signature.pdf';
                             a.href = e.target.result;
                             document.body.appendChild(a)
                             a.click();
