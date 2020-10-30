@@ -51,7 +51,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style  lang="less">
     #reLoginDialog{
         .dialogBt {
             margin-top: 3rem;

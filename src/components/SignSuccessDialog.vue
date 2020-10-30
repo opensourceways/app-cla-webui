@@ -50,7 +50,7 @@
     }
 </script>
 
-<style scoped lang="less">
+<style  lang="less">
     #signSuccessDialog{
         .dialogBt {
             margin-top: 3rem;
