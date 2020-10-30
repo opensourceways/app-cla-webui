@@ -446,7 +446,11 @@
             NewFooter,
             ReTryDialog,
         },
-        watch: {},
+        watch: {
+            $route(){
+                // this.$refs.transparentDiv.scrollTop
+            }
+        },
         computed: {
             reTryDialogVisible() {
                 return this.$store.state.reTryDialogVisible
@@ -550,7 +554,7 @@
             this.getRepoInfo();
         },
         mounted() {
-            this.$refs.transparentDiv.scrollTop = 0
+            this.$refs.transparentDiv.scrollTop
             until.setMinHeight('sign', 'btBox')
             this.setClientHeight();
         }
