@@ -361,7 +361,6 @@
             },
             setData(res, argRes) {
                 let data = res.data.data;
-                console.log(res);
                 this.signPageData = data
                 if (Object.keys(data).length) {
                     this.languageOptions = []
@@ -536,7 +535,6 @@
                 })
                 this.ruleForm = form
                 this.rules = rules
-                console.log(this.ruleForm, this.rules);
             },
             toHome() {
                 this.$router.push('/home')

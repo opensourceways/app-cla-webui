@@ -535,7 +535,6 @@
                 document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
             },
             clickSignTypeGuide(type) {
-                console.log(type);
                 this.signType = type;
             },
             setClientHeight() {

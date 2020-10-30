@@ -421,7 +421,6 @@
                         metadata_id: '',
                     };
                 }
-                // console.log(obj);
                 this.$axios({
                     url: '/api' + url.linkRepository,
                     method: 'post',

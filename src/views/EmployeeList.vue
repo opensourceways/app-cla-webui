@@ -179,34 +179,28 @@
         methods: {
             getInactivePageData() {
                 let data = []
-                console.log(this.inactiveCurrentPage);
                 data = this.inactiveData.slice((this.inactiveCurrentPage - 1) * this.pageSize, this.inactiveCurrentPage * this.pageSize)
                 if (data.length === 0 && this.inactiveCurrentPage > 1) {
                     this.inactiveCurrentPage--
                     this.getInactivePageData()
                 } else {
-                    console.log(data);
                     return data
                 }
             },
             getActivePageData() {
                 let data = []
-                console.log(this.activeData, this.activeCurrentPage);
                 data = this.activeData.slice((this.activeCurrentPage - 1) * this.pageSize, this.activeCurrentPage * this.pageSize)
                 if (data.length === 0 && this.activeCurrentPage > 1) {
                     this.activeCurrentPage--
                     this.getActivePageData()
                 } else {
-                    console.log(data);
                     return data
                 }
             },
             changeActivePage(page) {
-                console.log(page);
                 this.activeCurrentPage = page;
             },
             changeInActivePage(page) {
-                console.log(page);
                 this.inactiveCurrentPage = page;
             },
             submit() {
@@ -221,7 +215,6 @@
                     this.$message.closeAll();
                     this.$message.success('success')
                 }).catch(err => {
-                    console.log(err);
                     if (err.data.hasOwnProperty('data')) {
                         switch (err.data.data.error_code) {
                             case 'cla.invalid_token':
@@ -276,7 +269,6 @@
                 }).then(res => {
                     this.getEmployee()
                 }).catch(err => {
-                    console.log(err);
                     if (err.data.hasOwnProperty('data')) {
                         switch (err.data.data.error_code) {
                             case 'cla.invalid_token':
@@ -316,13 +308,10 @@
                 http({
                     url: url.queryEmployee,
                 }).then(res => {
-                    console.log(res);
                     this.inactiveData = [];
                     this.activeData = [];
                     let data = res.data.data;
                     for (let key in data) {
-                        console.log(key);
-                        console.log(data[key]);
                         data[key].forEach((item, index) => {
                             Object.assign(item, {cla_org_id: key})
                             item.enabled === false ? this.inactiveData.push(item) : this.activeData.push(item)

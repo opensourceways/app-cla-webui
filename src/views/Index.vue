@@ -75,7 +75,6 @@
         methods: {
             ...mapActions(['setPlatformAct']),
             clickSignTypeGuide(type) {
-                console.log(type);
                 this.signType = type;
             },
             setClientHeight() {

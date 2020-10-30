@@ -405,7 +405,6 @@
                 tab.index === '0' ? this.$router.push('/linkedRepo') : this.$router.push('/signedRepoLogin')
             },
             tableRowClassName({row, rowIndex}) {
-                console.log(row);
                 if (row.Organization === this.organization) {
                     return 'warning-row';
                 }
@@ -421,7 +420,6 @@
                 this.boundTableData=data
             },
             clickOrg(row, column, cell, event) {
-                console.log(row);
 
                 this.organization = row.Organization
                this.getBoundTableData()
@@ -439,7 +437,6 @@
                             resolve(claName)
                         }).then(res => {
                             Object.assign(data[index], {claName: res})
-                            console.log(res);
                             count--
                         }, err => {
                         })
@@ -447,7 +444,6 @@
                     let setDataInterval = setInterval(() => {
                         if (count === 0) {
                             this.tableData = data
-                            console.log(this.tableData);
                             this.getOrgTableData(data)
                             clearInterval(setDataInterval)
                         }
@@ -470,7 +466,6 @@
 
             },
             getOrgTableData(data) {
-                console.log(data);
                 let orgData = [];
                 data.forEach((item, index) => {
                     orgData.push({Organization: item.org_id})
@@ -517,19 +512,16 @@
                 this.$refs.uploadPdf.submit();
             },
             handleSuccess(file, fileList) {
-                console.log(file, fileList);
                 this.fileList = []
                 this.$message.closeAll()
                 this.$message.success('success')
                 this.uploadOrgDialogVisible = false
             },
             handleRemove(file, fileList) {
-                console.log(file, fileList);
                 this.$message.closeAll()
                 this.$message.success(file)
             },
             handlePreview(file) {
-                console.log(file);
             },
             handleExceed(files, fileList) {
                 this.$message.warning(`Currently, 1 file is limited to be selected. ${files.length} files are selected this time, and a total of ${files.length + fileList.length} files are selected`);
@@ -545,21 +537,17 @@
                 //     href:`/api${url.downloadSignature}/${this.item.id}`
                 // }
                 // this.previewOriginalDialogVisible = true
-                console.log('previewOriginalSignature', row);
             },
             downloadOriginalSignature(row) {
-                console.log('downloadOriginalSignature', row);
 
             },
 
             /*======================OrgSignature======================================*/
             uploadOrgSignature(row) {
                 this.uploadUrl = `/api${url.uploadSignature}/${row.id}`
-                console.log('uploadClaFile', row);
                 this.uploadOrgDialogVisible = true
             },
             previewOrgSignature(row) {
-                console.log('previewOrgSignature', row);
                 // this.pdfSrc = `../../static/pdf/merge.pdf`
                 // this.pdfSrc = `/api${url.downloadSignature}/${row.id}`
                 // this.pdfSrc = pdf.createLoadingTask(`/api${url.downloadSignature}/${row.id}`)
@@ -596,7 +584,6 @@
                     url: `/api${url.downloadSignature}/${row.id}`,
 
                 }).then(res => {
-                    console.log(res);
                     // this.showPdfFile(res.data.pdf)
                     sessionStorage.setItem('pdf_base64', res.data.data.pdf)
                     window.location.href = `../../static/pdf_source/web/viewer.html`
@@ -606,7 +593,6 @@
                     // window.location.href = `../../static/pdf_source/web/viewer.html?file=../../static/pdf/merge.pdf`
 
                 }).catch(err => {
-                    console.log(err);
                 })
             },
             converData(data) {
@@ -663,7 +649,6 @@
                     url: `/api${url.downloadSignature}/${row.id}`,
                     method: 'get',
                 }).then(res => {
-                    console.log(res.data.data);
                     let URL = this.dataURLtoBlob(res.data.data.pdf);
                     var reader = new FileReader();
                     reader.readAsDataURL(URL);

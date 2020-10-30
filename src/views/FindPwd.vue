@@ -7,7 +7,7 @@
                 </div>
             </el-col>
         </div>
-        <div>找回密码</div>
+        <div>Find Password</div>
         <Footer></Footer>
     </div>
 </template>

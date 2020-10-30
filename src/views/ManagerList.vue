@@ -163,11 +163,9 @@
                 http({
                     url: `${url.queryEmployeeManager}`,
                 }).then(res => {
-                    console.log(res);
                     this.tableData = res.data.data;
                     this.setUserLimitAct(res.data.data.length)
                 }).catch(err => {
-                    console.log(err);
                     if (err.data.hasOwnProperty('data')) {
                         switch (err.data.data.error_code) {
                             case 'cla.invalid_token':
@@ -213,7 +211,6 @@
                     method: 'delete',
                     data: obj,
                 }).then(res => {
-                    console.log(res);
                     this.getEmployeeManager();
                     this.deleteUserVisible = false
                 }).catch(err => {

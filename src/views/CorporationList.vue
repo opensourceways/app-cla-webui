@@ -281,7 +281,6 @@
         },
         methods: {
             tabsHandleClick(tab, event) {
-                console.log(tab);
                 if (tab.index === '0') {
                     this.getCorporationInfo()
                 }else if (tab.index === '1') {
@@ -320,7 +319,6 @@
             },
 
             downloadClaFile(row) {
-                console.log('downloadClaFile', row);
             },
             uploadClaFile(row) {
                 this.uploadUrl = `/api${url.uploadCorporationPdf}/${this.item.id}/${row.admin_email}`
@@ -330,7 +328,6 @@
                 this.$refs.uploadPdf.submit();
             },
             handleSuccess(file, fileList) {
-                console.log(file, fileList);
                 this.fileList=[]
                 this.$message.closeAll()
                 this.$message.success('success')
@@ -338,10 +335,8 @@
 
             },
             handleRemove(file, fileList) {
-                console.log(file, fileList);
             },
             handlePreview(file) {
-                console.log(file);
             },
             handleExceed(files, fileList) {
                 this.$message.warning(`Only one files can be uploaded.`);
@@ -353,7 +348,6 @@
                 http({
                     url: `${url.getClaInfo}/${this.item.id}/cla`,
                 }).then(resp => {
-                    console.log(resp);
                     this.claData = resp.data.data;
                 }).catch(err => {
                 })
@@ -366,7 +360,6 @@
                         cla_language: this.item.cla_language
                     },
                 }).then(resp => {
-                    console.log(resp);
                     this.tableData = resp.data.data[this.item.id];
                 }).catch(err => {
                 })
