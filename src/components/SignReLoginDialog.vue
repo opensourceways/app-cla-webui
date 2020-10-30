@@ -8,8 +8,8 @@
                 :close-on-click-modal="false"
                 width="30%">
             <div class="titleBox" align="middle">
-                    <svg-icon icon-class="fail_icon" class="dialogIcon"></svg-icon>
-                    <span>Failed</span>
+                <svg-icon icon-class="fail_icon" class="dialogIcon"></svg-icon>
+                <span>Failed</span>
             </div>
             <el-row>
                 <el-col align="center">
@@ -59,8 +59,8 @@
     }
 </script>
 
-<style  lang="less">
-    #signReLoginDialog{
+<style lang="less">
+    #signReLoginDialog {
         .dialogBt {
             margin-top: 3rem;
             width: 8rem;
