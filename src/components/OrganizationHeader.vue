@@ -12,22 +12,10 @@
                                       icon-class="default-user"></svg-icon>
                         </div>
                         <div v-if="menuVisible" id="menuOption">
-                            <div v-if="userInfo[orgValue].role==='admin'" @click="openOrCloseMenu('a')">
-                                Manager
+                            <div  @click="openOrCloseMenu('a')">
+                                Home
                             </div>
-                            <div v-else @click="openOrCloseMenu('b')">
-                                Employee
-                            </div>
-                            <div v-if="userInfo[orgValue].role==='admin'" @click="openOrCloseMenu('c')">
-                                Create manager
-                            </div>
-                            <div @click="openOrCloseMenu('d')">
-                                Reset password
-                            </div>
-                            <!--<div v-if="userInfo[orgValue].role==='admin'" @click="openOrCloseMenu('e')">-->
-                            <!--my cla-->
-                            <!--</div>-->
-                            <div @click="openOrCloseMenu('f')">
+                            <div @click="openOrCloseMenu('b')">
                                 Login out
                             </div>
                         </div>
@@ -73,24 +61,13 @@
 <script>
     export default {
         name: "CorporationHeader",
-        // computed: {user:{get:()=>{return this.userName}}},
-        props: ['user'],
-        computed: {
-
-            userInfo() {
-                return this.user.userInfo
-            },
-            orgValue() {
-                return this.user.orgValue
-            },
-        },
 
         data() {
             return {
                 userName: this.user.userName,
                 language: 'English',
                 value: 0,
-                options: [{value: 0, label: 'English'}, {value: 1, label: '中文'}, {value: 2, label: '日语'}],
+                options: [{value: 0, label: 'English'}, {value: 1, label: 'Chinese'}, {value: 2, label: 'Japanese'}],
                 visible: {
                     visibility: 'hidden',
                 },

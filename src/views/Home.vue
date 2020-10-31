@@ -1,8 +1,7 @@
 <template>
     <div id="home" :style="home">
         <Header></Header>
-
-        <el-col :offset="4" :span="16" id="section">
+        <el-col :offset="5" :span="14" id="section">
             <div>
                 <router-view></router-view>
             </div>
@@ -156,8 +155,8 @@
 <script>
     import * as url from '../until/api'
     import * as until from '../until/until'
-    import Header from '@components/Header'
-    import Footer from '@components/Footer'
+    import Header from '@components/OrganizationHeader'
+    import Footer from '@components/NewFooter'
     import {mapActions} from 'vuex'
 
     window.onresize = () => {
@@ -312,6 +311,23 @@
         },
         methods: {
             ...mapActions(['setLoginUserAct', 'setTokenAct', 'getLinkedRepoListAct']),
+            clickItem(command) {
+                switch (command) {
+                    case 'a':
+                        if (this.$route.path !== '/home') {
+                            this.$router.push('/home');
+                        }
+                        break;
+
+                    case 'b':
+                        this.loginOut()
+                        break;
+                }
+            },
+            loginOut() {
+                sessionStorage.clear();
+                this.$router.push('/')
+            },
             authorizeEmail() {
                 let myUrl = ''
                 switch (this.emailType) {

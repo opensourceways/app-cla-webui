@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="corporationList">
         <el-tabs v-model="activeName" @tab-click="tabsHandleClick">
             <el-tab-pane v-if="this.item.apply_to==='corporation'" label="Signed Corporation" name="first" style="margin-top: 1rem">
                 <div class="tableStyle">
@@ -411,94 +411,79 @@
 </script>
 
 <style lang="less">
-    .el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover {
-        cursor: pointer;
-    }
-
-    .el-popover {
-        min-width: 7rem;
-    }
-
-    .mySwitch .el-switch__label {
-        position: absolute;
-        display: none;
-        color: #fff;
-    }
-
-
-    .mySwitch .el-switch__label--right {
-        z-index: 1;
-        right: 0.5rem;
-    }
-
-
-    .mySwitch .el-switch__label--left {
-        z-index: 1;
-        left: .5rem;
-    }
-
-
-    .mySwitch .el-switch__label.is-active {
-        display: block;
-    }
-
-    .mySwitch.el-switch .el-switch__core,
-    .el-switch .el-switch__label {
-        width: 4rem !important;
-    }
-
-    .mySwitch .el-switch.is-disabled .el-switch__core, .mySwitch .el-switch.is-disabled .el-switch__label, .tableStyle {
-        cursor: pointer;
-    }
-
-    .tableStyle {
-        margin-bottom: 2rem;
-        padding: 3rem;
-        background-color: white;
-    }
-
-    .paginationClass {
-        text-align: center;
-        margin-bottom: 1rem;
-    }
-
-    .el-dropdown-link {
-        cursor: pointer;
-        color: #409EFF;
-    }
-
-    .el-icon-arrow-down {
-        font-size: 12px;
-    }
-
-    .menuBT {
-        display: flex;
-        flex-direction: column;
-
-        & > * {
-            width: 6rem;
-            margin: .2rem 1rem;
+    #corporationList{
+        padding-top: 3rem;
+        .el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover {
+            cursor: pointer;
+        }
+        .el-popover {
+            min-width: 7rem;
+        }
+        .mySwitch .el-switch__label {
+            position: absolute;
+            display: none;
+            color: #fff;
+        }
+        .mySwitch .el-switch__label--right {
+            z-index: 1;
+            right: 0.5rem;
+        }
+        .mySwitch .el-switch__label--left {
+            z-index: 1;
+            left: .5rem;
+        }
+        .mySwitch .el-switch__label.is-active {
+            display: block;
+        }
+        .mySwitch.el-switch .el-switch__core,
+        .el-switch .el-switch__label {
+            width: 4rem !important;
+        }
+        .mySwitch .el-switch.is-disabled .el-switch__core, .mySwitch .el-switch.is-disabled .el-switch__label, .tableStyle {
+            cursor: pointer;
+        }
+        .tableStyle {
+            margin-bottom: 2rem;
+            padding: 3rem;
+            background-color: white;
+        }
+        .paginationClass {
             text-align: center;
+            margin-bottom: 1rem;
+        }
+        .el-dropdown-link {
+            cursor: pointer;
+            color: #409EFF;
+        }
+        .el-icon-arrow-down {
+            font-size: 12px;
+        }
+        .menuBT {
+            display: flex;
+            flex-direction: column;
+            & > * {
+                width: 6rem;
+                margin: .2rem 1rem;
+                text-align: center;
+            }
+        }
+        .hoverUnderline:hover {
+            text-decoration: underline;
+        }
+        .pointer {
+            cursor: pointer;
+        }
+        .disableClass {
+            margin-top: 2rem;
+            text-align: center;
+            height: 3rem;
+            background-color: #ACD7E6;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
     }
 
-    .hoverUnderline:hover {
-        text-decoration: underline;
-    }
-
-    .pointer {
-        cursor: pointer;
-    }
-
-    .disableClass {
-        margin-top: 2rem;
-        text-align: center;
-        height: 3rem;
-        background-color: #ACD7E6;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
 
 </style>
