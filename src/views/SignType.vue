@@ -449,7 +449,7 @@
             NewFooter,
             ReTryDialog,
         },
-      
+
             computed: {
                 reTryDialogVisible() {
                     return this.$store.state.reTryDialogVisible
