@@ -119,6 +119,7 @@
         height: 5.5rem;
         width: 100%;
         /*z-index: 10;*/
+        background-color: white;
 
         .menuBox {
             position: relative;
@@ -151,7 +152,7 @@
             z-index: 9;
             background-color: white;
             white-space: pre;
-
+            width: 10rem;
             & > div {
                 height: 2.6rem;
                 line-height: 2.6rem;

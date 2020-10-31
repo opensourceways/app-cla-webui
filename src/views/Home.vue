@@ -1,6 +1,6 @@
 <template>
     <div id="home" :style="home">
-        <Header></Header>
+        <Header @clickItem="clickItem"></Header>
         <el-col :offset="5" :span="14" id="section">
             <div>
                 <router-view></router-view>
@@ -675,9 +675,7 @@
 
 </script>
 
-<style  lang="less">
-
-
+<style lang="less">
 
 
     #home {
@@ -685,10 +683,10 @@
         flex-direction: column;
         box-sizing: border-box;
         overflow: hidden;
+        background-color: #f9f9f9;
 
         & > div:nth-of-type(2) {
             flex-grow: 1;
-            background-color: #f9f9f9;
             text-align: left;
 
 
@@ -698,6 +696,7 @@
                 color: #2C3E50;
             }
         }
+
         .tableStyle {
             margin-bottom: 2rem;
             padding: 3rem;

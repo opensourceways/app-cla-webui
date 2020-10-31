@@ -1,11 +1,11 @@
 <template>
-    <el-row align="middle" style="border-top:2px solid #F2F2F2;">
+    <el-row id="newFooter" align="middle" style="border-top:2px solid #F2F2F2;">
         <el-col class="footer" :offset="5" :span="14">
             <div class="box" @click="join">
-                <span class="join_us" >JOIN US</span>
+                <span class="join_us">JOIN US</span>
             </div>
             <div class="box" @click="viewPrivacy">
-                <span class="copyright" >©2020 Draven.Designed by LA-Studio</span>
+                <span class="copyright">©2020 Draven.Designed by LA-Studio</span>
             </div>
 
         </el-col>
@@ -15,17 +15,18 @@
 
 <script>
     import {mapActions} from 'vuex'
+
     export default {
         name: "NewFooter",
-        data(){
-            return{}
+        data() {
+            return {}
         },
-        methods:{
+        methods: {
             ...mapActions(['viewPrivacy']),
-            join(){
+            join() {
                 window.open('https://github.com/opensourceways/app-cla-server')
             },
-            viewPrivacy(){
+            viewPrivacy() {
                 // window.open('/privacy')
             },
         },
@@ -39,26 +40,30 @@
     @import '../assets/font/css/HuaweiSans-Light.css';
     @import '../assets/font/css/HuaweiSans-Regular.css';
 
-    .footer {
-        font-family: HuaweiSans-Regular, sans-serif;
-        display: flex;
-        justify-content: space-between;
-        height: 5.5rem;
+    #newFooter {
+        background-color: white;
+        .footer {
+            font-family: HuaweiSans-Regular, sans-serif;
+            display: flex;
+            justify-content: space-between;
+            height: 5.5rem;
+        }
+
+        .box {
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .copyright {
+            font-size: .5rem;
+            /*font-family: HuaweiSans-Light,sans-serif;*/
+        }
+
+        .join_us {
+            font-size: 1.8rem;
+        }
     }
 
-    .box {
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .copyright {
-        font-size: .5rem;
-        /*font-family: HuaweiSans-Light,sans-serif;*/
-    }
-
-    .join_us {
-        font-size: 1.8rem;
-    }
 </style>
