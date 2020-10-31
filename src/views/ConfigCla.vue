@@ -95,7 +95,7 @@
                             size="medium"
                             class="emailInput"
                             placeholder="click to grant authorized email"
-                            @click="toAuthorizedEmail()"
+                            @click.native="toAuthorizedEmail()"
                             v-model="email">
 
                     </el-input>
@@ -154,7 +154,7 @@
                                 </el-col>
                                 <el-col :span="5">
                                     <el-select style="width: 100%" v-model="item.type"
-                                               placeholder="select dataType"
+                                               placeholder="select data type"
                                                size="medium">
                                         <el-option
                                                 v-for="i in dataTypeOptions"
