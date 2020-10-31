@@ -1,6 +1,6 @@
 <template>
     <div id="configCla" :style="configClaStyle">
-        <el-col :offset="5" :span="14" id="section">
+        <div  id="section">
             <div style="padding: 2rem 0;font-size: 1.3rem">Configure CLA</div>
             <div class="itemBox">
                 <div style="font-size: 1.2rem;padding: .5rem">
@@ -186,7 +186,7 @@
             </div>
 
 
-        </el-col>
+        </div>
         <el-dialog
                 top="5vh"
                 title=""
@@ -774,11 +774,6 @@
 
 <style scoped lang="less">
     #configCla {
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
-        overflow: hidden;
-        /*background-color: #F5F5F5;*/
 
         .itemBox {
             border-radius: 1.25rem;
@@ -800,9 +795,8 @@
             padding: .5rem 10px;
         }
 
-        & > div:nth-of-type(2) {
+        & > div:nth-of-type(1) {
             flex-grow: 1;
-            /*background-color: #F5F5F5;*/
             text-align: left;
 
         }

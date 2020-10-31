@@ -2,9 +2,7 @@
     <div id="home" :style="home">
         <Header @clickItem="clickItem"></Header>
         <el-col :offset="5" :span="14" id="section">
-            <div>
                 <router-view></router-view>
-            </div>
         </el-col>
         <Footer></Footer>
         <el-dialog
