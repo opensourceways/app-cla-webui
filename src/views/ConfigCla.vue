@@ -961,21 +961,8 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-
-
         &:hover {
             background-color: #046F94;
         }
     }
-
-    #configBtDiv {
-        text-align: left;
-        padding-top: 3rem;
-
-        & > .configBt {
-            font-size: 1.2rem;
-        }
-    }
-
-
 </style>

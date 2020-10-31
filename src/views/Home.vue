@@ -3,13 +3,6 @@
         <Header></Header>
 
         <el-col :offset="4" :span="16" id="section">
-
-            <div id="configBtDiv">
-                <el-button v-if="!showConfigForm" class="configBt" type="primary"
-                           @click="configCla()">
-                    Configure CLA
-                </el-button>
-            </div>
             <div>
                 <router-view></router-view>
             </div>
@@ -588,18 +581,6 @@
                 }).catch(err => {
                 })
             },
-            closeConfigForm() {
-                this.$store.commit('setShowConfigForm', 'false')
-                this.showConfigForm = false
-                this.setClientHeight()
-            },
-            configCla() {
-                // this.$store.commit('setShowConfigForm', 'true')
-                // this.showConfigForm = true;
-                // this.home.height = 'auto'
-                // this.getOrgsInfo()
-                this.$router.push('/bind-cla')
-            },
             setClientHeight() {
                 this.$nextTick(() => {
                     until.getClientHeight() > document.getElementById('home').offsetHeight ?
@@ -783,14 +764,7 @@
         }
     }
 
-    #configBtDiv {
-        text-align: left;
-        padding-top: 3rem;
 
-        & > .configBt {
-            font-size: 1.2rem;
-        }
-    }
 
     #home {
         padding-top: 4rem;

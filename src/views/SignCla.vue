@@ -50,7 +50,6 @@
                                     <button class="button" type="button" @click="submitForm('ruleForm')">
                                         {{desc.sign}}
                                     </button>
-                                    <!--<el-button @click="resetForm('ruleForm')">{{desc.reset}}</el-button>-->
                                 </el-form-item>
                             </el-form>
                         </el-col>

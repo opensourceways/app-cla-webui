@@ -1,5 +1,11 @@
 <template>
-    <div>
+    <div id="linkedRepo">
+        <div id="configBtDiv">
+            <el-button class="configBt" type="primary"
+                       @click="configCla()">
+                Configure CLA
+            </el-button>
+        </div>
         <el-tabs v-model="activeName" @tab-click="tabsHandleClick">
             <el-tab-pane label="Linked Repositories" name="first" style="margin-top: 1rem">
 
@@ -56,7 +62,7 @@
                                     placement="right">
                                 <div class="menuBT">
                                     <!--<el-button style="margin-left: 10px" @click="previewOriginalSignature(scope.row)"-->
-                                               <!--type="" size="mini">preview-->
+                                    <!--type="" size="mini">preview-->
                                     <!--</el-button>-->
                                     <el-button @click="downloadOriginalSignature(scope.row)" type="" size="mini">
                                         download
@@ -342,8 +348,7 @@
                 <!--<iframe :src="url"  width="100%" height="100%"></iframe>-->
             </div>
         </el-dialog>
-        <!--<div id="pop">-->
-        <!--</div>-->
+
         <ReLoginDialog></ReLoginDialog>
     </div>
 </template>
@@ -366,8 +371,8 @@
         },
         data() {
             return {
-                organization:'',
-                boundTableData:'',
+                organization: '',
+                boundTableData: '',
                 signAddress: '',
                 activeName: 'first',
                 clickRow: 0,
@@ -401,6 +406,9 @@
         },
         methods: {
             ...mapActions(['setLoginUserAct', 'setTokenAct', 'getLinkedRepoListAct', 'setTableDataAct']),
+            configCla() {
+                this.$router.push('/bind-cla')
+            },
             tabsHandleClick(tab, event) {
                 tab.index === '0' ? this.$router.push('/linkedRepo') : this.$router.push('/signedRepoLogin')
             },
@@ -410,19 +418,19 @@
                 }
                 return '';
             },
-            getBoundTableData(){
-                let data=[]
-                this.tableData.forEach((item,index)=>{
+            getBoundTableData() {
+                let data = []
+                this.tableData.forEach((item, index) => {
                     if (item.org_id === this.organization) {
                         data.push(item)
                     }
                 })
-                this.boundTableData=data
+                this.boundTableData = data
             },
             clickOrg(row, column, cell, event) {
 
                 this.organization = row.Organization
-               this.getBoundTableData()
+                this.getBoundTableData()
 
             },
             getLinkedRepoList() {
@@ -473,13 +481,13 @@
                 for (let i = 0; i < orgData.length; i++) {
                     for (let j = i + 1; j < orgData.length; j++) {
                         if (orgData[i].Organization === orgData[j].Organization) {
-                            orgData.splice(j,1)
+                            orgData.splice(j, 1)
                             j--
                         }
                     }
                 }
                 this.orgTableData = orgData
-                this.orgTableData.length>0?this.organization=this.orgTableData[0].Organization:this.organization=[]
+                this.orgTableData.length > 0 ? this.organization = this.orgTableData[0].Organization : this.organization = []
                 this.getBoundTableData()
             },
             copyAddress(row) {
@@ -812,238 +820,135 @@
 </script>
 
 <style lang="less">
-    .el-table .warning-row {
-        background: #8CC5FF;
-    }
+    #linkedRepo {
+        .el-table .warning-row {
+            background: #8CC5FF;
+        }
 
-    .el-popover {
-        min-width: 7rem;
-    }
+        .el-popover {
+            min-width: 7rem;
+        }
 
-    .tableStyle {
-        margin-bottom: 2rem;
-        padding: 3rem 0;
-        background-color: white;
-    }
+        .tableStyle {
+            margin-bottom: 2rem;
+            padding: 3rem 0;
+            background-color: white;
+        }
 
-    .orgTableStyle {
-        cursor: pointer;
-    }
+        .orgTableStyle {
+            cursor: pointer;
+        }
 
-    .paginationClass {
-        text-align: center;
-        margin-bottom: 1rem;
-    }
+        .paginationClass {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
 
-    .el-dropdown-link {
-        cursor: pointer;
-        color: #409EFF;
-    }
+        .el-dropdown-link {
+            cursor: pointer;
+            color: #409EFF;
+        }
 
-    .el-icon-arrow-down {
-        font-size: 12px;
-    }
+        .el-icon-arrow-down {
+            font-size: 12px;
+        }
 
-    .hoverUnderline:hover {
-        text-decoration: underline;
-    }
+        .hoverUnderline:hover {
+            text-decoration: underline;
+        }
 
-    .qusLink {
-        text-decoration: underline;
-        font-size: .8rem;
-        cursor: pointer;
-    }
+        .qusLink {
+            text-decoration: underline;
+            font-size: .8rem;
+            cursor: pointer;
+        }
 
-    .dialogDec {
-        font-size: 1rem;
-        padding: .5rem 0;
-    }
+        .dialogDec {
+            font-size: 1rem;
+            padding: .5rem 0;
+        }
 
-    .left {
-        text-align: left;
-    }
+        .left {
+            text-align: left;
+        }
 
-    .right {
-        text-align: right;
-    }
+        .right {
+            text-align: right;
+        }
 
-    .size_b {
-        font-size: 1.3rem;
-    }
+        .size_b {
+            font-size: 1.3rem;
+        }
 
-    .size_m {
-        font-size: 1rem;
-        text-align: left;
-    }
+        .size_m {
+            font-size: 1rem;
+            text-align: left;
+        }
 
 
-    .menuBT {
-        display: flex;
-        flex-direction: column;
+        .menuBT {
+            display: flex;
+            flex-direction: column;
 
-        & > * {
-            width: 6rem;
-            margin: .2rem 1rem;
+            & > * {
+                width: 6rem;
+                margin: .2rem 1rem;
+                text-align: center;
+            }
+        }
+
+        .pointer {
+            cursor: pointer;
+        }
+
+        .dialogDesc {
+
+            font-size: 1.2rem;
+            margin: 2rem 0;
             text-align: center;
         }
-    }
 
-    .pointer {
-        cursor: pointer;
-    }
-
-    .dialogDesc {
-
-        font-size: 1.2rem;
-        margin: 2rem 0;
-        text-align: center;
-    }
-
-    li {
-        margin: 1rem 0;
-    }
-
-    .disableClass {
-        margin-top: 2rem;
-        text-align: center;
-        height: 3rem;
-        background-color: #ACD7E6;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .linkBt {
-        margin-top: 2rem;
-        text-align: center;
-        height: 3rem;
-        background-color: #0594C6;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-
-
-        &:hover {
-            background-color: #046F94;
+        li {
+            margin: 1rem 0;
         }
-    }
 
-    #configBtDiv {
-        text-align: left;
-        padding-top: 3rem;
-
-        & > .configBt {
-            font-size: 1.2rem;
-        }
-    }
-
-    #home {
-        padding-top: 4rem;
-        display: flex;
-        flex-direction: column;
-        box-sizing: border-box;
-        overflow: hidden;
-        background-color: #F5F5F5;
-
-        & > .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: white;
-            height: 4rem;
+        .disableClass {
+            margin-top: 2rem;
+            text-align: center;
+            height: 3rem;
+            background-color: #ACD7E6;
+            color: white;
             display: flex;
-            flex-direction: row;
-            justify-content: space-between;
-            z-index: 1;
-            width: 100%;
+            flex-direction: column;
+            justify-content: center;
+        }
 
-            & > div:nth-of-type(1) {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                text-align: left;
-                padding-left: 3rem;
-            }
+        .linkBt {
+            margin-top: 2rem;
+            text-align: center;
+            height: 3rem;
+            background-color: #0594C6;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
 
-            & > div:nth-of-type(2) {
-                display: flex;
-                justify-content: center;
 
-                & > div {
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
-
-                    #svg_logo {
-                        height: 4rem;
-                        width: 4rem;
-                    }
-                }
-
-            }
-
-            & > div:nth-of-type(3) {
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                text-align: right;
-                padding-right: 3rem;
+            &:hover {
+                background-color: #046F94;
             }
         }
 
-        & > div:nth-of-type(2) {
-            flex-grow: 1;
-            background-color: #F5F5F5;
+        #configBtDiv {
             text-align: left;
+            padding-top: 3rem;
+            margin-bottom: 2rem;
 
-
-            & > div:nth-of-type(3) {
-                padding: 4rem 0 2rem 0;
-                font-size: 1.3rem;
-                color: #2C3E50;
-            }
-
-        }
-
-        & > .footer {
-            height: 4rem;
-            display: flex;
-            justify-content: space-between;
-            background-color: white;
-
-            & > .left {
-                text-align: left;
-                padding-left: 2rem;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-
-            & > .center {
-                text-align: center;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-            }
-
-            & > .right {
-                text-align: right;
-                padding-right: 2rem;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-
-                span:nth-of-type(1) {
-                    margin-right: 1rem;
-                }
-
-                #github_logo {
-                    width: 1.1rem;
-                    height: 1.1rem;
-                }
+            & > .configBt {
+                font-size: 1.2rem;
             }
         }
     }
+
+
 </style>
