@@ -152,7 +152,7 @@
                 serverAddress:'Hong Kong',
                 domain: this.$store.state.domain,
                 tipsTitle: '',
-                tipsMessage: 'An email has been sent to you. Please take a look to review the signing.',
+                tipsMessage: 'Thanks for your sign.',
                 tipsDialogVisible: false,
                 signPageData: '',
                 cla_org_id: '',

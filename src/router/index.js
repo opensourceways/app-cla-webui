@@ -56,6 +56,11 @@ const routes = [
                 name: 'CorporationList',
                 component: () => import('../views/CorporationList.vue')
             },
+            {
+                path: '/bind-cla',
+                name: 'ConfigCla',
+                component: () => import('../views/ConfigCla.vue')
+            },
         ]
     },
     {
@@ -112,11 +117,7 @@ const routes = [
         component: () => import('../views/SignType.vue')
     },
 
-    {
-        path: '/bind-cla',
-        name: 'ConfigCla',
-        component: () => import('../views/ConfigCla.vue')
-    },
+
     {
         path: '/privacy',
         name: 'Privacy',

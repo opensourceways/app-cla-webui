@@ -1,8 +1,6 @@
 <template>
     <div id="configCla" :style="configClaStyle">
-        <Header></Header>
-
-        <el-col :offset="4" :span="16" id="section">
+        <el-col :offset="5" :span="14" id="section">
             <div style="padding: 2rem 0;font-size: 1.3rem">Configure CLA</div>
             <div class="itemBox">
                 <div style="font-size: 1.2rem;padding: .5rem">
@@ -189,7 +187,6 @@
 
 
         </el-col>
-        <Footer></Footer>
         <el-dialog
                 top="5vh"
                 title=""
@@ -237,8 +234,6 @@
 <script>
     import * as url from '../until/api'
     import * as until from '../until/until'
-    import Header from '@components/NewHeader'
-    import Footer from '@components/NewFooter'
     import {mapActions} from 'vuex'
     import http from '../until/http'
 
@@ -249,10 +244,6 @@
     }
     export default {
         name: "ConfigCla",
-        components: {
-            Header,
-            Footer,
-        },
         computed: {
             orgOptions() {
                 try {
