@@ -31,6 +31,7 @@
                                     label='Role'>
                             </el-table-column>
                             <el-table-column
+                                    label="Operation"
                                     v-if="!multipleChoice"
                                     key="2"
                                     align="center"

@@ -18,7 +18,7 @@
                                 label="Email">
                         </el-table-column>
                         <el-table-column
-                                label="status"
+                                label="Operation"
                                 align="center">
                             <template slot-scope="scope">
                                 <el-row class="mySwitch">

@@ -795,7 +795,7 @@
             padding: .5rem 10px;
         }
 
-        & > div:nth-of-type(1) {
+       #section {
             flex-grow: 1;
             text-align: left;
 
