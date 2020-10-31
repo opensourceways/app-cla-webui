@@ -32,8 +32,6 @@
 </template>
 
 <script>
-    import * as url from '../until/api'
-    // import Header from '@components/NewHeader'
     import Header from '@components/CorporationHeader'
     import Footer from '@components/NewFooter'
     import * as until from '../until/until'
@@ -72,8 +70,7 @@
 
             }
         },
-        created() {
-        },
+
         mounted() {
             this.setClientHeight();
         },

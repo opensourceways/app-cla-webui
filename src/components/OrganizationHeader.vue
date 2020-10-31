@@ -60,11 +60,10 @@
 
 <script>
     export default {
-        name: "CorporationHeader",
+        name: "OrganizationHeader",
 
         data() {
             return {
-                userName: this.user.userName,
                 language: 'English',
                 value: 0,
                 options: [{value: 0, label: 'English'}, {value: 1, label: 'Chinese'}, {value: 2, label: 'Japanese'}],
@@ -324,49 +323,5 @@
         cursor: pointer;
     }
 
-    /*.header {*/
-    /*position: fixed;*/
-    /*top: 0;*/
-    /*left: 0;*/
-    /*background-color: #ececec;*/
-    /*height: 4rem;*/
-    /*display: flex;*/
-    /*flex-direction: row;*/
-    /*justify-content: space-between;*/
-    /*z-index: 10;*/
-    /*width: 100%;*/
 
-    /*& > div:nth-of-type(1) {*/
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*justify-content: center;*/
-    /*text-align: left;*/
-    /*padding-left: 3rem;*/
-    /*}*/
-
-    /*& > div:nth-of-type(2) {*/
-    /*display: flex;*/
-    /*justify-content: center;*/
-
-    /*& > div {*/
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*justify-content: center;*/
-
-    /*#svg_logo {*/
-    /*height: 4rem;*/
-    /*width: 4rem;*/
-    /*}*/
-    /*}*/
-
-    /*}*/
-
-    /*& > div:nth-of-type(3) {*/
-    /*display: flex;*/
-    /*flex-direction: column;*/
-    /*justify-content: center;*/
-    /*text-align: right;*/
-    /*padding-right: 3rem;*/
-    /*}*/
-    /*}*/
 </style>
