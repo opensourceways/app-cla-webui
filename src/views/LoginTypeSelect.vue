@@ -65,15 +65,13 @@
         height: 100%;
         display: flex;
         flex-direction: column;
-        /*justify-content: center;*/
     }
 
     .codeBox .el-input__inner {
         border-radius: 4px 0 0 4px;
     }
     .button {
-        /*font-family:Roboto-Regular,sans-serif ;*/
-        width: 15rem;
+        width: 17rem;
         height: 4rem;
         border-radius: 2rem;
         border: none;
