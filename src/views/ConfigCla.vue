@@ -6,7 +6,7 @@
             <div style="padding: 2rem 0;font-size: 1.3rem">Configure CLA</div>
             <div class="itemBox">
                 <div style="font-size: 1.2rem;padding: .5rem">
-                    ① Choose a org or repository
+                    ① Choose a organization or repository
                 </div>
                 <div style="padding: 0 2rem">
                     <el-row :gutter="20">
@@ -59,25 +59,25 @@
                 </div>
                 <div style="padding: 0 2rem">
                     <el-row :gutter="20">
-                        <el-col >
+                        <el-col>
                             <el-input size="medium" v-model="cla_Link">
                             </el-input>
                         </el-col>
                         <!--<el-col :span="4">-->
-                            <!--<el-select v-model="claLanguageValue"-->
-                                       <!--placeholder="select language"-->
-                                       <!--style="width: 100%"-->
-                                       <!--size="medium"-->
-                                       <!--clearable-->
-                                       <!--filterable-->
-                                       <!--@change="changeLanguage">-->
-                                <!--<el-option-->
-                                        <!--v-for="item in languageOptions"-->
-                                        <!--:key="item.value"-->
-                                        <!--:label="item.label"-->
-                                        <!--:value="item.value">-->
-                                <!--</el-option>-->
-                            <!--</el-select>-->
+                        <!--<el-select v-model="claLanguageValue"-->
+                        <!--placeholder="select language"-->
+                        <!--style="width: 100%"-->
+                        <!--size="medium"-->
+                        <!--clearable-->
+                        <!--filterable-->
+                        <!--@change="changeLanguage">-->
+                        <!--<el-option-->
+                        <!--v-for="item in languageOptions"-->
+                        <!--:key="item.value"-->
+                        <!--:label="item.label"-->
+                        <!--:value="item.value">-->
+                        <!--</el-option>-->
+                        <!--</el-select>-->
                         <!--</el-col>-->
                     </el-row>
 
@@ -88,16 +88,14 @@
             <div class="itemBox">
                 <div style="font-size: 1.2rem;padding: .5rem">
                     ③ Email
-                    <span @click="toAuthorizedEmail()"
-                          style="font-size: .8rem;text-decoration: underline;cursor: pointer">(click to grant authorized email)
-                                    </span>
                 </div>
                 <div style="padding: 0 2rem">
                     <el-input
                             readonly=""
-                            @input="verifyEmail"
                             size="medium"
-                            placeholder="authorization email"
+                            class="emailInput"
+                            placeholder="click to grant authorized email"
+                            @click="toAuthorizedEmail()"
                             v-model="email">
 
                     </el-input>
@@ -369,10 +367,9 @@
                 }],
                 org_id: '',
                 org: '',
-                emailTypeArr: [{value: 'Gmail', label: 'Gmail'}],
+                emailTypeArr: [{value: 'G-Mail', label: 'G-Mail'}],
                 emailType: '',
                 emailDialogVisible: false,
-                filterChange: true,
                 claLanguageValue: 'English',
                 claTypeValue: '',
                 claTypeOptions: [{label: 'individual', value: 'individual'}, {
@@ -389,7 +386,6 @@
                 isVerify: false,
                 activeName: 'first',
                 previewShow: false,
-                previewText: '',
                 loginType: this.$store.state.loginType,
                 tableType: 1,
                 tableShow: true,
@@ -439,7 +435,7 @@
                 let newArr = this.customMetadataArr.concat(this.metadataArr);
                 for (let i = 0; i < newArr.length; i++) {
                     for (let j = i + 1; j < newArr.length; j++) {
-                        if (newArr[i].title === newArr[j].title||newArr[i].type === newArr[j].type) {
+                        if (newArr[i].title === newArr[j].title || newArr[i].type === newArr[j].type) {
                             return false;
                         }
                     }
@@ -471,7 +467,7 @@
                     }
                     return fields
                 } else {
-                   return false
+                    return false
                 }
 
             },
@@ -512,7 +508,7 @@
                         this.$message.closeAll();
                         this.$message.error(err.data.error_message)
                     })
-                }else{
+                } else {
                     this.$message.closeAll();
                     this.$message.error('Same titles or types are filled.')
                 }
@@ -586,7 +582,7 @@
             authorizeEmail() {
                 let myUrl = ''
                 switch (this.emailType) {
-                    case 'Gmail':
+                    case 'G-Mail':
                         myUrl = url.getAuthEmail;
                         break;
                 }
@@ -615,17 +611,8 @@
                 this.$store.commit('setClaChoose', false)
                 this.filterChange = true
                 this.$store.commit('setClaValue', '')
-                this.previewText = ''
-                this.getCLA()
             },
-            claTypeChange(val) {
-                this.resetCla()
-            },
-            claLanguageChange(val) {
-                this.resetCla()
-            },
-            handleChange(val) {
-            },
+
             getPath() {
                 let path = this.$route.path;
                 if (path === '/linkedRepo' || path === '/home') {
@@ -639,16 +626,6 @@
             },
             openLinkDialog() {
                 (this.orgChoose && this.claChoose && this.isEmail) && (this.linkDialogVisible = true)
-            },
-            verifyEmail() {
-                var email = this.email;
-                var reg = /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/;
-                if (reg.test(email)) {
-                    this.isEmail = true
-                } else {
-                    this.isEmail = false
-                    return false
-                }
             },
             orgVisibleChange(visible) {
                 if (visible) {
@@ -722,33 +699,6 @@
                             orgOptions.push({value: index, label: item.login, id: item.id});
                         })
                         this.$store.commit('setOrgOption', orgOptions)
-                    }
-                }).catch(err => {
-                })
-            },
-            getCLA() {
-                this.$axios({
-                    url: '/api' + url.getClaInfo,
-                    params: {language: this.claLanguageValue, apply_to: this.claTypeValue},
-                    headers: {
-                        'Token': this.$store.state.access_token,
-                        'Access-Token': this.$store.state.platform_token,
-                        'Refresh-Token': this.$store.state.refresh_token,
-                        'User': `${this.$store.state.platform}/${this.$store.state.user.userName}`
-                    }
-                }).then(res => {
-                    let claOptions = [];
-                    if (res.data.data.length) {
-                        res.data.data.forEach((item, index) => {
-                            claOptions.push({
-                                value: index,
-                                label: item.name,
-                                id: item.id,
-                                text: item.text,
-                                language: item.language
-                            })
-                        })
-                        this.$store.commit('setClaOptions', claOptions)
                     }
                 }).catch(err => {
                 })
@@ -845,6 +795,9 @@
             padding: 2rem;
             margin-bottom: 2rem;
 
+            .emailInput {
+                cursor: pointer;
+            }
         }
 
         .btDiv {
@@ -961,6 +914,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+
         &:hover {
             background-color: #046F94;
         }
