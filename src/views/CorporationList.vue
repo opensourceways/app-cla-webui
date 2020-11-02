@@ -1,7 +1,8 @@
 <template>
     <div id="corporationList">
         <el-tabs v-model="activeName" @tab-click="tabsHandleClick">
-            <el-tab-pane v-if="this.item.apply_to==='corporation'" label="Signed Corporation" name="first" style="margin-top: 1rem">
+            <el-tab-pane v-if="this.item.apply_to==='corporation'" label="Signed Corporation" name="first"
+                         style="margin-top: 1rem">
                 <div class="tableStyle">
                     <el-table
                             :data="tableData"
@@ -35,7 +36,8 @@
                                         <el-button @click="uploadClaFile(scope.row)" style="margin-left: 10px" type=""
                                                    size="mini">upload
                                         </el-button>
-                                        <el-button @click="downloadClaFile(scope.row)" type="" size="mini">download</el-button>
+                                        <el-button @click="downloadClaFile(scope.row)" type="" size="mini">download
+                                        </el-button>
                                         <!--<el-button @click="previewClaFile(scope.row)" type="" size="mini">preview</el-button>-->
                                     </div>
 
@@ -48,7 +50,7 @@
                                 label="Operation">
 
                             <template slot-scope="scope">
-                                <el-button :disabled="scope.row.admin_added" style="margin-left: 1rem" type="primary"
+                                <el-button :disabled="scope.row.admin_added" type="primary"
                                            size="mini"
                                            @click="createRoot(scope.row.admin_email)">Create Administrator
                                 </el-button>
@@ -59,7 +61,7 @@
                     </el-table>
                 </div>
             </el-tab-pane>
-            <el-tab-pane label= "CLA" name="second" style="margin-top: 1rem">
+            <el-tab-pane label="CLA" name="second" style="margin-top: 1rem">
                 <div class="tableStyle">
                     <el-table
                             :data="claData"
@@ -94,7 +96,8 @@
                                         <el-button @click="uploadClaFile(scope.row)" style="margin-left: 10px" type=""
                                                    size="mini">upload
                                         </el-button>
-                                        <el-button @click="downloadClaFile(scope.row)" type="" size="mini">download</el-button>
+                                        <el-button @click="downloadClaFile(scope.row)" type="" size="mini">download
+                                        </el-button>
                                         <!--<el-button @click="previewClaFile(scope.row)" type="" size="mini">preview</el-button>-->
                                     </div>
 
@@ -120,7 +123,8 @@
                                 <!--inactive-color="#EBEEF5">-->
                                 <!--</el-switch>-->
                                 <!--</div>-->
-                                <el-button :disabled="scope.row.administrator_enabled" style="margin-left: 1rem" type="primary"
+                                <el-button :disabled="scope.row.administrator_enabled" style="margin-left: 1rem"
+                                           type="primary"
                                            size="mini"
                                            @click="createRoot(scope.row.admin_email)">Create Administrator
                                 </el-button>
@@ -146,7 +150,7 @@
         <!--</el-pagination>-->
         <!--</div>-->
         <el-dialog
-                title="upload cla file"
+                title="upload file"
                 top="5vh"
                 :visible.sync="uploadDialogVisible"
                 width="35%">
@@ -169,11 +173,10 @@
                                     :auto-upload="false"
                                     :on-exceed="handleExceed"
                                     :file-list="fileList">
-                                <el-button slot="trigger" size="small" type="primary">select </el-button>
+                                <el-button slot="trigger" size="small" type="primary">select</el-button>
                                 <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">
                                     upload
                                 </el-button>
-                                <!--<div slot="tip" class="el-upload__tip">文件不超过500kb</div>-->
                             </el-upload>
                         </el-form-item>
                     </el-form>
@@ -218,7 +221,7 @@
 
         data() {
             return {
-                claData:'',
+                claData: '',
                 activeName: 'first',
                 uploadHeaders: {
                     'Token': this.$store.state.access_token,
@@ -242,25 +245,14 @@
                 tableTotal: 0,
             }
         },
-        beforeRouteEnter(to, from, next) {
 
-            if (from.path !== '/') {
-                sessionStorage.removeItem('item')
-            }
-            next();
-        },
         created() {
-            if (JSON.parse(sessionStorage.getItem('item'))) {
-                this.item = JSON.parse(sessionStorage.getItem('item'))
-            } else {
-                this.item = this.$route.query.item
-                sessionStorage.setItem('item', JSON.stringify(this.$route.query.item))
-            }
-            if (this.item.apply_to==='corporation'){
-                this.activeName='first'
+            this.item = this.$route.query.item;
+            if (this.item.apply_to === 'corporation') {
+                this.activeName = 'first';
                 this.getCorporationInfo()
-            } else{
-                this.activeName='second'
+            } else if (this.item.apply_to === 'individual') {
+                this.activeName = 'second';
                 this.getClaInfo()
             }
 
@@ -269,7 +261,7 @@
             tabsHandleClick(tab, event) {
                 if (tab.index === '0') {
                     this.getCorporationInfo()
-                }else if (tab.index === '1') {
+                } else if (tab.index === '1') {
                     this.getClaInfo()
                 }
             },
@@ -281,7 +273,7 @@
                     url: this.uploadUrl,
                     method: 'patch',
                     data: formData,
-                    headers:{'Token':this.$store.state.access_token}
+                    headers: {'Token': this.$store.state.access_token}
                 }).then()
             },
             uploadOk() {
@@ -299,7 +291,7 @@
             previewClaFile(row) {
                 this.docInfo = {
                     type: "pdf",
-                    href:`/api${url.downloadSignature}/${this.item.id}`
+                    href: `/api${url.downloadSignature}/${this.item.id}`
                 }
                 this.previewDialogVisible = true
             },
@@ -314,10 +306,10 @@
                 this.$refs.uploadPdf.submit();
             },
             handleSuccess(file, fileList) {
-                this.fileList=[]
+                this.fileList = []
                 this.$message.closeAll()
                 this.$message.success('success')
-                this.uploadDialogVisible=false
+                this.uploadDialogVisible = false
 
             },
             handleRemove(file, fileList) {
@@ -330,7 +322,7 @@
             beforeRemove(file, fileList) {
                 return this.$confirm(`Are you sure you want to remove it ${file.name}？`);
             },
-            getClaInfo(){
+            getClaInfo() {
                 http({
                     url: `${url.getClaInfo}/${this.item.id}/cla`,
                 }).then(resp => {
@@ -397,68 +389,85 @@
 </script>
 
 <style lang="less">
-    #corporationList{
+    #corporationList {
         padding-top: 3rem;
+
         .el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover {
             cursor: pointer;
         }
+
         .el-popover {
             min-width: 7rem;
         }
+
         .mySwitch .el-switch__label {
             position: absolute;
             display: none;
             color: #fff;
         }
+
         .mySwitch .el-switch__label--right {
             z-index: 1;
             right: 0.5rem;
         }
+
         .mySwitch .el-switch__label--left {
             z-index: 1;
             left: .5rem;
         }
+
         .mySwitch .el-switch__label.is-active {
             display: block;
         }
+
         .mySwitch.el-switch .el-switch__core,
         .el-switch .el-switch__label {
             width: 4rem !important;
         }
+
         .mySwitch .el-switch.is-disabled .el-switch__core, .mySwitch .el-switch.is-disabled .el-switch__label, .tableStyle {
             cursor: pointer;
         }
+
         .tableStyle {
             margin-bottom: 2rem;
             padding: 3rem;
             background-color: white;
         }
+
         .paginationClass {
             text-align: center;
             margin-bottom: 1rem;
         }
+
         .el-dropdown-link {
             cursor: pointer;
             color: #409EFF;
         }
+
         .el-icon-arrow-down {
             font-size: 12px;
         }
+
         .menuBT {
             display: flex;
             flex-direction: column;
+
             & > * {
                 width: 6rem;
                 margin: .2rem 1rem;
                 text-align: center;
             }
         }
+
         .hoverUnderline:hover {
             text-decoration: underline;
         }
+
         .pointer {
             cursor: pointer;
         }
+
         .disableClass {
             margin-top: 2rem;
             text-align: center;
