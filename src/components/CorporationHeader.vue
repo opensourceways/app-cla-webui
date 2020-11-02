@@ -73,7 +73,6 @@
 <script>
     export default {
         name: "CorporationHeader",
-        // computed: {user:{get:()=>{return this.userName}}},
         props: ['user'],
         computed: {
 
@@ -175,6 +174,7 @@
             z-index: 9;
             background-color: white;
             white-space: pre;
+            width: 10rem;
 
             & > div {
                 height: 2.6rem;

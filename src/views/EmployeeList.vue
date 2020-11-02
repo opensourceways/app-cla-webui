@@ -116,7 +116,7 @@
                 Are you sure to delete ?
             </el-row>
             <el-row align="center" class="marginTop1rem contentTitle">
-                <button class="deleteBt" @click="submit()">Yes</button>
+                <button class="deleteBt" @click="submitDelete()">Yes</button>
                 <button class="cancelBt" @click="deleteUserVisible=false">No</button>
             </el-row>
 
@@ -199,11 +199,13 @@
             },
             changeActivePage(page) {
                 this.activeCurrentPage = page;
+                this.getActivePageData()
             },
             changeInActivePage(page) {
                 this.inactiveCurrentPage = page;
+                this.getInactivePageData()
             },
-            submit() {
+            submitDelete() {
                 let obj = {enabled: this.deleteData.enabled}
                 http({
                     url: `${url.enableEmployee}/${this.deleteData.email}`,
