@@ -28,7 +28,6 @@
             <el-col :span="21" class="tableStyle">
                 <el-table
                         :data="boundTableData"
-                        align="center"
                         style="width: 100%;">
                     <el-table-column
                             prop="repo_id"
@@ -53,7 +52,6 @@
                             label="Language">
                     </el-table-column>
                     <el-table-column
-                            align="center"
                             label="Empty Signature">
                         <template v-if="scope.row.apply_to==='corporation'" slot-scope="scope">
                             <el-popover
@@ -73,7 +71,6 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                            align="center"
                             label="Org Signature">
                         <template v-if="scope.row.apply_to==='corporation'" slot-scope="scope">
                             <el-popover
@@ -98,8 +95,7 @@
                     </el-table-column>
                     <el-table-column
                             label="Unlink"
-                            width="100"
-                            align="center">
+                            width="100">
                         <template slot-scope="scope">
                             <el-tooltip slot="reference" effect="dark" content="unlink"
                                         placement="bottom">
@@ -109,7 +105,7 @@
                     </el-table-column>
                     <el-table-column
                             width="200"
-                            label="Sign">
+                            label="Operation">
                         <template slot-scope="scope">
                             <el-button size="mini" @click="toSignPage(scope.row)">Sign</el-button>
                             <el-button size="mini" @click="copyAddress(scope.row)">copy address</el-button>

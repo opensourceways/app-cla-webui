@@ -23,8 +23,7 @@
                         </el-table-column>
 
                         <el-table-column
-                                label="PDF"
-                                align="center">
+                                label="PDF">
 
                             <template slot-scope="scope">
                                 <el-popover
@@ -46,22 +45,9 @@
                             </template>
                         </el-table-column>
                         <el-table-column
-                                align="center">
+                                label="Operation">
 
                             <template slot-scope="scope">
-                                <!--<div class="mySwitch" style="display: inline-block">-->
-                                <!--<el-switch-->
-                                <!--@change="changeActive(scope.row.cla_org_id,scope.row.corporation_name,scope.row.admin_email,true)"-->
-                                <!--v-model="scope.row.enabled"-->
-                                <!--class="mySwitch"-->
-                                <!--:disabled="scope.row.enabled"-->
-                                <!--width="100"-->
-                                <!--active-color="#409EFF"-->
-                                <!--active-text="active"-->
-                                <!--inactive-text="inactive"-->
-                                <!--inactive-color="#EBEEF5">-->
-                                <!--</el-switch>-->
-                                <!--</div>-->
                                 <el-button :disabled="scope.row.admin_added" style="margin-left: 1rem" type="primary"
                                            size="mini"
                                            @click="createRoot(scope.row.admin_email)">Create Administrator
