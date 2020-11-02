@@ -520,7 +520,82 @@
                             }).then(res => {
                                 window.location.href = res.data.data.url
                             }).catch(err => {
-                                this.errorAct(err)
+                                if (err.data.hasOwnProperty('data')) {
+                                    switch (err.data.data.error_code) {
+                                        case 'cla.no_cla_binding':
+                                            this.$store.commit('setSignReLogin', {
+                                                dialogVisible: true,
+                                                dialogMessage: 'There is no CLA to sign for organization.',
+                                            });
+                                            break;
+                                        case 'cla.invalid_parameter':
+                                            let repoInfo = this.$store.state.repoInfo
+                                            let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`
+                                            let path = '';
+                                            if (sessionStorage.getItem('orgAddress')) {
+                                                path = `${this.signRouter}/${until.strToBase64(params)}/${sessionStorage.getItem('orgAddress')}`
+                                            } else {
+                                                path = `${this.signRouter}/${until.strToBase64(params)}`
+                                            }
+                                            this.$router.replace(path)
+                                            break;
+                                        case 'cla.has_not_signed':
+                                            this.$store.commit('setSignReLogin', {
+                                                dialogVisible: true,
+                                                dialogMessage: 'Your corporation has not signed.',
+                                            });
+                                            break;
+                                        case 'cla.invalid_token':
+                                            this.$store.commit('setSignReLogin', {
+                                                dialogVisible: true,
+                                                dialogMessage: 'Token expired, please login again.',
+                                            });
+                                            break;
+                                        case 'cla.missing_token':
+                                            this.$store.commit('setSignReLogin', {
+                                                dialogVisible: true,
+                                                dialogMessage: 'Token invalid, please login again.',
+                                            });
+                                            break;
+                                        case 'cla.unknown_token':
+                                            this.$store.commit('setSignReLogin', {
+                                                dialogVisible: true,
+                                                dialogMessage: 'Token invalid, please login again.',
+                                            });
+                                            break;
+                                        case 'cla.uncompleted_signing':
+                                            this.$store.commit('setSignReLogin', {
+                                                dialogVisible: true,
+                                                dialogMessage: 'The signing process of corporation is not finish yet.',
+                                            });
+                                            break;
+
+                                        case 'cla.pdf_has_not_uploaded':
+                                            this.$store.commit('setSignReLogin', {
+                                                dialogVisible: true,
+                                                dialogMessage: 'Signature of organization is not uploaded.',
+                                            });
+                                            break;
+
+                                        case 'cla.not_ready_to_sign':
+                                            this.$store.commit('setSignReLogin', {
+                                                dialogVisible: true,
+                                                dialogMessage: 'The organization is not ready.',
+                                            });
+                                            break;
+                                        case 'cla.system_error':
+                                            this.$store.commit('errorCodeSet', {
+                                                dialogVisible: true,
+                                                dialogMessage: 'System error, please try again',
+                                            });
+                                            break;
+                                    }
+                                }else{
+                                    this.$store.commit('errorCodeSet', {
+                                        dialogVisible: true,
+                                        dialogMessage: 'System error, please try again',
+                                    })
+                                }
                             })
                         } else {
                             this.$router.push('/sign-cla')

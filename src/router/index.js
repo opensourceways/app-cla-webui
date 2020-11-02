@@ -149,6 +149,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    console.log(to);
     if (from.path === '/signedRepo/resetPassword' || from.path === '/rootManager/resetPassword') {
         if (to.path === '/corporationManagerLogin') {
             next()
@@ -156,7 +157,6 @@ router.beforeEach((to, from, next) => {
             if (sessionStorage.getItem('pwdIsChanged')==='true') {
                 next()
             } else {
-                // next(from.path)
             }
         }
     } else {

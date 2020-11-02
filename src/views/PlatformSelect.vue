@@ -108,25 +108,10 @@
                                             dialogMessage: 'token unknown, please login again',
                                         });
                                         break;
+                                        case 'cla.invalid_parameter':
+                                        this.$router.replace('/platformSelect')
+                                        break;
 
-                                    case 'cla.num_of_corp_managers_exceeded':
-                                        this.$store.commit('errorCodeSet', {
-                                            dialogVisible: true,
-                                            dialogMessage: 'The added administrator exceeds the limit',
-                                        });
-                                        break;
-                                    case 'cla.corp_manager_exists':
-                                        this.$store.commit('errorCodeSet', {
-                                            dialogVisible: true,
-                                            dialogMessage: 'The added administrator already exists',
-                                        });
-                                        break;
-                                    case 'cla.not_same_corp':
-                                        this.$store.commit('errorCodeSet', {
-                                            dialogVisible: true,
-                                            dialogMessage: 'The mailbox does not belong to the company mailbox',
-                                        });
-                                        break;
                                     case 'cla.system_error':
                                         this.$store.commit('errorCodeSet', {
                                             dialogVisible: true,
