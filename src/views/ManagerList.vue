@@ -339,9 +339,6 @@
         }
 
 
-        & .el-dialog__body {
-            padding-top: 0;
-        }
 
         & .el-checkbox__inner {
             border: 1px solid #319E55;

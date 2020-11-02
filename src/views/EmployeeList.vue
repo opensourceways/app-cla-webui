@@ -199,11 +199,11 @@
             },
             changeActivePage(page) {
                 this.activeCurrentPage = page;
-                this.getActivePageData()
+                this.activePageData=this.getActivePageData()
             },
             changeInActivePage(page) {
                 this.inactiveCurrentPage = page;
-                this.getInactivePageData()
+                this.inactivePageData=this.getInactivePageData()
             },
             submitDelete() {
                 let obj = {enabled: this.deleteData.enabled}
@@ -406,7 +406,7 @@
         }
 
         & .el-dialog__body {
-            padding-top: 0;
+
         }
 
         & .cancelBt {
