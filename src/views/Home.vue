@@ -659,8 +659,12 @@
                 }).catch(err => {
                 })
             },
+            setDomain(){
+                this.$store.commit('setDomain',window.location.href.split('/home')[0])
+            },
         },
         created() {
+            this.setDomain();
             this.clearPageSession();
             this.getPath();
             this.openFullScreen();

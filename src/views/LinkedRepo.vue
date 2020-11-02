@@ -369,6 +369,12 @@
             pdf,
             ReLoginDialog,
         },
+        computed:{
+            address(){
+                return this.$store.state.domain
+            },
+
+        },
         data() {
             return {
                 organization: '',
@@ -378,7 +384,7 @@
                 clickRow: 0,
                 tableData: [],
                 orgTableData: [],
-                address: this.$store.state.domain,
+
                 url: '',
                 signRouter: this.$store.state.signRouter,
                 pdfSrc: '',
@@ -816,7 +822,9 @@
             changePage(page) {
             },
             setDomain(){
-                this.$store.commit('setDomain',window.location.href.split('/index')[0])
+                if (window.location.href.split('/linkedRepo')[0] !== window.location.href) {
+                    this.$store.commit('setDomain',window.location.href.split('/linkedRepo')[0])
+                }
             },
         },
 
