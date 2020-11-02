@@ -46,7 +46,6 @@
                         </el-table-column>
                     </el-table>
                     <el-pagination
-                            small
                             class="pagination-class"
                             layout="prev, pager, next"
                             :page-size="pageSize"
@@ -573,6 +572,9 @@
 
         .el-pagination button:disabled:hover {
             color: #c0c4cc;
+        }
+        .el-pagination button:disabled{
+            cursor: auto;
         }
     }
 
