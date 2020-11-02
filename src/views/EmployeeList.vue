@@ -93,7 +93,6 @@
                         </el-table-column>
                     </el-table>
                     <el-pagination
-                            small
                             class="pagination-class"
                             layout="prev, pager, next"
                             :page-size="pageSize"
