@@ -182,7 +182,7 @@
                 data = this.inactiveData.slice((this.inactiveCurrentPage - 1) * this.pageSize, this.inactiveCurrentPage * this.pageSize)
                 if (data.length === 0 && this.inactiveCurrentPage > 1) {
                     this.inactiveCurrentPage--
-                    this.getInactivePageData()
+                   return this.getInactivePageData()
                 } else {
                     return data
                 }
@@ -192,7 +192,7 @@
                 data = this.activeData.slice((this.activeCurrentPage - 1) * this.pageSize, this.activeCurrentPage * this.pageSize)
                 if (data.length === 0 && this.activeCurrentPage > 1) {
                     this.activeCurrentPage--
-                    this.getActivePageData()
+                   return this.getActivePageData()
                 } else {
                     return data
                 }
