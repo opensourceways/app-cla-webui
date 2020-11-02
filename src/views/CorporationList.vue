@@ -247,8 +247,8 @@
         },
 
         created() {
-            this.item = this.$route.query.item;
-            console.log(this.$route.query.item);
+            this.item = JSON.parse(this.$route.query.item)
+            console.log(this.item);
             if (this.item.apply_to === 'corporation') {
                 this.activeName = 'first';
                 this.getCorporationInfo()
