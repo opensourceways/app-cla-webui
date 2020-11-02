@@ -149,7 +149,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    console.log(to);
+    alert(to)
     if (from.path === '/signedRepo/resetPassword' || from.path === '/rootManager/resetPassword') {
         if (to.path === '/corporationManagerLogin') {
             next()
