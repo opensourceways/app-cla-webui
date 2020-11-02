@@ -25,7 +25,7 @@ export default new Vuex.Store({
         tableData: sessionStorage.getItem('tableData') || undefined,
         ready: Boolean(sessionStorage.getItem('ready') || undefined),
         platform: sessionStorage.getItem('platform') || undefined,
-        domain: 'https://clasign.osinfra.cn',
+        domain:sessionStorage.getItem('domain') || undefined,
         access_token: sessionStorage.getItem('token') || undefined,
         refresh_token: sessionStorage.getItem('refresh_token') || undefined,
         platform_token: sessionStorage.getItem('platform_token') || undefined,
@@ -159,6 +159,10 @@ export default new Vuex.Store({
         setCorpToken(state, token) {
             state.access_token = token;
             sessionStorage.setItem('token', token);
+        },
+        setDomain(state,domain){
+            state.domain=domain
+           sessionStorage.setItem('domain',domain)
         },
     },
     actions: {

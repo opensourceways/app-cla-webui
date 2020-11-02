@@ -402,6 +402,7 @@
             }
         },
         created() {
+            this.setDomain();
             this.getLinkedRepoList();
         },
         methods: {
@@ -813,6 +814,9 @@
                 })
             },
             changePage(page) {
+            },
+            setDomain(){
+                this.$store.commit('setDomain',window.location.href.split('/index')[0])
             },
         },
 

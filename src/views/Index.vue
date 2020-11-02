@@ -17,7 +17,6 @@
                                             <p><span>L</span>icense</p>
                                             <p><span>A</span>greement</p>
                                         </div>
-                                        <!--<span>Sign</span>-->
                                     </div>
                                 </el-col>
 
@@ -84,13 +83,19 @@
                     }
                 })
             },
+            setDomain(){
+                this.$store.commit('setDomain',window.location.href.split('/index')[0])
+            },
+        },
+        created(){
+            this.setDomain()
         },
         mounted() {
             this.setClientHeight();
         }
     }
 </script>
-<style scoped lang="less">
+<style  lang="less">
     @import "../assets/font/css/Roboto-Bold.css";
     @import "../assets/font/css/Roboto-Black.css";
     @import "../assets/font/css/Roboto-Light.css";
@@ -132,44 +137,43 @@
             font-size:2.5rem ;
             margin: 5rem 0;
         }
-    }
-    .backgroundBox {
-        background-repeat: no-repeat;
-        position: absolute;
-        overflow: hidden;
-        top: 120px;
-        left: 230px;
+        .backgroundBox {
+            background-repeat: no-repeat;
+            position: absolute;
+            overflow: hidden;
+            top: 120px;
+            left: 230px;
 
-    }
-    .actionBox {
-        position: relative;
-        height: 720px;
-    }
-    .title {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        text-align: left
-    }
-
-    .name {
-        font-family: Roboto-Regular, sans-serif;
-        color: #424242;
-        font-size: 5rem;
-        line-height: 30px;
-        p{
-            span{
-                font-family: Roboto-Bold, sans-serif;
-                font-weight: bold;
+        }
+        .actionBox {
+            position: relative;
+            height: 720px;
+        }
+        .title {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: left
+        }
+        .name {
+            font-family: Roboto-Regular, sans-serif;
+            color: #424242;
+            font-size: 5rem;
+            line-height: 30px;
+            p{
+                span{
+                    font-family: Roboto-Bold, sans-serif;
+                    font-weight: bold;
+                }
             }
+        }
+        .description {
+            font-family: Roboto-Regular, sans-serif;
+            font-size: 1.5rem;
         }
     }
 
-    .description {
-        font-family: Roboto-Regular, sans-serif;
-        font-size: 1.5rem;
-    }
 
 
 </style>
