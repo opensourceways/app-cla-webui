@@ -1,7 +1,7 @@
 <template>
     <div id="corporationList">
         <el-tabs v-model="activeName" @tab-click="tabsHandleClick">
-            <el-tab-pane v-if="this.item.apply_to==='corporation'" label="Signed Corporation" name="first"
+            <el-tab-pane v-if="item.apply_to==='corporation'" label="Signed Corporation" name="first"
                          style="margin-top: 1rem">
                 <div class="tableStyle">
                     <el-table
@@ -248,6 +248,7 @@
 
         created() {
             this.item = this.$route.query.item;
+            console.log(this.$route.query.item);
             if (this.item.apply_to === 'corporation') {
                 this.activeName = 'first';
                 this.getCorporationInfo()
