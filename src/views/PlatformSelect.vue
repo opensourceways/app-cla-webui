@@ -135,6 +135,8 @@
             goBack(){
                 alert('goBack')
                 // this.$router.go(-1)
+                window.history.back();
+                history.pushState(null, null, document.URL);
             },
         },
         created() {
