@@ -22,26 +22,27 @@
 
                 </el-col>
                 <!--<el-col :span="10">-->
-                    <!--<div class="icon_back">-->
-                        <!--<div class="icon_box">-->
-                            <!--<div class="loginSvg">-->
-                                <!--<svg-icon icon-class="github_new" class="loginIcon"></svg-icon>-->
+                <!--<div class="icon_back">-->
+                <!--<div class="icon_box">-->
+                <!--<div class="loginSvg">-->
+                <!--<svg-icon icon-class="github_new" class="loginIcon"></svg-icon>-->
 
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="icon_box">-->
-                            <!--<div class="loginBt">-->
-                                <!--<button class="button" @click="login('github')">-->
-                                    <!--Login in-->
-                                <!--</button>-->
-                            <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--<div class="icon_box">-->
+                <!--<div class="loginBt">-->
+                <!--<button class="button" @click="login('github')">-->
+                <!--Login in-->
+                <!--</button>-->
+                <!--</div>-->
 
-                        <!--</div>-->
+                <!--</div>-->
 
-                    <!--</div>-->
+                <!--</div>-->
                 <!--</el-col>-->
             </el-row>
-            <reTryDialog :title="corpReLoginDialogTitle" :message="corpReLoginMsg" :dialogVisible="corpReTryDialogVisible"></reTryDialog>
+            <reTryDialog :title="corpReLoginDialogTitle" :message="corpReLoginMsg"
+                         :dialogVisible="corpReTryDialogVisible"></reTryDialog>
         </el-col>
     </el-row>
 
@@ -55,10 +56,10 @@
 
     export default {
         name: "PlatformSelect",
-        components:{
+        components: {
             reTryDialog,
         },
-        computed:{
+        computed: {
             corpReLoginMsg() {
                 return this.$store.state.dialogMessage
             },
@@ -74,7 +75,7 @@
                 platform: '',
             };
         },
-        inject:['setClientHeight'],
+        inject: ['setClientHeight'],
         methods: {
             ...mapActions(['setPlatformAct']),
             submit() {
@@ -108,7 +109,7 @@
                                             dialogMessage: 'token unknown, please login again',
                                         });
                                         break;
-                                        case 'cla.invalid_parameter':
+                                    case 'cla.invalid_parameter':
                                         this.$router.replace('/platformSelect')
                                         break;
 
@@ -119,7 +120,7 @@
                                         });
                                         break;
                                 }
-                            }else{
+                            } else {
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
                                     dialogMessage: 'System error, please try again',
@@ -138,7 +139,7 @@
     }
 </script>
 
-<style  lang="less">
+<style lang="less">
     .bt_desc {
         height: 100px;
         display: flex;
@@ -196,6 +197,7 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
+
         & .el-dialog {
             border-radius: 1rem;
             text-align: center;

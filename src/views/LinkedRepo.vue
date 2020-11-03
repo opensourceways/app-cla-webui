@@ -71,7 +71,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                            label="Org Signature">
+                            label="Organization Signature">
                         <template v-if="scope.row.apply_to==='corporation'" slot-scope="scope">
                             <el-popover
                                     width="80"

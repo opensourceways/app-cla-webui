@@ -10,12 +10,12 @@
                             style="width: 100%;">
                         <el-table-column
                                 prop="corporation_name"
-                                label="CorporationName">
+                                label="Corporation Name">
 
                         </el-table-column>
                         <el-table-column
                                 prop="admin_name"
-                                label="AdminName">
+                                label="Administrator Name">
                         </el-table-column>
 
                         <el-table-column

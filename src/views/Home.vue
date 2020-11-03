@@ -2,7 +2,7 @@
     <div id="home" :style="home">
         <Header @clickItem="clickItem"></Header>
         <el-col :offset="5" :span="14" id="section">
-                <router-view></router-view>
+            <router-view></router-view>
         </el-col>
         <Footer></Footer>
         <el-dialog
@@ -659,8 +659,12 @@
                 }).catch(err => {
                 })
             },
-            setDomain(){
-                this.$store.commit('setDomain',window.location.href.split('/home')[0])
+            setDomain() {
+                this.$store.commit('setDomain', window.location.href.split('/home')[0])
+            },
+            goBack(){
+                console.log('goBack');
+                this.$router.go(-1)
             },
         },
         created() {
@@ -672,6 +676,15 @@
         },
         mounted() {
             this.setClientHeight();
+
+            if (window.history && window.history.pushState) {
+                history.pushState(null, null, document.URL)
+                window.addEventListener('popstate', this.goBack, false)
+            }
+
+        },
+        destroyed() {
+            window.removeEventListener('popstate', this.goBack, false)
         },
     };
 
