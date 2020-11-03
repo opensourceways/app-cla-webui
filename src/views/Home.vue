@@ -662,10 +662,7 @@
             setDomain() {
                 this.$store.commit('setDomain', window.location.href.split('/home')[0])
             },
-            goBack(){
-               alert('goBack')
-                // this.$router.go(-1)
-            },
+
         },
         created() {
             this.setDomain();
@@ -676,16 +673,10 @@
         },
         mounted() {
             this.setClientHeight();
-            if (window.history && window.history.pushState) {
-                console.log(window.history.state);
-                history.pushState(null, null, document.URL)
-                window.addEventListener('popstate', this.goBack, false)
-            }
+
 
         },
-        destroyed() {
-            window.removeEventListener('popstate', this.goBack, false)
-        },
+
     };
 
 </script>

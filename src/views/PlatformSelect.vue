@@ -89,7 +89,7 @@
                         }).then(res => {
                             console.log(res);
                             // this.login(res.data.data.url)
-                            window.location.href = res.data.data.url
+                            window.location.replace(res.data.data.url)
                         }).catch(err => {
                             console.log(err);
                             if (err.data.hasOwnProperty('data')) {
@@ -140,25 +140,10 @@
                 let params = url.split('/api')
 
             },
-            goBack(){
-                alert('goBack')
-                // this.$router.go(-1)
-                // window.history.back();
-                // history.pushState(null, null, document.URL);
-            },
+
         },
         created() {
             this.setClientHeight()
-        },
-        mounted() {
-            if (window.history && window.history.pushState) {
-                history.pushState(null, null, document.URL)
-                console.log(history.state);
-                window.addEventListener('popstate', this.goBack, false)
-            }
-        },
-        destroyed() {
-            window.removeEventListener('popstate', this.goBack, false)
         },
     }
 </script>
