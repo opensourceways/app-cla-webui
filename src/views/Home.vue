@@ -676,7 +676,6 @@
         },
         mounted() {
             this.setClientHeight();
-
             if (window.history && window.history.pushState) {
                 console.log(window.history.state);
                 history.pushState(null, null, document.URL)

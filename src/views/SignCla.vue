@@ -101,10 +101,12 @@
                 return this.$store.state.refresh_token
             },
             apply_to() {
-                if (this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee') {
+                if (this.$store.state.loginType === 'individual') {
                     return 'Individual'
                 } else if (this.$store.state.loginType === 'corporation') {
                     return 'Corporation'
+                } else if (this.$store.state.loginType === 'employee') {
+                    return 'Employee'
                 }
             },
             org() {
@@ -148,8 +150,8 @@
         ,
         data() {
             return {
-                signRouter:'/sign',
-                serverAddress:'Hong Kong',
+                signRouter: '/sign',
+                serverAddress: 'Hong Kong',
                 domain: this.$store.state.domain,
                 tipsTitle: '',
                 tipsMessage: 'Thanks for your sign.',
@@ -203,7 +205,7 @@
         },
         methods: {
             ...mapActions(['setTokenAct', 'setRepoInfoAct', 'viewPrivacy', 'errorAct']),
-            toIndex(){
+            toIndex() {
                 let date = new Date();
                 date.setTime(date.getTime() - 10000);
                 document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
@@ -211,10 +213,10 @@
 
                 let repoInfo = this.$store.state.repoInfo
                 let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`
-                let path='';
+                let path = '';
                 if (sessionStorage.getItem('orgAddress')) {
                     path = `${this.signRouter}/${until.strToBase64(params)}/${sessionStorage.getItem('orgAddress')}`
-                }else{
+                } else {
                     path = `${this.signRouter}/${until.strToBase64(params)}`
                 }
                 this.$router.push(path)
@@ -254,10 +256,10 @@
                 let reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
                 let email = this.myForm.email
                 let myHttp = ''
-                if(this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee'){
-                    myHttp=http
-                }else {
-                    myHttp=axios
+                if (this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee') {
+                    myHttp = http
+                } else {
+                    myHttp = axios
                 }
                 if (reg.test(email)) {
                     myHttp({
@@ -270,7 +272,7 @@
                         let codeInterval = setInterval(() => {
                             if (second !== 0) {
                                 second--;
-                                this.sendBtText = second + 's'
+                                this.sendBtText = second + 's' + 'can resend'
                             } else {
                                 this.sendBtText = 'send code';
                                 clearInterval(codeInterval)
@@ -368,7 +370,7 @@
                             this.cla_org_id = key
                             this.setClaText(key)
                             argRes('complete')
-                        }else{
+                        } else {
                             this.$message.closeAll()
                             this.$message.error('Language wrong')
                         }
@@ -468,7 +470,7 @@
                                 },
                             ],
                         })
-                    }else if (item.type === 'title') {
+                    } else if (item.type === 'title') {
                         Object.assign(this.myForm, {title: ''})
                         item.required && Object.assign(rules, {
                             [item.id]: [
@@ -479,7 +481,7 @@
                                 },
                             ],
                         })
-                    }else if (item.type === 'authorized') {
+                    } else if (item.type === 'authorized') {
                         Object.assign(this.myForm, {authorized: ''})
                         item.required && Object.assign(rules, {
                             [item.id]: [
@@ -586,10 +588,10 @@
                     } else if (this.$store.state.loginType === 'employee') {
                         this.tipsMessage = 'An email has been sent to you. Please take a look to review the signing.'
                     }
-                        this.$store.commit('setSignSuccess', {
-                            dialogVisible: true,
-                            dialogMessage: this.tipsMessage,
-                        });
+                    this.$store.commit('setSignSuccess', {
+                        dialogVisible: true,
+                        dialogMessage: this.tipsMessage,
+                    });
 
                 }).catch(err => {
                     this.errorAct(err)
