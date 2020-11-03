@@ -678,6 +678,8 @@
             this.setClientHeight();
 
             if (window.history && window.history.pushState) {
+                console.log(window.history);
+                console.log(window.history.pushState);
                 history.pushState(null, null, document.URL)
                 window.addEventListener('popstate', this.goBack, false)
             }

@@ -132,10 +132,25 @@
                 }, 100)
 
             },
+            goBack(){
+                alert('goBack')
+                this.$router.go(-1)
+            },
         },
         created() {
             this.setClientHeight()
-        }
+        },
+        mounted() {
+            if (window.history && window.history.pushState) {
+                console.log(window.history);
+                console.log(window.history.pushState);
+                history.pushState(null, null, document.URL)
+                window.addEventListener('popstate', this.goBack, false)
+            }
+        },
+        destroyed() {
+            window.removeEventListener('popstate', this.goBack, false)
+        },
     }
 </script>
 
