@@ -151,7 +151,7 @@
             }
         },
         destroyed() {
-            window.removeEventListener('popstate', this.goBack, false)
+            // window.removeEventListener('popstate', this.goBack, false)
         },
     }
 </script>
