@@ -12,7 +12,7 @@
                         </div>
                         <div class="icon_box ">
                             <div class="loginBt">
-                                <button class="button" @click="login('gitee')">
+                                <button class="button" @click="getLoginUrl('gitee')">
                                     Login in
                                 </button>
                             </div>
@@ -31,7 +31,7 @@
                 <!--</div>-->
                 <!--<div class="icon_box">-->
                 <!--<div class="loginBt">-->
-                <!--<button class="button" @click="login('github')">-->
+                <!--<button class="button" @click="getLoginUrl('github')">-->
                 <!--Login in-->
                 <!--</button>-->
                 <!--</div>-->
@@ -80,7 +80,7 @@
             ...mapActions(['setPlatformAct']),
             submit() {
             },
-            login(platform) {
+            getLoginUrl(platform) {
                 this.setPlatformAct(platform)
                 let interval = setInterval(() => {
                     if (this.$store.state.platform) {
@@ -88,7 +88,8 @@
                             url: `${url.getAuthCodeUrl}/${platform}/login`,
                         }).then(res => {
                             console.log(res);
-                            window.location.href = res.data.data.url
+                            this.login(res.data.data.url)
+                            // window.location.href = res.data.data.url
                         }).catch(err => {
                             console.log(err);
                             if (err.data.hasOwnProperty('data')) {
@@ -132,6 +133,11 @@
                         clearInterval(interval)
                     }
                 }, 100)
+
+            },
+            login(url){
+                console.log(url);
+                let params = url.split('/api')
 
             },
             goBack(){
