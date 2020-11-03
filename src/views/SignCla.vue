@@ -180,7 +180,7 @@
                 isVerify: false,
                 isSendCode: false,
                 verifyCode: '',
-                platform: this.$store.state.platform,
+                platform: this.$store.state.repoInfo.platform,
                 dialogVisible: false,
                 repositoryOptions: [],
                 role: '0',
@@ -267,12 +267,12 @@
                         method: 'post',
                     }).then(res => {
                         this.$message.closeAll();
-                        this.$message.success('A verification code is sent to your Email.');
+                        this.$message.success({message:'A verification code is sent to your Email.',duration:6000});
                         let second = 60;
                         let codeInterval = setInterval(() => {
                             if (second !== 0) {
                                 second--;
-                                this.sendBtText = second + 's' + 'can resend'
+                                this.sendBtText = second + 's ' + 'can resend'
                             } else {
                                 this.sendBtText = 'send code';
                                 clearInterval(codeInterval)
@@ -311,18 +311,19 @@
                     url: url.getEmail,
                     params: {access_token: access_token}
                 }).then(res => {
-                    for (let item of res.data) {
-                        if (item.scope) {
-                            if (item.scope[0] === 'primary') {
+                    if (res.data.length > 0) {
+                        for (let item of res.data) {
+                            if (item.scope[0]&&item.scope[0] === 'primary') {
                                 this.myForm.email = item.email;
                                 break
                             }
                         }
                     }
+
                     if (this.myForm.email === '') {
                         this.$store.commit('setSignReLogin', {
                             dialogVisible: true,
-                            dialogMessage: `Sorry, it is failed to fetch your email from ${this.platform}. Please set the primary email on setting page of ${this.platform}.`,
+                            dialogMessage: `Sorry, it is failed to fetch the primary email from your ${this.platform} account. Please check the email setting and try again.`,
                         })
                     }
                     for (let item of this.fields) {
@@ -757,7 +758,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            width: 10rem;
+            width: 11rem;
             height: 2.5rem;
             border-radius: 1.25rem;
             font-size: 1.2rem;
