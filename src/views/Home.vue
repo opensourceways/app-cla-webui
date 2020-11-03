@@ -663,7 +663,7 @@
                 this.$store.commit('setDomain', window.location.href.split('/home')[0])
             },
             goBack(){
-                console.log('goBack');
+               alert('goBack')
                 this.$router.go(-1)
             },
         },
