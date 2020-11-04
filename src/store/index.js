@@ -166,7 +166,6 @@ export default new Vuex.Store({
            sessionStorage.setItem('domain',domain)
         },
         setLoading(state,loading){
-            console.log(loading);
             state.loading=loading
             sessionStorage.setItem('loading',loading)
         },

@@ -11,7 +11,7 @@
 
             </el-tab-pane>
         </el-tabs>
-        <el-row :gutter="20">
+        <el-row :gutter="20" class="tableBox">
             <el-col :span="3" class="orgTableStyle tableStyle">
                 <el-table
                         :data="orgTableData"
@@ -404,6 +404,7 @@
             }
         },
         created() {
+            this.openFullScreen();
             this.setDomain();
             this.getLinkedRepoList();
         },
@@ -436,6 +437,20 @@
                 this.organization = row.Organization
                 this.getBoundTableData()
 
+            },
+            openFullScreen() {
+                const loading = this.$loading({
+                    lock: true,
+                    text: 'loading',
+                    target: '.tableBox',
+                    background: 'rgba(255, 255, 255, 1)'
+                });
+                let interval =  setInterval(() => {
+                    if (this.$store.state.loading) {
+                        loading.close();
+                        clearInterval(interval)
+                    }
+                }, 200)
             },
             getLinkedRepoList() {
                 http({

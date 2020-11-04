@@ -68,18 +68,7 @@
                 })
             },
 
-            openFullScreen() {
-                const loading = this.$loading({
-                    lock: true,
-                    background: 'rgba(255, 255, 255, 1)'
-                });
-               let interval =  setInterval(() => {
-                   if (this.$store.state.loading) {
-                        loading.close();
-                        clearInterval(interval)
-                    }
-                }, 200)
-            },
+
             clearPageSession() {
                 this.$store.commit('setOrgOption', undefined)
                 this.$store.commit('setRepositoryOptions', undefined)
@@ -115,7 +104,7 @@
         created() {
             this.setDomain();
             this.clearPageSession();
-            this.openFullScreen();
+
             this.getCookieData()
         },
         mounted() {
