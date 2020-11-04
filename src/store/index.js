@@ -6,7 +6,6 @@ import * as url from '../until/api'
 Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
-        loading:sessionStorage.getItem('loading') || undefined,
         signRouter:'/sign',
         claChoose: sessionStorage.getItem('claChoose') || undefined,
         orgChoose: sessionStorage.getItem('orgChoose') || undefined,
@@ -164,10 +163,6 @@ export default new Vuex.Store({
         setDomain(state,domain){
             state.domain=domain
            sessionStorage.setItem('domain',domain)
-        },
-        setLoading(state,loading){
-            state.loading=loading
-            sessionStorage.setItem('loading',loading)
         },
     },
     actions: {

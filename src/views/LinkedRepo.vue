@@ -407,7 +407,6 @@
             }
         },
         created() {
-            // this.openFullScreen();
             this.setDomain();
             this.getLinkedRepoList();
         },
@@ -433,29 +432,13 @@
                     }
                 })
                 this.boundTableData = data
-                this.$store.commit('setLoading',true)
-                // this.loading=false
+                this.loading=false
             },
             clickOrg(row, column, cell, event) {
 
                 this.organization = row.Organization
                 this.getBoundTableData()
 
-            },
-            openFullScreen() {
-                const loading = this.$loading({
-                    lock: true,
-                    text: 'Loading',
-                    target: '#tableBox',
-                    fullscreen:false,
-                    background: 'rgba(255, 255, 255, 1)'
-                });
-                let interval =  setInterval(() => {
-                    if (this.$store.state.loading) {
-                        loading.close();
-                        clearInterval(interval)
-                    }
-                }, 200)
             },
             getLinkedRepoList() {
                 http({
