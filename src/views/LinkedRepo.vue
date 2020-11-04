@@ -110,7 +110,7 @@
                             label="Operation">
                         <template slot-scope="scope">
                             <el-button size="mini" @click="toSignPage(scope.row)">Sign</el-button>
-                            <el-button size="mini" @click="copyAddress(scope.row)">copy address</el-button>
+                            <el-button size="mini" @click="copyAddress(scope)">copy address</el-button>
                             <input class="signAddressInput" style="visibility: hidden;position: relative;z-index: -1">
 
                         </template>
@@ -507,6 +507,7 @@
                 }
                 let base64Params = until.strToBase64(params)
                 let url = `${this.address}${this.signRouter}/${base64Params}`
+                console.log(document.getElementsByClassName('signAddressInput'));
                 let input = document.getElementsByClassName('signAddressInput')[row.index]
                 input.value = url
                 input.select();
