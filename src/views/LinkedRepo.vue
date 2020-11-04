@@ -441,8 +441,8 @@
             openFullScreen() {
                 const loading = this.$loading({
                     lock: true,
-                    text: 'loading',
-                    target: '.tableBox',
+                    text: 'Loading',
+                    target: 'tableBox',
                     background: 'rgba(255, 255, 255, 1)'
                 });
                 let interval =  setInterval(() => {
