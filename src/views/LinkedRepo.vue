@@ -442,7 +442,8 @@
                 const loading = this.$loading({
                     lock: true,
                     text: 'Loading',
-                    target: 'tableBox',
+                    target: '.tableBox',
+                    fullscreen:false,
                     background: 'rgba(255, 255, 255, 1)'
                 });
                 let interval =  setInterval(() => {
