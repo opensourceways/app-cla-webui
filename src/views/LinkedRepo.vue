@@ -434,7 +434,7 @@
                 })
                 this.boundTableData = data
                 this.$store.commit('setLoading',true)
-                this.loading=false
+                // this.loading=false
             },
             clickOrg(row, column, cell, event) {
 
