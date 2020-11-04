@@ -461,140 +461,7 @@
                     this.$message.error(err.response.data)
                 })
             },
-            checkCla() {
-                this.$router.push('/checkCla')
-            },
-            editHandleClick(index) {
-                this.editDialogVisible = true
-            },
-            toCreateCLA() {
-                this.$router.push('/createCLA')
-                this.$router.push('/createCLA')
-            },
-            toCreateMetadata() {
-                this.$router.push('/createMetadata')
-            },
-            claVisibleChange(visible) {
-                if (visible && this.filterChange) {
-                    this.getCLA();
-                    this.filterChange = false;
-                }
-            },
-            orgVisibleChange(visible) {
-                if (visible) {
-                    this.getOrgsInfo();
-                }
-            },
-            repoVisibleChange(visible) {
-                if (visible && this.org) {
-                    this.getRepositoriesOfOrg(this.org, this.org_id);
-                }
-            },
-            changeCla(value) {
-                this.$store.commit('setClaValue', value)
-                this.$store.commit('setClaChoose', true)
-                this.showPreviewCla = true
-                this.previewText = this.claOptions[value].text;
-            },
-            createCLA() {
-                this.createCLADialogVisible = true
-            },
-            createMetadata() {
-                this.createMetadataDialogVisible = true
-            },
-            authorize() {
-                this.authorizeDialogVisible = true
-            },
-            changeOrg(value) {
-                this.$store.commit('setOrgValue', value)
-                if (value === '') {
-                    this.org = '';
-                    this.org_id = ''
-                    this.$store.commit('setOrgChoose', false)
-                    this.$store.commit('setRepositoryValue', undefined)
-                    this.$store.commit('setRepositoryChoose', false)
-                    this.$store.commit('setRepositoryOptions', undefined)
-                } else {
-                    this.org = this.orgOptions[value].label;
-                    this.org_id = this.orgOptions[value].id
-                    this.$store.commit('setOrgChoose', true)
-                    this.getRepositoriesOfOrg(this.orgOptions[value].label, this.orgOptions[value].id)
-                }
 
-            },
-            changeRepository(value) {
-                this.$store.commit('setRepositoryValue', value)
-                if (value !== '') {
-                    this.$store.commit('setRepositoryChoose', true)
-                } else {
-                    this.$store.commit('setRepositoryChoose', false)
-                }
-            },
-            getRepositoriesOfOrg(org, org_id) {
-                let obj = {access_token: this.$store.state.platform_token, org: org, page: 1, per_page: 10};
-                this.$axios({
-                    url: `https://gitee.com/api/v5/orgs/${org}/repos`,
-                    params: obj,
-                }).then(res => {
-                    let repositoryOptions = [];
-                    res.data.forEach((item, index) => {
-                        repositoryOptions.push({
-                            value: index,
-                            org: org,
-                            org_id: org_id,
-                            repoName: item.name,
-                            label: item.name,
-                            id: item.id
-                        });
-                    })
-                    this.$store.commit('setRepositoryOptions', repositoryOptions)
-
-                }).catch(err => {
-                })
-            },
-            getOrgsInfo() {
-                let obj = {access_token: this.$store.state.platform_token, admin: true, page: 1, per_page: 10};
-                this.$axios({
-                    url: url.getOrgsInfo,
-                    params: obj,
-                }).then(res => {
-                    if (res.status === 200) {
-                        let orgOptions = [];
-                        res.data.forEach((item, index) => {
-                            orgOptions.push({value: index, label: item.login, id: item.id});
-                        })
-                        this.$store.commit('setOrgOption', orgOptions)
-                    }
-                }).catch(err => {
-                })
-            },
-            getCLA() {
-                this.$axios({
-                    url: '/api' + url.getClaInfo,
-                    params: {language: this.claLanguageValue, apply_to: this.claTypeValue},
-                    headers: {
-                        'Token': this.$store.state.access_token,
-                        'Access-Token': this.$store.state.platform_token,
-                        'Refresh-Token': this.$store.state.refresh_token,
-                        'User': `${this.$store.state.platform}/${this.$store.state.user.userName}`
-                    }
-                }).then(res => {
-                    let claOptions = [];
-                    if (res.data.data.length) {
-                        res.data.data.forEach((item, index) => {
-                            claOptions.push({
-                                value: index,
-                                label: item.name,
-                                id: item.id,
-                                text: item.text,
-                                language: item.language
-                            })
-                        })
-                        this.$store.commit('setClaOptions', claOptions)
-                    }
-                }).catch(err => {
-                })
-            },
             setClientHeight() {
                 this.$nextTick(() => {
                     until.getClientHeight() > document.getElementById('home').offsetHeight ?
@@ -602,9 +469,7 @@
                         this.home.height = document.getElementById('home').offsetHeight
                 })
             },
-            change(value) {
-                this.value = value;
-            },
+
             openFullScreen() {
                 const loading = this.$loading({
                     lock: true,
@@ -639,7 +504,7 @@
                     }
                     let data = {access_token, refresh_token, platform_token};
                     this.setTokenAct(data);
-                    this.getUserInfo(access_token, refresh_token, platform_token)
+                    // this.getUserInfo(access_token, refresh_token, platform_token)
                 }
             },
             getUserInfo(access_token, refresh_token, platform_token) {
@@ -673,8 +538,6 @@
         },
         mounted() {
             this.setClientHeight();
-
-
         },
 
     };

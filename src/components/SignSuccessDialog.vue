@@ -13,7 +13,7 @@
             </div>
             <el-row>
                 <el-col align="center">
-                    <p>{{message}}</p>
+                    <p class="messageBox">{{message}}</p>
                     <button class="dialogBt" @click="clickGoHome()">OK</button>
                 </el-col>
             </el-row>
@@ -42,7 +42,7 @@
 
                 if (sessionStorage.getItem('orgAddress')) {
                     window.location.href = sessionStorage.getItem('orgAddress')
-                }else{
+                } else {
                     let date = new Date();
                     date.setTime(date.getTime() - 10000);
                     document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
@@ -75,6 +75,10 @@
             color: white;
             cursor: pointer;
             outline: none;
+        }
+
+        .messageBox {
+            white-space: pre-wrap;
         }
 
         .el-dialog__header {

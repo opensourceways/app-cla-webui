@@ -692,6 +692,7 @@
                         this.$store.commit('setOrgOption', orgOptions)
                     }
                 }).catch(err => {
+
                 })
             },
             setClientHeight() {

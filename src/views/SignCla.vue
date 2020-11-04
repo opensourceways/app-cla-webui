@@ -267,7 +267,7 @@
                         method: 'post',
                     }).then(res => {
                         this.$message.closeAll();
-                        this.$message.success({message:'A verification code is sent to your Email.',duration:6000});
+                        this.$message.success({message:'A verification code is sent to your Email.',duration:8000});
                         let second = 60;
                         let codeInterval = setInterval(() => {
                             if (second !== 0) {
@@ -333,8 +333,10 @@
                         }
                     }
                 }).catch(err => {
-                    this.$message.closeAll()
-                    this.$message.error(err.response.data)
+                    this.$store.commit('setSignReLogin',{
+                        dialogVisible: true,
+                        dialogMessage: `Email access is not authorized, please re authorize`
+                    })
                 })
             },
             getCookieData() {

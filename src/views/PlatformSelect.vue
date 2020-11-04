@@ -89,7 +89,7 @@
                         }).then(res => {
                             console.log(res);
                             // this.login(res.data.data.url)
-                            window.location.replace(res.data.data.url)
+                            window.location.href=res.data.data.url
                         }).catch(err => {
                             console.log(err);
                             if (err.data.hasOwnProperty('data')) {
