@@ -447,7 +447,7 @@
                 });
                 let interval =  setInterval(() => {
                     if (this.$store.state.loading) {
-                        loading.close();
+                        // loading.close();
                         clearInterval(interval)
                     }
                 }, 200)
