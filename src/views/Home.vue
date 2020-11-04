@@ -73,9 +73,13 @@
                     lock: true,
                     background: 'rgba(255, 255, 255, 1)'
                 });
-                setInterval(() => {
-                    this.$store.state.loading==='true' && loading.close();
-                }, 500)
+               let interval =  setInterval(() => {
+                   console.log(this.$store.state.loading);
+                   if (this.$store.state.loading==='true') {
+                        loading.close();
+                        clearInterval(interval)
+                    }
+                }, 200)
             },
             clearPageSession() {
                 this.$store.commit('setOrgOption', undefined)
