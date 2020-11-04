@@ -13,9 +13,7 @@
             </div>
             <el-row>
                 <el-col align="center">
-                    <p class="messageBox">融云实时音视频全面升级,支持一对一多对多音视频通话,适用于社交、直播、电商教育等场景融云IM即时通讯
-                    </p>
-                    <!--<p class="messageBox">{{message}}</p>-->
+                    <p class="messageBox">{{message}}</p>
                     <button class="dialogBt" @click="clickGoHome()">OK</button>
                 </el-col>
             </el-row>
@@ -64,7 +62,6 @@
 <style lang="less">
     #signReLoginDialog {
         .messageBox {
-            white-space: pre-wrap;
             word-break: keep-all;
         }
         .dialogBt {

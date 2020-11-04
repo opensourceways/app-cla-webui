@@ -109,7 +109,7 @@
                         <template slot-scope="scope">
                             <el-button size="mini" @click="toSignPage(scope.row)">Sign</el-button>
                             <el-button size="mini" @click="copyAddress(scope.row)">copy address</el-button>
-                            <input id="signAddressInput" style="visibility: hidden;position: relative;z-index: -1">
+                            <input class="signAddressInput" style="visibility: hidden;position: relative;z-index: -1">
 
                         </template>
                     </el-table-column>
@@ -365,8 +365,8 @@
             pdf,
             ReLoginDialog,
         },
-        computed:{
-            address(){
+        computed: {
+            address() {
                 return this.$store.state.domain
             },
 
@@ -494,6 +494,7 @@
                 this.getBoundTableData()
             },
             copyAddress(row) {
+                console.log(row);
                 let params = ''
                 if (row.repo_id) {
                     params = `${row.platform}/${row.org_id}/${row.repo_id}`
@@ -502,7 +503,7 @@
                 }
                 let base64Params = until.strToBase64(params)
                 let url = `${this.address}${this.signRouter}/${base64Params}`
-                let input = document.getElementById('signAddressInput')
+                let input = document.getElementsByClassName('signAddressInput')[row.index]
                 input.value = url
                 input.select();
                 document.execCommand('copy')
@@ -817,9 +818,9 @@
             },
             changePage(page) {
             },
-            setDomain(){
+            setDomain() {
                 if (window.location.href.split('/linkedRepo')[0] !== window.location.href) {
-                    this.$store.commit('setDomain',window.location.href.split('/linkedRepo')[0])
+                    this.$store.commit('setDomain', window.location.href.split('/linkedRepo')[0])
                 }
             },
         },
@@ -831,6 +832,12 @@
     #linkedRepo {
         .el-table .warning-row {
             background: #8CC5FF;
+        }
+
+        .signAddressInput {
+            visibility: hidden;
+            position: relative;
+            z-index: -1;
         }
 
         .el-popover {
