@@ -74,8 +74,8 @@
                     background: 'rgba(255, 255, 255, 1)'
                 });
                let interval =  setInterval(() => {
-                   console.log(this.$store.state.loading);
-                   if (this.$store.state.loading==='true') {
+                   console.log(typeof this.$store.state.loading);
+                   if (this.$store.state.loading=='true') {
                         loading.close();
                         clearInterval(interval)
                     }
