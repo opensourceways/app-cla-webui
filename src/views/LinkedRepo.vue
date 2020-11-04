@@ -62,7 +62,7 @@
                                     <!--<el-button style="margin-left: 10px" @click="previewOriginalSignature(scope.row)"-->
                                     <!--type="" size="mini">preview-->
                                     <!--</el-button>-->
-                                    <el-button @click="downloadOriginalSignature(scope.row)" type="" size="mini">
+                                    <el-button @click="downloadEmptySignature(scope.row)" type="" size="mini">
                                         download
                                     </el-button>
                                 </div>
@@ -429,6 +429,7 @@
                     }
                 })
                 this.boundTableData = data
+                this.$store.commit('setLoading',true)
             },
             clickOrg(row, column, cell, event) {
 
@@ -550,7 +551,7 @@
                 // }
                 // this.previewOriginalDialogVisible = true
             },
-            downloadOriginalSignature(row) {
+            downloadEmptySignature(row) {
 
             },
 
@@ -743,36 +744,8 @@
                     })
                     let data = {access_token, refresh_token};
                     this.setTokenAct(data);
-                    this.getUserInfo(access_token, refresh_token)
-
                 }
 
-            },
-            getUserInfo(access_token, refresh_token) {
-                let obj = {access_token: access_token};
-                this.$axios({
-                    url: url.getUserInfo,
-                    params: obj,
-                }).then(res => {
-                    let data = {
-                        userId: res.data.id,
-                        userName: res.data.login,
-                        userImg: res.data.avatar_url,
-                        userEmail: res.data.email
-                    }
-                    this.setLoginUserAct(data);
-                    let obj = {
-                        access_token: access_token,
-                        refresh_token: refresh_token,
-                        userName: res.data.login,
-                        platform: this.$store.state.platform
-                    }
-                    this.getLinkedRepoListAct(obj);
-
-                }).catch(err => {
-                    this.$message.closeAll()
-                    this.$message.error(err.response.data)
-                })
             },
             editHandleClick(index) {
                 this.editDialogVisible = true
