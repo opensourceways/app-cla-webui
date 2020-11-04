@@ -11,7 +11,9 @@
 
             </el-tab-pane>
         </el-tabs>
-        <el-row :gutter="20" id="tableBox">
+        <el-row :gutter="20" v-loading.lock="loading"
+                element-loading-text="Loading"
+                element-loading-background="rgba(255, 255, 255, 1)">
             <el-col :span="3" class="orgTableStyle tableStyle">
                 <el-table
                         :data="orgTableData"
@@ -373,6 +375,7 @@
         },
         data() {
             return {
+                loading:true,
                 organization: '',
                 boundTableData: '',
                 signAddress: '',
@@ -404,7 +407,7 @@
             }
         },
         created() {
-            this.openFullScreen();
+            // this.openFullScreen();
             this.setDomain();
             this.getLinkedRepoList();
         },
@@ -431,6 +434,7 @@
                 })
                 this.boundTableData = data
                 this.$store.commit('setLoading',true)
+                this.loading=false
             },
             clickOrg(row, column, cell, event) {
 
@@ -448,7 +452,7 @@
                 });
                 let interval =  setInterval(() => {
                     if (this.$store.state.loading) {
-                        // loading.close();
+                        loading.close();
                         clearInterval(interval)
                     }
                 }, 200)
