@@ -11,7 +11,7 @@
 
             </el-tab-pane>
         </el-tabs>
-        <el-row :gutter="20" class="tableBox">
+        <el-row :gutter="20" id="tableBox">
             <el-col :span="3" class="orgTableStyle tableStyle">
                 <el-table
                         :data="orgTableData"
@@ -442,7 +442,7 @@
                 const loading = this.$loading({
                     lock: true,
                     text: 'Loading',
-                    target: '.tableBox',
+                    target: '#tableBox',
                     fullscreen:false,
                     background: 'rgba(255, 255, 255, 1)'
                 });
