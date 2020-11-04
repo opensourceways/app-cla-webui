@@ -79,6 +79,7 @@
 
         .messageBox {
             white-space: pre-wrap;
+            word-break: keep-all;
         }
 
         .el-dialog__header {

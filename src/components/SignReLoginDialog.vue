@@ -63,6 +63,7 @@
     #signReLoginDialog {
         .messageBox {
             white-space: pre-wrap;
+            word-break: keep-all;
         }
         .dialogBt {
             margin-top: 3rem;
