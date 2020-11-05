@@ -116,7 +116,9 @@
 </script>
 
 <style lang="less">
-
+    .el-table th>.cell{
+        word-break: keep-all;
+    }
     #home {
         display: flex;
         flex-direction: column;
