@@ -84,7 +84,7 @@
                                     <el-button @click="uploadOrgSignature(scope.row)" style="margin-left: 10px"
                                                size="mini">upload
                                     </el-button>
-                                    <el-button @click="downloadOrgSignature(scope.row)"  size="mini">download
+                                    <el-button @click="downloadOrgSignature(scope.row)" size="mini">download
                                     </el-button>
                                     <!--<el-button @click="previewOrgSignature(scope.row)" type="" size="mini">preview-->
                                     <!--</el-button>-->
@@ -818,7 +818,20 @@
         }
 
         .el-popover {
-            min-width: 7rem;
+            min-width: 5rem;
+
+            .menuBT {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+
+                * {
+                    width: 6rem;
+                    margin: .2rem 1rem;
+                    text-align: center;
+                }
+            }
+
         }
 
         .tableStyle {
@@ -877,17 +890,6 @@
             text-align: left;
         }
 
-
-        .menuBT {
-            display: flex;
-            flex-direction: column;
-
-            * {
-                width: 6rem;
-                margin: .2rem 1rem;
-                text-align: center;
-            }
-        }
 
         .pointer {
             cursor: pointer;
