@@ -80,8 +80,8 @@
                                     trigger="click"
                                     placement="right">
 
-                                <div class="menuBT">
-                                    <el-button @click="uploadOrgSignature(scope.row)" style="margin-left: 10px"
+                                <div class="pdfBT">
+                                    <el-button @click="uploadOrgSignature(scope.row)" class="wid" style="margin-left: 10px"
                                                size="mini">upload
                                     </el-button>
                                     <el-button @click="downloadOrgSignature(scope.row)" size="mini">download
@@ -155,129 +155,6 @@
                     <el-button type="danger" @click="unLinkRepositoryFun()">Unlink anyway</el-button>
                 </div>
 
-            </div>
-
-        </el-dialog>
-        <el-dialog
-                title=""
-                top="5vh"
-                :visible.sync="editDialogVisible"
-                width="35%">
-            <div>
-                <p class="size_b">Edit ooo/Test</p>
-                <div class="left">
-                    <div>
-                        <span class="size_m">Choose a CLA</span>
-                    </div>
-                    <div>
-                        <span>(please note that changing the CLA results in a new request to sign the CLA from the contributors!)</span>
-                    </div>
-                    <p class="size_m" style="margin-bottom: .2rem">Select from Gist</p>
-                    <el-select v-model="claValue"
-                               clearable
-                               placeholder="select"
-                               style="width: 100%"
-                               size="medium"
-                               @change="changeCla"
-                               :value="claValue">
-                        <el-option
-                                v-for="item in claOptions"
-                                :key="item.value"
-                                :label="item.label"
-                                :value="item.value">
-                        </el-option>
-                    </el-select>
-                    <div class="dialogDec">
-                        Email
-                    </div>
-                    <el-input
-                            size="medium"
-                            placeholder="Input your email"
-                            v-model="email">
-
-                    </el-input>
-                    <div class="dialogDec">
-                        - or -
-                    </div>
-                    <div class="dialogDec">
-                        Paste a URL from a Gist
-                    </div>
-                    <div>
-                        <el-input
-                                size="medium"
-                                placeholder="https://gist.github.com/<your cla gist id>"
-                                v-model="gistUrl">
-
-                        </el-input>
-                    </div>
-                    <div class="dialogDec">
-                        <el-checkbox v-model="shareGistChecked"/>
-                        Share the Gist
-                        <span class="qusLink"
-                              @click="shareDialogVisible=true">(want to share?)</span>
-                    </div>
-
-                    <div class="dialogDec">
-                        Minimum File Number Changes
-                    </div>
-                    <div>
-                        <el-input
-                                type="number"
-                                size="medium"
-                                placeholder="number"
-                                v-model="fileNumber">
-
-                        </el-input>
-                    </div>
-                    <div class="dialogDec">
-                        - or -
-                    </div>
-                    <div class="dialogDec">
-                        Minimum Line Number Changes
-                    </div>
-                    <div>
-                        <el-input
-                                type="number"
-                                size="medium"
-                                placeholder="number"
-                                v-model="lineNumber">
-
-                        </el-input>
-                    </div>
-
-                    <div class="dialogDec">Specify usernames to be whitelisted <span class="qusLink">(how does this work?)</span>
-                    </div>
-                    <span>(you can also use wildcard *)</span>
-                    <div class="dialogDec">
-                        <el-input
-                                size="medium"
-                                placeholder="user1,user2,*[bot]"
-                                v-model="gistUrl">
-
-                        </el-input>
-                    </div>
-                    <div class="dialogDec">
-                    <span>Request the user's consent to the use of personal data in accordance with your privacy policy.
-                        Please, provide a link to your Privacy Policy here</span>
-                    </div>
-                    <div class="dialogDec">
-                        <el-input
-                                size="medium"
-                                placeholder="https://..."
-                                v-model="gistUrl">
-
-                        </el-input>
-                    </div>
-
-                </div>
-
-
-                <div class="right" style="margin: 1rem 0">
-                <span slot="footer" class="dialog-footer">
-                    <el-button @click="editDialogVisible = false">Cancel</el-button>
-                    <el-button type="primary" @click="editDialogVisible = false">Save</el-button>
-                </span>
-                </div>
             </div>
 
         </el-dialog>
@@ -400,7 +277,6 @@
 
                 unlinkId: '',
                 platform: this.$store.state.platform,
-                editDialogVisible: false,
                 unLinkDialogVisible: false,
                 tableTotal: 0,
                 currentPage: 1,
@@ -751,9 +627,7 @@
                 }
 
             },
-            editHandleClick(index) {
-                this.editDialogVisible = true
-            },
+
             unlinkHandleClick(scope) {
                 this.unlinkId = scope.row.id;
                 this.unLinkDialogVisible = true
@@ -815,7 +689,7 @@
         .el-popover {
             min-width: 5rem !important;
 
-            .menuBT {
+            .pdfBT {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
@@ -863,10 +737,6 @@
             cursor: pointer;
         }
 
-        .dialogDec {
-            font-size: 1rem;
-            padding: .5rem 0;
-        }
 
         .left {
             text-align: left;
