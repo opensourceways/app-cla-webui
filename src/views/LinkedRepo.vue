@@ -81,10 +81,10 @@
                                     placement="right">
 
                                 <div class="pdfBT">
-                                    <el-button @click="uploadOrgSignature(scope.row)"  style="margin-left: 10px;width: 6rem;text-align: center;"
+                                    <el-button @click="uploadOrgSignature(scope.row)"
                                                size="mini">upload
                                     </el-button>
-                                    <el-button @click="downloadOrgSignature(scope.row)" style="margin:0.2rem;width: 6rem;text-align: center;" size="mini">download
+                                    <el-button @click="downloadOrgSignature(scope.row)"  size="mini">download
                                     </el-button>
                                     <!--<el-button @click="previewOrgSignature(scope.row)" type="" size="mini">preview-->
                                     <!--</el-button>-->
@@ -680,28 +680,29 @@
 </script>
 
 <style lang="less">
+    .el-popover {
+        min-width: 5rem ;
+
+        .pdfBT {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            * {
+                width: 6rem;
+                margin: .2rem 1rem;
+                text-align: center;
+            }
+        }
+
+    }
     #linkedRepo {
         .el-table .warning-row {
             background: #8CC5FF;
         }
 
 
-        .el-popover {
-            min-width: 5rem !important;
 
-            .pdfBT {
-                display: flex;
-                flex-direction: column;
-                justify-content: space-between;
-
-                * {
-                    width: 6rem;
-                    margin: .2rem 1rem;
-                    text-align: center;
-                }
-            }
-
-        }
 
         .tableStyle {
             margin-bottom: 2rem;
