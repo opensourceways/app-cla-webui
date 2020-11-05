@@ -643,7 +643,6 @@
                     }
                 })
             },
-
             showAll(url, i, id) {
                 PDFJS.getDocument().then(function getPdfHelloWorld(pdf) {
                     pdf.getPage(page).then(function getPageHelloWorld(page) {
@@ -668,6 +667,7 @@
                     url: `/api${url.downloadSignature}/${row.id}`,
                     method: 'get',
                 }).then(res => {
+                    console.log(res);
                     let URL = this.dataURLtoBlob(res.data.data.pdf);
                     var reader = new FileReader();
                     reader.readAsDataURL(URL);
