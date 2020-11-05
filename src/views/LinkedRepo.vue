@@ -81,7 +81,7 @@
                                     placement="right">
 
                                 <div class="menuBT">
-                                    <el-button @click="uploadOrgSignature(scope.row)" style="margin-left: 10px" type=""
+                                    <el-button @click="uploadOrgSignature(scope.row)" style="margin-left: 10px"
                                                size="mini">upload
                                     </el-button>
                                     <el-button @click="downloadOrgSignature(scope.row)" type="" size="mini">download
@@ -663,9 +663,8 @@
                 })
             },
             downloadOrgSignature(row) {
-                this.$axios({
+                http({
                     url: `/api${url.downloadSignature}/${row.id}`,
-                    method: 'get',
                 }).then(res => {
                     console.log(res);
                     let URL = this.dataURLtoBlob(res.data.data.pdf);
