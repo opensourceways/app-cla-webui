@@ -111,7 +111,7 @@
                         <template slot-scope="scope">
                             <el-button size="mini" @click="toSignPage(scope.row)">Sign</el-button>
                             <el-button size="mini" @click="copyAddress(scope)">copy address</el-button>
-                            <input class="signAddressInput" style="visibility: hidden;position: relative;z-index: -1">
+                            <el-input v-model="copyAddressValue" class="signAddressInput" ></el-input>
 
                         </template>
                     </el-table-column>
@@ -375,6 +375,7 @@
         },
         data() {
             return {
+                copyAddressValue:'',
                 loading:true,
                 organization: '',
                 boundTableData: '',
@@ -509,7 +510,8 @@
                 let url = `${this.address}${this.signRouter}/${base64Params}`
                 let input = document.getElementsByClassName('signAddressInput')[row.$index]
                 console.log(input);
-                input.value = url
+                this.copyAddressValue=url;
+                // input.value = url
                 input.select();
                 document.execCommand('copy')
 
@@ -812,7 +814,7 @@
         }
 
         .signAddressInput {
-            visibility: hidden;
+            /*visibility: hidden;*/
             position: relative;
             z-index: -1;
         }
