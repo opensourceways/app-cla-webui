@@ -374,8 +374,8 @@
         },
         data() {
             return {
-                copyAddressValue:'',
-                loading:true,
+                copyAddressValue: '',
+                loading: true,
                 organization: '',
                 boundTableData: '',
                 signAddress: '',
@@ -432,7 +432,7 @@
                     }
                 })
                 this.boundTableData = data
-                this.loading=false
+                this.loading = false
             },
             clickOrg(row, column, cell, event) {
 
@@ -884,7 +884,7 @@
             display: flex;
             flex-direction: column;
 
-            & > * {
+            * {
                 width: 6rem;
                 margin: .2rem 1rem;
                 text-align: center;
