@@ -10,7 +10,7 @@
                     <el-row :gutter="20">
                         <el-col :span="12">
                             <el-select v-model="orgValue"
-                                       placeholder="select org"
+                                       placeholder="select organization"
                                        style="width: 100%"
                                        size="medium"
                                        clearable
@@ -27,7 +27,7 @@
                         </el-col>
                         <el-col :span="12">
                             <el-select v-model="repositoryValue"
-                                       placeholder="select repo"
+                                       placeholder="select repository"
                                        style="width: 100%"
                                        size="medium"
                                        clearable=""
@@ -58,7 +58,7 @@
                 <div style="padding: 0 2rem">
                     <el-row :gutter="20">
                         <el-col>
-                            <el-input size="medium" v-model="cla_Link">
+                            <el-input placeholder="Paste a link" size="medium" v-model="cla_Link">
                             </el-input>
                         </el-col>
                         <!--<el-col :span="4">-->
@@ -363,53 +363,25 @@
                 emailDialogVisible: false,
                 claLanguageValue: 'English',
                 claTypeValue: '',
-                claTypeOptions: [{label: 'individual', value: 'individual'}, {
-                    label: 'corporation',
-                    value: 'corporation'
-                }],
                 languageOptions: [{label: 'English', value: 'English'}, {label: 'Chinese', value: 'Chinese'}, {
                     label: 'Japanese',
                     value: 'Japanese'
                 }],
-                createMetadataDialogVisible: false,
                 linkLoading: false,
                 platform: this.$store.state.platform,
                 isVerify: false,
                 activeName: 'first',
                 previewShow: false,
                 loginType: this.$store.state.loginType,
-                tableType: 1,
-                tableShow: true,
-                listCurrentPage: 1,
-                dropdownTitle: 'Linked Repositories',
                 email: '',
                 code: '',
                 access_token: this.$store.state.access_token,
                 refresh_token: this.$store.state.refresh_token,
                 platform_token: this.$store.state.platform_token,
-                listDialogVisible: false,
-                checkClaDialogVisible: false,
-                unLinkDialogVisible: false,
-                editDialogVisible: false,
-                menuVisible: false,
-                claName: '',
-                repositoryName: '',
-                shareGistChecked: false,
-                metadataOptions: [{
-                    value: 0,
-                    label: '',
-                    id: '',
-                    text: '',
-                    language: ''
-                }],
-                showPreviewCla: false,
+
+
                 linkDialogVisible: false,
-                shareDialogVisible: false,
-                createCLADialogVisible: false,
-                authorizeDialogVisible: false,
-                fileNumber: '',
-                lineNumber: '',
-                gistUrl: '',
+
                 configClaStyle: {
                     height: '',
                 },
