@@ -110,8 +110,7 @@
                             label="Operation">
                         <template slot-scope="scope">
                             <el-button size="mini" @click="toSignPage(scope.row)">Sign</el-button>
-                            <el-button size="mini" @click="copyAddress(scope)">copy address</el-button>
-                            <el-input v-model="copyAddressValue" class="signAddressInput" ></el-input>
+                            <el-button size="mini" @click="copyAddress(scope.row)">copy address</el-button>
 
                         </template>
                     </el-table-column>
@@ -508,22 +507,14 @@
                 }
                 let base64Params = until.strToBase64(params)
                 let url = `${this.address}${this.signRouter}/${base64Params}`
-                let input = document.getElementsByClassName('signAddressInput')[row.$index]
-                console.log(input);
-                // this.copyAddressValue=url;
-                // input.value = url
-                // input.select();
-                // document.execCommand('copy')
-
-
-                var oInput = document.createElement("input");
-                console.log(oInput);
-                oInput.value = url;
-                document.body.appendChild(oInput);
-                oInput.select();
+                let copyInput = document.createElement("input");
+                copyInput.value = url;
+                document.body.appendChild(copyInput);
+                copyInput.select();
                 document.execCommand("Copy");
-                oInput.className = "oInput";
-                oInput.style.display = "none";
+                copyInput.className = "copyInput";
+                copyInput.style.display = "none";
+                document.body.removeChild(document.getElementsByClassName('copyInput')[0])
             },
             toSignPage(row) {
                 let params = ''

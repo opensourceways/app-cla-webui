@@ -464,8 +464,9 @@
             },
             binding() {
                 let obj = {}
-                if (this.editMetadata()) {
-                    let cla = {url: this.cla_Link, language: this.claLanguageValue, fields: this.editMetadata()}
+                let metadata = this.editMetadata()
+                if (metadata) {
+                    let cla = {url: this.cla_Link, language: this.claLanguageValue, fields: metadata}
                     if (this.repositoryChoose) {
                         obj = {
                             repo_id: `${this.repositoryOptions[this.repositoryValue].repoName}`,
@@ -570,6 +571,9 @@
 
                 }
             },
+            toAuthorizedEmail() {
+                this.emailDialogVisible = true
+            },
             authorizeEmail() {
                 let myUrl = ''
                 switch (this.emailType) {
@@ -595,22 +599,11 @@
                 }).catch(err => {
                 })
             },
-            toAuthorizedEmail() {
-                this.emailDialogVisible = true
-            },
+
             resetCla() {
                 this.$store.commit('setClaChoose', false)
                 this.filterChange = true
                 this.$store.commit('setClaValue', '')
-            },
-
-            getPath() {
-                let path = this.$route.path;
-                if (path === '/linkedRepo' || path === '/home') {
-                    this.activeName = 'first';
-                } else if (path === '/signedRepo' || path === '/signedRepoLogin') {
-                    this.activeName = 'second';
-                }
             },
             tabsHandleClick(tab, event) {
                 tab.index === '0' ? this.$router.push('/linkedRepo') : this.$router.push('/signedRepoLogin')
@@ -627,9 +620,6 @@
                 if (visible && this.org) {
                     this.getRepositoriesOfOrg(this.org, this.org_id);
                 }
-            },
-            authorize() {
-                this.authorizeDialogVisible = true
             },
             changeOrg(value) {
                 this.$store.commit('setOrgValue', value)
@@ -705,15 +695,6 @@
             change(value) {
                 this.value = value;
             },
-            openFullScreen() {
-                const loading = this.$loading({
-                    lock: true,
-                    background: 'rgba(255, 255, 255, 0.8)'
-                });
-                setInterval(() => {
-                    this.$store.state.user.userName && loading.close();
-                }, 500)
-            },
             clearPageSession() {
                 this.$store.commit('setOrgOption', undefined)
                 this.$store.commit('setRepositoryOptions', undefined)
@@ -761,10 +742,7 @@
             },
         },
         created() {
-            this.clearPageSession();
-            this.getPath();
-            this.openFullScreen();
-            this.getCookieData()
+            this.getOrgsInfo()
         },
         mounted() {
             this.setClientHeight();
@@ -773,9 +751,12 @@
 
 </script>
 
-<style scoped lang="less">
+<style  lang="less">
     #configCla {
-
+        .el-dialog__body{
+            text-align: center;
+            word-break: keep-all;
+        }
         .itemBox {
             border-radius: 1.25rem;
             box-shadow: 0 0 20px 10px #F3F3F3;
@@ -904,5 +885,6 @@
         &:hover {
             background-color: #046F94;
         }
+
     }
 </style>
