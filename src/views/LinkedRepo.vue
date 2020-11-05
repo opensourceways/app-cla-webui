@@ -498,7 +498,6 @@
                 this.getBoundTableData()
             },
             copyAddress(row) {
-                console.log(row);
                 let params = ''
                 if (row.repo_id) {
                     params = `${row.platform}/${row.org_id}/${row.repo_id}`
@@ -664,7 +663,7 @@
             },
             downloadOrgSignature(row) {
                 http({
-                    url: `/api${url.downloadSignature}/${row.id}`,
+                    url: `${url.downloadSignature}/${row.id}`,
                 }).then(res => {
                     console.log(res);
                     let URL = this.dataURLtoBlob(res.data.data.pdf);
