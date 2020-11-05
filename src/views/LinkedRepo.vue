@@ -81,10 +81,10 @@
                                     placement="right">
 
                                 <div class="pdfBT">
-                                    <el-button @click="uploadOrgSignature(scope.row)" class="wid" style="margin-left: 10px"
+                                    <el-button @click="uploadOrgSignature(scope.row)"  style="margin-left: 10px;width: 6rem;text-align: center;"
                                                size="mini">upload
                                     </el-button>
-                                    <el-button @click="downloadOrgSignature(scope.row)" size="mini">download
+                                    <el-button @click="downloadOrgSignature(scope.row)" style="margin:0.2rem;width: 6rem;text-align: center;" size="mini">download
                                     </el-button>
                                     <!--<el-button @click="previewOrgSignature(scope.row)" type="" size="mini">preview-->
                                     <!--</el-button>-->
