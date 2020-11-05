@@ -510,11 +510,20 @@
                 let url = `${this.address}${this.signRouter}/${base64Params}`
                 let input = document.getElementsByClassName('signAddressInput')[row.$index]
                 console.log(input);
-                this.copyAddressValue=url;
+                // this.copyAddressValue=url;
                 // input.value = url
-                input.select();
-                document.execCommand('copy')
+                // input.select();
+                // document.execCommand('copy')
 
+
+                var oInput = document.createElement("input");
+                console.log(oInput);
+                oInput.value = url;
+                document.body.appendChild(oInput);
+                oInput.select();
+                document.execCommand("Copy");
+                oInput.className = "oInput";
+                oInput.style.display = "none";
             },
             toSignPage(row) {
                 let params = ''
@@ -815,8 +824,8 @@
 
         .signAddressInput {
             /*visibility: hidden;*/
-            position: relative;
-            z-index: -1;
+            /*position: relative;*/
+            /*z-index: -1;*/
         }
 
         .el-popover {
