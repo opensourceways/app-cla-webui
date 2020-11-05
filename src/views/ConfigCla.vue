@@ -1,6 +1,6 @@
 <template>
     <div id="configCla" :style="configClaStyle">
-        <div  id="section">
+        <div id="section">
             <div style="padding: 2rem 0;font-size: 1.3rem">Configure CLA</div>
             <div class="itemBox">
                 <div style="font-size: 1.2rem;padding: .5rem">
@@ -599,7 +599,6 @@
                 }).catch(err => {
                 })
             },
-
             resetCla() {
                 this.$store.commit('setClaChoose', false)
                 this.filterChange = true
@@ -695,15 +694,6 @@
             change(value) {
                 this.value = value;
             },
-            clearPageSession() {
-                this.$store.commit('setOrgOption', undefined)
-                this.$store.commit('setRepositoryOptions', undefined)
-                this.$store.commit('setClaOptions', undefined)
-                this.$store.commit('setOrgValue', undefined)
-                this.$store.commit('setClaValue', undefined)
-                this.$store.commit('setRepositoryValue', undefined)
-                this.$store.commit('setTableData', undefined)
-            },
             getCookieData() {
                 if (document.cookie !== '') {
                     let cookieArr = document.cookie.split('; ')
@@ -711,37 +701,20 @@
                     let email = ''
                     cookieArr.forEach((item, index) => {
                         let arr = item.split('=');
-                        arr[0] === 'access_token' ? access_token = arr[1] : arr[0] === 'refresh_token' ? refresh_token = arr[1] :
-                            arr[0] === 'email' ? email = arr[1] : arr[0] === 'platform_token' ? platform_token = arr[1] : platform_token = '';
+                        if (arr[0] === 'email') {
+                            email = arr[1]
+                        }
                     })
                     this.email = email;
                     if (email !== '') {
                         this.$store.commit('setIsEmail', true)
                     }
-                    let data = {access_token, refresh_token, platform_token};
-                    this.setTokenAct(data);
-                    this.getUserInfo(access_token, refresh_token, platform_token)
-                }
-            },
-            getUserInfo(access_token, refresh_token, platform_token) {
-                let obj = {access_token: platform_token};
-                this.$axios({
-                    url: url.getUserInfo,
-                    params: obj,
-                }).then(res => {
-                    let data = {
-                        userId: res.data.id,
-                        userName: res.data.login,
-                        userImg: res.data.avatar_url,
-                        userEmail: res.data.email
-                    }
-                    this.setLoginUserAct(data);
 
-                }).catch(err => {
-                })
+                }
             },
         },
         created() {
+            this.getCookieData()
             this.getOrgsInfo()
         },
         mounted() {
@@ -751,12 +724,13 @@
 
 </script>
 
-<style  lang="less">
+<style lang="less">
     #configCla {
-        .el-dialog__body{
+        .el-dialog__body {
             text-align: center;
             word-break: keep-all;
         }
+
         .itemBox {
             border-radius: 1.25rem;
             box-shadow: 0 0 20px 10px #F3F3F3;
@@ -777,7 +751,7 @@
             padding: .5rem 10px;
         }
 
-       #section {
+        #section {
             flex-grow: 1;
             text-align: left;
 
