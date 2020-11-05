@@ -811,14 +811,9 @@
             background: #8CC5FF;
         }
 
-        .signAddressInput {
-            /*visibility: hidden;*/
-            /*position: relative;*/
-            /*z-index: -1;*/
-        }
 
         .el-popover {
-            min-width: 5rem;
+            min-width: 5rem !important;
 
             .menuBT {
                 display: flex;
@@ -904,33 +899,6 @@
 
         li {
             margin: 1rem 0;
-        }
-
-        .disableClass {
-            margin-top: 2rem;
-            text-align: center;
-            height: 3rem;
-            background-color: #ACD7E6;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .linkBt {
-            margin-top: 2rem;
-            text-align: center;
-            height: 3rem;
-            background-color: #0594C6;
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-
-
-            &:hover {
-                background-color: #046F94;
-            }
         }
 
         #configBtDiv {
