@@ -77,14 +77,14 @@
                         <template v-if="scope.row.apply_to==='corporation'" slot-scope="scope">
                             <el-popover
                                     width="80"
-                                    trigger="hover"
+                                    trigger="click"
                                     placement="right">
 
                                 <div class="menuBT">
                                     <el-button @click="uploadOrgSignature(scope.row)" style="margin-left: 10px"
                                                size="mini">upload
                                     </el-button>
-                                    <el-button @click="downloadOrgSignature(scope.row)" type="" size="mini">download
+                                    <el-button @click="downloadOrgSignature(scope.row)"  size="mini">download
                                     </el-button>
                                     <!--<el-button @click="previewOrgSignature(scope.row)" type="" size="mini">preview-->
                                     <!--</el-button>-->
