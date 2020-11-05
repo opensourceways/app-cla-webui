@@ -681,7 +681,7 @@
 
 <style lang="less">
     .el-popover {
-        min-width: 5rem ;
+        min-width: 6rem ;
 
         .pdfBT {
             display: flex;
@@ -690,7 +690,7 @@
 
             * {
                 width: 6rem;
-                margin: .2rem 1rem;
+                margin: .2rem 0;
                 text-align: center;
             }
         }
