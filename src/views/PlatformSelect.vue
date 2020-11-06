@@ -86,6 +86,7 @@
                     if (this.$store.state.platform) {
                         http({
                             url: `${url.getAuthCodeUrl}/${platform}/login`,
+                            params:{success_redirect:'/home',failure_redirect:'/platformSelect',}
                         }).then(res => {
                             console.log(res);
                             // this.login(res.data.data.url)
