@@ -26,9 +26,13 @@ export default new Vuex.Store({
         ready: Boolean(sessionStorage.getItem('ready') || undefined),
         platform: sessionStorage.getItem('platform') || undefined,
         domain:sessionStorage.getItem('domain') || undefined,
+        signDomain:sessionStorage.getItem('signDomain') || undefined,
         access_token: sessionStorage.getItem('token') || undefined,
         refresh_token: sessionStorage.getItem('refresh_token') || undefined,
         platform_token: sessionStorage.getItem('platform_token') || undefined,
+        sign_access_token :sessionStorage.getItem('sign_access_token') || undefined,
+        sign_refresh_token :sessionStorage.getItem('sign_refresh_token') || undefined,
+        sign_platform_token :sessionStorage.getItem('sign_platform_token') || undefined,
         user: {
             userId: sessionStorage.getItem('userId') || undefined,
             userName: sessionStorage.getItem('userName') || undefined,
@@ -61,6 +65,14 @@ export default new Vuex.Store({
             sessionStorage.setItem('token', data.access_token);
             sessionStorage.setItem('refresh_token', data.refresh_token);
             sessionStorage.setItem('platform_token', data.platform_token);
+        },
+        setSignToken(state, data) {
+            state.sign_access_token = data.access_token;
+            state.sign_refresh_token = data.refresh_token;
+            state.sign_platform_token = data.platform_token;
+            sessionStorage.setItem('sign_access_token', data.access_token);
+            sessionStorage.setItem('sign_refresh_token', data.refresh_token);
+            sessionStorage.setItem('sign_platform_token', data.platform_token);
         },
         setLoginUser(state, data) {
             state.user.userId = data.userId;
@@ -163,6 +175,10 @@ export default new Vuex.Store({
         setDomain(state,domain){
             state.domain=domain
            sessionStorage.setItem('domain',domain)
+        },
+        setSignDomain(state,signDomain){
+            state.signDomain=signDomain
+            sessionStorage.setItem('signDomain',signDomain)
         },
     },
     actions: {

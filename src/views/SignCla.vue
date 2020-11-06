@@ -92,13 +92,13 @@
                 return this.$store.state.loginType
             },
             platform_token() {
-                return this.$store.state.platform_token
+                return this.$store.state.sign_platform_token
             },
             access_token() {
-                return this.$store.state.access_token
+                return this.$store.state.sign_access_token
             },
             refresh_token() {
-                return this.$store.state.refresh_token
+                return this.$store.state.sign_refresh_token
             },
             apply_to() {
                 if (this.$store.state.loginType === 'individual') {
@@ -152,7 +152,7 @@
             return {
                 signRouter: '/sign',
                 serverAddress: 'Hong Kong',
-                domain: this.$store.state.domain,
+                domain: this.$store.state.signDomain,
                 tipsTitle: '',
                 tipsMessage: 'Thanks for your sign.',
                 tipsDialogVisible: false,
@@ -355,7 +355,7 @@
                         let date = new Date();
                         date.setTime(date.getTime() - 10000);
                         document.cookie = `_mark=1; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
-                        this.setTokenAct(data);
+                        this.$store.commit('setSignToken',data);
                     }
 
 
@@ -630,7 +630,7 @@
                 });
             },
             getRepositoriesOfOrg(org, org_id) {
-                let obj = {access_token: this.$store.state.access_token, org: org, page: 1, per_page: 10};
+                let obj = {access_token: this.$store.state.sign_access_token, org: org, page: 1, per_page: 10};
                 this.$axios({
                     url: `https://gitee.com/api/v5/orgs/${org}/repos`,
                     params: obj,

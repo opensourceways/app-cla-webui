@@ -450,188 +450,192 @@
             ReTryDialog,
         },
 
-            computed: {
-                reTryDialogVisible() {
-                    return this.$store.state.reTryDialogVisible
-                },
-                reLoginMsg() {
-                    return this.$store.state.dialogMessage
-                },
+        computed: {
+            reTryDialogVisible() {
+                return this.$store.state.reTryDialogVisible
             },
-            data() {
-                return {
-                    reLoginDialogTitle: '',
-                    platform: '',
-                    org: '',
-                    repo: '',
-                    domain: this.$store.state.domain,
-                    signType: 'corporation',
-                    transparentDiv: {
-                        height: '',
-                    },
-                    sectionStyle: {
-                        height: '',
-                    },
-                }
+            reLoginMsg() {
+                return this.$store.state.dialogMessage
             },
-            provide() {
-                return {
-                    setClientHeight: this.setClientHeight
-                }
-            },
-            methods: {
-                ...mapActions(['setPlatformAct', 'setLoginTypeAct', 'setRepoInfoAct', 'errorAct']),
-                getRepoInfo() {
-                    let params = window.location.href.split('/sign/')[1]
-                    let repoInfoParams = ''
-                    if (params.indexOf('/') !== -1) {
-                        repoInfoParams = params.substring(0, params.indexOf('/'));
-                        let orgAddress = params.substring(params.indexOf('/') + 1);
-                        sessionStorage.setItem('orgAddress', orgAddress)
-                    } else {
-                        sessionStorage.removeItem('orgAddress')
-                        repoInfoParams = params
-                    }
-                    let arg = until.base64ToStr(repoInfoParams)
-                    if (arg) {
-                        let args = arg.split('/');
-                        if (args.length < 2) {
-                            this.$router.push({name: 'ErrorPath'})
-                        } else {
-                            this.platform = args[0];
-                            this.org = args[1];
-                            if (args[2]) {
-                                this.repo = args[2]
-                            } else {
-                                this.repo = ''
-                            }
-                            this.setRepoInfoAct({platform: this.platform, org_id: this.org, repo_id: this.repo});
-                        }
-                    } else {
-                        this.$router.push({name: 'ErrorPath'})
-                    }
+        },
+        data() {
+            return {
+                reLoginDialogTitle: '',
+                platform: '',
+                org: '',
+                repo: '',
+                domain: this.$store.state.signDomain,
+                signType: 'corporation',
+                transparentDiv: {
+                    height: '',
                 },
-                submit(loginType) {
-                    this.setLoginTypeAct(loginType)
-                    if (this.platform === 'gitee') {
-                        if (loginType === 'individual' || loginType === 'employee') {
-                            http({
-                                url: `${url.getAuthCodeUrl}/${this.platform}/sign`,
-                            }).then(res => {
-                                window.location.href = res.data.data.url
-                            }).catch(err => {
-                                if (err.data.hasOwnProperty('data')) {
-                                    switch (err.data.data.error_code) {
-                                        case 'cla.no_cla_binding':
-                                            this.$store.commit('setSignReLogin', {
-                                                dialogVisible: true,
-                                                dialogMessage: 'There is no CLA to sign for organization.',
-                                            });
-                                            break;
-                                        case 'cla.invalid_parameter':
-                                            let repoInfo = this.$store.state.repoInfo
-                                            let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`
-                                            let path = '';
-                                            if (sessionStorage.getItem('orgAddress')) {
-                                                path = `${this.signRouter}/${until.strToBase64(params)}/${sessionStorage.getItem('orgAddress')}`
-                                            } else {
-                                                path = `${this.signRouter}/${until.strToBase64(params)}`
-                                            }
-                                            this.$router.replace(path)
-                                            break;
-                                        case 'cla.has_not_signed':
-                                            this.$store.commit('setSignReLogin', {
-                                                dialogVisible: true,
-                                                dialogMessage: 'Your corporation has not signed.',
-                                            });
-                                            break;
-                                        case 'cla.invalid_token':
-                                            this.$store.commit('setSignReLogin', {
-                                                dialogVisible: true,
-                                                dialogMessage: 'Token expired, please login again.',
-                                            });
-                                            break;
-                                        case 'cla.missing_token':
-                                            this.$store.commit('setSignReLogin', {
-                                                dialogVisible: true,
-                                                dialogMessage: 'Token invalid, please login again.',
-                                            });
-                                            break;
-                                        case 'cla.unknown_token':
-                                            this.$store.commit('setSignReLogin', {
-                                                dialogVisible: true,
-                                                dialogMessage: 'Token invalid, please login again.',
-                                            });
-                                            break;
-                                        case 'cla.uncompleted_signing':
-                                            this.$store.commit('setSignReLogin', {
-                                                dialogVisible: true,
-                                                dialogMessage: 'The signing process of corporation is not finish yet.',
-                                            });
-                                            break;
-
-                                        case 'cla.pdf_has_not_uploaded':
-                                            this.$store.commit('setSignReLogin', {
-                                                dialogVisible: true,
-                                                dialogMessage: 'Signature of organization is not uploaded.',
-                                            });
-                                            break;
-
-                                        case 'cla.not_ready_to_sign':
-                                            this.$store.commit('setSignReLogin', {
-                                                dialogVisible: true,
-                                                dialogMessage: 'The organization is not ready.',
-                                            });
-                                            break;
-                                        case 'cla.system_error':
-                                            this.$store.commit('errorCodeSet', {
-                                                dialogVisible: true,
-                                                dialogMessage: 'System error, please try again',
-                                            });
-                                            break;
-                                    }
-                                }else{
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: 'System error, please try again',
-                                    })
-                                }
-                            })
-                        } else {
-                            this.$router.push('/sign-cla')
-                        }
-                    } else if (this.platform === 'github') {
-                        if (this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee') {
-                        } else {
-                            this.$router.push('/signCla')
-                        }
-                    }
+                sectionStyle: {
+                    height: '',
                 },
-                setCookie() {
-                    let date = new Date();
-                    date.setTime(date.getTime() - 10000);
-                    document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
-                },
-                clickSignTypeGuide(type) {
-                    this.signType = type;
-                },
-                setClientHeight() {
-                    this.$nextTick(() => {
-                        if (until.getClientHeight() > document.getElementById('transparentDiv').offsetHeight) {
-                            this.transparentDiv.height = until.getClientHeight() + 'px'
-                        }
-                    })
-                },
-            },
-            created() {
-                this.setCookie();
-                this.getRepoInfo();
-            },
-            mounted() {
-                until.setMinHeight('sign', 'btBox')
-                this.setClientHeight();
             }
+        },
+        provide() {
+            return {
+                setClientHeight: this.setClientHeight
+            }
+        },
+        methods: {
+            ...mapActions(['setPlatformAct', 'setLoginTypeAct', 'setRepoInfoAct', 'errorAct']),
+            getRepoInfo() {
+                let params = window.location.href.split('/sign/')[1]
+                let repoInfoParams = ''
+                if (params.indexOf('/') !== -1) {
+                    repoInfoParams = params.substring(0, params.indexOf('/'));
+                    let orgAddress = params.substring(params.indexOf('/') + 1);
+                    sessionStorage.setItem('orgAddress', orgAddress)
+                } else {
+                    sessionStorage.removeItem('orgAddress')
+                    repoInfoParams = params
+                }
+                let arg = until.base64ToStr(repoInfoParams)
+                if (arg) {
+                    let args = arg.split('/');
+                    if (args.length < 2) {
+                        this.$router.push({name: 'ErrorPath'})
+                    } else {
+                        this.platform = args[0];
+                        this.org = args[1];
+                        if (args[2]) {
+                            this.repo = args[2]
+                        } else {
+                            this.repo = ''
+                        }
+                        this.setRepoInfoAct({platform: this.platform, org_id: this.org, repo_id: this.repo});
+                    }
+                } else {
+                    this.$router.push({name: 'ErrorPath'})
+                }
+            },
+            submit(loginType) {
+                this.setLoginTypeAct(loginType)
+                if (this.platform === 'gitee') {
+                    if (loginType === 'individual' || loginType === 'employee') {
+                        http({
+                            url: `${url.getAuthCodeUrl}/${this.platform}/sign`,
+                        }).then(res => {
+                            window.location.href = res.data.data.url
+                        }).catch(err => {
+                            if (err.data.hasOwnProperty('data')) {
+                                switch (err.data.data.error_code) {
+                                    case 'cla.no_cla_binding':
+                                        this.$store.commit('setSignReLogin', {
+                                            dialogVisible: true,
+                                            dialogMessage: 'There is no CLA to sign for organization.',
+                                        });
+                                        break;
+                                    case 'cla.invalid_parameter':
+                                        let repoInfo = this.$store.state.repoInfo
+                                        let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`
+                                        let path = '';
+                                        if (sessionStorage.getItem('orgAddress')) {
+                                            path = `${this.signRouter}/${until.strToBase64(params)}/${sessionStorage.getItem('orgAddress')}`
+                                        } else {
+                                            path = `${this.signRouter}/${until.strToBase64(params)}`
+                                        }
+                                        this.$router.replace(path)
+                                        break;
+                                    case 'cla.has_not_signed':
+                                        this.$store.commit('setSignReLogin', {
+                                            dialogVisible: true,
+                                            dialogMessage: 'Your corporation has not signed.',
+                                        });
+                                        break;
+                                    case 'cla.invalid_token':
+                                        this.$store.commit('setSignReLogin', {
+                                            dialogVisible: true,
+                                            dialogMessage: 'Token expired, please login again.',
+                                        });
+                                        break;
+                                    case 'cla.missing_token':
+                                        this.$store.commit('setSignReLogin', {
+                                            dialogVisible: true,
+                                            dialogMessage: 'Token invalid, please login again.',
+                                        });
+                                        break;
+                                    case 'cla.unknown_token':
+                                        this.$store.commit('setSignReLogin', {
+                                            dialogVisible: true,
+                                            dialogMessage: 'Token invalid, please login again.',
+                                        });
+                                        break;
+                                    case 'cla.uncompleted_signing':
+                                        this.$store.commit('setSignReLogin', {
+                                            dialogVisible: true,
+                                            dialogMessage: 'The signing process of corporation is not finish yet.',
+                                        });
+                                        break;
+
+                                    case 'cla.pdf_has_not_uploaded':
+                                        this.$store.commit('setSignReLogin', {
+                                            dialogVisible: true,
+                                            dialogMessage: 'Signature of organization is not uploaded.',
+                                        });
+                                        break;
+
+                                    case 'cla.not_ready_to_sign':
+                                        this.$store.commit('setSignReLogin', {
+                                            dialogVisible: true,
+                                            dialogMessage: 'The organization is not ready.',
+                                        });
+                                        break;
+                                    case 'cla.system_error':
+                                        this.$store.commit('errorCodeSet', {
+                                            dialogVisible: true,
+                                            dialogMessage: 'System error, please try again',
+                                        });
+                                        break;
+                                }
+                            } else {
+                                this.$store.commit('errorCodeSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: 'System error, please try again',
+                                })
+                            }
+                        })
+                    } else {
+                        this.$router.push('/sign-cla')
+                    }
+                } else if (this.platform === 'github') {
+                    if (this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee') {
+                    } else {
+                        this.$router.push('/signCla')
+                    }
+                }
+            },
+            setCookie() {
+                let date = new Date();
+                date.setTime(date.getTime() - 10000);
+                document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
+            },
+            clickSignTypeGuide(type) {
+                this.signType = type;
+            },
+            setClientHeight() {
+                this.$nextTick(() => {
+                    if (until.getClientHeight() > document.getElementById('transparentDiv').offsetHeight) {
+                        this.transparentDiv.height = until.getClientHeight() + 'px'
+                    }
+                })
+            },
+            setDomain() {
+                this.$store.commit('setSignDomain', window.location.href.split('/sign')[0])
+            },
+        },
+        created() {
+            this.setDomain();
+            this.setCookie();
+            this.getRepoInfo();
+        },
+        mounted() {
+            until.setMinHeight('sign', 'btBox')
+            this.setClientHeight();
         }
+    }
 </script>
 <style scoped lang="less">
     @import "../assets/font/css/Roboto-Bold.css";
