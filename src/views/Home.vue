@@ -69,24 +69,6 @@
             },
 
 
-            clearPageSession() {
-                this.$store.commit('setOrgOption', undefined)
-                this.$store.commit('setRepositoryOptions', undefined)
-                this.$store.commit('setClaOptions', undefined)
-                this.$store.commit('setOrgValue', undefined)
-                this.$store.commit('setClaValue', undefined)
-                this.$store.commit('setRepositoryValue', undefined)
-                this.$store.commit('setTableData', undefined)
-            },
-
-        },
-        created() {
-            this.setDomain();
-            new Promise((resolve,reject)=>{
-                this.clearPageSession();
-            }).then(res=>{
-                this.getCookieData()
-            },err=>{})
 
         },
         mounted() {
