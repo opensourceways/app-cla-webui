@@ -664,7 +664,6 @@
             getCookieData() {
                 if (document.cookie !== '') {
                     let cookieArr = document.cookie.split('; ')
-                    let access_token, refresh_token, platform_token = '';
                     let email = ''
                     cookieArr.forEach((item, index) => {
                         let arr = item.split('=');

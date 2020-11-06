@@ -299,7 +299,7 @@
         methods: {
             ...mapActions(['setLoginUserAct', 'setTokenAct', 'getLinkedRepoListAct', 'setTableDataAct']),
             configCla() {
-                this.$router.push('/home/bind-cla')
+                this.$router.push('/bind-cla')
             },
             tabsHandleClick(tab, event) {
                 tab.index === '0' ? this.$router.push('/linkedRepo') : this.$router.push('/signedRepoLogin')
@@ -647,7 +647,7 @@
                 this.unLinkDialogVisible = true
             },
             checkCorporationList(item) {
-                this.$router.push({path: '/home/corporationList', query: {item: JSON.stringify(item)}})
+                this.$router.push({path: '/corporationList', query: {item: JSON.stringify(item)}})
             },
             checkCla() {
                 this.$router.push('/signCla')
@@ -684,8 +684,9 @@
             changePage(page) {
             },
             setDomain() {
-                if (window.location.href.split('/linkedRepo')[0] !== window.location.href) {
-                    this.$store.commit('setDomain', window.location.href.split('/linkedRepo')[0])
+                let domain = window.location.href.split('/linkedRepo')[0]
+                if (domain !== window.location.href) {
+                    this.$store.commit('setDomain', domain)
                 }
             },
             clearPageSession() {
