@@ -284,7 +284,16 @@
         },
         created() {
             this.setDomain();
-            this.getLinkedRepoList();
+            new Promise((resolve,reject)=>{
+                this.clearPageSession();
+            }).then(res=>{
+               return new Promise(resolve=>{
+                   this.getCookieData()
+               }).then(res=>{
+                   this.getLinkedRepoList();
+               })
+            },err=>{})
+
         },
         methods: {
             ...mapActions(['setLoginUserAct', 'setTokenAct', 'getLinkedRepoListAct', 'setTableDataAct']),
@@ -616,16 +625,19 @@
             getCookieData() {
                 if (document.cookie !== '') {
                     let cookieArr = document.cookie.split('; ')
-                    let access_token, refresh_token = '';
+                    let access_token, refresh_token, platform_token,email = '';
                     cookieArr.forEach((item, index) => {
                         let arr = item.split('=');
-                        arr[0] === 'access_token' ? access_token = arr[1] : arr[0] === 'refresh_token' ? refresh_token = arr[1] : refresh_token = '';
-                        ;
+                        arr[0] === 'access_token' ? access_token = arr[1] : arr[0] === 'refresh_token' ? refresh_token = arr[1] :
+                            arr[0] === 'email' ? email = arr[1] : arr[0] === 'platform_token' ? platform_token = arr[1] : platform_token = '';
                     })
-                    let data = {access_token, refresh_token};
+                    this.email = email;
+                    if (email !== '') {
+                        this.$store.commit('setIsEmail', true)
+                    }
+                    let data = {access_token, refresh_token, platform_token};
                     this.setTokenAct(data);
                 }
-
             },
 
             unlinkHandleClick(scope) {
@@ -673,6 +685,15 @@
                 if (window.location.href.split('/linkedRepo')[0] !== window.location.href) {
                     this.$store.commit('setDomain', window.location.href.split('/linkedRepo')[0])
                 }
+            },
+            clearPageSession() {
+                this.$store.commit('setOrgOption', undefined)
+                this.$store.commit('setRepositoryOptions', undefined)
+                this.$store.commit('setClaOptions', undefined)
+                this.$store.commit('setOrgValue', undefined)
+                this.$store.commit('setClaValue', undefined)
+                this.$store.commit('setRepositoryValue', undefined)
+                this.$store.commit('setTableData', undefined)
             },
         },
 

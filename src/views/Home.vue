@@ -78,27 +78,6 @@
                 this.$store.commit('setRepositoryValue', undefined)
                 this.$store.commit('setTableData', undefined)
             },
-            getCookieData() {
-                if (document.cookie !== '') {
-                    let cookieArr = document.cookie.split('; ')
-                    let access_token, refresh_token, platform_token = '';
-                    let email = ''
-                    cookieArr.forEach((item, index) => {
-                        let arr = item.split('=');
-                        arr[0] === 'access_token' ? access_token = arr[1] : arr[0] === 'refresh_token' ? refresh_token = arr[1] :
-                            arr[0] === 'email' ? email = arr[1] : arr[0] === 'platform_token' ? platform_token = arr[1] : platform_token = '';
-                    })
-                    this.email = email;
-                    if (email !== '') {
-                        this.$store.commit('setIsEmail', true)
-                    }
-                    let data = {access_token, refresh_token, platform_token};
-                    this.setTokenAct(data);
-                }
-            },
-            setDomain() {
-                this.$store.commit('setDomain', window.location.href.split('/home')[0])
-            },
 
         },
         created() {
