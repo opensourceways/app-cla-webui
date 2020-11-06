@@ -571,11 +571,6 @@
                 }).catch(err => {
                 })
             },
-            resetCla() {
-                this.$store.commit('setClaChoose', false)
-                this.filterChange = true
-                this.$store.commit('setClaValue', '')
-            },
             tabsHandleClick(tab, event) {
                 tab.index === '0' ? this.$router.push('/linkedRepo') : this.$router.push('/signedRepoLogin')
             },

@@ -103,8 +103,9 @@
         },
         created() {
             this.setDomain();
-            this.clearPageSession();
-
+            new Promise((resolve,reject)=>{
+                this.clearPageSession();
+            }).then(res=>{},err=>{})
             this.getCookieData()
         },
         mounted() {

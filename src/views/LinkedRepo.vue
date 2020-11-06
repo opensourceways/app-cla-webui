@@ -289,7 +289,7 @@
         methods: {
             ...mapActions(['setLoginUserAct', 'setTokenAct', 'getLinkedRepoListAct', 'setTableDataAct']),
             configCla() {
-                this.$router.push('/bind-cla')
+                this.$router.push('/home/bind-cla')
             },
             tabsHandleClick(tab, event) {
                 tab.index === '0' ? this.$router.push('/linkedRepo') : this.$router.push('/signedRepoLogin')
@@ -633,7 +633,7 @@
                 this.unLinkDialogVisible = true
             },
             checkCorporationList(item) {
-                this.$router.push({path: '/corporationList', query: {item: JSON.stringify(item)}})
+                this.$router.push({path: '/home/corporationList', query: {item: JSON.stringify(item)}})
             },
             checkCla() {
                 this.$router.push('/signCla')

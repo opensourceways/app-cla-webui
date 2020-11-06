@@ -47,17 +47,17 @@ const routes = [
                 component: () => import('../views/LinkedRepo.vue')
             },
             {
-                path: '/linkedRepo',
+                path: '/home/linkedRepo',
                 name: 'LinkedRepo',
                 component: () => import('../views/LinkedRepo.vue')
             },
             {
-                path: '/corporationList',
+                path: '/home/corporationList',
                 name: 'CorporationList',
                 component: () => import('../views/CorporationList.vue')
             },
             {
-                path: '/bind-cla',
+                path: '/home/bind-cla',
                 name: 'ConfigCla',
                 component: () => import('../views/ConfigCla.vue')
             },
