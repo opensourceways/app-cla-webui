@@ -6,7 +6,7 @@
                 <el-row class="emailRow" gutter="20" v-for="(item,index) in data">
                     <el-col :span="6">
                         <el-input
-                                placeholder="please input name" @blur="setAcount(item.name,item.acount)" clearable="" size="medium" v-model="">
+                                placeholder="please input name" @blur="setAcount(item.name,item.acount)" clearable="" size="medium" v-model="item.name">
                         </el-input>
                     </el-col>
                     <el-col :span="8">
