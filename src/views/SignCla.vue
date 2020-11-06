@@ -152,7 +152,7 @@
             return {
                 signRouter: '/sign',
                 serverAddress: 'Hong Kong',
-                domain: this.$store.state.signDomain,
+                domain: this.$store.state.domain,
                 tipsTitle: '',
                 tipsMessage: 'Thanks for your sign.',
                 tipsDialogVisible: false,

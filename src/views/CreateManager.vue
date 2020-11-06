@@ -4,17 +4,22 @@
             <p id="tabName">Create Manager</p>
             <el-row class="createUserBack">
                 <el-row class="emailRow" gutter="20" v-for="(item,index) in data">
-                    <el-col :span="8">
+                    <el-col :span="6">
                         <el-input
-                                placeholder="please input name" clearable="" size="medium" v-model="item.name">
+                                placeholder="please input name" @blur="setAcount(item.name,item.acount)" clearable="" size="medium" v-model="">
                         </el-input>
                     </el-col>
-                    <el-col :span="10">
+                    <el-col :span="8">
                         <el-input
                                 placeholder="please input email" clearable="" size="medium" v-model="item.email">
                         </el-input>
                     </el-col>
-                    <el-col :span="6" align="right">
+                    <el-col :span="6">
+                        <el-input
+                                placeholder="please input acount" clearable="" size="medium" v-model="item.acount">
+                        </el-input>
+                    </el-col>
+                    <el-col :span="4" align="right">
                         <button class="deleteBt" @click="myDeleteRow(index)">-</button>
                         <button class="button" @click="addRow(index)">+</button>
                     </el-col>
@@ -68,11 +73,18 @@
         data() {
 
             return {
-                data:[{name:'',email:''}],
+                data:[{name:'',email:'',acount:''}],
                 limit: 5,
             }
         },
         methods: {
+            setAcount(name,acount){
+                let reg = /[a-zA-Z0-9_.]+/;
+                let myName = name.trim()
+                if (reg.test(myName)&&acount.trim()!==''){
+                    acount=myName
+                }
+            },
             pressEnter(){
                 if (event.keyCode === 13) {
                     this.createUser();
@@ -83,7 +95,7 @@
                     this.$message.closeAll()
                     this.$message.error(`Create up to ${this.limit} users`)
                 } else {
-                    this.data.splice(index + 1, 0, {name:'',email: ''})
+                    this.data.splice(index + 1, 0, {name:'',email: '',acount:''})
                 }
 
             },
@@ -91,6 +103,7 @@
                 if (this.data.length === 1) {
                     this.data[0].name = ''
                     this.data[0].email = ''
+                    this.data[0].acount = ''
 
                 } else {
                     this.data.splice(index, 1);
@@ -99,13 +112,17 @@
             createUser() {
                 let managers = []
                 this.data.forEach(item => {
-                    if ((item.email.trim() !== '' && item.name.trim() === '')||(item.email.trim() === '' && item.name.trim() !== '')) {
+                    let email = item.email.trim();
+                    let name = item.name.trim();
+                    let acount = item.acount.trim();
+
+                    if (!((email === '' && name === ''&&acount === '')||(email !== '' && name !== ''&& acount !== ''))){
                         this.$store.commit('errorCodeSet', {
                             dialogVisible: true,
                             dialogMessage: 'Please fill in the complete information.',
                         });
-                    }else if (item.email.trim()!==''&&item.name.trim()!==''){
-                        managers.push({name:item.name.trim(),email:item.email.trim()})
+                    }else if (email!==''&&name!==''&&acount!==''){
+                        managers.push({name:name,email:email,acount:acount})
                     }
                 })
                 let obj = {managers: managers}

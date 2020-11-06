@@ -26,7 +26,6 @@ export default new Vuex.Store({
         ready: Boolean(sessionStorage.getItem('ready') || undefined),
         platform: sessionStorage.getItem('platform') || undefined,
         domain:sessionStorage.getItem('domain') || undefined,
-        signDomain:sessionStorage.getItem('signDomain') || undefined,
         access_token: sessionStorage.getItem('token') || undefined,
         refresh_token: sessionStorage.getItem('refresh_token') || undefined,
         platform_token: sessionStorage.getItem('platform_token') || undefined,
@@ -176,10 +175,7 @@ export default new Vuex.Store({
             state.domain=domain
            sessionStorage.setItem('domain',domain)
         },
-        setSignDomain(state,signDomain){
-            state.signDomain=signDomain
-            sessionStorage.setItem('signDomain',signDomain)
-        },
+
     },
     actions: {
         setCorpTokenAct({commit}, token) {

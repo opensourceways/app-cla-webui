@@ -464,7 +464,7 @@
                 platform: '',
                 org: '',
                 repo: '',
-                domain: this.$store.state.signDomain,
+                domain: this.$store.state.domain,
                 signType: 'corporation',
                 transparentDiv: {
                     height: '',
@@ -623,7 +623,7 @@
                 })
             },
             setDomain() {
-                this.$store.commit('setSignDomain', window.location.href.split('/sign')[0])
+                this.$store.commit('setDomain', window.location.href.split('/sign')[0])
             },
         },
         created() {
