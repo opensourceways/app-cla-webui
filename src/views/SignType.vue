@@ -460,6 +460,7 @@
         },
         data() {
             return {
+                base64Params:'',
                 reLoginDialogTitle: '',
                 platform: '',
                 org: '',
@@ -481,6 +482,9 @@
         },
         methods: {
             ...mapActions(['setPlatformAct', 'setLoginTypeAct', 'setRepoInfoAct', 'errorAct']),
+            getBase64Params(){
+
+            },
             getRepoInfo() {
                 let params = window.location.href.split('/sign/')[1]
                 let repoInfoParams = ''
@@ -517,6 +521,7 @@
                     if (loginType === 'individual' || loginType === 'employee') {
                         http({
                             url: `${url.getAuthCodeUrl}/${this.platform}/sign`,
+                            params:{success_redirect:'/sign-cla',failure_redirect:`/sign`,}
                         }).then(res => {
                             window.location.href = res.data.data.url
                         }).catch(err => {

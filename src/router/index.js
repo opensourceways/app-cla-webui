@@ -149,11 +149,12 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    window.scrollTo(0, 0);
     if (from.path === '/signedRepo/resetPassword' || from.path === '/rootManager/resetPassword') {
         if (to.path === '/corporationManagerLogin') {
             next()
         } else {
-            if (sessionStorage.getItem('pwdIsChanged')==='true') {
+            if (sessionStorage.getItem('pwdIsChanged') === 'true') {
                 next()
             } else {
             }
@@ -162,7 +163,7 @@ router.beforeEach((to, from, next) => {
         next()
     }
 })
-router.afterEach((to,from,next) => {
-    window.scrollTo(0,0);
+router.afterEach((to, from, next) => {
+    window.scrollTo(0, 0);
 });
 export default router
