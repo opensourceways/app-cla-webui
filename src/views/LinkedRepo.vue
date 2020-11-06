@@ -286,9 +286,10 @@
             this.setDomain();
             new Promise((resolve,reject)=>{
                 this.clearPageSession();
+                resolve('complete')
             }).then(res=>{
                return new Promise(resolve=>{
-                   this.getCookieData()
+                   this.getCookieData(resolve)
                }).then(res=>{
                    this.getLinkedRepoList();
                })
@@ -622,7 +623,7 @@
                 }, 100)
 
             },
-            getCookieData() {
+            getCookieData(resolve) {
                 if (document.cookie !== '') {
                     let cookieArr = document.cookie.split('; ')
                     let access_token, refresh_token, platform_token,email = '';
@@ -637,6 +638,7 @@
                     }
                     let data = {access_token, refresh_token, platform_token};
                     this.setTokenAct(data);
+                    resolve('complete')
                 }
             },
 
