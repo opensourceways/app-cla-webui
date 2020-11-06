@@ -105,8 +105,10 @@
             this.setDomain();
             new Promise((resolve,reject)=>{
                 this.clearPageSession();
-            }).then(res=>{},err=>{})
-            this.getCookieData()
+            }).then(res=>{
+                this.getCookieData()
+            },err=>{})
+
         },
         mounted() {
             this.setClientHeight();

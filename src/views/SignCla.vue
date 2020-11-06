@@ -77,7 +77,7 @@
     import * as until from '../until/until'
     import * as url from '../until/api'
     import {mapActions} from 'vuex'
-    import http from '../until/http'
+    import http from '../until/sign_http'
     import axios from '../until/axios'
     import ReLoginDialog from '../components/ReLoginDialog'
     import ReTryDialog from '../components/ReTryDialog'
@@ -362,7 +362,7 @@
                 }
 
             },
-            setData(res, argRes) {
+            setData(res, resolve) {
                 let data = res.data.data;
                 this.signPageData = data
                 if (Object.keys(data).length) {
@@ -372,7 +372,7 @@
                             this.value = key;
                             this.cla_org_id = key
                             this.setClaText(key)
-                            argRes('complete')
+                            resolve('complete')
                         } else {
                             this.$message.closeAll()
                             this.$message.error('Language wrong')
@@ -381,7 +381,7 @@
                     }
                 }
             },
-            getSignPage(argRes) {
+            getSignPage(resolve) {
                 this.changeDesc('english');
                 let applyTo = '';
                 if (this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee') {
@@ -392,7 +392,7 @@
                             repo_id: this.$store.state.repoInfo.repo_id,
                         },
                     }).then(res => {
-                        this.setData(res, argRes)
+                        this.setData(res, resolve)
                     }).catch(err => {
                         this.errorAct(err)
                     })
