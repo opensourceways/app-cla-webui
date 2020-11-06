@@ -460,7 +460,7 @@
         },
         data() {
             return {
-                base64Params:'',
+                base64Params: '',
                 reLoginDialogTitle: '',
                 platform: '',
                 org: '',
@@ -482,7 +482,7 @@
         },
         methods: {
             ...mapActions(['setPlatformAct', 'setLoginTypeAct', 'setRepoInfoAct', 'errorAct']),
-            getBase64Params(){
+            getBase64Params() {
 
             },
             getRepoInfo() {
@@ -521,7 +521,7 @@
                     if (loginType === 'individual' || loginType === 'employee') {
                         http({
                             url: `${url.getAuthCodeUrl}/${this.platform}/sign`,
-                            params:{success_redirect:'/sign-cla',failure_redirect:`/sign`,}
+                            params: {success_redirect: '/sign-cla', failure_redirect: `/sign`,}
                         }).then(res => {
                             window.location.href = res.data.data.url
                         }).catch(err => {
@@ -649,6 +649,9 @@
     @import "../assets/font/css/Roboto-Regular.css";
 
     .index {
+        .el-dialog {
+            border-radius: 1rem;
+        }
 
         display: flex;
         flex-direction: column;
