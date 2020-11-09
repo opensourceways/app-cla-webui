@@ -48,8 +48,7 @@
                                     </el-col>
                                 </el-row>
                             </el-col>
-                            <ReTryDialog :dialogVisible="reTryDialogVisible" :message="reLoginMsg"
-                                         :title="reLoginDialogTitle"></ReTryDialog>
+
                         </el-row>
                     </el-col>
                 </el-row>
@@ -424,6 +423,8 @@
         </el-row>
 
         <NewFooter></NewFooter>
+        <ReTryDialog :dialogVisible="reTryDialogVisible" :message="reLoginMsg"
+                     :title="reLoginDialogTitle"></ReTryDialog>
     </el-row>
 </template>
 <script>
@@ -642,7 +643,7 @@
         }
     }
 </script>
-<style scoped lang="less">
+<style  lang="less">
     @import "../assets/font/css/Roboto-Bold.css";
     @import "../assets/font/css/Roboto-Black.css";
     @import "../assets/font/css/Roboto-Light.css";
