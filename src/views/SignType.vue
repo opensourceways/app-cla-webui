@@ -648,8 +648,8 @@
     @import "../assets/font/css/Roboto-Light.css";
     @import "../assets/font/css/Roboto-Regular.css";
 
-    .index {
-        & .el-dialog {
+    #transparentDiv {
+         .el-dialog {
             border-radius: 1rem;
         }
 
