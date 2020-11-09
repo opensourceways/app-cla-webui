@@ -685,9 +685,10 @@
             },
             setDomain() {
                 let domain = window.location.href.split('/linkedRepo')[0]
-                if (domain !== window.location.href) {
-                    this.$store.commit('setDomain', domain)
+                if (domain === window.location.href) {
+                    domain = window.location.href.split('/home')[0]
                 }
+                this.$store.commit('setDomain', domain)
             },
             clearPageSession() {
                 this.$store.commit('setOrgOption', undefined)

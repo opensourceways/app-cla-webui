@@ -335,7 +335,7 @@
                 }).catch(err => {
                     this.$store.commit('setSignReLogin',{
                         dialogVisible: true,
-                        dialogMessage: `Email access is not authorized, please re authorize`
+                        dialogMessage: `Email access is not authorized, please reAuthorize`
                     })
                 })
             },
