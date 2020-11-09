@@ -649,7 +649,7 @@
     @import "../assets/font/css/Roboto-Regular.css";
 
     .index {
-        .el-dialog {
+        & .el-dialog {
             border-radius: 1rem;
         }
 
