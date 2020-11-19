@@ -21,7 +21,7 @@ module.exports = {
         empStep5:'收到员工CLA签署生效的邮件签署完成',
         individualStep2:'同意CLA签署平台对您个人Gitee账号的访问授权跳转至个人CLA签署页面',
         individualStep4:'收到个人CLA签署生效的邮件签署完成',
-        admin_platform:'超级管理员后台'
+        admin_platform:'超级管理员后台',
     },
     signPage: {
         claTitle: "贡献者许可协议",
