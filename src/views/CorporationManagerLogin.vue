@@ -108,6 +108,7 @@
                     method: 'post',
                     data: obj,
                 }).then(res => {
+                    console.log(res);
                     let data = res.data.data
                     if (data.length) {
                         new Promise((resolve, reject) => {
