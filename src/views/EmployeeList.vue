@@ -77,7 +77,7 @@
                                 :label="$t('corp.email')">
                         </el-table-column>
                         <el-table-column
-                                label="status"
+                                :label="$t('corp.operation')"
                                 align="center">
                             <template slot-scope="scope">
                                 <el-row class="mySwitch">

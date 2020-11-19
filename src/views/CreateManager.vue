@@ -6,12 +6,14 @@
                 <el-row class="emailRow" gutter="20" v-for="(item,index) in data">
                     <el-col :span="6">
                         <el-input
-                                :placeholder="$t('tips.fill_name')" @blur="setAcount(item.name,index)" clearable="" size="medium" v-model="item.name">
+                                :placeholder="$t('tips.fill_name')" @blur="setAcount(item.name,index)" clearable=""
+                                size="medium" v-model="item.name">
                         </el-input>
                     </el-col>
                     <el-col :span="8">
                         <el-input
-                                :placeholder="$t('tips.not_fill_email')" clearable="" size="medium" v-model="item.email">
+                                :placeholder="$t('tips.not_fill_email')" clearable="" size="medium"
+                                v-model="item.email">
                         </el-input>
                     </el-col>
                     <el-col :span="6">
@@ -32,8 +34,8 @@
                 </el-row>
             </el-row>
 
-            <corpReLoginDialog  :message="corpReLoginMsg" :dialogVisible="corpReLoginDialogVisible"></corpReLoginDialog>
-            <reTryDialog  :message="corpReLoginMsg" :dialogVisible="corpReTryDialogVisible"></reTryDialog>
+            <corpReLoginDialog :message="corpReLoginMsg" :dialogVisible="corpReLoginDialogVisible"></corpReLoginDialog>
+            <reTryDialog :message="corpReLoginMsg" :dialogVisible="corpReTryDialogVisible"></reTryDialog>
         </el-col>
     </el-row>
 </template>
@@ -43,6 +45,7 @@
     import http from '../until/http'
     import corpReLoginDialog from '../components/CorpReLoginDialog'
     import reTryDialog from '../components/ReTryDialog'
+
     export default {
         name: "CreateUser",
         components: {
@@ -70,19 +73,19 @@
         data() {
 
             return {
-                data:[{name:'',email:'',id:''}],
+                data: [{name: '', email: '', id: ''}],
                 limit: 5,
             }
         },
         methods: {
-            setAcount(name,index){
+            setAcount(name, index) {
                 let reg = /^[a-zA-Z0-9_.]+$/;
                 let myName = name.trim()
-                if (reg.test(myName)&&this.data[index].id.trim()===''){
-                    this.data[index].id=myName
+                if (reg.test(myName) && this.data[index].id.trim() === '') {
+                    this.data[index].id = myName
                 }
             },
-            pressEnter(){
+            pressEnter() {
                 if (event.keyCode === 13) {
                     this.createUser();
                 }
@@ -90,9 +93,9 @@
             addRow(index) {
                 if (Number(this.$store.state.userLimit) + this.data.length >= this.limit) {
                     this.$message.closeAll()
-                    this.$message.error(this.$t('corp.manager_limit',{limit:this.limit}))
+                    this.$message.error(this.$t('corp.manager_limit', {limit: this.limit}))
                 } else {
-                    this.data.splice(index + 1, 0, {name:'',email: '',id:''})
+                    this.data.splice(index + 1, 0, {name: '', email: '', id: ''})
                 }
 
             },
@@ -113,23 +116,27 @@
                     let name = item.name.trim();
                     let id = item.id.trim();
 
-                    if (!((email === '' && name === ''&&id === '')||(email !== '' && name !== ''&& id !== ''))){
+                    if (!((email === '' && name === '' && id === '') || (email !== '' && name !== '' && id !== ''))) {
+                        console.log('errorCodeSet_before');
                         this.$store.commit('errorCodeSet', {
                             dialogVisible: true,
                             dialogMessage: this.$t('corp.fill_complete'),
                         });
-                    }else if (email!==''&&name!==''&&id!==''){
-                        managers.push({name:name,email:email,id:id})
+                        console.log('errorCodeSet_after');
+
+                    } else if (email !== '' && name !== '' && id !== '') {
+                        managers.push({name: name, email: email, id: id})
                     }
                 })
                 let obj = {managers: managers}
+                console.log('errorCodeSet_after',obj);
                 http({
                     url: url.addEmployeeManager,
                     method: 'post',
                     data: obj,
                 }).then(res => {
                     this.$message.closeAll()
-                    this.$message.success( this.$t('tips.successTitle'))
+                    this.$message.success(this.$t('tips.successTitle'))
                     setTimeout(() => {
                         this.$router.push('/managerList')
                     }, 500)
@@ -139,7 +146,7 @@
                             case 'cla.invalid_token':
                                 this.$store.commit('errorSet', {
                                     dialogVisible: true,
-                                    dialogMessage:this.$t('tips.invalid_token'),
+                                    dialogMessage: this.$t('tips.invalid_token'),
                                 });
                                 break;
                             case 'cla.missing_token':
@@ -151,7 +158,7 @@
                             case 'cla.unknown_token':
                                 this.$store.commit('errorSet', {
                                     dialogVisible: true,
-                                    dialogMessage:this.$t('tips.unknown_token'),
+                                    dialogMessage: this.$t('tips.unknown_token'),
                                 });
                                 break;
 
@@ -176,7 +183,7 @@
                             case 'cla.invalid_parameter':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
-                                    dialogMessage: this.$t('tips.manager_email_same_with_admin'),
+                                    dialogMessage: this.$t('corp.manager_email_same_with_admin'),
                                 });
                                 break;
                             case 'cla.system_error':
@@ -186,10 +193,10 @@
                                 });
                                 break;
                         }
-                    }else{
+                    } else {
                         this.$store.commit('errorCodeSet', {
                             dialogVisible: true,
-                            dialogMessage:this.$t('tips.system_error'),
+                            dialogMessage: this.$t('tips.system_error'),
                         })
                     }
                 })
@@ -205,6 +212,7 @@
         & .el-dialog {
             border-radius: 1rem;
         }
+
         & .createUserBack {
             box-shadow: 0 0 20px 10px #F3F3F3;
             padding: 2rem;
