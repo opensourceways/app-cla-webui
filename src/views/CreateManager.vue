@@ -117,89 +117,88 @@
                     let id = item.id.trim();
 
                     if (!((email === '' && name === '' && id === '') || (email !== '' && name !== '' && id !== ''))) {
-                        console.log('errorCodeSet_before');
                         this.$store.commit('errorCodeSet', {
                             dialogVisible: true,
                             dialogMessage: this.$t('corp.fill_complete'),
                         });
-                        console.log('errorCodeSet_after');
-
                     } else if (email !== '' && name !== '' && id !== '') {
                         managers.push({name: name, email: email, id: id})
                     }
-                })
-                let obj = {managers: managers}
-                console.log('errorCodeSet_after',obj);
-                http({
-                    url: url.addEmployeeManager,
-                    method: 'post',
-                    data: obj,
-                }).then(res => {
-                    this.$message.closeAll()
-                    this.$message.success(this.$t('tips.successTitle'))
-                    setTimeout(() => {
-                        this.$router.push('/managerList')
-                    }, 500)
-                }).catch(err => {
-                    if (err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
+                });
+                if (managers.length) {
+                    let obj = {managers: managers}
+                    http({
+                        url: url.addEmployeeManager,
+                        method: 'post',
+                        data: obj,
+                    }).then(res => {
+                        this.$message.closeAll()
+                        this.$message.success(this.$t('tips.successTitle'))
+                        setTimeout(() => {
+                            this.$router.push('/managerList')
+                        }, 500)
+                    }).catch(err => {
+                        if (err.data.hasOwnProperty('data')) {
+                            switch (err.data.data.error_code) {
+                                case 'cla.invalid_token':
+                                    this.$store.commit('errorSet', {
+                                        dialogVisible: true,
+                                        dialogMessage: this.$t('tips.invalid_token'),
+                                    });
+                                    break;
+                                case 'cla.missing_token':
+                                    this.$store.commit('errorSet', {
+                                        dialogVisible: true,
+                                        dialogMessage: this.$t('tips.missing_token'),
+                                    });
+                                    break;
+                                case 'cla.unknown_token':
+                                    this.$store.commit('errorSet', {
+                                        dialogVisible: true,
+                                        dialogMessage: this.$t('tips.unknown_token'),
+                                    });
+                                    break;
 
-                            case 'cla.num_of_corp_managers_exceeded':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.num_of_corp_managers_exceeded'),
-                                });
-                                break;
-                            case 'cla.corp_manager_exists':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.corp_manager_exists'),
-                                });
-                                break;
-                            case 'cla.not_same_corp':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.not_same_corp'),
-                                });
-                                break;
-                            case 'cla.invalid_parameter':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('corp.manager_email_same_with_admin'),
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
+                                case 'cla.num_of_corp_managers_exceeded':
+                                    this.$store.commit('errorCodeSet', {
+                                        dialogVisible: true,
+                                        dialogMessage: this.$t('tips.num_of_corp_managers_exceeded'),
+                                    });
+                                    break;
+                                case 'cla.corp_manager_exists':
+                                    this.$store.commit('errorCodeSet', {
+                                        dialogVisible: true,
+                                        dialogMessage: this.$t('tips.corp_manager_exists'),
+                                    });
+                                    break;
+                                case 'cla.not_same_corp':
+                                    this.$store.commit('errorCodeSet', {
+                                        dialogVisible: true,
+                                        dialogMessage: this.$t('tips.not_same_corp'),
+                                    });
+                                    break;
+                                case 'cla.invalid_parameter':
+                                    this.$store.commit('errorCodeSet', {
+                                        dialogVisible: true,
+                                        dialogMessage: this.$t('corp.manager_email_same_with_admin'),
+                                    });
+                                    break;
+                                case 'cla.system_error':
+                                    this.$store.commit('errorCodeSet', {
+                                        dialogVisible: true,
+                                        dialogMessage: this.$t('tips.system_error'),
+                                    });
+                                    break;
+                            }
+                        } else {
+                            this.$store.commit('errorCodeSet', {
+                                dialogVisible: true,
+                                dialogMessage: this.$t('tips.system_error'),
+                            })
                         }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
-                })
+                    })
+                }
+
             },
         },
     }
