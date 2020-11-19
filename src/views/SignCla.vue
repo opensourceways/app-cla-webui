@@ -449,21 +449,23 @@
                         if (err.data.hasOwnProperty('data')) {
                             switch (err.data.data.error_code) {
                                 case 'cla.no_cla_binding':
+                                    let message = '';
+                                    if (this.$store.state.loginType === 'corporation') {
+                                        message=this.$t('tips.no_cla_binding_corp')
+                                    }else  if (this.$store.state.loginType === 'employee') {
+                                        message=this.$t('tips.no_cla_binding_emp')
+                                    } if (this.$store.state.loginType === 'individual') {
+                                    message=this.$t('tips.no_cla_binding_individual')
+                                }
                                     this.$store.commit('setSignReLogin', {
                                         dialogVisible: true,
-                                        dialogMessage: this.$t('tips.no_cla_binding'),
+                                        dialogMessage:message,
                                     });
                                     break;
                                 case 'cla.invalid_parameter':
                                     this.$store.commit('setSignReLogin', {
                                         dialogVisible: true,
                                         dialogMessage: this.$t('tips.invalid_parameter'),
-                                    });
-                                    break;
-                                case 'cla.no_corp_manager':
-                                    this.$store.commit('setSignReLogin', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.no_corp_manager'),
                                     });
                                     break;
                                 case 'cla.has_not_signed':
@@ -848,6 +850,18 @@
                                 this.$store.commit('setSignReLogin', {
                                     dialogVisible: true,
                                     dialogMessage: this.$t('tips.unknown_token'),
+                                });
+                                break;
+                            case 'cla.uncompleted_signing':
+                                this.$store.commit('setSignReLogin', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.uncompleted_signing'),
+                                });
+                                break;
+                            case 'cla.no_corp_manager':
+                                this.$store.commit('setSignReLogin', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.no_corp_manager'),
                                 });
                                 break;
                             case 'cla.failed_to_send_email':
