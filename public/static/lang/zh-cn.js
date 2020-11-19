@@ -125,6 +125,7 @@ module.exports = {
         inactive:'未激活',
         active:'已激活',
         no_data:'暂无数据',
+        manager_email_same_with_admin:'不能添加超级管理员为员工管理员',
 
     },
     index:{

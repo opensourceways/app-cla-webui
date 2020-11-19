@@ -176,7 +176,7 @@
                             case 'cla.invalid_parameter':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_parameter'),
+                                    dialogMessage: this.$t('tips.manager_email_same_with_admin'),
                                 });
                                 break;
                             case 'cla.system_error':

@@ -143,7 +143,7 @@
                         })
                     }
                 }).catch(err => {
-                    if (err.data.hasOwnProperty('data')) {
+                    if (err.data&&err.data.hasOwnProperty('data')) {
                         switch (err.data.data.error_code) {
                             case 'cla.invalid_token':
                                 this.$store.commit('errorSet', {
