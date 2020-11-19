@@ -21,7 +21,7 @@ module.exports = {
         empStep5:'Receive an e-mail indicating that the CLA is signed and activated.',
         individualStep2:'Agree to access your Gitee account on the CLA signing platform and go to the individual CLA signing page.',
         individualStep4:'Receive an e-mail indicating that the the CLA is signed and activated.',
-        admin_platform:' Administrator platform '
+        admin_platform:' Administrator platform ',
     },
     signPage: {
         claTitle: "Contributor License Agreement",
