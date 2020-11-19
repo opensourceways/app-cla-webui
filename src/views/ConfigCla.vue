@@ -2,7 +2,6 @@
     <div id="configCla" :style="configClaStyle">
         <div id="section">
             <div class="pageTitle">Configure CLA</div>
-            <router-view></router-view>
             <div class="itemBox">
                 <div style="font-size: 1.2rem;padding: .5rem">
                     ① Choose a organization or repository
