@@ -165,6 +165,7 @@
                     url: `${url.queryEmployeeManager}`,
                 }).then(res => {
                     this.tableData = res.data.data;
+                    this.$store.commit('setManagerList',res.data.data)
                     this.setUserLimitAct(res.data.data.length)
                 }).catch(err => {
                     if (err.data.hasOwnProperty('data')) {

@@ -48,8 +48,13 @@ export default new Vuex.Store({
         metadataType:sessionStorage.getItem('metadataType') || undefined,
         individualCustomMetadataArr:JSON.parse(sessionStorage.getItem('individualCustomMetadataArr')) || undefined,
         corporationCustomMetadataArr:JSON.parse(sessionStorage.getItem('corporationCustomMetadataArr')) || undefined,
+        managerList:JSON.parse(sessionStorage.getItem('managerList')) || undefined,
     },
     mutations: {
+        setManagerList(state,data){
+            state.managerList = data;
+            sessionStorage.setItem('managerList',JSON.stringify(data));
+        },
         setIndividualCustomMetadataArr(state,individualCustomMetadataArr){
             state.individualCustomMetadataArr=individualCustomMetadataArr;
             sessionStorage.setItem('individualCustomMetadataArr', JSON.stringify(individualCustomMetadataArr));

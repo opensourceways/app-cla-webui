@@ -110,21 +110,78 @@
                 }
             },
             createUser() {
-                let managers = [];
+                let managers = this.$store.state.managerList;
+                let newManagers = [];
                 let isCreate = true;
-                this.data.forEach(item => {
-                    let email = item.email.trim();
-                    let name = item.name.trim();
-                    let id = item.id.trim();
-
+                for (let i = 0; i < this.data.length; i++) {
+                    let email = this.data[i].email.trim();
+                    let name = this.data[i].name.trim();
+                    let id = this.data[i].id.trim();
                     if (!((email === '' && name === '' && id === '') || (email !== '' && name !== '' && id !== ''))) {
                         isCreate = false;
+                        this.$store.commit('errorCodeSet', {
+                            dialogVisible: true,
+                            dialogMessage: this.$t('corp.fill_complete'),
+                        });
+                        break;
                     } else if (email !== '' && name !== '' && id !== '') {
-                        managers.push({name: name, email: email, id: id})
+                        newManagers.push({name: name, email: email, id: id})
                     }
-                });
-                if (managers.length && isCreate) {
-                    let obj = {managers: managers}
+                }
+                for (let i = 0; i < this.data.length; i++) {
+                    let flag = 0;
+                    for (let j = i + 1; j < this.data.length; j++) {
+                        if (this.data[i].email.trim() === this.data[j].email.trim()) {
+                            isCreate = false;
+                            this.$store.commit('errorCodeSet', {
+                                dialogVisible: true,
+                                dialogMessage: this.$t('tips.same_email'),
+                            });
+                            flag = 1;
+                            break;
+                        }
+                        if (this.data[i].id.trim() === this.data[j].id.trim()) {
+                            isCreate = false;
+                            this.$store.commit('errorCodeSet', {
+                                dialogVisible: true,
+                                dialogMessage: this.$t('tips.same_id'),
+                            });
+                            flag = 1;
+                            break;
+                        }
+                    }
+                    if (flag) {
+                        break;
+                    }
+                }
+                for (let i = 0; i < managers.length; i++) {
+                    let flag = 0;
+                    for (let j = 0; j < this.data.length; j++) {
+                        if (managers[i].email.trim() === this.data[j].email.trim()) {
+                            isCreate = false;
+                            this.$store.commit('errorCodeSet', {
+                                dialogVisible: true,
+                                dialogMessage: this.$t('tips.exits_email'),
+                            });
+                            flag = 1;
+                            break;
+                        }
+                        if (managers[i].id.trim() === this.data[j].id.trim()) {
+                            isCreate = false;
+                            this.$store.commit('errorCodeSet', {
+                                dialogVisible: true,
+                                dialogMessage: this.$t('tips.exits_id'),
+                            });
+                            flag = 1;
+                            break;
+                        }
+                    }
+                    if (flag) {
+                        break;
+                    }
+                }
+                if (newManagers.length && isCreate) {
+                    let obj = {managers: newManagers}
                     http({
                         url: url.addEmployeeManager,
                         method: 'post',
@@ -154,6 +211,12 @@
                                     this.$store.commit('errorSet', {
                                         dialogVisible: true,
                                         dialogMessage: this.$t('tips.unknown_token'),
+                                    });
+                                    break;
+                                case 'cla.invalid_email':
+                                    this.$store.commit('errorCodeSet', {
+                                        dialogVisible: true,
+                                        dialogMessage: this.$t('tips.invalid_email'),
                                     });
                                     break;
 
@@ -195,11 +258,8 @@
                             })
                         }
                     })
-                }else{
-                    this.$store.commit('errorCodeSet', {
-                        dialogVisible: true,
-                        dialogMessage: this.$t('corp.fill_complete'),
-                    });
+                } else {
+
                 }
 
             },
@@ -212,6 +272,7 @@
 
     #createUser {
         padding: 2rem 0;
+
         & .el-dialog {
             border-radius: 1rem;
         }
