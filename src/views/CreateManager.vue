@@ -197,6 +197,7 @@
                 }
                 if (newManagers.length && isCreate) {
                     let obj = {managers: newManagers}
+
                     http({
                         url: url.addEmployeeManager,
                         method: 'post',
@@ -279,8 +280,9 @@
                             })
                         }
                     })
-                } else {
 
+                } else {
+                    
                 }
 
             },
