@@ -211,6 +211,7 @@
     @import "../assets/font/css/Roboto-Regular.css";
 
     #createUser {
+        padding: 2rem 0;
         & .el-dialog {
             border-radius: 1rem;
         }
