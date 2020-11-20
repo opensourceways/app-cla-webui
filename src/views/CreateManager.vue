@@ -235,6 +235,7 @@
                                         dialogMessage: this.$t('tips.invalid_email'),
                                     });
                                     break;
+
                                 case 'cla.invalid_manager_id':
                                     this.$store.commit('errorCodeSet', {
                                         dialogVisible: true,
@@ -280,9 +281,8 @@
                             })
                         }
                     })
-
                 } else {
-                    
+
                 }
 
             },
@@ -295,6 +295,7 @@
 
     #createUser {
         padding: 2rem 0;
+
         & .el-dialog {
             border-radius: 1rem;
         }

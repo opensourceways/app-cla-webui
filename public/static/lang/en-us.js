@@ -92,7 +92,6 @@ module.exports = {
         exits_email:'Email existed.Please check and try again',
         exits_id:'ID existed.Please check and try again',
         invalid_id:'ID format error,ID can only contain a-zA-Z0-9_.',
-
     },
     header:{
         home:'Home',
