@@ -168,10 +168,10 @@
                     }
                 }
                 if (isCreate) {
-                    for (let i = 0; i < managers.length; i++) {
+                    for (let i = 0; i < newManagers.length; i++) {
                         let flag = 0;
                         for (let j = 0; j < this.data.length; j++) {
-                            if (managers[i].email.trim() === this.data[j].email.trim()) {
+                            if (newManagers[i].email.trim() === this.data[j].email.trim()) {
                                 isCreate = false;
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -180,7 +180,7 @@
                                 flag = 1;
                                 break;
                             }
-                            if (managers[i].id.trim() === this.data[j].id.trim()) {
+                            if (newManagers[i].id.trim() === this.data[j].id.trim()) {
                                 isCreate = false;
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -197,7 +197,6 @@
                 }
                 if (newManagers.length && isCreate) {
                     let obj = {managers: newManagers}
-
                     http({
                         url: url.addEmployeeManager,
                         method: 'post',
