@@ -89,8 +89,8 @@ module.exports = {
         id_pwd_err:'账号或者密码错误，请重试',
         same_email:'不能填写相同的邮箱，请检查后重试',
         same_id:'不能填写相同的ID，请检查后重试',
-        exits_email:'Email existed.Please check and try again',
-        exits_id:'ID existed.Please check and try again',
+        exits_email:'邮箱已存在，请检查后重试',
+        exits_id:'ID已存在，请检查后重试',
     },
     header:{
         home:'首页',
