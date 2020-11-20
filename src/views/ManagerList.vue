@@ -258,7 +258,7 @@
     @import "../assets/font/css/Roboto-Regular.css";
 
     #userList {
-        padding-top: 2rem;
+        padding: 2rem 0;
 
         .actionRow {
             display: flex;
