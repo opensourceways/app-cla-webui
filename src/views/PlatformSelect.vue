@@ -85,11 +85,8 @@
                             url: `${url.getAuthCodeUrl}/${platform}/login`,
                             params:{success_redirect:'/home',failure_redirect:'/platformSelect',}
                         }).then(res => {
-                            console.log(res);
-                            // this.login(res.data.data.url)
                             window.location.href=res.data.data.url
                         }).catch(err => {
-                            console.log(err);
                             if (err.data.hasOwnProperty('data')) {
                                 switch (err.data.data.error_code) {
                                     case 'cla.invalid_token':
@@ -134,7 +131,6 @@
 
             },
             login(url){
-                console.log(url);
                 let params = url.split('/api')
 
             },

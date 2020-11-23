@@ -1,7 +1,7 @@
 <template>
     <el-row class="headerBox">
         <el-col class="header" :offset="5" :span="14">
-            <div class="box">
+            <div class="box" @click="toIndex">
                 <svg-icon icon-class="logo" class="icon"></svg-icon>
             </div>
 
@@ -96,6 +96,11 @@
         },
 
         methods: {
+            toIndex() {
+                if (this.$route.path === '/corporationManagerLogin' || this.$route.path === '/platformSelect') {
+                    this.$router.push('/')
+                }
+            },
             openOrCloseMenu() {
                 this.menuVisible = !this.menuVisible
             },
@@ -228,83 +233,84 @@
     }
 </script>
 
-<style scoped lang="less">
-    .visible {
-        visibility: hidden;
-    }
-
-    .pointer {
-        cursor: pointer;
-    }
-
-    .menuBox {
-        position: relative;
-        height: 2.6rem;
-        width: 8rem;
-    }
-
-    .userImgBox {
-
-        cursor: pointer;
-        height: 2.6rem;
-        width: 2.6rem;
-        overflow: hidden;
-        border-radius: 1.3rem;
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 5;
-
-        .svgCover {
-            background-color: transparent;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 3;
-            height: 2.6rem;
-            width: 2.6rem;
-            border-radius: 1.3rem;
-        }
-
-        & .userImg {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 2;
-            height: 2.6rem;
-            width: 2.6rem;
-        }
-    }
-
-    #menuOption {
-        border: 1px solid black;
-        border-radius: 1.3rem;
-        position: absolute;
-        right: 0;
-        top: 0;
-        z-index: 4;
-        background-color: white;
-        white-space: pre;
-        width: 10rem;
-
-        & > div {
-            height: 2.6rem;
-            line-height: 2.6rem;
-            margin: 0 1rem;
-            cursor: pointer;
-            user-select: none;
-        }
-
-        & > div:not(:last-of-type) {
-            border-bottom: 1px solid black;
-        }
-    }
-
+<style  lang="less">
     .headerBox {
         border-bottom: 2px solid #F2F2F2;
         height: 5.5rem;
         width: 100%;
+        .box{
+            cursor: pointer;
+        }
+        .visible {
+            visibility: hidden;
+        }
 
+        .pointer {
+            cursor: pointer;
+        }
+
+        .menuBox {
+            position: relative;
+            height: 2.6rem;
+            width: 8rem;
+        }
+
+        .userImgBox {
+
+            cursor: pointer;
+            height: 2.6rem;
+            width: 2.6rem;
+            overflow: hidden;
+            border-radius: 1.3rem;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 5;
+
+            .svgCover {
+                background-color: transparent;
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 3;
+                height: 2.6rem;
+                width: 2.6rem;
+                border-radius: 1.3rem;
+            }
+
+            & .userImg {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: 2;
+                height: 2.6rem;
+                width: 2.6rem;
+            }
+        }
+
+        #menuOption {
+            border: 1px solid black;
+            border-radius: 1.3rem;
+            position: absolute;
+            right: 0;
+            top: 0;
+            z-index: 4;
+            background-color: white;
+            white-space: pre;
+            width: 10rem;
+
+            & > div {
+                height: 2.6rem;
+                line-height: 2.6rem;
+                margin: 0 1rem;
+                cursor: pointer;
+                user-select: none;
+            }
+
+            & > div:not(:last-of-type) {
+                border-bottom: 1px solid black;
+            }
+        }
         .mark {
             height: 6px;
             width: 6px;
