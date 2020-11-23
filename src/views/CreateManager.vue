@@ -77,7 +77,9 @@
                 limit: 5,
             }
         },
+
         methods: {
+
             setAcount(name, index) {
                 let reg = /^[a-zA-Z0-9_.]+$/;
                 let myName = name.trim()
