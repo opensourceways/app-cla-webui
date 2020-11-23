@@ -2,7 +2,8 @@
     <el-row id="newFooter" align="middle" style="border-top:2px solid #F2F2F2;">
         <el-col class="footer" :offset="5" :span="14">
             <div class="box" @click="join">
-                <span class="join_us">JOIN US</span>
+                <svg-icon icon-class="github" class="footerIcon"></svg-icon>
+                <!--<span class="join_us">JOIN US</span>-->
             </div>
             <div class="box" @click="viewPrivacy">
                 <span class="copyright">©2020 Draven.Designed by LA-Studio</span>
@@ -42,11 +43,17 @@
 
     #newFooter {
         background-color: white;
+
         .footer {
             font-family: HuaweiSans-Regular, sans-serif;
             display: flex;
             justify-content: space-between;
             height: 5.5rem;
+        }
+
+        .footerIcon {
+            width: 3rem;
+            height: 3rem;
         }
 
         .box {
