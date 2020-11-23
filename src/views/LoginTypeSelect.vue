@@ -15,7 +15,7 @@
 
                         </div>
                         <div>
-                            <el-tooltip :content="$t('index.corp_bt_tip')" placement="top" effect="light" popper-class="my_tooltip">
+                            <el-tooltip :content="$t('index.corp_bt_tip')" placement="bottom" effect="light" popper-class="my_tooltip">
                                 <button class="button" @click="submit('corporationManager')">
                                     {{$t('index.corp_login')}}
                                 </button>
