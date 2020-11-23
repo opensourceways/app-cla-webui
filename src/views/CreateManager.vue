@@ -94,7 +94,7 @@
             },
             addRow(index) {
                 if (Number(this.$store.state.userLimit) + this.data.length >= this.limit) {
-                    this.$message.closeAll()
+                    this.$message.closeAll();
                     this.$message.error(this.$t('corp.manager_limit', {limit: this.limit}))
                 } else {
                     this.data.splice(index + 1, 0, {name: '', email: '', id: ''})
@@ -103,8 +103,8 @@
             },
             myDeleteRow(index) {
                 if (this.data.length === 1) {
-                    this.data[0].name = ''
-                    this.data[0].email = ''
+                    this.data[0].name = '';
+                    this.data[0].email = '';
                     this.data[0].id = ''
 
                 } else {
@@ -132,10 +132,19 @@
                         }
                     }
                 }
-                if (isCreate)  {
+                if (isCreate) {
                     for (let i = 0; i < this.data.length; i++) {
                         let flag = 0;
                         for (let j = i + 1; j < this.data.length; j++) {
+                            if (!this.data[i].id.match(/^[a-zA-Z0-9_.]+&/)) {
+                                isCreate = false;
+                                this.$store.commit('errorCodeSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.invalid_id'),
+                                });
+                                flag = 1;
+                                break;
+                            }
                             if (this.data[i].email.trim() === this.data[j].email.trim()) {
                                 isCreate = false;
                                 this.$store.commit('errorCodeSet', {
@@ -225,6 +234,12 @@
                                     this.$store.commit('errorCodeSet', {
                                         dialogVisible: true,
                                         dialogMessage: this.$t('tips.invalid_email'),
+                                    });
+                                    break;
+                                case 'cla.invalid_manager_id':
+                                    this.$store.commit('errorCodeSet', {
+                                        dialogVisible: true,
+                                        dialogMessage: this.$t('tips.invalid_id'),
                                     });
                                     break;
 

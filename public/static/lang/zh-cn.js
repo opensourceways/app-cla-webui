@@ -91,6 +91,7 @@ module.exports = {
         same_id:'不能填写相同的ID，请检查后重试',
         exits_email:'邮箱已存在，请检查后重试',
         exits_id:'ID已存在，请检查后重试',
+        invalid_id:'ID格式错误，ID只能包含a-zA-Z0-9_.',
     },
     header:{
         home:'首页',
