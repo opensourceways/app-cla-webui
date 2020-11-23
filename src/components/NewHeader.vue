@@ -256,12 +256,12 @@
         }
 
         .userImgBox {
-
             cursor: pointer;
             height: 2.6rem;
             width: 2.6rem;
             overflow: hidden;
             border-radius: 1.3rem;
+<<<<<<< HEAD
             position: absolute;
             right: 0;
             top: 0;
@@ -306,7 +306,6 @@
                 cursor: pointer;
                 user-select: none;
             }
-
             & > div:not(:last-of-type) {
                 border-bottom: 1px solid black;
             }
