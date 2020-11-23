@@ -21,7 +21,15 @@
 
 <script>
     export default {
-        name: "ConfigThree"
+        name: "ConfigThree",
+        data(){
+            return{
+
+            }
+        },
+        methods:{
+
+        }
     }
 </script>
 

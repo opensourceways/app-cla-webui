@@ -144,7 +144,7 @@
                     for (let i = 0; i < this.data.length; i++) {
                         let flag = 0;
                         for (let j = i + 1; j < this.data.length; j++) {
-                            if (!this.data[i].id.match(/^[a-zA-Z0-9_.]+&/)) {
+                            if (!this.data[i].id.match(/^[a-zA-Z0-9_.]+$/)) {
                                 isCreate = false;
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
