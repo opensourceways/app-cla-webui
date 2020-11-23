@@ -90,7 +90,7 @@
                     return Number(this.$store.state.repositoryValue)
                 }
             },
-          
+
         },
         data(){
             return {
@@ -109,7 +109,7 @@
                 }
             },
             changeOrg(value) {
-                this.$store.commit('setOrgValue', value)
+                this.$store.commit('setOrgValue', value);
                 if (value === '') {
                     this.org = '';
                     this.org_id = '';
@@ -126,7 +126,7 @@
 
             },
             changeRepository(value) {
-                this.$store.commit('setRepositoryValue', value)
+                this.$store.commit('setRepositoryValue', value);
                 if (value !== '') {
                     this.$store.commit('setRepositoryChoose', true)
                 } else {
@@ -149,7 +149,7 @@
                             label: item.name,
                             id: item.id
                         });
-                    })
+                    });
                     this.$store.commit('setRepositoryOptions', repositoryOptions)
 
                 }).catch(err => {
@@ -165,7 +165,7 @@
                         let orgOptions = [];
                         res.data.forEach((item, index) => {
                             orgOptions.push({value: index, label: item.login, id: item.id});
-                        })
+                        });
                         this.$store.commit('setOrgOption', orgOptions)
                     }
                 }).catch(err => {
@@ -181,6 +181,16 @@
         .stepTitle {
             font-size: 1.2rem;
             padding: .5rem;
+        }
+        .itemBox {
+            border-radius: 1.25rem;
+            box-shadow: 0 0 20px 10px #F3F3F3;
+            padding: 2rem;
+            margin-bottom: 2rem;
+
+            .emailInput {
+                cursor: pointer;
+            }
         }
     }
 
