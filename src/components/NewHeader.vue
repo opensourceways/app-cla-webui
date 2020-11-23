@@ -102,13 +102,13 @@
             handleCommand(command) {
                 switch (command) {
                     case 'a':
-                        this.toHome()
+                        this.toHome();
                         break;
                     case 'b':
-                        this.toManager()
+                        this.toManager();
                         break;
                     case 'c':
-                        this.toEmployee()
+                        this.toEmployee();
                         break;
                     case 'd':
                         this.toCreateManager()

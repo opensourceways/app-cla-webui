@@ -120,6 +120,14 @@
                         let email = this.data[i].email.trim();
                         let name = this.data[i].name.trim();
                         let id = this.data[i].id.trim();
+                        if (!this.data[i].id.match(/^[a-zA-Z0-9_.]+$/)) {
+                            isCreate = false;
+                            this.$store.commit('errorCodeSet', {
+                                dialogVisible: true,
+                                dialogMessage: this.$t('tips.invalid_id'),
+                            });
+                            break;
+                        }
                         if (!((email === '' && name === '' && id === '') || (email !== '' && name !== '' && id !== ''))) {
                             isCreate = false;
                             this.$store.commit('errorCodeSet', {
