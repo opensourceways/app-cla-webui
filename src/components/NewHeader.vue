@@ -261,7 +261,6 @@
             width: 2.6rem;
             overflow: hidden;
             border-radius: 1.3rem;
-<<<<<<< HEAD
             position: absolute;
             right: 0;
             top: 0;
