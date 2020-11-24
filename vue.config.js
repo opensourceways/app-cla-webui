@@ -24,10 +24,7 @@ module.exports = {
 
         proxy: {
             '/api': {
-                // target: 'http://159.138.26.163:8080',
                 target: 'http://159.138.58.253:8080',
-                // target: 'http://139.159.224.207:60057',
-
                 secure: false,
                 changeOrigin: true,
                 pathRewrite: {
@@ -61,11 +58,8 @@ module.exports = {
         config.resolve.alias
             .set('@', resolve('src'))
             .set('@components', resolve('src/components'))
-
     },
-
-
-}
+};
 
 
 
