@@ -19,8 +19,9 @@ module.exports = {
         // open: true,
         // host: 'localhost',
         // port: 8080,
-        //     https: false,
-        //     hotOnly: false,
+        // https: false,
+        // hotOnly: false,
+        hot:true,
 
         proxy: {
             '/api': {
