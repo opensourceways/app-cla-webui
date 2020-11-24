@@ -170,10 +170,10 @@
                     }
                 }
                 if (isCreate) {
-                    for (let i = 0; i < newManagers.length; i++) {
+                    for (let i = 0; i < managers.length; i++) {
                         let flag = 0;
                         for (let j = 0; j < this.data.length; j++) {
-                            if (newManagers[i].email.trim() === this.data[j].email.trim()) {
+                            if (managers[i].email.trim() === this.data[j].email.trim()) {
                                 isCreate = false;
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -182,7 +182,7 @@
                                 flag = 1;
                                 break;
                             }
-                            if (newManagers[i].id.trim() === this.data[j].id.trim()) {
+                            if (managers[i].id.trim() === this.data[j].id.trim()) {
                                 isCreate = false;
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -234,12 +234,6 @@
                                     this.$store.commit('errorCodeSet', {
                                         dialogVisible: true,
                                         dialogMessage: this.$t('tips.invalid_email'),
-                                    });
-                                    break;
-                                case 'cla.invalid_manager_id':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.invalid_id'),
                                     });
                                     break;
 
