@@ -59,6 +59,7 @@ module.exports = {
             .set('@', resolve('src'))
             .set('@components', resolve('src/components'))
     },
+
 };
 
 
