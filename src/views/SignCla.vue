@@ -245,6 +245,48 @@
                     callback(new Error(this.$t('tips.invalid_email')))
                 }
             },
+            async verifyName(rule, value, callback) {
+                if (!value) {
+                    callback(new Error(this.$t('tips.fill_name')))
+                } else {
+                    callback();
+                }
+            },
+            async verifyCorpName(rule, value, callback) {
+                if (!value) {
+                    callback(new Error(this.$t('tips.fill_corp_name')))
+                } else {
+                    callback();
+                }
+            },
+            async verifyTitle(rule, value, callback) {
+                if (!value) {
+                    callback(new Error(this.$t('tips.fill_representative_title')))
+                } else {
+                    callback();
+                }
+            },
+            async verifyAuthorized(rule, value, callback) {
+                if (!value) {
+                    callback(new Error(this.$t('tips.fill_representative_name')))
+                } else {
+                    callback();
+                }
+            },
+            async verifyDate(rule, value, callback) {
+                if (!value) {
+                    callback(new Error(this.$t('tips.fill_date')))
+                } else {
+                    callback();
+                }
+            },
+            async verifyCodeCheck(rule, value, callback) {
+                if (!value) {
+                    callback(new Error(this.$t('tips.fill_verification_code')))
+                } else {
+                    callback();
+                }
+            },
             setMyForm(type, value) {
                 this.myForm[type] = value
             },
@@ -676,7 +718,7 @@
                             [item.id]: [
                                 {
                                     required: item.required,
-                                    message: this.$t('tips.fill_name'),
+                                    validator:this.verifyName,
                                     trigger: ['blur', 'change']
                                 },
                             ],
@@ -687,7 +729,7 @@
                             [item.id]: [
                                 {
                                     required: item.required,
-                                    message: this.$t('tips.fill_corp_name'),
+                                    validator:this.verifyCorpName,
                                     trigger: ['blur', 'change']
                                 },
                             ],
@@ -698,7 +740,7 @@
                             [item.id]: [
                                 {
                                     required: item.required,
-                                    message: this.$t('tips.fill_representative_title'),
+                                    validator:this.verifyTitle,
                                     trigger: ['blur', 'change']
                                 },
                             ],
@@ -709,7 +751,7 @@
                             [item.id]: [
                                 {
                                     required: item.required,
-                                    message: this.$t('tips.fill_representative_name'),
+                                    validator:this.verifyAuthorized,
                                     trigger: ['blur', 'change']
                                 },
                             ],
@@ -720,7 +762,7 @@
                             [item.id]: [
                                 {
                                     required: item.required,
-                                    message: this.$t('tips.fill_date'),
+                                    validator:this.verifyDate,
                                     trigger: ['blur', 'change']
                                 }],
                         })
@@ -753,16 +795,16 @@
                         })
                     }
                 })
-                Object.assign(form, {code: ''})
-                Object.assign(this.myForm, {code: ''})
+                Object.assign(form, {code: ''});
+                Object.assign(this.myForm, {code: ''});
                 Object.assign(rules, {
                     code: [{
                         required: true,
-                        message: this.$t('tips.fill_verification_code'),
+                        validator: this.verifyCodeCheck,
                         trigger: ['blur', 'change']
                     },]
                 })
-                this.ruleForm = form
+                this.ruleForm = form;
                 this.rules = rules
             },
             signCla() {
