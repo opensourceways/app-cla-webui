@@ -20,8 +20,8 @@
                     <button class="cancelBt" type="reset" @click="reset('ruleForm')">{{$t('corp.reset')}}</button>
                 </el-form-item>
             </el-form>
-            <corpReLoginDialog  :message="corpReLoginMsg" :dialogVisible="corpReLoginDialogVisible"></corpReLoginDialog>
-            <reTryDialog  :message="corpReLoginMsg" :dialogVisible="corpReTryDialogVisible"></reTryDialog>
+            <corpReLoginDialog :message="corpReLoginMsg" :dialogVisible="corpReLoginDialogVisible"></corpReLoginDialog>
+            <reTryDialog :message="corpReLoginMsg" :dialogVisible="corpReTryDialogVisible"></reTryDialog>
         </el-col>
     </el-row>
 </template>
@@ -108,7 +108,7 @@
             }
         },
         methods: {
-            pressEnter(){
+            pressEnter() {
                 if (event.keyCode === 13) {
                     this.submit('ruleForm')
                 }
@@ -125,12 +125,12 @@
                     method: 'patch',
                     data: obj,
                 }).then(res => {
-                    this.$store.commit('setPwdIsChanged',true)
+                    this.$store.commit('setPwdIsChanged', true)
                     this.$message.closeAll()
                     this.$message.success(this.$t('tips.successTitle'))
-                    if (this.$store.state.loginInfo.userInfo[0].role==='manager') {
+                    if (this.$store.state.loginInfo.userInfo[0].role === 'manager') {
                         this.$router.push('/employeeList')
-                    }else{
+                    } else {
                         this.$router.push('/managerList')
                     }
                 }).catch(err => {
@@ -155,7 +155,7 @@
                                 });
                                 break;
 
-                                case 'cla.invalid_parameter':
+                            case 'cla.invalid_parameter':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
                                     dialogMessage: this.$t('tips.invalid_parameter'),
@@ -164,7 +164,13 @@
                             case 'cla.invalid_account_or_pw':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
-                                    dialogMessage:  this.$t('tips.invalid_account_or_pw'),
+                                    dialogMessage: this.$t('tips.invalid_account_or_pw'),
+                                });
+                                break;
+                            case 'cla.no_db_record':
+                                this.$store.commit('errorCodeSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.invalid_account_or_pw'),
                                 });
                                 break;
                             case 'cla.system_error':
@@ -177,7 +183,7 @@
                     } else {
                         this.$store.commit('errorCodeSet', {
                             dialogVisible: true,
-                            dialogMessage:this.$t('tips.system_error'),
+                            dialogMessage: this.$t('tips.system_error'),
                         })
                     }
                 })
