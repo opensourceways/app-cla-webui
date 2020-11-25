@@ -651,7 +651,8 @@
                 this.unLinkDialogVisible = true
             },
             checkCorporationList(item) {
-                this.$router.push({path: '/corporationList', query: {item: JSON.stringify(item)}})
+                this.$store.commit('setCorpItem',item);
+                this.$router.push('/corporationList')
             },
             checkCla() {
                 this.$router.push('/signCla')
