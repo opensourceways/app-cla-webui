@@ -36,10 +36,9 @@
                                         placement="right">
 
                                     <div class="menuBT">
-                                        <el-button @click="uploadClaFile(scope.row)" style="margin-left: 10px" type=""
-                                                   size="mini">upload
+                                        <el-button @click="uploadClaFile(scope.row)" size="mini">upload
                                         </el-button>
-                                        <el-button @click="downloadClaFile(scope.row)" type="" size="mini">download
+                                        <el-button @click="downloadClaFile(scope.row)" size="mini">download
                                         </el-button>
                                         <!--<el-button @click="previewClaFile(scope.row)" type="" size="mini">preview</el-button>-->
                                     </div>
