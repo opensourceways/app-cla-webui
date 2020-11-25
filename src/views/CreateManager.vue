@@ -120,7 +120,6 @@
                         let email = this.data[i].email.trim();
                         let name = this.data[i].name.trim();
                         let id = this.data[i].id.trim();
-                        console.log('email,name,id',email, name, id);
                         if (!((email === '' && name === '' && id === '') || (email !== '' && name !== '' && id !== ''))) {
                             isCreate = false;
                             this.$store.commit('errorCodeSet', {
@@ -146,7 +145,6 @@
                     for (let i = 0; i < this.data.length; i++) {
                         let flag = 0;
                         for (let j = i + 1; j < this.data.length; j++) {
-
                             if (this.data[i].email.trim() === this.data[j].email.trim()) {
                                 isCreate = false;
                                 this.$store.commit('errorCodeSet', {

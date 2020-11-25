@@ -59,9 +59,9 @@
                                            @click="createRoot(scope.row.admin_email)">Create Administrator
                                 </el-button>
                                 <el-tooltip effect="dark" :content="$t('org.resend_tip')" placement="top">
-                                    <el-button  type="primary"
-                                                size="mini"
-                                                @click="resendPDF(scope.row.admin_email)">Resend PDF
+                                    <el-button type="primary"
+                                               size="mini"
+                                               @click="resendPDF(scope.row.admin_email)">Resend PDF
                                     </el-button>
                                 </el-tooltip>
 
@@ -360,12 +360,12 @@
                     // console.log(err);
                 })
             },
-            resendPDF(email){
+            resendPDF(email) {
                 let resend_url = '';
                 if (this.item.repo_id) {
-                    resend_url=`${url.resend_pdf}/${this.item.org_id}:${this.item.repo_id}/${email}`
-                }else{
-                    resend_url=`${url.resend_pdf}/${this.item.org_id}/${email}`
+                    resend_url = `${url.resend_pdf}/${this.item.org_id}:${this.item.repo_id}/${email}`
+                } else {
+                    resend_url = `${url.resend_pdf}/${this.item.org_id}/${email}`
                 }
                 http({
                     url: resend_url,
@@ -486,16 +486,6 @@
             font-size: 12px;
         }
 
-        .menuBT {
-            display: flex;
-            flex-direction: column;
-
-            & > * {
-                width: 6rem;
-                margin: .2rem 1rem;
-                text-align: center;
-            }
-        }
 
         .hoverUnderline:hover {
             text-decoration: underline;
@@ -517,5 +507,21 @@
         }
     }
 
+    .el-popover {
+        min-width: 6rem;
+
+        .menuBT {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            * {
+                width: 6rem;
+                margin: .2rem 0;
+                text-align: center;
+            }
+        }
+
+    }
 
 </style>
