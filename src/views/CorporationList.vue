@@ -370,7 +370,6 @@
                     url: resend_url,
                     method: 'post',
                 }).then(res => {
-                    console.log(res);
                     this.$message.closeAll()
                     this.$message.success('success');
                 }).catch(err => {
