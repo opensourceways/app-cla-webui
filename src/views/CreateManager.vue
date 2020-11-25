@@ -120,6 +120,7 @@
                         let email = this.data[i].email.trim();
                         let name = this.data[i].name.trim();
                         let id = this.data[i].id.trim();
+                        console.log('email,name,id',email, name, id);
                         if (!((email === '' && name === '' && id === '') || (email !== '' && name !== '' && id !== ''))) {
                             isCreate = false;
                             this.$store.commit('errorCodeSet', {
