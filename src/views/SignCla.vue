@@ -493,15 +493,16 @@
                                 case 'cla.no_cla_binding':
                                     let message = '';
                                     if (this.$store.state.loginType === 'corporation') {
-                                        message=this.$t('tips.no_cla_binding_corp')
-                                    }else  if (this.$store.state.loginType === 'employee') {
-                                        message=this.$t('tips.no_cla_binding_emp')
-                                    } if (this.$store.state.loginType === 'individual') {
-                                    message=this.$t('tips.no_cla_binding_individual')
-                                }
+                                        message = this.$t('tips.no_cla_binding_corp')
+                                    } else if (this.$store.state.loginType === 'employee') {
+                                        message = this.$t('tips.no_cla_binding_emp')
+                                    }
+                                    if (this.$store.state.loginType === 'individual') {
+                                        message = this.$t('tips.no_cla_binding_individual')
+                                    }
                                     this.$store.commit('setSignReLogin', {
                                         dialogVisible: true,
-                                        dialogMessage:message,
+                                        dialogMessage: message,
                                     });
                                     break;
                                 case 'cla.invalid_parameter':
@@ -718,7 +719,7 @@
                             [item.id]: [
                                 {
                                     required: item.required,
-                                    validator:this.verifyName,
+                                    validator: this.verifyName,
                                     trigger: ['blur', 'change']
                                 },
                             ],
@@ -729,7 +730,7 @@
                             [item.id]: [
                                 {
                                     required: item.required,
-                                    validator:this.verifyCorpName,
+                                    validator: this.verifyCorpName,
                                     trigger: ['blur', 'change']
                                 },
                             ],
@@ -740,7 +741,7 @@
                             [item.id]: [
                                 {
                                     required: item.required,
-                                    validator:this.verifyTitle,
+                                    validator: this.verifyTitle,
                                     trigger: ['blur', 'change']
                                 },
                             ],
@@ -751,7 +752,7 @@
                             [item.id]: [
                                 {
                                     required: item.required,
-                                    validator:this.verifyAuthorized,
+                                    validator: this.verifyAuthorized,
                                     trigger: ['blur', 'change']
                                 },
                             ],
@@ -762,7 +763,7 @@
                             [item.id]: [
                                 {
                                     required: item.required,
-                                    validator:this.verifyDate,
+                                    validator: this.verifyDate,
                                     trigger: ['blur', 'change']
                                 }],
                         })
@@ -904,6 +905,12 @@
                                 this.$store.commit('setSignReLogin', {
                                     dialogVisible: true,
                                     dialogMessage: this.$t('tips.no_corp_manager'),
+                                });
+                                break;
+                            case 'cla.has_not_signed':
+                                this.$store.commit('setSignReLogin', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.has_not_signed'),
                                 });
                                 break;
                             case 'cla.failed_to_send_email':
