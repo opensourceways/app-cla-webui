@@ -60,7 +60,7 @@
                                 <el-tooltip effect="dark" :content="$t('org.resend_tip')" placement="top">
                                     <el-button type="primary"
                                                size="mini"
-                                               @click="resendPDF(scope.row.admin_email)">Resend PDF
+                                               @click="resendPDF(scope.row.admin_email)">Resend Email
                                     </el-button>
                                 </el-tooltip>
 
@@ -244,15 +244,21 @@
         },
 
         created() {
-            this.item = JSON.parse(this.$route.query.item)
-            if (this.item.apply_to === 'corporation') {
-                this.activeName = 'first';
-                this.getCorporationInfo()
-            } else if (this.item.apply_to === 'individual') {
-                this.activeName = 'second';
-                //   this.getClaInfo()
-            }
-
+            let interval = setInterval(()=>{
+                if (this.$store.state.corpItem&&this.$store.state.corpItem.length) {
+                    this.item = this.$store.state.corpItem;
+                    this.$store.commit('setCorpItem',[]);
+                    sessionStorage.removeItem('corpItem');
+                    if (this.item.apply_to === 'corporation') {
+                        this.activeName = 'first';
+                        this.getCorporationInfo()
+                    } else if (this.item.apply_to === 'individual') {
+                        this.activeName = 'second';
+                        //   this.getClaInfo()
+                    }
+                    clearInterval(interval)
+                }
+            },100);
         },
         mounted() {
             this.setClientHeight();
