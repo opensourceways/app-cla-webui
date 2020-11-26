@@ -4,45 +4,53 @@
             <div class="stepTitle">
                 ① Choose a organization or repository
             </div>
-
-            <div style="padding: 0 2rem">
-                <el-row :gutter="20">
-                    <el-col :span="12">
-                        <el-select v-model="orgValue"
-                                   placeholder="select organization"
-                                   style="width: 100%"
-                                   size="medium"
-                                   clearable
-                                   filterable
-                                   @visible-change="orgVisibleChange"
-                                   @change="changeOrg">
-                            <el-option
-                                    v-for="item in orgOptions"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-col>
-                    <el-col :span="12">
-                        <el-select v-model="repositoryValue"
-                                   placeholder="select repository"
-                                   style="width: 100%"
-                                   size="medium"
-                                   clearable=""
-                                   filterable
-                                   @visible-change="repoVisibleChange"
-                                   @change="changeRepository">
-                            <el-option
-                                    v-for="item in repositoryOptions"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value">
-                            </el-option>
-                        </el-select>
-                    </el-col>
-                </el-row>
-
+            <div>
+                Select an organization that needs to configure cla
+            </div>
+            <el-row>
+                <el-col>
+                    <el-select v-model="orgValue"
+                               placeholder="select organization"
+                               style="width: 100%"
+                               size="medium"
+                               clearable
+                               filterable
+                               @visible-change="orgVisibleChange"
+                               @change="changeOrg">
+                        <el-option
+                                v-for="item in orgOptions"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-col>
+            </el-row>
+            <div>
+                If you want to configure CLA for a repository under the organization, please select the repository. If
+                not, please ignore it
+            </div>
+            <el-row>
+                <el-col>
+                    <el-select v-model="repositoryValue"
+                               placeholder="select repository"
+                               style="width: 100%"
+                               size="medium"
+                               clearable=""
+                               filterable
+                               @visible-change="repoVisibleChange"
+                               @change="changeRepository">
+                        <el-option
+                                v-for="item in repositoryOptions"
+                                :key="item.value"
+                                :label="item.label"
+                                :value="item.value">
+                        </el-option>
+                    </el-select>
+                </el-col>
+            </el-row>
+            <div class="orgStepBtBox">
+                <el-button size="medium" type="primary" class="stepBt" @click="toConfigClaLink">Next Step</el-button>
             </div>
         </div>
     </el-row>
@@ -92,12 +100,13 @@
             },
 
         },
-        data(){
-            return {
-
-            }
+        data() {
+            return {}
         },
-        methods:{
+        methods: {
+            toConfigClaLink(){
+                this.$router.push('/config-cla-link')
+            },
             orgVisibleChange(visible) {
                 if (visible) {
                     this.getOrgsInfo();
@@ -178,10 +187,15 @@
 
 <style lang="less">
     #configOne {
+        .orgStepBtBox{
+            text-align: right;
+        }
+
         .stepTitle {
             font-size: 1.2rem;
             padding: .5rem;
         }
+
         .itemBox {
             border-radius: 1.25rem;
             box-shadow: 0 0 20px 10px #F3F3F3;
