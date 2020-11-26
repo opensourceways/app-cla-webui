@@ -232,6 +232,37 @@
             </div>
 
         </el-dialog>
+        <el-dialog
+                style="background-color: #3C3C3C"
+                title="pdf-reader"
+                top="5vh"
+                :close-on-click-modal="false"
+                :visible.sync="previewOriginalDialogVisible"
+                width="50%">
+            <div id="box">
+                <!--<pdf-->
+                <!--:src="pdfSrc">-->
+                <!--</pdf>-->
+
+                <!--<pdf-->
+                <!--v-for="i in numPages"-->
+                <!--:key="i"-->
+                <!--:src="pdfSrc"-->
+                <!--:page="i">-->
+                <!--</pdf>-->
+
+                <!--<pdfReader-->
+                <!--v-if="docInfo.type === 'pdf'"-->
+                <!--:doctype="docInfo.type"-->
+                <!--:dochref="docInfo.href">-->
+                <!--</pdfReader>-->
+
+                <!--<iframe :src="url"  width="100%" height="100%"></iframe>-->
+            </div>
+        </el-dialog>
+        <div id="pop">
+
+        </div>
     </div>
 
 
@@ -548,6 +579,7 @@
         },
         mounted() {
             this.setClientHeight();
+            // this.showPdfFile(this.pdfBase64)
         },
         updated() {
             this.setClientHeight()
