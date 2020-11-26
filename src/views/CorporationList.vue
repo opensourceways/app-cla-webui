@@ -60,7 +60,7 @@
                                 <el-tooltip effect="dark" :content="$t('org.resend_tip')" placement="top">
                                     <el-button type="primary"
                                                size="mini"
-                                               @click="resendPDF(scope.row.admin_email)">Resend Email
+                                               @click="openResendPdf(scope.row.admin_email)">Resend Email
                                     </el-button>
                                 </el-tooltip>
 
@@ -201,6 +201,19 @@
             </div>
 
         </el-dialog>
+        <el-dialog
+                top="5vh"
+                :visible.sync="resendEmailDialogVisible"
+                width="20%">
+            <div>
+                Are you sure to resend ?
+                <div>
+                    <el-button size="medium" type="primary" @click="resendPDF">Yes</el-button>
+                    <el-button size="medium" @click="resendEmailDialogVisible=false">No</el-button>
+                </div>
+            </div>
+
+        </el-dialog>
     </div>
 
 
@@ -218,6 +231,8 @@
 
         data() {
             return {
+                resendEmailDialogVisible: false,
+                resendEmail: '',
                 claData: '',
                 activeName: 'first',
                 uploadHeaders: {
@@ -343,7 +358,13 @@
                     // console.log(err);
                 })
             },
-            resendPDF(email) {
+            openResendPdf(email) {
+                this.resendEmail = email;
+                this.resendEmailDialogVisible = true;
+            },
+
+            resendPDF() {
+                let email = this.resendEmail;
                 let resend_url = '';
                 if (this.item.repo_id) {
                     resend_url = `${url.resend_pdf}/${this.item.org_id}:${this.item.repo_id}/${email}`
@@ -402,9 +423,9 @@
                 }).catch(err => {
                 })
             },
-            init(){
-                let interval = setInterval(()=>{
-                    if (this.$store.state.corpItem&&this.$store.state.corpItem.apply_to) {
+            init() {
+                let interval = setInterval(() => {
+                    if (this.$store.state.corpItem && this.$store.state.corpItem.apply_to) {
                         this.item = this.$store.state.corpItem;
                         if (this.item.apply_to === 'corporation') {
                             this.activeName = 'first';
@@ -416,16 +437,16 @@
                         clearInterval(interval)
                     }
 
-                },100);
+                }, 100);
                 if (interval) {
-                    setTimeout(()=>{
+                    setTimeout(() => {
                         clearInterval(interval)
-                    },2000)
+                    }, 2000)
                 }
             },
         },
         created() {
-        this.init();
+            this.init();
         },
         mounted() {
             this.setClientHeight();
