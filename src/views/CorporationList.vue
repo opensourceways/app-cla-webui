@@ -205,10 +205,10 @@
                 top="5vh"
                 :visible.sync="resendEmailDialogVisible"
                 width="20%">
-            <div>
+            <div class="dialogContent">
                 Are you sure to resend ?
-                <div>
-                    <el-button size="medium" type="primary" @click="resendPDF">Yes</el-button>
+                <div class="dialogBtBox">
+                    <el-button class="dialogBt" size="medium" type="primary" @click="resendPDF">Yes</el-button>
                     <el-button size="medium" @click="resendEmailDialogVisible=false">No</el-button>
                 </div>
             </div>
@@ -461,6 +461,22 @@
     #corporationList {
         padding-top: 3rem;
 
+        .dialogContent {
+            text-align: center;
+        }
+
+        .dialogBtBox {
+            margin-top: 2rem;
+            button{
+                width: 4rem;
+            }
+            button:nth-of-type(2){
+                margin-left: 3rem;
+            }
+        }
+        .dialogBt{
+
+        }
         .el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover {
             cursor: pointer;
         }
