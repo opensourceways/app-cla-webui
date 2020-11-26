@@ -206,7 +206,7 @@
                 :visible.sync="resendEmailDialogVisible"
                 width="20%">
             <div class="dialogContent">
-                Are you sure to resend ?
+                Are you sure to resend email?
                 <div class="dialogBtBox">
                     <el-button class="dialogBt" size="medium" type="primary" @click="resendPDF">Yes</el-button>
                     <el-button size="medium" @click="resendEmailDialogVisible=false">No</el-button>
@@ -375,6 +375,7 @@
                     url: resend_url,
                     method: 'post',
                 }).then(res => {
+                    this.resendEmailDialogVisible = false;
                     this.$message.closeAll()
                     this.$message.success('success');
                 }).catch(err => {
@@ -467,16 +468,20 @@
 
         .dialogBtBox {
             margin-top: 2rem;
-            button{
+
+            button {
                 width: 4rem;
             }
-            button:nth-of-type(2){
+
+            button:nth-of-type(2) {
                 margin-left: 3rem;
             }
         }
-        .dialogBt{
+
+        .dialogBt {
 
         }
+
         .el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover {
             cursor: pointer;
         }
