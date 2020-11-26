@@ -406,8 +406,6 @@
                 let interval = setInterval(()=>{
                     if (this.$store.state.corpItem&&this.$store.state.corpItem.apply_to) {
                         this.item = this.$store.state.corpItem;
-                        this.$store.commit('setCorpItem',{});
-                        sessionStorage.removeItem('corpItem');
                         if (this.item.apply_to === 'corporation') {
                             this.activeName = 'first';
                             this.getCorporationInfo()
