@@ -79,10 +79,7 @@
             <!--&lt;!&ndash;</el-select>&ndash;&gt;-->
             <!--&lt;!&ndash;</el-col>&ndash;&gt;-->
             <!--</el-row>-->
-
             <!--</div>-->
-
-
             <!--</div>-->
             <!--<div class="itemBox">-->
             <!--<div style="font-size: 1.2rem;padding: .5rem">-->
@@ -241,8 +238,6 @@
             <!--LINK-->
             <!--</el-button>-->
             <!--</div>-->
-
-
         </div>
         <el-dialog
                 top="5vh"

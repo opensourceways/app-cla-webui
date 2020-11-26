@@ -48,7 +48,7 @@
         <div class="itemBox">
             <div class="=info-title">
                 ③ Url of CLA file
-                <el-tooltip class="item" effect="dark"
+               <el-tooltip class="item" effect="dark"
                             content="Paste a link to the original data of a CLA in the repository"
                             placement="right">
                     <svg-icon icon-class="bangzhu"></svg-icon>
@@ -138,7 +138,6 @@
                             v-for="(item,index) in individualMetadata">
                         <el-col :span="5">
                             <el-input disabled="" v-model="item.title" size="medium" readonly="">
-
                             </el-input>
                         </el-col>
                         <el-col :span="5">
@@ -176,7 +175,6 @@
                                 v-for="(item,index) in corporationMetadata">
                             <el-col :span="5">
                                 <el-input disabled="" v-model="item.title" size="medium" readonly="">
-
                                 </el-input>
                             </el-col>
                             <el-col :span="5">
@@ -189,7 +187,6 @@
                                 <el-checkbox v-model="item.required" disabled="">required</el-checkbox>
                             </el-col>
                         </el-row>
-
                     </div>
                 </div>
 

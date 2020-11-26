@@ -124,7 +124,6 @@
     import * as until from '../until/until'
     import http from '../until/http'
     import download from 'downloadjs'
-
     export default {
         name: "ConfigClaLink",
         components: {
@@ -138,6 +137,15 @@
                 set(value) {
                     this.$store.commit('setClaLinkIndividual', value)
                 },
+                set(value) {
+                    this.$store.commit('setCorpLanguage', value)
+                }
+            },
+            corpReLoginMsg() {
+                return this.$store.state.dialogMessage
+            },
+            corpReTryDialogVisible() {
+                return this.$store.state.reTryDialogVisible
             },
             cla_link_corporation: {
                 get() {
@@ -218,7 +226,6 @@
                     this.$message.closeAll();
                     this.$message.error('Please select the language of the signature page to be downloaded first');
                 }
-
             },
             changeIndividualLanguage(value) {
                 this.$store.commit('setIndividualLanguage', value)
