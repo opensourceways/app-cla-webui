@@ -651,6 +651,8 @@
                 this.unLinkDialogVisible = true
             },
             checkCorporationList(item) {
+                this.$store.commit('setCorpItem',{});
+                sessionStorage.removeItem('corpItem');
                 this.$store.commit('setCorpItem',item);
                 this.$router.push('/corporationList')
             },
