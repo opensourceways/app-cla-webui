@@ -243,29 +243,7 @@
             }
         },
 
-        created() {
-            let interval = setInterval(()=>{
-                if (this.$store.state.corpItem&&this.$store.state.corpItem.length) {
-                    this.item = this.$store.state.corpItem;
-                    this.$store.commit('setCorpItem',[]);
-                    sessionStorage.removeItem('corpItem');
-                    if (this.item.apply_to === 'corporation') {
-                        this.activeName = 'first';
-                        this.getCorporationInfo()
-                    } else if (this.item.apply_to === 'individual') {
-                        this.activeName = 'second';
-                        //   this.getClaInfo()
-                    }
-                    clearInterval(interval)
-                }
-            },100);
-        },
-        mounted() {
-            this.setClientHeight();
-        },
-        updated() {
-            this.setClientHeight()
-        },
+
         inject: ['setClientHeight'],
         methods: {
             tabsHandleClick(tab, event) {
@@ -424,8 +402,39 @@
                 }).catch(err => {
                 })
             },
-        },
+            init(){
+                let interval = setInterval(()=>{
+                    if (this.$store.state.corpItem&&this.$store.state.corpItem.apply_to) {
+                        this.item = this.$store.state.corpItem;
+                        this.$store.commit('setCorpItem',{});
+                        sessionStorage.removeItem('corpItem');
+                        if (this.item.apply_to === 'corporation') {
+                            this.activeName = 'first';
+                            this.getCorporationInfo()
+                        } else if (this.item.apply_to === 'individual') {
+                            this.activeName = 'second';
+                            //   this.getClaInfo()
+                        }
+                        clearInterval(interval)
+                    }
 
+                },100);
+                if (interval) {
+                    setTimeout(()=>{
+                        clearInterval(interval)
+                    },2000)
+                }
+            },
+        },
+        created() {
+        this.init();
+        },
+        mounted() {
+            this.setClientHeight();
+        },
+        updated() {
+            this.setClientHeight()
+        },
     }
 </script>
 
