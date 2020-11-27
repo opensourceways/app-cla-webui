@@ -27,6 +27,12 @@
                 </el-col>
             </el-row>
             <div class="margin-top-1rem">
+                You need an alias for the organization you choose
+            </div>
+            <div class="margin-top-1rem">
+                <el-input v-model="org_alias" size="medium" placeholder="input org alias"></el-input>
+            </div>
+            <div class="margin-top-1rem">
                 If you want to configure CLA for a repository under the organization, please select the repository. If
                 not, please ignore it
             </div>
@@ -53,13 +59,25 @@
         <div class="orgStepBtBox">
             <el-button size="medium" type="primary" class="stepBt" @click="toConfigClaLink">Next Step</el-button>
         </div>
+        <reTryDialog :message="corpReLoginMsg" :dialogVisible="corpReTryDialogVisible"></reTryDialog>
     </el-row>
 </template>
 
 <script>
+    import reTryDialog from '../components/ReTryDialog'
+
     export default {
         name: "ConfigOne",
+        components: {
+            reTryDialog
+        },
         computed: {
+            corpReLoginMsg() {
+                return this.$store.state.dialogMessage
+            },
+            corpReTryDialogVisible() {
+                return this.$store.state.reTryDialogVisible
+            },
             orgOptions() {
                 try {
                     return JSON.parse(this.$store.state.orgOptions)
@@ -69,9 +87,6 @@
             },
             orgChoose() {
                 return `${this.$store.state.orgChoose}` === 'true';
-            },
-            isEmail() {
-                return `${this.$store.state.isEmail}` === 'true';
             },
             repositoryChoose() {
                 return `${this.$store.state.repositoryChoose}` === 'true'
@@ -98,14 +113,29 @@
                     return Number(this.$store.state.repositoryValue)
                 }
             },
-
+            org_alias(){
+                return this.$store.state.orgAlias
+            },
         },
         data() {
-            return {}
+            return {
+                org_id: '',
+                org: '',
+            }
         },
         methods: {
-            toConfigClaLink(){
-                this.$router.push('/config-cla-link')
+            toConfigClaLink() {
+                if (this.org && this.org_alias) {
+                    this.$store.commit('setChooseOrg', this.orgOptions[this.orgValue]);
+                    this.$store.commit('setChooseRepo', this.repositoryOptions[this.repositoryValue]);
+                    this.$store.commit('setOrgAlias', this.org_alias);
+                    this.$router.push('/config-cla-link')
+                } else {
+                    this.$store.commit('errorCodeSet', {
+                        dialogVisible: true,
+                        dialogMessage: this.$t('tips.fill_complete'),
+                    });
+                }
             },
             orgVisibleChange(visible) {
                 if (visible) {
@@ -118,29 +148,18 @@
                 }
             },
             changeOrg(value) {
-                this.$store.commit('setOrgValue', value);
                 if (value === '') {
                     this.org = '';
                     this.org_id = '';
-                    this.$store.commit('setOrgChoose', false);
-                    this.$store.commit('setRepositoryValue', undefined);
-                    this.$store.commit('setRepositoryChoose', false);
-                    this.$store.commit('setRepositoryOptions', undefined)
                 } else {
                     this.org = this.orgOptions[value].label;
                     this.org_id = this.orgOptions[value].id;
-                    this.$store.commit('setOrgChoose', true);
                     this.getRepositoriesOfOrg(this.orgOptions[value].label, this.orgOptions[value].id)
                 }
 
             },
             changeRepository(value) {
-                this.$store.commit('setRepositoryValue', value);
-                if (value !== '') {
-                    this.$store.commit('setRepositoryChoose', true)
-                } else {
-                    this.$store.commit('setRepositoryChoose', false)
-                }
+
             },
             getRepositoriesOfOrg(org, org_id) {
                 let obj = {access_token: this.$store.state.platform_token, org: org, page: 1, per_page: 100};
@@ -159,8 +178,7 @@
                             id: item.id
                         });
                     });
-                    this.$store.commit('setRepositoryOptions', repositoryOptions)
-
+                    this.repositoryOptions = repositoryOptions;
                 }).catch(err => {
                 })
             },
@@ -175,7 +193,7 @@
                         res.data.forEach((item, index) => {
                             orgOptions.push({value: index, label: item.login, id: item.id});
                         });
-                        this.$store.commit('setOrgOption', orgOptions)
+                        this.orgOptions = orgOptions;
                     }
                 }).catch(err => {
 
@@ -187,7 +205,7 @@
 
 <style lang="less">
     #configOne {
-        .orgStepBtBox{
+        .orgStepBtBox {
             text-align: right;
         }
 

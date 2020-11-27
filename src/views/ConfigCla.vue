@@ -4,242 +4,242 @@
             <div class="pageTitle">Configure CLA</div>
             <router-view></router-view>
             <!--<div class="itemBox">-->
-                <!--<div style="font-size: 1.2rem;padding: .5rem">-->
-                    <!--① Choose a organization or repository-->
-                <!--</div>-->
-                <!--<div style="padding: 0 2rem">-->
-                    <!--<el-row :gutter="20">-->
-                        <!--<el-col :span="12">-->
-                            <!--<el-select v-model="orgValue"-->
-                                       <!--placeholder="select organization"-->
-                                       <!--style="width: 100%"-->
-                                       <!--size="medium"-->
-                                       <!--clearable-->
-                                       <!--filterable-->
-                                       <!--@visible-change="orgVisibleChange"-->
-                                       <!--@change="changeOrg">-->
-                                <!--<el-option-->
-                                        <!--v-for="item in orgOptions"-->
-                                        <!--:key="item.value"-->
-                                        <!--:label="item.label"-->
-                                        <!--:value="item.value">-->
-                                <!--</el-option>-->
-                            <!--</el-select>-->
-                        <!--</el-col>-->
-                        <!--<el-col :span="12">-->
-                            <!--<el-select v-model="repositoryValue"-->
-                                       <!--placeholder="select repository"-->
-                                       <!--style="width: 100%"-->
-                                       <!--size="medium"-->
-                                       <!--clearable=""-->
-                                       <!--filterable-->
-                                       <!--@visible-change="repoVisibleChange"-->
-                                       <!--@change="changeRepository">-->
-                                <!--<el-option-->
-                                        <!--v-for="item in repositoryOptions"-->
-                                        <!--:key="item.value"-->
-                                        <!--:label="item.label"-->
-                                        <!--:value="item.value">-->
-                                <!--</el-option>-->
-                            <!--</el-select>-->
-                        <!--</el-col>-->
-                    <!--</el-row>-->
-
-                <!--</div>-->
+            <!--<div style="font-size: 1.2rem;padding: .5rem">-->
+            <!--① Choose a organization or repository-->
             <!--</div>-->
-            <!--<div class="itemBox">-->
-                <!--<div style="font-size: 1.2rem;padding: .5rem">-->
-                    <!--② Paste a link of a CLA file-->
-                    <!--<el-tooltip class="item" effect="dark"-->
-                                <!--content="Paste a link to the original data of a CLA in the repository"-->
-                                <!--placement="right">-->
-                        <!--<svg-icon icon-class="bangzhu"></svg-icon>-->
-                    <!--</el-tooltip>-->
-                <!--</div>-->
-                <!--<div style="padding: 0 2rem">-->
-                    <!--<el-row :gutter="20">-->
-                        <!--<el-col>-->
-                            <!--<el-input placeholder="Paste a link" size="medium" v-model="cla_link">-->
-                            <!--</el-input>-->
-                        <!--</el-col>-->
-                        <!--&lt;!&ndash;<el-col :span="4">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<el-select v-model="claLanguageValue"&ndash;&gt;-->
-                        <!--&lt;!&ndash;placeholder="select language"&ndash;&gt;-->
-                        <!--&lt;!&ndash;style="width: 100%"&ndash;&gt;-->
-                        <!--&lt;!&ndash;size="medium"&ndash;&gt;-->
-                        <!--&lt;!&ndash;clearable&ndash;&gt;-->
-                        <!--&lt;!&ndash;filterable&ndash;&gt;-->
-                        <!--&lt;!&ndash;@change="changeLanguage">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<el-option&ndash;&gt;-->
-                        <!--&lt;!&ndash;v-for="item in languageOptions"&ndash;&gt;-->
-                        <!--&lt;!&ndash;:key="item.value"&ndash;&gt;-->
-                        <!--&lt;!&ndash;:label="item.label"&ndash;&gt;-->
-                        <!--&lt;!&ndash;:value="item.value">&ndash;&gt;-->
-                        <!--&lt;!&ndash;</el-option>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</el-select>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</el-col>&ndash;&gt;-->
-                    <!--</el-row>-->
-
-                <!--</div>-->
-
+            <!--<div style="padding: 0 2rem">-->
+            <!--<el-row :gutter="20">-->
+            <!--<el-col :span="12">-->
+            <!--<el-select v-model="orgValue"-->
+            <!--placeholder="select organization"-->
+            <!--style="width: 100%"-->
+            <!--size="medium"-->
+            <!--clearable-->
+            <!--filterable-->
+            <!--@visible-change="orgVisibleChange"-->
+            <!--@change="changeOrg">-->
+            <!--<el-option-->
+            <!--v-for="item in orgOptions"-->
+            <!--:key="item.value"-->
+            <!--:label="item.label"-->
+            <!--:value="item.value">-->
+            <!--</el-option>-->
+            <!--</el-select>-->
+            <!--</el-col>-->
+            <!--<el-col :span="12">-->
+            <!--<el-select v-model="repositoryValue"-->
+            <!--placeholder="select repository"-->
+            <!--style="width: 100%"-->
+            <!--size="medium"-->
+            <!--clearable=""-->
+            <!--filterable-->
+            <!--@visible-change="repoVisibleChange"-->
+            <!--@change="changeRepository">-->
+            <!--<el-option-->
+            <!--v-for="item in repositoryOptions"-->
+            <!--:key="item.value"-->
+            <!--:label="item.label"-->
+            <!--:value="item.value">-->
+            <!--</el-option>-->
+            <!--</el-select>-->
+            <!--</el-col>-->
+            <!--</el-row>-->
 
             <!--</div>-->
-            <!--<div class="itemBox">-->
-                <!--<div style="font-size: 1.2rem;padding: .5rem">-->
-                    <!--③ Email-->
-                <!--</div>-->
-                <!--<div style="padding: 0 2rem">-->
-                    <!--<el-input-->
-                            <!--readonly=""-->
-                            <!--size="medium"-->
-                            <!--class="emailInput"-->
-                            <!--placeholder="click to grant authorized email"-->
-                            <!--@click.native="toAuthorizedEmail()"-->
-                            <!--v-model="email">-->
-
-                    <!--</el-input>-->
-                <!--</div>-->
             <!--</div>-->
             <!--<div class="itemBox">-->
-                <!--<div style="padding: .5rem">-->
-                    <!--<p style="font-size: 1.2rem">④ Edit CLA's Fields-->
-                        <!--<el-tooltip class="item" effect="dark"-->
-                                    <!--content="The information you want contributors to fill in when they sign the cla.Title and type are required, otherwise the field will fail to be added"-->
-                                    <!--placement="right">-->
-                            <!--<svg-icon icon-class="bangzhu"></svg-icon>-->
-                        <!--</el-tooltip>-->
-                    <!--</p>-->
-                <!--</div>-->
-                <!--<div style="padding: 0 2rem">-->
-                    <!--<el-row>-->
-                        <!--<el-col :span="5" class="typeCol">-->
-                            <!--<el-radio v-model="metadataType" label="individual">For Individual-->
-                            <!--</el-radio>-->
-                        <!--</el-col>-->
-                        <!--<el-col :span="5" class="typeCol">-->
-                            <!--<el-radio v-model="metadataType" label="corporation">For Corporation-->
-                            <!--</el-radio>-->
-                        <!--</el-col>-->
-                    <!--</el-row>-->
-                    <!--<div v-if="metadataType==='individual'">-->
-                        <!--<div>-->
-                            <!--<el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"-->
-                                    <!--v-for="(item,index) in individualMetadataArr">-->
-                                <!--<el-col :span="5">-->
-                                    <!--<el-input disabled="" v-model="item.title" size="medium" readonly="">-->
+            <!--<div style="font-size: 1.2rem;padding: .5rem">-->
+            <!--② Paste a link of a CLA file-->
+            <!--<el-tooltip class="item" effect="dark"-->
+            <!--content="Paste a link to the original data of a CLA in the repository"-->
+            <!--placement="right">-->
+            <!--<svg-icon icon-class="bangzhu"></svg-icon>-->
+            <!--</el-tooltip>-->
+            <!--</div>-->
+            <!--<div style="padding: 0 2rem">-->
+            <!--<el-row :gutter="20">-->
+            <!--<el-col>-->
+            <!--<el-input placeholder="Paste a link" size="medium" v-model="cla_link">-->
+            <!--</el-input>-->
+            <!--</el-col>-->
+            <!--&lt;!&ndash;<el-col :span="4">&ndash;&gt;-->
+            <!--&lt;!&ndash;<el-select v-model="claLanguageValue"&ndash;&gt;-->
+            <!--&lt;!&ndash;placeholder="select language"&ndash;&gt;-->
+            <!--&lt;!&ndash;style="width: 100%"&ndash;&gt;-->
+            <!--&lt;!&ndash;size="medium"&ndash;&gt;-->
+            <!--&lt;!&ndash;clearable&ndash;&gt;-->
+            <!--&lt;!&ndash;filterable&ndash;&gt;-->
+            <!--&lt;!&ndash;@change="changeLanguage">&ndash;&gt;-->
+            <!--&lt;!&ndash;<el-option&ndash;&gt;-->
+            <!--&lt;!&ndash;v-for="item in languageOptions"&ndash;&gt;-->
+            <!--&lt;!&ndash;:key="item.value"&ndash;&gt;-->
+            <!--&lt;!&ndash;:label="item.label"&ndash;&gt;-->
+            <!--&lt;!&ndash;:value="item.value">&ndash;&gt;-->
+            <!--&lt;!&ndash;</el-option>&ndash;&gt;-->
+            <!--&lt;!&ndash;</el-select>&ndash;&gt;-->
+            <!--&lt;!&ndash;</el-col>&ndash;&gt;-->
+            <!--</el-row>-->
 
-                                    <!--</el-input>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="5">-->
-                                    <!--<el-input disabled="" v-model="item.type" size="medium" readonly></el-input>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="5">-->
-                                    <!--<el-input disabled="" v-model="item.description" size="medium" readonly></el-input>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="5" style="height: 100%">-->
-                                    <!--<el-checkbox v-model="item.required" disabled="">required</el-checkbox>-->
-                                <!--</el-col>-->
-                            <!--</el-row>-->
+            <!--</div>-->
 
-                        <!--</div>-->
-                        <!--<div>-->
-                            <!--<el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"-->
-                                    <!--v-for="(item,index) in individualCustomMetadataArr">-->
-                                <!--<el-col :span="5">-->
-                                    <!--<el-input v-model="item.title" size="medium"-->
-                                              <!--placeholder="please input title">-->
 
-                                    <!--</el-input>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="5">-->
-                                    <!--<el-select style="width: 100%" v-model="item.type"-->
-                                               <!--placeholder="select data type"-->
-                                               <!--size="medium">-->
-                                        <!--<el-option-->
-                                                <!--v-for="i in dataTypeOptions"-->
-                                                <!--:key="i.value"-->
-                                                <!--:label="i.label"-->
-                                                <!--:value="i.value">-->
-                                        <!--</el-option>-->
-                                    <!--</el-select>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="5" style="height: 100%">-->
-                                    <!--<el-input v-model="item.description" size="medium"-->
-                                              <!--placeholder="description"></el-input>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="5" style="height: 100%">-->
-                                    <!--<el-checkbox v-model="item.required">required</el-checkbox>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="4">-->
-                                    <!--<el-button @click="addRow(index)" size="medium">+</el-button>-->
-                                    <!--<el-button @click="myDeleteRow(index)" size="medium">-</el-button>-->
-                                <!--</el-col>-->
-                            <!--</el-row>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div v-if="metadataType==='corporation'">-->
-                        <!--<div>-->
-                            <!--<el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"-->
-                                    <!--v-for="(item,index) in corporationMetadataArr">-->
-                                <!--<el-col :span="5">-->
-                                    <!--<el-input disabled="" v-model="item.title" size="medium" readonly="">-->
+            <!--</div>-->
+            <!--<div class="itemBox">-->
+            <!--<div style="font-size: 1.2rem;padding: .5rem">-->
+            <!--③ Email-->
+            <!--</div>-->
+            <!--<div style="padding: 0 2rem">-->
+            <!--<el-input-->
+            <!--readonly=""-->
+            <!--size="medium"-->
+            <!--class="emailInput"-->
+            <!--placeholder="click to grant authorized email"-->
+            <!--@click.native="toAuthorizedEmail()"-->
+            <!--v-model="email">-->
 
-                                    <!--</el-input>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="5">-->
-                                    <!--<el-input disabled="" v-model="item.type" size="medium" readonly></el-input>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="5">-->
-                                    <!--<el-input disabled="" v-model="item.description" size="medium" readonly></el-input>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="5" style="height: 100%">-->
-                                    <!--<el-checkbox v-model="item.required" disabled="">required</el-checkbox>-->
-                                <!--</el-col>-->
-                            <!--</el-row>-->
+            <!--</el-input>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div class="itemBox">-->
+            <!--<div style="padding: .5rem">-->
+            <!--<p style="font-size: 1.2rem">④ Edit CLA's Fields-->
+            <!--<el-tooltip class="item" effect="dark"-->
+            <!--content="The information you want contributors to fill in when they sign the cla.Title and type are required, otherwise the field will fail to be added"-->
+            <!--placement="right">-->
+            <!--<svg-icon icon-class="bangzhu"></svg-icon>-->
+            <!--</el-tooltip>-->
+            <!--</p>-->
+            <!--</div>-->
+            <!--<div style="padding: 0 2rem">-->
+            <!--<el-row>-->
+            <!--<el-col :span="5" class="typeCol">-->
+            <!--<el-radio v-model="metadataType" label="individual">For Individual-->
+            <!--</el-radio>-->
+            <!--</el-col>-->
+            <!--<el-col :span="5" class="typeCol">-->
+            <!--<el-radio v-model="metadataType" label="corporation">For Corporation-->
+            <!--</el-radio>-->
+            <!--</el-col>-->
+            <!--</el-row>-->
+            <!--<div v-if="metadataType==='individual'">-->
+            <!--<div>-->
+            <!--<el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"-->
+            <!--v-for="(item,index) in individualMetadataArr">-->
+            <!--<el-col :span="5">-->
+            <!--<el-input disabled="" v-model="item.title" size="medium" readonly="">-->
 
-                        <!--</div>-->
-                        <!--<div>-->
-                            <!--<el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"-->
-                                    <!--v-for="(item,index) in corporationCustomMetadataArr">-->
-                                <!--<el-col :span="5">-->
-                                    <!--<el-input v-model="item.title" size="medium"-->
-                                              <!--placeholder="please input title">-->
+            <!--</el-input>-->
+            <!--</el-col>-->
+            <!--<el-col :span="5">-->
+            <!--<el-input disabled="" v-model="item.type" size="medium" readonly></el-input>-->
+            <!--</el-col>-->
+            <!--<el-col :span="5">-->
+            <!--<el-input disabled="" v-model="item.description" size="medium" readonly></el-input>-->
+            <!--</el-col>-->
+            <!--<el-col :span="5" style="height: 100%">-->
+            <!--<el-checkbox v-model="item.required" disabled="">required</el-checkbox>-->
+            <!--</el-col>-->
+            <!--</el-row>-->
 
-                                    <!--</el-input>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="5">-->
-                                    <!--<el-select style="width: 100%" v-model="item.type"-->
-                                               <!--placeholder="select data type"-->
-                                               <!--size="medium">-->
-                                        <!--<el-option-->
-                                                <!--v-for="i in dataTypeOptions"-->
-                                                <!--:key="i.value"-->
-                                                <!--:label="i.label"-->
-                                                <!--:value="i.value">-->
-                                        <!--</el-option>-->
-                                    <!--</el-select>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="5" style="height: 100%">-->
-                                    <!--<el-input v-model="item.description" size="medium"-->
-                                              <!--placeholder="description"></el-input>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="5" style="height: 100%">-->
-                                    <!--<el-checkbox v-model="item.required">required</el-checkbox>-->
-                                <!--</el-col>-->
-                                <!--<el-col :span="4">-->
-                                    <!--<el-button @click="addRow(index)" size="medium">+</el-button>-->
-                                    <!--<el-button @click="myDeleteRow(index)" size="medium">-</el-button>-->
-                                <!--</el-col>-->
-                            <!--</el-row>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
+            <!--</div>-->
+            <!--<div>-->
+            <!--<el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"-->
+            <!--v-for="(item,index) in individualCustomMetadataArr">-->
+            <!--<el-col :span="5">-->
+            <!--<el-input v-model="item.title" size="medium"-->
+            <!--placeholder="please input title">-->
+
+            <!--</el-input>-->
+            <!--</el-col>-->
+            <!--<el-col :span="5">-->
+            <!--<el-select style="width: 100%" v-model="item.type"-->
+            <!--placeholder="select data type"-->
+            <!--size="medium">-->
+            <!--<el-option-->
+            <!--v-for="i in dataTypeOptions"-->
+            <!--:key="i.value"-->
+            <!--:label="i.label"-->
+            <!--:value="i.value">-->
+            <!--</el-option>-->
+            <!--</el-select>-->
+            <!--</el-col>-->
+            <!--<el-col :span="5" style="height: 100%">-->
+            <!--<el-input v-model="item.description" size="medium"-->
+            <!--placeholder="description"></el-input>-->
+            <!--</el-col>-->
+            <!--<el-col :span="5" style="height: 100%">-->
+            <!--<el-checkbox v-model="item.required">required</el-checkbox>-->
+            <!--</el-col>-->
+            <!--<el-col :span="4">-->
+            <!--<el-button @click="addRow(index)" size="medium">+</el-button>-->
+            <!--<el-button @click="myDeleteRow(index)" size="medium">-</el-button>-->
+            <!--</el-col>-->
+            <!--</el-row>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--<div v-if="metadataType==='corporation'">-->
+            <!--<div>-->
+            <!--<el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"-->
+            <!--v-for="(item,index) in corporationMetadataArr">-->
+            <!--<el-col :span="5">-->
+            <!--<el-input disabled="" v-model="item.title" size="medium" readonly="">-->
+
+            <!--</el-input>-->
+            <!--</el-col>-->
+            <!--<el-col :span="5">-->
+            <!--<el-input disabled="" v-model="item.type" size="medium" readonly></el-input>-->
+            <!--</el-col>-->
+            <!--<el-col :span="5">-->
+            <!--<el-input disabled="" v-model="item.description" size="medium" readonly></el-input>-->
+            <!--</el-col>-->
+            <!--<el-col :span="5" style="height: 100%">-->
+            <!--<el-checkbox v-model="item.required" disabled="">required</el-checkbox>-->
+            <!--</el-col>-->
+            <!--</el-row>-->
+
+            <!--</div>-->
+            <!--<div>-->
+            <!--<el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"-->
+            <!--v-for="(item,index) in corporationCustomMetadataArr">-->
+            <!--<el-col :span="5">-->
+            <!--<el-input v-model="item.title" size="medium"-->
+            <!--placeholder="please input title">-->
+
+            <!--</el-input>-->
+            <!--</el-col>-->
+            <!--<el-col :span="5">-->
+            <!--<el-select style="width: 100%" v-model="item.type"-->
+            <!--placeholder="select data type"-->
+            <!--size="medium">-->
+            <!--<el-option-->
+            <!--v-for="i in dataTypeOptions"-->
+            <!--:key="i.value"-->
+            <!--:label="i.label"-->
+            <!--:value="i.value">-->
+            <!--</el-option>-->
+            <!--</el-select>-->
+            <!--</el-col>-->
+            <!--<el-col :span="5" style="height: 100%">-->
+            <!--<el-input v-model="item.description" size="medium"-->
+            <!--placeholder="description"></el-input>-->
+            <!--</el-col>-->
+            <!--<el-col :span="5" style="height: 100%">-->
+            <!--<el-checkbox v-model="item.required">required</el-checkbox>-->
+            <!--</el-col>-->
+            <!--<el-col :span="4">-->
+            <!--<el-button @click="addRow(index)" size="medium">+</el-button>-->
+            <!--<el-button @click="myDeleteRow(index)" size="medium">-</el-button>-->
+            <!--</el-col>-->
+            <!--</el-row>-->
+            <!--</div>-->
+            <!--</div>-->
+            <!--</div>-->
 
             <!--</div>-->
             <!--<div class="btDiv">-->
-                <!--<el-button @click="binding" style="width: 8rem;text-align: center" size="medium" type="primary">-->
-                    <!--LINK-->
-                <!--</el-button>-->
+            <!--<el-button @click="binding" style="width: 8rem;text-align: center" size="medium" type="primary">-->
+            <!--LINK-->
+            <!--</el-button>-->
             <!--</div>-->
 
 
@@ -349,14 +349,6 @@
                     this.$store.commit('setMetadataType', value)
                 },
             },
-            customMetadataArr: {
-                get() {
-                    return this.$store.state.customMetadataArr;
-                },
-                set(value) {
-                    this.$store.commit('setCusMetadataArr', value)
-                },
-            },
         },
         watch: {
             $route(to, from) {
@@ -393,7 +385,6 @@
                     value: 'fax'
                 },
                 ],
-                customMetadataArr: [],
                 individualMetadataArr: [{
                     title: 'Name',
                     type: 'name',
@@ -763,14 +754,16 @@
 </script>
 
 <style lang="less">
-    .margin-top-1rem{
+    .margin-top-1rem {
         margin-top: 1rem;
     }
+
     .padding-left-right-2rem {
         padding: 0 2rem;
     }
+
     .stepBtBox {
-        margin-top: 2rem;
+        margin: 2rem 0;
         display: flex;
         justify-content: space-between;
     }

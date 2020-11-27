@@ -6,11 +6,14 @@ import * as url from '../until/api'
 Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
+        chooseRepo:sessionStorage.getItem('chooseRepo') || undefined,
+        chooseOrg:sessionStorage.getItem('chooseOrg') || undefined,
         signRouter:'/sign',
         claChoose: sessionStorage.getItem('claChoose') || undefined,
         orgChoose: sessionStorage.getItem('orgChoose') || undefined,
         repositoryChoose: sessionStorage.getItem('repositoryChoose') || undefined,
         isEmail: sessionStorage.getItem('isEmail') || undefined,
+        email: sessionStorage.getItem('email') || undefined,
         repositoryValue: sessionStorage.getItem('repositoryValue') || undefined,
         claValue: sessionStorage.getItem('claValue') || undefined,
         orgValue: sessionStorage.getItem('orgValue') || undefined,
@@ -50,11 +53,44 @@ export default new Vuex.Store({
         corporationCustomMetadataArr:JSON.parse(sessionStorage.getItem('corporationCustomMetadataArr')) || undefined,
         managerList:JSON.parse(sessionStorage.getItem('managerList')) || undefined,
         corpItem:JSON.parse(sessionStorage.getItem('corpItem')) || undefined,
+        orgAlias:sessionStorage.getItem('corpItem') || undefined,
+        claLinkIndividual:sessionStorage.getItem('claLinkIndividual') || undefined,
+        claLinkCorp:sessionStorage.getItem('claLinkCorp') || undefined,
+        individualMetadata:JSON.parse(sessionStorage.getItem('individualMetadata')) || undefined,
+        corporationMetadata:JSON.parse(sessionStorage.getItem('corporationMetadata')) || undefined,
     },
     mutations: {
-        setCorpItem(state,data){
-            state.corpItem = data;
-            sessionStorage.setItem('corpItem',JSON.stringify(data));
+        setEmail(state,data){
+            state.email = data;
+            sessionStorage.setItem('email',data);
+        },
+        setIndividualMetadata(state,data){
+            state.individualMetadata = data;
+            sessionStorage.setItem('individualMetadata',JSON.stringify(data));
+        },
+        setCorpMetadata(state,data){
+            state.corporationMetadata = data;
+            sessionStorage.setItem('corporationMetadata',JSON.stringify(data));
+        },
+        setClaLinkCorp(state,data){
+            state.claLinkCorp = data;
+            sessionStorage.setItem('claLinkCorp',data);
+        },
+        setClaLinkIndividual(state,data){
+            state.claLinkIndividual = data;
+            sessionStorage.setItem('claLinkIndividual',data);
+        },
+        setOrgAlias(state,data){
+            state.orgAlias = data;
+            sessionStorage.setItem('orgAlias',data);
+        },
+        setChooseRepo(state,data){
+            state.chooseRepo = data;
+            sessionStorage.setItem('chooseRepo',data);
+        },
+        setChooseOrg(state,data){
+            state.chooseOrg = data;
+            sessionStorage.setItem('chooseOrg',data);
         },
         setManagerList(state,data){
             state.managerList = data;

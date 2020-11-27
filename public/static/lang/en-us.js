@@ -92,6 +92,8 @@ module.exports = {
         exits_email:'Email existed.Please check and try again',
         exits_id:'ID existed.Please check and try again',
         invalid_id:'ID format error,ID can only contain a-zA-Z0-9_.',
+        paste_individual_link:'Please paste the cla link applied to the individual signature',
+        authorized_email:'Please authorize an email for your organization or repository to communicate with the signer',
     },
     header:{
         home:'Home',

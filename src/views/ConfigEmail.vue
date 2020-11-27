@@ -77,10 +77,12 @@
             isEmail() {
                 return `${this.$store.state.isEmail}` === 'true';
             },
+            email() {
+                return this.$store.state.email;
+            },
         },
         data() {
             return {
-                email: '',
                 emailDialogVisible: false,
                 emailTypeArr: [{value: 'G-Mail', label: 'G-Mail'}],
                 emailType: '',
@@ -91,7 +93,12 @@
                 this.$router.push('/config-fields')
             },
             toConfigCheck() {
-                this.$router.push('/config-check')
+                if (this.email) {
+                    this.$router.push('/config-check')
+                }else{
+                    this.$message.closeAll();
+                    this.$message.error(this.$t('tips.authorized_email'));
+                }
             },
             getCookieData() {
                 if (document.cookie !== '') {
@@ -106,9 +113,9 @@
                         }
                         this.$cookie.remove(name, {path: '/'});
                     });
-                    this.email = email;
                     if (email) {
-                        this.$store.commit('setIsEmail', true)
+                        this.$store.commit('setIsEmail', true);
+                        this.$store.commit('setEmail', email);
                     }
                 }
             },
