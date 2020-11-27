@@ -229,7 +229,7 @@
             </div>
 
         </div>
-        <div class="btDiv">
+        <div class="stepBtBox">
             <el-button @click="toConfigEmail" size="medium" type="primary" class="stepBt">Previous Step</el-button>
             <el-button @click="binding"  size="medium" type="primary" class="stepBt">Submit</el-button>
         </div>
@@ -754,11 +754,6 @@
             .emailInput {
                 cursor: pointer;
             }
-        }
-
-        .btDiv {
-            margin: 1rem 0;
-            text-align: center;
         }
 
         .typeCol {

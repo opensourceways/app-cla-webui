@@ -4,10 +4,10 @@
             <div class="stepTitle">
                 ③ Email
             </div>
-            <div>
+            <div class="margin-top-1rem">
                 Authorize an email to send signed documents to the signer
             </div>
-            <div class="padding-left-right-2rem">
+            <div class="margin-top-1rem">
                 <el-input
                         readonly=""
                         size="medium"

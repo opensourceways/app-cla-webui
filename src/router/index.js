@@ -62,6 +62,10 @@ const routes = [
                 children: [
                     {
                         path: '/',
+                        redirect:'/config-org',
+                    },
+                    {
+                        path: '/config-org',
                         name: 'ConfigOrg',
                         component: () => import('../views/ConfigOrg.vue')
                     },

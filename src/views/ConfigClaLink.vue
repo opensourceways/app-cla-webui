@@ -9,13 +9,13 @@
                     <svg-icon icon-class="bangzhu"></svg-icon>
                 </el-tooltip>
             </div>
-            <div>
+            <div class="margin-top-1rem">
                 individual CLA link
             </div>
-            <div>
+            <div class="margin-top-1rem">
                 You need to paste here a link to the original data from the gitee repository, which is the cla protocol, applied to individual signatures
             </div>
-            <div class="padding-left-right-2rem">
+            <div class="margin-top-1rem">
                 <el-row>
                     <el-col>
                         <el-input placeholder="Paste a link" size="medium" v-model="cla_link">
@@ -42,13 +42,13 @@
                 </el-row>
 
             </div>
-            <div>
+            <div class="margin-top-1rem">
             corporation CLA link
             </div>
-            <div>
+            <div class="margin-top-1rem">
                 You need to paste here a link to the original data from the gitee repository, which is the cla protocol, applied to corporation signatures
             </div>
-            <div style="padding: 0 2rem">
+            <div class="margin-top-1rem">
                 <el-row>
                     <el-col>
                         <el-input placeholder="Paste a link" size="medium" v-model="cla_link">
@@ -75,11 +75,10 @@
                 </el-row>
 
             </div>
-            <div class="stepBtBox">
-                <el-button size="medium" type="primary" class="stepBt" @click="toConfigFields">Previous Step</el-button>
-                <el-button size="medium" type="primary" class="stepBt" @click="toConfigOrg">Next Step</el-button>
-            </div>
-
+        </div>
+        <div class="stepBtBox">
+            <el-button size="medium" type="primary" class="stepBt" @click="toConfigOrg">Previous Step</el-button>
+            <el-button size="medium" type="primary" class="stepBt" @click="toConfigFields">Next Step</el-button>
         </div>
     </el-row>
 </template>
@@ -103,11 +102,11 @@
             }
         },
         methods: {
+            toConfigOrg() {
+                this.$router.push('/config-org')
+            },
             toConfigFields() {
                 this.$router.push('/config-fields')
-            },
-            toConfigOrg() {
-                this.$router.push('/')
             },
         },
     }

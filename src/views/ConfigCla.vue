@@ -763,10 +763,14 @@
 </script>
 
 <style lang="less">
+    .margin-top-1rem{
+        margin-top: 1rem;
+    }
     .padding-left-right-2rem {
         padding: 0 2rem;
     }
     .stepBtBox {
+        margin-top: 2rem;
         display: flex;
         justify-content: space-between;
     }

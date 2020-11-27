@@ -4,10 +4,10 @@
             <div class="stepTitle">
                 ① Choose a organization or repository
             </div>
-            <div>
+            <div class="margin-top-1rem">
                 Select an organization that needs to configure cla
             </div>
-            <el-row>
+            <el-row class="margin-top-1rem">
                 <el-col>
                     <el-select v-model="orgValue"
                                placeholder="select organization"
@@ -26,11 +26,11 @@
                     </el-select>
                 </el-col>
             </el-row>
-            <div>
+            <div class="margin-top-1rem">
                 If you want to configure CLA for a repository under the organization, please select the repository. If
                 not, please ignore it
             </div>
-            <el-row>
+            <el-row class="margin-top-1rem">
                 <el-col>
                     <el-select v-model="repositoryValue"
                                placeholder="select repository"
@@ -49,9 +49,9 @@
                     </el-select>
                 </el-col>
             </el-row>
-            <div class="orgStepBtBox">
-                <el-button size="medium" type="primary" class="stepBt" @click="toConfigClaLink">Next Step</el-button>
-            </div>
+        </div>
+        <div class="orgStepBtBox">
+            <el-button size="medium" type="primary" class="stepBt" @click="toConfigClaLink">Next Step</el-button>
         </div>
     </el-row>
 </template>

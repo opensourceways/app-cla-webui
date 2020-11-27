@@ -10,42 +10,79 @@
                     </el-tooltip>
                 </p>
             </div>
-            <div class="padding-left-right-2rem">
+            <div class="margin-top-1rem">
 
                 <div>
                     <div class="margin-top-1rem">
                        for individual metadata
                     </div>
-                    <div>
+                    <div class="margin-top-1rem">
                         Configure the required field information for individual and employee signers
                     </div>
-                    <div>
-                        <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
-                                v-for="(item,index) in individualMetadataArr">
-                            <el-col :span="5">
-                                <el-input disabled="" v-model="item.title" size="medium" readonly="">
+                    <div class="margin-top-1rem">
+                        <div>
+                            <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
+                                    v-for="(item,index) in individualMetadataArr">
+                                <el-col :span="5">
+                                    <el-input disabled="" v-model="item.title" size="medium" readonly="">
 
-                                </el-input>
-                            </el-col>
-                            <el-col :span="5">
-                                <el-input disabled="" v-model="item.type" size="medium" readonly></el-input>
-                            </el-col>
-                            <el-col :span="5">
-                                <el-input disabled="" v-model="item.description" size="medium" readonly></el-input>
-                            </el-col>
-                            <el-col :span="5" style="height: 100%">
-                                <el-checkbox v-model="item.required" disabled="">required</el-checkbox>
-                            </el-col>
-                        </el-row>
+                                    </el-input>
+                                </el-col>
+                                <el-col :span="5">
+                                    <el-input disabled="" v-model="item.type" size="medium" readonly></el-input>
+                                </el-col>
+                                <el-col :span="5">
+                                    <el-input disabled="" v-model="item.description" size="medium" readonly></el-input>
+                                </el-col>
+                                <el-col :span="5" style="height: 100%">
+                                    <el-checkbox v-model="item.required" disabled="">required</el-checkbox>
+                                </el-col>
+                            </el-row>
 
+                        </div>
+                        <div>
+                            <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
+                                    v-for="(item,index) in individualCustomMetadataArr">
+                                <el-col :span="5">
+                                    <el-input v-model="item.title" size="medium"
+                                              placeholder="please input title">
+
+                                    </el-input>
+                                </el-col>
+                                <el-col :span="5">
+                                    <el-select style="width: 100%" v-model="item.type"
+                                               placeholder="select data type"
+                                               size="medium">
+                                        <el-option
+                                                v-for="i in dataTypeOptions"
+                                                :key="i.value"
+                                                :label="i.label"
+                                                :value="i.value">
+                                        </el-option>
+                                    </el-select>
+                                </el-col>
+                                <el-col :span="5" style="height: 100%">
+                                    <el-input v-model="item.description" size="medium"
+                                              placeholder="description"></el-input>
+                                </el-col>
+                                <el-col :span="5" style="height: 100%">
+                                    <el-checkbox v-model="item.required">required</el-checkbox>
+                                </el-col>
+                                <el-col :span="4">
+                                    <el-button @click="addRow(index)" size="medium">+</el-button>
+                                    <el-button @click="myDeleteRow(index)" size="medium">-</el-button>
+                                </el-col>
+                            </el-row>
+                        </div>
                     </div>
+
                     <div class="margin-top-1rem">
                        for corporation metadata
                     </div>
-                    <div>
+                    <div class="margin-top-1rem">
                         Configure the required field information for corporation signers
                     </div>
-                    <div>
+                    <div class="margin-top-1rem">
                         <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
                                 v-for="(item,index) in individualCustomMetadataArr">
                             <el-col :span="5">
@@ -80,7 +117,7 @@
                         </el-row>
                     </div>
                 </div>
-                <div>
+                <div class="margin-top-1rem">
                     <div>
                         <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
                                 v-for="(item,index) in corporationMetadataArr">
@@ -137,10 +174,10 @@
                     </div>
                 </div>
             </div>
-            <div class="stepBtBox">
-                <el-button size="medium" type="primary" class="stepBt" @click="toConfigClaLink">Previous Step</el-button>
-                <el-button size="medium" type="primary" class="stepBt" @click="toConfigEmail">Next Step</el-button>
-            </div>
+        </div>
+        <div class="stepBtBox">
+            <el-button size="medium" type="primary" class="stepBt" @click="toConfigClaLink">Previous Step</el-button>
+            <el-button size="medium" type="primary" class="stepBt" @click="toConfigEmail">Next Step</el-button>
         </div>
     </el-row>
 </template>
@@ -331,9 +368,6 @@
 
 <style lang="less">
     #configFields {
-        .margin-top-1rem{
-            margin-top: 1rem;
-        }
         .itemBox {
             border-radius: 1.25rem;
             box-shadow: 0 0 20px 10px #F3F3F3;
