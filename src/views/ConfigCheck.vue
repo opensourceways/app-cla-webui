@@ -4,12 +4,15 @@
             <div class="=info-title">
                 ① Organization and repository
             </div>
-            <div class="padding-left-right-2rem">
+            <div class="margin-top-1rem">
                 <el-row :gutter="20">
-                    <el-col :span="12">
+                    <el-col :span="8">
                         <el-input disabled="" size="medium" v-model="org"></el-input>
                     </el-col>
-                    <el-col :span="12">
+                    <el-col :span="8">
+                        <el-input disabled="" size="medium" v-model="orgAlias"></el-input>
+                    </el-col>
+                    <el-col :span="8">
                         <el-input disabled="" size="medium" v-model="repo"></el-input>
                     </el-col>
                 </el-row>
@@ -25,68 +28,70 @@
                     <svg-icon icon-class="bangzhu"></svg-icon>
                 </el-tooltip>
             </div>
-            <div>
+            <div class="margin-top-1rem">
                 Individual CLA Link
             </div>
-            <div class="padding-left-right-2rem">
+            <div class="margin-top-1rem">
                 <el-row :gutter="20">
-                    <el-col>
+                    <el-col :span="18">
                         <el-input disabled="" size="medium" v-model="cla_link_individual">
                         </el-input>
                     </el-col>
-                    <!--<el-col :span="4">-->
-                    <!--<el-select v-model="claLanguageValue"-->
-                    <!--placeholder="select language"-->
-                    <!--style="width: 100%"-->
-                    <!--size="medium"-->
-                    <!--clearable-->
-                    <!--filterable-->
-                    <!--@change="changeLanguage">-->
-                    <!--<el-option-->
-                    <!--v-for="item in languageOptions"-->
-                    <!--:key="item.value"-->
-                    <!--:label="item.label"-->
-                    <!--:value="item.value">-->
-                    <!--</el-option>-->
-                    <!--</el-select>-->
-                    <!--</el-col>-->
+                    <el-col :span="6">
+                        <el-select v-model="individualClaLanguageValue"
+                                   placeholder="select language"
+                                   style="width: 100%"
+                                   disabled=""
+                                   size="medium">
+                            <el-option
+                                    v-for="item in languageOptions"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-col>
                 </el-row>
             </div>
-            <div>
+            <div class="margin-top-1rem">
                 Corporation CLA Link
             </div>
-            <div class="padding-left-right-2rem">
+            <div class="margin-top-1rem">
                 <el-row :gutter="20">
-                    <el-col>
+                    <el-col :span="18">
                         <el-input disabled="" size="medium" v-model="cla_link_corporation">
                         </el-input>
                     </el-col>
-                    <!--<el-col :span="4">-->
-                    <!--<el-select v-model="claLanguageValue"-->
-                    <!--placeholder="select language"-->
-                    <!--style="width: 100%"-->
-                    <!--size="medium"-->
-                    <!--clearable-->
-                    <!--filterable-->
-                    <!--@change="changeLanguage">-->
-                    <!--<el-option-->
-                    <!--v-for="item in languageOptions"-->
-                    <!--:key="item.value"-->
-                    <!--:label="item.label"-->
-                    <!--:value="item.value">-->
-                    <!--</el-option>-->
-                    <!--</el-select>-->
-                    <!--</el-col>-->
+                    <el-col :span="6">
+                        <el-select v-model="corpClaLanguageValue"
+                                   placeholder="select language"
+                                   style="width: 100%"
+                                   size="medium"
+                                   disabled="">
+                            <el-option
+                                    v-for="item in languageOptions"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value">
+                            </el-option>
+                        </el-select>
+                    </el-col>
                 </el-row>
+                <div class="margin-top-1rem">
+                    Signature File
+                </div>
+                <div class="margin-top-1rem">
+                    <el-input disabled="" v-model="corp_pdf_name"></el-input>
+                </div>
             </div>
         </div>
         <div class="itemBox">
             <div class="=info-title">
                 ③ Email
             </div>
-            <div class="padding-left-right-2rem">
+            <div class="margin-top-1rem">
                 <el-input
-                        readonly=""
+                        disabled=""
                         size="medium"
                         class="emailInput"
                         placeholder="authorized email"
@@ -105,7 +110,7 @@
                 </p>
             </div>
             <div style="padding: 0 2rem">
-                <el-row class="size-b">
+                <el-row class="margin-top-1rem">
                     For Individual
                 </el-row>
                 <div>
@@ -128,7 +133,7 @@
                     </el-row>
 
                 </div>
-                <el-row class="size-b">
+                <el-row class="margin-top-1rem">
                     For Corporation
                 </el-row>
                 <div>
@@ -162,6 +167,9 @@
 </template>
 
 <script>
+    import * as url from '../until/api'
+    import http from '../until/http'
+
     export default {
         name: "ConfigCheck",
         computed: {
@@ -180,8 +188,8 @@
             org() {
                 return this.$store.state.org
             },
-            org_alias() {
-                return this.$store.state.org_alias
+            orgAlias() {
+                return this.$store.state.orgAlias
             },
             repo() {
                 return this.$store.state.repo
@@ -207,19 +215,22 @@
             },
             corporationMetadata() {
                 return this.$store.state.corporationMetadata;
-            }
+            },
+            individualClaLanguageValue() {
+                return this.$store.state.individualLanguage;
+            },
+            corpClaLanguageValue() {
+                return this.$store.state.corpLanguage;
+            },
+            corp_pdf_name() {
+                return this.$store.state.corpFDName
+            },
         },
         data() {
             return {
-                claLanguageValue: 'English',
-                claTypeValue: '',
-                languageOptions: [{label: 'English', value: 'English'}, {label: 'Chinese', value: 'Chinese'}, {
-                    label: 'Japanese',
-                    value: 'Japanese'
-                }],
+                languageOptions: [{value: 'English', label: 'English'}, {value: '中文', label: '中文'}],
                 platform: this.$store.state.platform,
                 isVerify: false,
-                activeName: 'first',
                 previewShow: false,
                 loginType: this.$store.state.loginType,
                 access_token: this.$store.state.access_token,
@@ -233,46 +244,130 @@
             }
         },
         methods: {
-            binding() {
-                let obj = {};
-                let metadata = true;
+            toConfigEmail() {
+                this.$router.push('/config-email');
+            },
+            editMetadata(metadata) {
                 if (metadata) {
-                    let cla = {url: this.cla_link.trim(), language: this.claLanguageValue, fields: metadata};
-                    if (this.repositoryChoose) {
+                    let metadataArr = metadata;
+                    let fields = [];
+                    metadataArr.forEach((item, index) => {
+                        if (item.title !== '' && item.type !== '') {
+                            fields.push({
+                                id: index + '',
+                                title: item.title,
+                                type: item.type,
+                                description: item.description,
+                                required: item.required,
+                            })
+                        }
+                    });
+                    return fields;
+                } else {
+                    return false
+                }
+            },
+            dataURLtoFile(dataurl, filename) {
+                let arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                    bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+                while (n--) {
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+                return new File([u8arr], filename, {type: mime});
+            },
+            fileToFormData(fs){
+                let formData = new FormData();
+                let max_size = 1024 * 1024;
+                for (let i = 0; i < fs.length; i++) {
+                    let d = fs[i];
+                    if (d.size <= max_size) {
+                        if (/.(PDF|pdf)$/.test(d.name)) {
+                            formData.append("files", fs[i]);
+                        } else {
+                            alert('上传文件必须是PDF！');
+                            return false
+                        }
+                    } else {
+                        alert('上传文件过大！');
+                        return false
+                    }
+                }
+                return formData;
+            },
+            binding() {
+                let corp_pdf={};
+                let formData={};
+                if (this.$store.state.corpFD) {
+                     corp_pdf = this.dataURLtoFile(this.$store.state.corpFD, this.$store.state.corpFDName);
+                    console.log('pdf==', corp_pdf);
+                    formData = this.fileToFormData(corp_pdf)
+                }
+                let obj = {};
+                let corpCla = {};
+                let individualCla = {
+                    url: this.cla_link_individual.trim(),
+                    language: this.individualClaLanguageValue,
+                    fields: this.editMetadata(this.individualMetadata)
+                };
+                if (this.cla_link_corporation) {
+                    corpCla = {
+                        org_signature: formData,
+                        url: this.cla_link_corporation.trim(),
+                        language: this.corpClaLanguageValue,
+                        fields: this.editMetadata(this.corporationMetadata)
+                    };
+                    if (this.repo) {
                         obj = {
                             repo_id: this.repo,
                             org_email: this.email,
                             platform: this.platform,
                             org_id: this.org,
-                            apply_to: this.metadataType,
-                            cla: cla,
+                            org_alias: this.orgAlias,
+                            individual_cla: individualCla,
+                            corp_cla: corpCla,
                         };
                     } else {
                         obj = {
-                            repo_id: '',
                             org_email: this.email,
                             platform: this.platform,
-                            org_id: `${this.orgOptions[this.orgValue].label}`,
-                            apply_to: this.metadataType,
-                            cla: cla,
+                            org_id: this.org,
+                            org_alias: this.orgAlias,
+                            individual_cla: individualCla,
+                            corp_cla: corpCla,
                         };
                     }
-                    http({
-                        url: url.linkRepository,
-                        method: 'post',
-                        data: obj,
-                    }).then(res => {
-                        this.$message.closeAll();
-                        this.$message.success('success')
-                        this.$router.push('/home')
-                    }).catch(err => {
-                        this.$message.closeAll();
-                        this.$message.error(err.data.error_message)
-                    })
                 } else {
-                    this.$message.closeAll();
-                    this.$message.error(this.$t('tips.title_type_repeat'))
+                    if (this.repo) {
+                        obj = {
+                            repo_id: this.repo,
+                            org_email: this.email,
+                            platform: this.platform,
+                            org_id: this.org,
+                            org_alias: this.orgAlias,
+                            individual_cla: individualCla,
+                        };
+                    } else {
+                        obj = {
+                            org_email: this.email,
+                            platform: this.platform,
+                            org_id: this.org,
+                            org_alias: this.orgAlias,
+                            individual_cla: individualCla,
+                        };
+                    }
                 }
+                http({
+                    url: url.linkRepository,
+                    method: 'post',
+                    data: obj,
+                }).then(res => {
+                    this.$message.closeAll();
+                    this.$message.success('success');
+                    this.$router.push('/home')
+                }).catch(err => {
+                    this.$message.closeAll();
+                    this.$message.error(err.data.error_message)
+                })
 
             },
         },

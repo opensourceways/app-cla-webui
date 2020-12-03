@@ -53,13 +53,33 @@ export default new Vuex.Store({
         corporationCustomMetadataArr:JSON.parse(sessionStorage.getItem('corporationCustomMetadataArr')) || undefined,
         managerList:JSON.parse(sessionStorage.getItem('managerList')) || undefined,
         corpItem:JSON.parse(sessionStorage.getItem('corpItem')) || undefined,
-        orgAlias:sessionStorage.getItem('corpItem') || undefined,
+        orgAlias:sessionStorage.getItem('orgAlias') || undefined,
         claLinkIndividual:sessionStorage.getItem('claLinkIndividual') || undefined,
         claLinkCorp:sessionStorage.getItem('claLinkCorp') || undefined,
         individualMetadata:JSON.parse(sessionStorage.getItem('individualMetadata')) || undefined,
         corporationMetadata:JSON.parse(sessionStorage.getItem('corporationMetadata')) || undefined,
+        corpFD:JSON.parse(sessionStorage.getItem('corpFD')) || undefined,
+        individualLanguage:sessionStorage.getItem('individualLanguage') || undefined,
+        corpLanguage:sessionStorage.getItem('corpLanguage') || undefined,
+        corpFDName:sessionStorage.getItem('corpFDName') || undefined,
     },
     mutations: {
+        setCorpLanguage(state,data){
+            state.corpLanguage = data;
+            sessionStorage.setItem('corpLanguage',data);
+        },
+        setIndividualLanguage(state,data){
+            state.individualLanguage = data;
+            sessionStorage.setItem('individualLanguage',data);
+        },
+        setCorpFDName(state,data){
+            state.corpFDName = data;
+            sessionStorage.setItem('corpFDName',data);
+        },
+        setCorpFD(state,data){
+            state.corpFD = data;
+            sessionStorage.setItem('corpFD',JSON.stringify(data));
+        },
         setEmail(state,data){
             state.email = data;
             sessionStorage.setItem('email',data);

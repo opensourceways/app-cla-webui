@@ -17,9 +17,9 @@
                         For Individual Metadata
                     </div>
                     <div class="margin-top-1rem">
-                        Configure the required field information for individual and employee signers
-                    </div>
-                    <div class="margin-top-1rem">
+                        <div class="margin-top-1rem">
+                            Configure the required field information for individual and employee signers
+                        </div>
                         <div>
                             <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
                                     v-for="(item,index) in individualMetadataArr">
@@ -75,15 +75,14 @@
                             </el-row>
                         </div>
                     </div>
-
+                </div>
+                <div v-if="this.$store.state.claLinkCorp" class="margin-top-1rem">
                     <div class="margin-top-1rem">
                         For Corporation Metadata
                     </div>
                     <div class="margin-top-1rem">
                         Configure the required field information for corporation signers
                     </div>
-                </div>
-                <div class="margin-top-1rem">
                     <div>
                         <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
                                 v-for="(item,index) in corporationMetadataArr">
@@ -178,6 +177,8 @@
         },
         data() {
             return {
+                individualMetadata: [],
+                corpMetadata: [],
                 dataTypeOptions: [{label: 'name', value: 'name'}, {
                     label: 'corporationName',
                     value: 'corporationName'
@@ -234,12 +235,12 @@
                 this.$router.push('/config-cla-link')
             },
             toConfigEmail() {
-                let metadataObj = this.editMetadata();
+                let metadataObj = this.checkMetadata();
                 if (metadataObj) {
                     this.$store.commit('setIndividualMetadata', metadataObj.individualArr)
                     this.$store.commit('setCorpMetadata', metadataObj.corpArr)
-                    // this.$store.commit('setIndividualCustomMetadataArr', metadataObj.corpArr)
-                    // this.$store.commit('setCorporationCustomMetadataArr', metadataObj.corpArr)
+                    this.$store.commit('setIndividualCustomMetadataArr', this.individualMetadata)
+                    this.$store.commit('setCorporationCustomMetadataArr', this.corpMetadata)
                     this.$router.push('/config-email')
                 } else {
                     this.$message.closeAll();
@@ -247,8 +248,20 @@
                 }
             },
             checkMetadata() {
-                let individualArr = this.individualMetadataArr.concat(this.individualCustomMetadataArr);
-                let corpArr = this.corporationMetadataArr.concat(this.corporationCustomMetadataArr);
+                let individualMetadata = [];
+                let corpMetadata = [];
+                this.individualCustomMetadataArr.forEach((item) => {
+                    if (item.title !== '' && item.type !== '') {
+                        individualMetadata.push(item)
+                    }
+                });
+                this.corporationCustomMetadataArr.forEach((item) => {
+                    if (item.title !== '' && item.type !== '') {
+                        corpMetadata.push(item)
+                    }
+                });
+                let individualArr = this.individualMetadataArr.concat(individualMetadata);
+                let corpArr = this.corporationMetadataArr.concat(corpMetadata);
                 for (let i = 0; i < individualArr.length; i++) {
                     for (let j = i + 1; j < individualArr.length; j++) {
                         if (individualArr[i].title === individualArr[j].title || individualArr[i].type === individualArr[j].type) {
@@ -259,19 +272,37 @@
                 for (let i = 0; i < corpArr.length; i++) {
                     for (let j = i + 1; j < corpArr.length; j++) {
                         if (corpArr[i].title === corpArr[j].title || corpArr[i].type === corpArr[j].type) {
+                            console.log('i--title==', corpArr[i].title, 'j---title===', corpArr[j].title);
                             return false;
                         }
                     }
                 }
+                individualMetadata.push({
+                    title: '',
+                    type: '',
+                    description: '',
+                    required: false,
+                });
+                corpMetadata.push({
+                    title: '',
+                    type: '',
+                    description: '',
+                    required: false,
+                });
+                this.individualMetadata = individualMetadata;
+                this.corpMetadata = corpMetadata;
                 return {individualArr, corpArr};
             },
             editMetadata() {
-                let fields = [];
                 let metadataArr = this.checkMetadata();
                 if (metadataArr) {
-                    metadataArr.forEach((item, index) => {
-                        if (metadataArr[index].title !== '' && metadataArr[index].type !== '') {
-                            fields.push({
+                    let individualArr = metadataArr.individualArr;
+                    let corpArr = metadataArr.corpArr;
+                    let individualFields = [];
+                    let corpFields = [];
+                    individualArr.forEach((item, index) => {
+                        if (item.title !== '' && item.type !== '') {
+                            individualFields.push({
                                 id: index + '',
                                 title: item.title,
                                 type: item.type,
@@ -280,7 +311,18 @@
                             })
                         }
                     });
-                    return fields
+                    corpArr.forEach((item, index) => {
+                        if (item.title !== '' && item.type !== '') {
+                            corpFields.push({
+                                id: index + '',
+                                title: item.title,
+                                type: item.type,
+                                description: item.description,
+                                required: item.required,
+                            })
+                        }
+                    });
+                    return {individualFields, corpFields}
                 } else {
                     return false
                 }
@@ -293,6 +335,7 @@
                     description: '',
                     required: false,
                 });
+                this.$store.commit('setIndividualCustomMetadataArr', metadata)
             },
             myDeleteRow(index) {
                 let metadata = this.individualCustomMetadataArr;

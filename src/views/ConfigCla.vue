@@ -754,6 +754,9 @@
 </script>
 
 <style lang="less">
+    .margin-top-2rem {
+        margin-top: 2rem;
+    }
     .margin-top-1rem {
         margin-top: 1rem;
     }
@@ -763,7 +766,7 @@
     }
 
     .stepBtBox {
-        margin: 2rem 0;
+        margin-bottom: 2rem;
         display: flex;
         justify-content: space-between;
     }

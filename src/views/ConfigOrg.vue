@@ -30,7 +30,7 @@
                 You need an alias for the organization you choose
             </div>
             <div class="margin-top-1rem">
-                <el-input v-model="org_alias" size="medium" placeholder="input org alias"></el-input>
+                <el-input v-model="org_alias" size="medium" placeholder="input organization alias"></el-input>
             </div>
             <div class="margin-top-1rem">
                 If you want to configure CLA for a repository under the organization, please select the repository. If
@@ -65,7 +65,7 @@
 
 <script>
     import reTryDialog from '../components/ReTryDialog'
-
+    import * as url from '../until/api'
     export default {
         name: "ConfigOne",
         components: {
@@ -113,7 +113,7 @@
                     return Number(this.$store.state.repositoryValue)
                 }
             },
-            org_alias(){
+            org_alias() {
                 return this.$store.state.orgAlias
             },
         },
@@ -133,7 +133,7 @@
                 } else {
                     this.$store.commit('errorCodeSet', {
                         dialogVisible: true,
-                        dialogMessage: this.$t('tips.fill_complete'),
+                        dialogMessage: this.$t('corp.fill_complete'),
                     });
                 }
             },
@@ -207,6 +207,7 @@
     #configOne {
         .orgStepBtBox {
             text-align: right;
+            margin-bottom: 2rem;
         }
 
         .stepTitle {

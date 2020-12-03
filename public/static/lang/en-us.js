@@ -93,7 +93,11 @@ module.exports = {
         exits_id:'ID existed.Please check and try again',
         invalid_id:'ID format error,ID can only contain a-zA-Z0-9_.',
         paste_individual_link:'Please paste the cla link applied to the individual signature',
+        select_individual_language:'Please select the language to apply to the cla signed by the individual',
+        paste_corp_link:'Please paste the cla link applied to the corporation signature',
+        select_corp_language:'Please select the language to apply to the cla signed by the corporation',
         authorized_email:'Please authorize an email for your organization or repository to communicate with the signer',
+        upload_signature_file:'Please upload a PDF file with the signature of the community',
     },
     header:{
         home:'Home',

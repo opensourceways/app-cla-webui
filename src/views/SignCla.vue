@@ -163,7 +163,7 @@
             return {
                 second: '',
                 sendBtText: this.$t('signPage.sendCode'),
-                signRouter: '/sign',
+                signRouter: this.$store.state.signRouter,
                 domain: this.$store.state.domain,
                 tipsTitle: '',
                 tipsMessage: this.$t('tips.individual_sign'),
@@ -207,8 +207,6 @@
                 let date = new Date();
                 date.setTime(date.getTime() - 10000);
                 document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
-
-
                 let repoInfo = this.$store.state.repoInfo;
                 let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`;
                 let path = '';
@@ -217,7 +215,7 @@
                 } else {
                     path = `${this.signRouter}/${until.strToBase64(params)}`
                 }
-                this.$router.push(path)
+                window.open(`${this.domain}${path}`)
             },
             async verifyTel(rule, value, callback) {
                 if (value) {
@@ -613,7 +611,7 @@
                                 case 'cla.no_cla_binding':
                                     this.$store.commit('setSignReLogin', {
                                         dialogVisible: true,
-                                        dialogMessage: this.$t('tips.no_cla_binding'),
+                                        dialogMessage: this.$t('tips.no_cla_binding_corp'),
                                     });
                                     break;
                                 case 'cla.invalid_parameter':

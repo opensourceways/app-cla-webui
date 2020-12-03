@@ -57,7 +57,6 @@ const routes = [
             },
             {
                 path: '/bind-cla',
-                name: 'ConfigCla',
                 component: () => import('../views/ConfigCla.vue'),
                 children: [
                     {
