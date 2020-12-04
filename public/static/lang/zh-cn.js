@@ -136,6 +136,8 @@ module.exports = {
         active:'已激活',
         no_data:'暂无数据',
         manager_email_same_with_admin:'不能添加超级管理员为员工管理员',
+        select_community:'请选择要管理的社区',
+        select_placeholder:'请选择',
     },
     index:{
         org_login: '开源社区管理员',

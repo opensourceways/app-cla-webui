@@ -2,19 +2,19 @@
     <el-row id="configTwo">
         <div class="itemBox">
             <div class="stepTitle">
-                ② Paste a link of a CLA file
+                ② Paste a url of a CLA file
                 <el-tooltip class="item" effect="light"
-                            content="Paste a link to the original data of a CLA in the repository"
+                            content="Paste a url to the original data of a CLA in the repository"
                             placement="right">
                     <svg-icon icon-class="bangzhu"></svg-icon>
                 </el-tooltip>
             </div>
             <div>
                 <div class="margin-top-1rem">
-                    Individual CLA Link
+                    Individual CLA Url
                 </div>
                 <div class="margin-top-1rem">
-                    You need to paste here a link to the original data from the gitee repository, which is the cla
+                    You need to paste here a url to the original data from the gitee repository, which is the cla
                     protocol,
                     applied to individual signatures
                 </div>
@@ -50,14 +50,14 @@
             </div>
             <div class="margin-top-2rem">
                 <div class="margin-top-1rem">
-                    If you need your community support business to sign up for CLA, please complete the following
+                    If you need your community support corporation to sign up for CLA, please complete the following
                     information. If not, please ignore it
                 </div>
                 <div class="margin-top-1rem">
-                    Corporation CLA Link
+                    Corporation CLA Url
                 </div>
                 <div class="margin-top-1rem">
-                    You need to paste here a link to the original data from the gitee repository, which is the cla
+                    You need to paste here a url to the original data from the gitee repository, which is the cla
                     protocol,
                     applied to corporation signatures
                 </div>
@@ -91,6 +91,11 @@
                     </el-row>
                     <div class="margin-top-1rem">
                         Upload Signature File
+                    </div>
+                    <div class="margin-top-1rem">
+                        You need to upload a PDF file that the community administrator has signed. If you don't have the
+                        original file, click
+                        <span @click="downloadFile" class="downloadText">download</span>
                     </div>
                     <div class="margin-top-1rem">
                         <div>
@@ -180,6 +185,9 @@
         }
         ,
         methods: {
+            downloadFile(){
+                
+            },
             changeIndividualLanguage(value) {
                 this.$store.commit('setIndividualLanguage', value)
             },
@@ -257,6 +265,12 @@
     #configTwo {
         .signatureName {
             font-size: .8rem;
+        }
+
+        .downloadText {
+            text-decoration: underline;
+            cursor: pointer;
+            color: #409EFF;
         }
 
         .inputFile {

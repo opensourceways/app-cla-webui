@@ -71,7 +71,66 @@
                     </el-table>
                 </div>
             </el-tab-pane>
-            <el-tab-pane label="CLA" name="second" style="margin-top: 1rem">
+            <el-tab-pane label="Individual CLA" name="second" style="margin-top: 1rem">
+                <div class="tableStyle">
+                    <el-table
+                            :empty-text="$t('corp.no_data')"
+                            :data="claData"
+                            align="center"
+                            style="width: 100%;">
+                        <el-table-column
+                                prop="corporation_name"
+                                label="CorporationName">
+                        </el-table-column>
+                        <el-table-column
+                                prop="admin_name"
+                                label="AdminName">
+                        </el-table-column>
+                        <el-table-column
+                                prop="admin_email"
+                                label="Email">
+                        </el-table-column>
+
+                        <el-table-column
+                                label="PDF">
+                            <template slot-scope="scope">
+                                <el-popover
+                                        width="80"
+                                        trigger="hover"
+                                        placement="right">
+
+                                    <div class="menuBT">
+                                        <el-button @click="uploadClaFile(scope.row)" style="margin-left: 10px" type=""
+                                                   size="mini">upload
+                                        </el-button>
+                                        <el-button @click="downloadClaFile(scope.row)" type="" size="mini">download
+                                        </el-button>
+                                        <!--<el-button @click="previewClaFile(scope.row)" type="" size="mini">preview</el-button>-->
+                                    </div>
+
+                                    <svg-icon slot="reference" class="pointer" icon-class="pdf" @click=""/>
+
+                                </el-popover>
+                            </template>
+                        </el-table-column>
+
+                        <el-table-column
+                                align="center">
+
+                            <template slot-scope="scope">
+                                <el-button :disabled="scope.row.administrator_enabled" style="margin-left: 1rem"
+                                           type="primary"
+                                           size="mini"
+                                           @click="createRoot(scope.row.admin_email)">Create Administrator
+                                </el-button>
+
+                            </template>
+                        </el-table-column>
+
+                    </el-table>
+                </div>
+            </el-tab-pane>
+            <el-tab-pane label="Corporation CLA" name="third" style="margin-top: 1rem">
                 <div class="tableStyle">
                     <el-table
                             :empty-text="$t('corp.no_data')"

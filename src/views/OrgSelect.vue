@@ -1,20 +1,20 @@
 <template>
-    <el-row style="height: 100%">
+    <el-row id="orgSelect" style="height: 100%">
         <el-col align="right" class="formBox">
             <div class="formBack_Box">
                 <div class="formBack">
                     <el-row class="marginTop">
                         <el-col>
-                            <span>Please select the organization you want to manage</span>
+                            <span>{{$t('corp.select_community')}}</span>
                         </el-col>
                     </el-row>
-                    <el-row class="marginTop">
+                    <el-row class="marginTop margin-bottom">
                         <el-col>
                             <el-select value="" v-model="orgValue"
                                        clearable=""
                                        filterable=""
-                                       style="width: 15rem"
-                                       placeholder="select"
+                                       class="select"
+                                       :placeholder="$t('corp.select_placeholder')"
                                        @change="changeOrg">
                                 <el-option
                                         v-for="item in orgData"
@@ -26,10 +26,14 @@
                             </el-select>
                         </el-col>
                     </el-row>
-                    <el-row class="marginTop">
-                        <el-col>
-                            <el-button style="width: 15rem" type="primary" size="medium" @click="submit">SUBMIT
-                            </el-button>
+                    <el-row class="marginTop buttonRow">
+                        <el-col align="center">
+                            <div class="buttonBox">
+                                <el-button class="button" type="primary" size="medium" @click="submit">
+                                    {{$t('corp.submit')}}
+                                </el-button>
+                            </div>
+
                         </el-col>
                     </el-row>
                 </div>
@@ -53,10 +57,9 @@
                         } else {
                             data.push({value: index, label: item.org_id})
                         }
-                    })
+                    });
                     this.orgValue = 0;
                 }
-
                 return data
             },
         },
@@ -66,14 +69,14 @@
             }
         },
         methods: {
-            ...mapActions(['setLoginInfoAct','setCorpTokenAct']),
+            ...mapActions(['setLoginInfoAct', 'setCorpTokenAct']),
             changeOrg(value) {
             },
             submit() {
                 let data = JSON.parse(JSON.stringify(this.$store.state.loginInfo))
                 Object.assign(data, {orgValue: this.orgValue})
                 this.setCorpTokenAct(data.userInfo[this.orgValue].token)
-                this.setLoginInfoAct(data)
+                this.setLoginInfoAct(data);
                 if (data.userInfo[this.orgValue].role === 'admin') {
                     this.$router.push('/rootManager')
                 } else {
@@ -84,31 +87,84 @@
     }
 </script>
 
-<style scoped lang="less">
-    .formBack_Box {
+<style lang="less">
+    .el-select .el-input.is-focus .el-input__inner {
+        border-color: #319E55
+    }
+
+    .el-select .el-input__inner:focus {
+        border-color: #319E55
+    }
+
+    .el-input--suffix .el-input__inner {
+        padding-right: 30px;
+        height: 3rem;
         width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
+        border-radius: 1.5rem;
     }
 
-    .formBack {
-        width: 18rem;
-        box-shadow: 0 0 20px 10px #F3F3F3;
-        padding: 3rem;
-        background-color: white;
-        border-radius: 2rem;
+    #orgSelect {
+        .select {
+            width: 100%;
+        }
 
+        .buttonRow {
+            position: relative;
+        }
+
+        .buttonBox {
+            position: absolute;
+            left: 50%;
+        }
+
+        .button {
+            position: relative;
+            left: -50%;
+            top: -2rem;
+            width: 15rem;
+            height: 4rem;
+            border-radius: 2rem;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            background: linear-gradient(to right, #97DB30, #319E55);
+        }
+
+        .button:focus {
+            outline: none;
+        }
+
+        .formBack_Box {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+        }
+
+        .formBack {
+            width: 18rem;
+            box-shadow: 0 0 20px 10px #F3F3F3;
+            padding: 2rem 2rem 0 2rem;
+            background-color: white;
+            border-radius: 2rem;
+
+        }
+
+        .formBox {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .marginTop {
+            margin-top: 2rem;
+        }
+
+        .margin-bottom {
+            margin-bottom: 6rem;
+        }
     }
 
-    .formBox {
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-    }
-
-    .marginTop {
-        margin-top: 2rem;
-    }
 </style>

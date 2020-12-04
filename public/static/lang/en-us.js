@@ -136,6 +136,8 @@ module.exports = {
         active:'active',
         no_data:'No data',
         manager_email_same_with_admin:'Administrator cannot be added as employee manager',
+        select_community:'Please select the community you want to manage',
+        select_placeholder:'select',
     },
     index:{
        org_login: 'Opensource Community Manager',
