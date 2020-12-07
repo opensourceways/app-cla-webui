@@ -98,6 +98,8 @@ module.exports = {
         select_corp_language:'Please select the language to apply to the cla signed by the corporation',
         authorized_email:'Please authorize an email for your organization or repository to communicate with the signer',
         upload_signature_file:'Please upload a PDF file with the signature of the community',
+        not_upload_file:'No file has been uploaded. Please upload and try again',
+        no_file_can_download:'No files available',
     },
     header:{
         home:'Home',

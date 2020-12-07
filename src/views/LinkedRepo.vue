@@ -442,7 +442,10 @@
                 // this.previewOriginalDialogVisible = true
             },
             downloadEmptySignature(row) {
-
+                this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: this.$t('tips.no_file_can_download'),
+                })
             },
 
             /*======================OrgSignature======================================*/
@@ -508,12 +511,10 @@
                 }
                 return array
             },
-
-
             showPdfFile(data) {
                 PDFJS.GlobalWorkerOptions.workerSrc = '../until/pdf/pdf.worker.js';
                 var fileContent = this.converData(data);
-                this.previewOriginalDialogVisible = true
+                this.previewOriginalDialogVisible = true;
                 // $('#container').show();
                 // $('#pop').empty();
                 let pop = document.getElementById('pop');
@@ -550,27 +551,34 @@
                 http({
                     url: `${url.downloadSignature}/${row.id}`,
                 }).then(res => {
-                    let URL = this.dataURLtoBlob(res.data.data.pdf);
-                    var reader = new FileReader();
-                    reader.readAsDataURL(URL);
-                    reader.onload = function (e) {
-                        if (window.navigator.msSaveOrOpenBlob) {
-                            var bstr = atob(e.target.result.split(",")[1]);
-                            var n = bstr.length;
-                            var u8arr = new Uint8Array(n);
-                            while (n--) {
-                                u8arr[n] = bstr.charCodeAt(n);
+                    if (res.data.data.pdf) {
+                        let URL = this.dataURLtoBlob(res.data.data.pdf);
+                        var reader = new FileReader();
+                        reader.readAsDataURL(URL);
+                        reader.onload = function (e) {
+                            if (window.navigator.msSaveOrOpenBlob) {
+                                var bstr = atob(e.target.result.split(",")[1]);
+                                var n = bstr.length;
+                                var u8arr = new Uint8Array(n);
+                                while (n--) {
+                                    u8arr[n] = bstr.charCodeAt(n);
+                                }
+                                var blob = new Blob([u8arr]);
+                                window.navigator.msSaveOrOpenBlob(blob, 'Signature.pdf');
+                            } else {
+                                const a = document.createElement('a');
+                                a.download = 'Signature.pdf';
+                                a.href = e.target.result;
+                                document.body.appendChild(a)
+                                a.click();
+                                document.body.removeChild(a)
                             }
-                            var blob = new Blob([u8arr]);
-                            window.navigator.msSaveOrOpenBlob(blob, 'Signature.pdf');
-                        } else {
-                            const a = document.createElement('a');
-                            a.download = 'Signature.pdf';
-                            a.href = e.target.result;
-                            document.body.appendChild(a)
-                            a.click();
-                            document.body.removeChild(a)
                         }
+                    }else{
+                        this.$store.commit('errorCodeSet', {
+                            dialogVisible: true,
+                            dialogMessage: this.$t('tips.not_upload_file'),
+                        })
                     }
                 }).catch(err => {
                 })

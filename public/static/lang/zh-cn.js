@@ -98,6 +98,8 @@ module.exports = {
         select_corp_language:'请选择应用于企业签署的CLA的语言',
         authorized_email:'请为组织或仓库授权一个邮箱用于与签署者通讯',
         upload_signature_file:'请上传代表社区的签名的PDF文件',
+        not_upload_file:'暂未上传文件，请上传后再试',
+        no_file_can_download:'暂无可用文件',
     },
     header:{
         home:'首页',

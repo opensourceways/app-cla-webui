@@ -38,12 +38,12 @@
                 this.$store.commit('setSignReLogin', {
                     dialogVisible: false,
                     dialogMessage: '',
-                })
+                });
 
                 let date = new Date();
                 date.setTime(date.getTime() - 10000);
                 document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
-                let repoInfo = this.$store.state.repoInfo
+                let repoInfo = this.$store.state.repoInfo;
                 let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`
                 let path = '';
                 if (sessionStorage.getItem('orgAddress')) {
