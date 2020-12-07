@@ -197,6 +197,8 @@
                 checkCLAClass: {
                     height: '',
                 },
+                sign_user: '',
+                sign_email: '',
             }
         },
         methods: {
@@ -293,7 +295,7 @@
             sendCode() {
                 let reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
                 let email = this.myForm.email;
-                let myHttp = ''
+                let myHttp = '';
                 if (this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee') {
                     myHttp = http
                 } else {
@@ -393,8 +395,8 @@
                     }
                 }
                 if (this.loginType !== 'corporation') {
-                    this.getEmail(this.platform_token, this.refresh_token)
-                    this.getUserInfo(this.platform_token)
+                    // this.getEmail(this.platform_token, this.refresh_token)
+                    this.getUserInfo()
                 }
             },
             getEmail(access_token, refresh_token) {
@@ -434,7 +436,7 @@
             getCookieData(resolve) {
                 if (document.cookie) {
                     let cookieArr = document.cookie.split(';');
-                    let access_token, refresh_token, platform_token, _mark = '';
+                    let access_token, refresh_token, platform_token, _mark, error_code = '';
                     cookieArr.forEach((item, index) => {
                         let arr = item.split('=');
                         let name = arr[0].trim();
@@ -447,9 +449,26 @@
                             platform_token = value;
                         } else if (name === 'access_token') {
                             access_token = value;
+                        } else if (name === 'sign_user') {
+                            this.sign_user = value;
+                        } else if (name === 'sign_email') {
+                            this.sign_email = value;
+                        } else if (name === 'error_code') {
+                            error_code = value;
                         }
                         this.$cookie.remove(name, {path: '/'});
                     });
+                    if (error_code === 'unauthorized') {
+                        this.$store.commit('setSignReLogin', {
+                            dialogVisible: true,
+                            dialogMessage: this.$t('tips.not_authorize_email'),
+                        });
+                    } else if (error_code === 'system_error') {
+                        this.$store.commit('setSignReLogin', {
+                            dialogVisible: true,
+                            dialogMessage: this.$t('tips.not_commit_email'),
+                        });
+                    }
                     let data = {access_token, refresh_token, platform_token, resolve};
                     this.$store.commit('setSignToken', data);
                 } else {
@@ -681,25 +700,30 @@
 
             },
 
-            getUserInfo(platform_token) {
-                let obj = {access_token: platform_token};
-                this.$axios({
-                    url: url.getUserInfo,
-                    params: obj,
-                }).then(res => {
-                    this.myForm.name = res.data.login
-                    for (let item of this.fields) {
-                        if (item.type === 'name') {
-                            Object.assign(this.ruleForm, {[item.id]: this.myForm.name})
+            getUserInfo() {
+                this.myForm.name = this.sign_user;
+                this.myForm.email = this.sign_email;
+                let setName, setEmail = false;
+                for (let item of this.fields) {
+                    if (item.type === 'name') {
+                        Object.assign(this.ruleForm, {[item.id]: this.myForm.name});
+                        setName = true;
+                        if (setName && setEmail) {
                             break;
                         }
                     }
-                }).catch(err => {
-                })
+                    if (item.type === 'email') {
+                        Object.assign(this.ruleForm, {[item.id]: this.myForm.email});
+                        setEmail = true;
+                        if (setName && setEmail) {
+                            break;
+                        }
+                    }
+                }
             },
             setClaText(key) {
-                let form = {}
-                let rules = {}
+                let form = {};
+                let rules = {};
                 document.getElementById('claBox').innerHTML = this.signPageData[key].text;
                 for (let i = 0; i < this.signPageData[key].fields.length; i++) {
                     for (let j = i + 1; j < this.signPageData[key].fields.length; j++) {
