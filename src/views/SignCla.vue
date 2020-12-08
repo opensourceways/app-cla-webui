@@ -456,7 +456,7 @@
                         } else if (name === 'error_code') {
                             error_code = value;
                         }
-                        // this.$cookie.remove(name, {path: '/'});
+                        this.$cookie.remove(name, {path: '/'});
                     });
                     if (error_code === 'unauthorized') {
                         this.$store.commit('setSignReLogin', {
