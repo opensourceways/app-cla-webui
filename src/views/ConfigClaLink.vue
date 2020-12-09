@@ -220,13 +220,13 @@
                 };
             },
             toConfigOrg() {
-                this.$router.push('/config-org')
+                this.$router.replace('/config-org')
             },
             toConfigFields() {
                 if (this.cla_link_individual && this.individualClaLanguageValue) {
                     if (this.cla_link_corporation && this.corpClaLanguageValue && this.$store.state.corpFD
                         || !(this.cla_link_corporation || this.corpClaLanguageValue || this.$store.state.corpFD)) {
-                        this.$router.push('/config-fields')
+                        this.$router.replace('/config-fields')
                     } else if (this.cla_link_corporation) {
                         if (this.corpClaLanguageValue) {
                             this.$store.commit('errorCodeSet', {

@@ -113,23 +113,25 @@
                     return Number(this.$store.state.repositoryValue)
                 }
             },
-            org_alias() {
-                return this.$store.state.orgAlias
+            org_alias: {
+                get() {
+                    return this.$store.state.orgAlias;
+                },
+                set(value) {
+                    this.$store.commit('setOrgAlias', value)
+                },
             },
         },
         data() {
             return {
                 org_id: '',
-                org: '',
+                org: this.$store.state.chooseOrg,
             }
         },
         methods: {
             toConfigClaLink() {
                 if (this.org && this.org_alias) {
-                    this.$store.commit('setChooseOrg', this.orgOptions[this.orgValue]);
-                    this.$store.commit('setChooseRepo', this.repositoryOptions[this.repositoryValue]);
-                    this.$store.commit('setOrgAlias', this.org_alias);
-                    this.$router.push('/config-cla-link')
+                    this.$router.replace('/config-cla-link')
                 } else {
                     this.$store.commit('errorCodeSet', {
                         dialogVisible: true,
@@ -148,18 +150,31 @@
                 }
             },
             changeOrg(value) {
+                this.$store.commit('setOrgValue', value);
+                this.$store.commit('setRepositoryValue', undefined);
+                this.$store.commit('setRepositoryChoose', false);
+                this.$store.commit('setRepositoryOptions', undefined);
                 if (value === '') {
+                    this.$store.commit('setChooseOrg', '');
                     this.org = '';
                     this.org_id = '';
+                    this.$store.commit('setOrgChoose', false);
                 } else {
+                    this.$store.commit('setChooseOrg', this.orgOptions[value].label);
                     this.org = this.orgOptions[value].label;
                     this.org_id = this.orgOptions[value].id;
+                    this.$store.commit('setOrgChoose', true);
                     this.getRepositoriesOfOrg(this.orgOptions[value].label, this.orgOptions[value].id)
                 }
-
             },
             changeRepository(value) {
-
+                this.$store.commit('setRepositoryValue', value);
+                this.$store.commit('setChooseRepo', this.repositoryOptions[value].label);
+                if (value !== '') {
+                    this.$store.commit('setRepositoryChoose', true)
+                } else {
+                    this.$store.commit('setRepositoryChoose', false)
+                }
             },
             getRepositoriesOfOrg(org, org_id) {
                 let obj = {access_token: this.$store.state.platform_token, org: org, page: 1, per_page: 100};
@@ -178,7 +193,7 @@
                             id: item.id
                         });
                     });
-                    this.repositoryOptions = repositoryOptions;
+                    this.$store.commit('setRepositoryOptions', repositoryOptions)
                 }).catch(err => {
                 })
             },
@@ -193,12 +208,38 @@
                         res.data.forEach((item, index) => {
                             orgOptions.push({value: index, label: item.login, id: item.id});
                         });
-                        this.orgOptions = orgOptions;
+                        this.$store.commit('setOrgOption', orgOptions)
                     }
                 }).catch(err => {
 
                 })
             },
+            init() {
+                this.$store.commit('setOrgOption', []);
+                this.$store.commit('setOrgValue', '');
+                this.$store.commit('setOrgChoose', '');
+                this.$store.commit('setRepositoryOptions', []);
+                this.$store.commit('setRepositoryChoose', '');
+                this.$store.commit('setRepositoryValue', '');
+                this.$store.commit('setOrgAlias', '');
+                sessionStorage.removeItem('orgOptions');
+                sessionStorage.removeItem('orgValue');
+                sessionStorage.removeItem('orgChoose');
+                sessionStorage.removeItem('orgAlias');
+                sessionStorage.removeItem('repositoryOptions');
+                sessionStorage.removeItem('repositoryChoose');
+                sessionStorage.removeItem('repositoryValue');
+            },
+        },
+        created() {
+            this.getOrgsInfo();
+        },
+        beforeRouteEnter(to,from,next){
+          next(vm=>{
+              if (from.path === '/'||from.path === '/linkedRepo') {
+                  vm.init();
+              }
+          })
         },
     }
 </script>
