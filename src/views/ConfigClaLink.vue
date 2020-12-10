@@ -175,12 +175,12 @@
         ,
         methods: {
             init() {
-                // this.$store.commit('setIndividualLanguage', '');
-                // this.$store.commit('setCorpLanguage', '');
-                // this.$store.commit('setClaLinkIndividual', '');
-                // this.$store.commit('setClaLinkCorp', '');
-                // this.$store.commit('setCorpFDName', '');
-                // this.$store.commit('setCorpFD', '');
+                this.$store.commit('setIndividualLanguage', '');
+                this.$store.commit('setCorpLanguage', '');
+                this.$store.commit('setClaLinkIndividual', '');
+                this.$store.commit('setClaLinkCorp', '');
+                this.$store.commit('setCorpFDName', '');
+                this.$store.commit('setCorpFD', '');
                 sessionStorage.removeItem('individualLanguage');
                 sessionStorage.removeItem('corpLanguage');
                 sessionStorage.removeItem('claLinkIndividual');
