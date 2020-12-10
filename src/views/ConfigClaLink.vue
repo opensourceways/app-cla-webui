@@ -158,24 +158,13 @@
                 set(value) {
                     this.$store.commit('setCorpLanguage', value)
                 }
-            }
-            ,
-            // corp_pdf_name() {
-            //     console.log( 'corpFD',this.$store.state.corpFD);
-            //     if (this.$store.state.corpFD) {
-            //         console.log('files',this.$store.state.corpFD.get('files'));
-            //         return this.$store.state.corpFD.get('files').name;
-            //     }
-            //     return this.$store.state.corpFD
-            // },
+            },
             corpReLoginMsg() {
                 return this.$store.state.dialogMessage
-            }
-            ,
+            },
             corpReTryDialogVisible() {
                 return this.$store.state.reTryDialogVisible
-            }
-            ,
+            },
         },
         data() {
             return {
@@ -185,8 +174,20 @@
         }
         ,
         methods: {
-            downloadFile(){
-                
+            init() {
+                this.$store.commit('setIndividualLanguage', '');
+                this.$store.commit('setCorpLanguage', '');
+                this.$store.commit('setClaLinkIndividual', '');
+                this.$store.commit('setClaLinkCorp', '');
+                this.$store.commit('setCorpFDName', '');
+                sessionStorage.removeItem('individualLanguage');
+                sessionStorage.removeItem('corpLanguage');
+                sessionStorage.removeItem('claLinkIndividual');
+                sessionStorage.removeItem('claLinkCorp');
+                sessionStorage.removeItem('corpFDName');
+            },
+            downloadFile() {
+
             },
             changeIndividualLanguage(value) {
                 this.$store.commit('setIndividualLanguage', value)
@@ -212,7 +213,7 @@
                         return false
                     }
                 }
-                this.$store.commit('setCorpFDName', formData.get('files').name)
+                this.$store.commit('setCorpFDName', formData.get('files').name);
                 let reader = new FileReader();
                 reader.readAsDataURL(formData.get('files'));
                 reader.onload = () => {
@@ -258,6 +259,13 @@
                     });
                 }
             },
+        },
+        beforeRouteEnter(to, from, next) {
+            next(vm => {
+                if (from.path === '/') {
+                    vm.init();
+                }
+            })
         },
     }
 </script>
