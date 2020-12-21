@@ -42,4 +42,3 @@ export const corporationPdf = '/v1/corporation-pdf';                            
 export const resend_pdf = '/v1/corporation-signing';                                //重发企业签名pdf      方式post  参数：/link_id/email
 export const getBlankSignature = 'v1/org-signature/blank';                          //下载空白签名页       方式get  参数：/:language
 
-
