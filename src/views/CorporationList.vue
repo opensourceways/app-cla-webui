@@ -38,9 +38,9 @@
                                     <div class="menuBT">
                                         <el-button @click="uploadClaFile(scope.row)" size="mini">upload
                                         </el-button>
-                                        <el-button @click="downloadClaFile(scope.row)" size="mini">download
+                                        <el-button v-if="scope.row.pdf_uploaded" @click="downloadClaFile(scope.row)" size="mini">download
                                         </el-button>
-                                        <el-button @click="previewClaFile(scope.row)" type="" size="mini">preview
+                                        <el-button v-if="scope.row.pdf_uploaded" @click="previewClaFile(scope.row)" type="" size="mini">preview
                                         </el-button>
                                     </div>
 
@@ -59,7 +59,7 @@
                                            @click="createRoot(scope.row.admin_email)">Create Administrator
                                 </el-button>
                                 <el-tooltip effect="dark" :content="$t('org.resend_tip')" placement="top">
-                                    <el-button type="primary"
+                                    <el-button :disabled="scope.row.pdf_uploaded" type="primary"
                                                size="mini"
                                                @click="openResendPdf(scope.row.admin_email)">Resend Email
                                     </el-button>
@@ -135,12 +135,9 @@
                                         placement="right">
 
                                     <div class="menuBT">
-                                        <el-button @click="uploadOrgSignature(scope.row)"
-                                                   type=""
-                                                   size="mini">upload
-                                        </el-button>
-                                        <!--<el-button @click="downloadOrgSignature(scope.row)" type="" size="mini">download</el-button>-->
-                                        <!--<el-button @click="previewOrgSignature(scope.row)" type="" size="mini">preview</el-button>-->
+                                        <!--<el-button @click="uploadOrgSignature(scope.row)" size="mini">upload</el-button>-->
+                                        <el-button @click="downloadOrgSignature(scope.row)" type="" size="mini">download</el-button>
+                                        <el-button @click="previewOrgSignature(scope.row)" type="" size="mini">preview</el-button>
                                     </div>
 
                                     <svg-icon slot="reference" class="pointer" icon-class="pdf" @click=""/>
@@ -302,40 +299,40 @@
             previewOrgSignature(row) {
             },
             downloadOrgSignature(row) {
-                http({
-                    url: `${url.downloadSignature}/${row.id}`,
-                }).then(res => {
-                    if (res.data.data.pdf) {
-                        let URL = this.dataURLtoBlob(res.data.data.pdf);
-                        var reader = new FileReader();
-                        reader.readAsDataURL(URL);
-                        reader.onload = function (e) {
-                            if (window.navigator.msSaveOrOpenBlob) {
-                                var bstr = atob(e.target.result.split(",")[1]);
-                                var n = bstr.length;
-                                var u8arr = new Uint8Array(n);
-                                while (n--) {
-                                    u8arr[n] = bstr.charCodeAt(n);
-                                }
-                                var blob = new Blob([u8arr]);
-                                window.navigator.msSaveOrOpenBlob(blob, `${row.language}_signature.pdf`);
-                            } else {
-                                const a = document.createElement('a');
-                                a.download = `${row.language}_signature.pdf`;
-                                a.href = e.target.result;
-                                document.body.appendChild(a);
-                                a.click();
-                                document.body.removeChild(a)
-                            }
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.not_upload_file'),
-                        })
-                    }
-                }).catch(err => {
-                })
+                // http({
+                //     url: `${url.downloadSignature}/${row.id}`,
+                // }).then(res => {
+                //     if (res.data.data.pdf) {
+                //         let URL = this.dataURLtoBlob(res.data.data.pdf);
+                //         var reader = new FileReader();
+                //         reader.readAsDataURL(URL);
+                //         reader.onload = function (e) {
+                //             if (window.navigator.msSaveOrOpenBlob) {
+                //                 var bstr = atob(e.target.result.split(",")[1]);
+                //                 var n = bstr.length;
+                //                 var u8arr = new Uint8Array(n);
+                //                 while (n--) {
+                //                     u8arr[n] = bstr.charCodeAt(n);
+                //                 }
+                //                 var blob = new Blob([u8arr]);
+                //                 window.navigator.msSaveOrOpenBlob(blob, `${row.language}_signature.pdf`);
+                //             } else {
+                //                 const a = document.createElement('a');
+                //                 a.download = `${row.language}_signature.pdf`;
+                //                 a.href = e.target.result;
+                //                 document.body.appendChild(a);
+                //                 a.click();
+                //                 document.body.removeChild(a)
+                //             }
+                //         }
+                //     } else {
+                //         this.$store.commit('errorCodeSet', {
+                //             dialogVisible: true,
+                //             dialogMessage: this.$t('tips.not_upload_file'),
+                //         })
+                //     }
+                // }).catch(err => {
+                // })
             },
             converData(data) {
                 // data = data.replace(/[\n\r]/g, '');
