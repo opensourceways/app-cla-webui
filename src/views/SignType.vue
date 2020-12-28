@@ -887,11 +887,7 @@
                 var bIsAndroid = sUserAgent.match(/android/i) === "android";
                 var bIsCE = sUserAgent.match(/windows ce/i) === "windows ce";
                 var bIsWM = sUserAgent.match(/windows mobile/i) === "windows mobile";
-                if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
-                    this.isMobile = true;
-                } else {
-                    this.isMobile = false;
-                }
+                this.isMobile = bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM;
             },
             toCorpLogin() {
                 this.$store.commit('setLoginType', 'corporationManager');
