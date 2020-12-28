@@ -137,15 +137,6 @@
                 set(value) {
                     this.$store.commit('setClaLinkIndividual', value)
                 },
-                set(value) {
-                    this.$store.commit('setCorpLanguage', value)
-                }
-            },
-            corpReLoginMsg() {
-                return this.$store.state.dialogMessage
-            },
-            corpReTryDialogVisible() {
-                return this.$store.state.reTryDialogVisible
             },
             cla_link_corporation: {
                 get() {
@@ -181,7 +172,7 @@
         data() {
             return {
                 corp_pdf_name: '',
-                languageOptions: [{value: 'English', label: 'English'}, {value: '中文', label: '中文'}],
+                languageOptions: [{value: 'english', label: 'English'}, {value: 'chinese', label: '中文'}],
             }
         }
         ,
@@ -202,25 +193,15 @@
             },
             downloadFile() {
                 if (this.corpClaLanguageValue) {
-                    let language = '';
-                    switch (this.$store.state.corpLanguage) {
-                        case 'English':
-                            language = 'English';
-                            break;
-                        case '中文':
-                            language = 'Chinese';
-                            break;
-                    }
                     http({
-                        url: `${url.getBlankSignature}/${language}`,
+                        url: `${url.getBlankSignature}/${this.$store.state.corpLanguage}`,
                         responseType:"blob",
                     }).then(res => {
                         if (res.data) {
                             let time = until.getNowDateToTime();
-                            download((new Blob([res.data])), `${language}_blank_signature${time}.pdf`, 'application/pdf');
+                            download((new Blob([res.data])), `${this.$store.state.corpLanguage}_blank_signature${time}.pdf`, 'application/pdf');
                         }
                     }).catch(err => {
-
                     })
                 }else {
                     this.$message.closeAll();

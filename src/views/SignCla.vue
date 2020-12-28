@@ -1,8 +1,7 @@
 <template>
-    <el-row id="checkCLA" :style="checkCLAClass">
+    <el-row id="signType">
         <Header></Header>
-
-        <div id="section">
+        <div id="singCla_section">
             <el-row v-if="!isSendCode" class="content">
                 <el-col :offset="5" :span="14">
                     <p class="contentTitle"><span>{{apply_to}}</span>{{ $t('signPage.claTitle') }}</p>
@@ -83,7 +82,7 @@
 
     export default {
 
-        name: "CheckCLA",
+        name: "SignType",
         computed: {
             loginType() {
                 return this.$store.state.loginType
@@ -204,9 +203,6 @@
                     label: 'Chinese'
                 },],
                 metadataArr: [],
-                checkCLAClass: {
-                    height: '',
-                },
                 cla_lang: '',
             }
         },
@@ -221,6 +217,7 @@
                 let path = '';
                 if (sessionStorage.getItem('orgAddress')) {
                     path = `${this.signRouter}/${until.strToBase64(params)}/${sessionStorage.getItem('orgAddress')}`
+
                 } else {
                     path = `${this.signRouter}/${until.strToBase64(params)}`
                 }
@@ -460,17 +457,13 @@
                     this.languageOptions = [];
                     this.link_id = data.link_id;
                     if (localStorage.getItem('lang') === '0') {
-                        this.lang = 'English'
+                        this.lang = 'english'
                     } else if (localStorage.getItem('lang') === '1') {
-                        this.lang = '中文'
+                        this.lang = 'chinese'
                     }
                     this.signPageData.forEach((item, index) => {
                         if (item.language === this.lang) {
-                            if (this.lang === 'English') {
-                                this.cla_lang = 'English';
-                            } else if (this.lang === '中文') {
-                                this.cla_lang = 'Chinese'
-                            }
+                            this.cla_lang=item.language;
                             this.value = index;
                             this.cla_hash = item.cla_hash;
                             this.setClaText(index);
@@ -483,6 +476,7 @@
                         this.ruleForm = {};
                         this.rules = {};
                         this.fields = [];
+
                         this.$message.closeAll();
                         this.$message.error(this.$t('tips.no_lang', {language: this.lang}))
                     }
@@ -913,8 +907,8 @@
             },
             setClientHeight() {
                 this.$nextTick(() => {
-                    if (until.getClientHeight() > document.getElementById('checkCLA').offsetHeight) {
-                        document.getElementById('checkCLA').style.minHeight = until.getClientHeight() + 'px'
+                    if (until.getClientHeight() > document.getElementById('signType').offsetHeight) {
+                        document.getElementById('signType').style.minHeight = until.getClientHeight() + 'px'
                     }
                 })
             },
@@ -936,8 +930,8 @@
         }
     }
     window.onresize = () => {
-        if (until.getClientHeight() > document.getElementById('checkCLA').offsetHeight) {
-            document.getElementById("checkCLA").style.height = until.getClientHeight() + 'px'
+        if (until.getClientHeight() > document.getElementById('signType').offsetHeight) {
+            document.getElementById("signType").style.height = until.getClientHeight() + 'px'
         }
     }
 </script>
@@ -1132,7 +1126,7 @@
         font-size: .9rem;
     }
 
-    #checkCLA {
+    #signType {
         display: flex;
         flex-direction: column;
         box-sizing: border-box;
@@ -1141,7 +1135,7 @@
             border-radius: 1rem;
         }
 
-        & > #section {
+        #singCla_section {
             flex-grow: 1;
             font-family: Roboto-Light, sans-serif;
 

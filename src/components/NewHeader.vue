@@ -31,9 +31,9 @@
                                 <div v-if="loginRole==='corp'" @click="handleCommand('e')">
                                     {{$t('header.resetPwd')}}
                                 </div>
-                                <!--<div v-if="loginRole==='corp'&&role===admin" @click="handleCommand('f')">-->
-                                <!--{{$t('header.corpCla')}}-->
-                                <!--</div>-->
+                                <div v-if="loginRole==='corp'&&role==='admin'" @click="handleCommand('f')">
+                                {{$t('header.corpCla')}}
+                                </div>
                                 <div @click="handleCommand('g')">
                                     {{$t('header.loginOut')}}
                                 </div>
@@ -78,6 +78,8 @@
 </template>
 
 <script>
+    import http from '../until/http'
+    import * as url from '../until/api'
     export default {
         name: "NewHeader",
         data() {
@@ -117,16 +119,16 @@
                         this.toEmployee();
                         break;
                     case 'd':
-                        this.toCreateManager()
+                        this.toCreateManager();
                         break;
                     case 'e':
-                        this.toResetPwd()
+                        this.toResetPwd();
                         break;
                     case 'f':
-                        this.toCLA()
+                        this.toCLA();
                         break;
                     case 'g':
-                        this.loginOut()
+                        this.loginOut();
                         break;
                 }
             },
@@ -134,7 +136,6 @@
                 if (this.$route.path !== '/linkedRepo') {
                     this.$router.push('/home')
                 }
-
             },
             toManager() {
                 if (this.$route.path !== '/managerList') {
@@ -157,9 +158,57 @@
                 }
             },
             toCLA() {
-                // if (this.$route.path !== '/resetPassword') {
-                //     this.$router.push('/resetPassword')
-                // }
+                http({
+                    url: url.corporationPdf,
+                    responseType: 'blob',
+                }).then(res => {
+                    if (res && res.data) {
+                        let blob = new Blob([(res.data)], { type: 'application/pdf' });
+                        let url = window.URL.createObjectURL(blob);
+                        window.open(`../../static/pdf_source/web/viewer.html?file=${encodeURIComponent(url)}`)
+                    }
+                }).catch(err => {
+                    if (err.data && err.data.hasOwnProperty('data')) {
+                        switch (err.data.data.error_code) {
+                            case 'cla.invalid_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.invalid_token'),
+                                });
+                                break;
+                            case 'cla.missing_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.missing_token'),
+                                });
+                                break;
+                            case 'cla.unknown_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unknown_token'),
+                                });
+                                break;
+
+                            case 'cla.system_error':
+                                this.$store.commit('errorCodeSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.system_error'),
+                                });
+                                break;
+                            default :
+                                this.$store.commit('errorCodeSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unknown_error'),
+                                });
+                                break;
+                        }
+                    } else {
+                        this.$store.commit('errorCodeSet', {
+                            dialogVisible: true,
+                            dialogMessage: this.$t('tips.system_error'),
+                        })
+                    }
+                })
             },
             loginOut() {
                 sessionStorage.clear();
@@ -184,7 +233,6 @@
                     }
                 }
                 this.isActive = true;
-
             },
             clickSelect() {
                 this.isActive = !this.isActive;
@@ -215,7 +263,6 @@
                     this.showHeaderMenu = true;
                     this.loginRole = 'org';
                 }
-
             },
         },
         created() {

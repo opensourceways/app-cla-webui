@@ -38,9 +38,11 @@
                                     <div class="menuBT">
                                         <el-button @click="uploadClaFile(scope.row)" size="mini">upload
                                         </el-button>
-                                        <el-button v-if="scope.row.pdf_uploaded" @click="downloadClaFile(scope.row)" size="mini">download
+                                        <el-button v-if="scope.row.pdf_uploaded" @click="downloadClaFile(scope.row)"
+                                                   size="mini">download
                                         </el-button>
-                                        <el-button v-if="scope.row.pdf_uploaded" @click="previewClaFile(scope.row)" type="" size="mini">preview
+                                        <el-button v-if="scope.row.pdf_uploaded" @click="previewClaFile(scope.row)"
+                                                   type="" size="mini">preview
                                         </el-button>
                                     </div>
 
@@ -136,8 +138,11 @@
 
                                     <div class="menuBT">
                                         <!--<el-button @click="uploadOrgSignature(scope.row)" size="mini">upload</el-button>-->
-                                        <el-button @click="downloadOrgSignature(scope.row)" type="" size="mini">download</el-button>
-                                        <el-button @click="previewOrgSignature(scope.row)" type="" size="mini">preview</el-button>
+                                        <el-button @click="downloadOrgSignature(scope.row)" type="" size="mini">
+                                            download
+                                        </el-button>
+                                        <el-button @click="previewOrgSignature(scope.row)" type="" size="mini">preview
+                                        </el-button>
                                     </div>
 
                                     <svg-icon slot="reference" class="pointer" icon-class="pdf" @click=""/>
@@ -240,6 +245,7 @@
     import pdf from 'vue-pdf'
     import ReLoginDialog from '../components/ReLoginDialog'
     import download from 'downloadjs'
+
     export default {
         name: "CorporationList",
         components: {
@@ -281,101 +287,77 @@
             checkUrl(url) {
                 window.open(url)
             },
-            previewEmptySignature(row) {
-
-            },
-            downloadEmptySignature(row) {
-                this.$store.commit('errorCodeSet', {
-                    dialogVisible: true,
-                    dialogMessage: this.$t('tips.no_file_can_download'),
-                })
-            },
-
-            /*======================OrgSignature======================================*/
             uploadOrgSignature(row) {
                 this.uploadUrl = `/api${url.uploadSignature}/${this.$store.state.corpItem.link_id}`;
                 this.uploadOrgDialogVisible = true
             },
             previewOrgSignature(row) {
-            },
-            downloadOrgSignature(row) {
-                // http({
-                //     url: `${url.downloadSignature}/${row.id}`,
-                // }).then(res => {
-                //     if (res.data.data.pdf) {
-                //         let URL = this.dataURLtoBlob(res.data.data.pdf);
-                //         var reader = new FileReader();
-                //         reader.readAsDataURL(URL);
-                //         reader.onload = function (e) {
-                //             if (window.navigator.msSaveOrOpenBlob) {
-                //                 var bstr = atob(e.target.result.split(",")[1]);
-                //                 var n = bstr.length;
-                //                 var u8arr = new Uint8Array(n);
-                //                 while (n--) {
-                //                     u8arr[n] = bstr.charCodeAt(n);
-                //                 }
-                //                 var blob = new Blob([u8arr]);
-                //                 window.navigator.msSaveOrOpenBlob(blob, `${row.language}_signature.pdf`);
-                //             } else {
-                //                 const a = document.createElement('a');
-                //                 a.download = `${row.language}_signature.pdf`;
-                //                 a.href = e.target.result;
-                //                 document.body.appendChild(a);
-                //                 a.click();
-                //                 document.body.removeChild(a)
-                //             }
-                //         }
-                //     } else {
-                //         this.$store.commit('errorCodeSet', {
-                //             dialogVisible: true,
-                //             dialogMessage: this.$t('tips.not_upload_file'),
-                //         })
-                //     }
-                // }).catch(err => {
-                // })
-            },
-            converData(data) {
-                // data = data.replace(/[\n\r]/g, '');
-                var raw = window.atob(data);
-                var rawLength = raw.length;
-                var array = new Uint8Array(new ArrayBuffer(rawLength));
-                for (var i = 0; i < rawLength; i++) {
-                    array[i] = raw.charCodeAt(i)
-                }
-                return array
-            },
-            showPdfFile(data) {
-                PDFJS.GlobalWorkerOptions.workerSrc = '../until/pdf/pdf.worker.js';
-                var fileContent = this.converData(data);
-                this.previewOriginalDialogVisible = true;
-                // $('#container').show();
-                // $('#pop').empty();
-                let pop = document.getElementById('pop');
-                pop.innerHTML = '';
-                PDFJS.getDocument(fileContent).promise.then(function getPdfHelloWorld(pdf) {
-                    let pages = pdf.numPages;
-                    for (var i = 1; i < pages; i++) {
-                        var id = 'page-id' + i;
-                        pop.append('<canvas :id=`${id}`></canvas>');
-                        this.showAll(url, i, id)
+                http({
+                    url: `${url.downloadSignature}/${this.$store.state.corpItem.link_id}/${row.language}`,
+                    responseType: 'blob',
+                }).then(res => {
+                    if (res && res.data) {
+                        let blob = new Blob([(res.data)], {type: 'application/pdf'});
+                        let url = window.URL.createObjectURL(blob);
+                        window.open(`../../static/pdf_source/web/viewer.html?file=${encodeURIComponent(url)}`)
+                    }
+                }).catch(err => {
+                    if (err.data && err.data.hasOwnProperty('data')) {
+                        switch (err.data.data.error_code) {
+                            case 'cla.invalid_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.invalid_token'),
+                                });
+                                break;
+                            case 'cla.missing_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.missing_token'),
+                                });
+                                break;
+                            case 'cla.unknown_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unknown_token'),
+                                });
+                                break;
+
+                            case 'cla.system_error':
+                                this.$store.commit('errorCodeSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.system_error'),
+                                });
+                                break;
+                            default :
+                                this.$store.commit('errorCodeSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unknown_error'),
+                                });
+                                break;
+                        }
+                    } else {
+                        this.$store.commit('errorCodeSet', {
+                            dialogVisible: true,
+                            dialogMessage: this.$t('tips.system_error'),
+                        })
                     }
                 })
             },
-            showAll(url, i, id) {
-                PDFJS.getDocument().then(function getPdfHelloWorld(pdf) {
-                    pdf.getPage(page).then(function getPageHelloWorld(page) {
-                        let scale = 1.0,
-                            viewport = page.getViewport(scale),
-                            canvas = document.getElementById(id),
-                            context = canvas.getContext('2d');
-                        canvas.height = viewport.height;
-                        canvas.width = viewport.width;
-                        let renderContext = {
-                            canvasContext: context,
-                            viewport: viewport
-                        };
-                        page.render(renderContext)
-                    })
+            downloadOrgSignature(row) {
+                http({
+                    url: `${url.downloadSignature}/${this.$store.state.corpItem.link_id}/${row.language}`,
+                    responseType: 'blob',
+                }).then(res => {
+                    if (res && res.data) {
+                        let time = until.getNowDateToTime();
+                        download((new Blob([res.data])), `${this.$store.state.corpItem.org_id}_${row.language}_signature${time}.pdf`, 'application/pdf');
+                    } else {
+                        this.$store.commit('errorCodeSet', {
+                            dialogVisible: true,
+                            dialogMessage: this.$t('tips.system_error'),
+                        })
+                    }
                 })
             },
             tabsHandleClick(tab, event) {
@@ -450,9 +432,11 @@
                     url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${row.admin_email}`,
                     responseType: 'blob',
                 }).then(res => {
-                    let blob = new Blob([(res.data)], { type: 'application/pdf' });
-                    let url = window.URL.createObjectURL(blob);
-                    window.open(`../../static/pdf_source/web/viewer.html?file=${encodeURIComponent(url)}`)
+                    if (res && res.data) {
+                        let blob = new Blob([(res.data)], {type: 'application/pdf'});
+                        let url = window.URL.createObjectURL(blob);
+                        window.open(`../../static/pdf_source/web/viewer.html?file=${encodeURIComponent(url)}`)
+                    }
                 }).catch(err => {
                 })
             },
