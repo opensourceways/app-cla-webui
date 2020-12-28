@@ -2,8 +2,8 @@
     <el-row>
         <el-col class="index" id="transparentDiv" :style="transparentDiv">
             <NewHeader></NewHeader>
-            <el-row id="section" :style="sectionStyle">
-                <el-col :offset="5" :span="14" >
+            <el-row id="section">
+                <el-col >
                     <el-row class="actionBox">
                         <div class="backgroundBox">
                             <img src="../assets/images/backgroundx1.png" alt="">
@@ -61,9 +61,6 @@
                 transparentDiv: {
                     height: '',
                 },
-                sectionStyle: {
-                    height: '',
-                },
             }
         },
         provide() {
@@ -100,12 +97,40 @@
     @import "../assets/font/css/Roboto-Black.css";
     @import "../assets/font/css/Roboto-Light.css";
     @import "../assets/font/css/Roboto-Regular.css";
+    @media screen and (min-width: 100px) and (max-width: 1200px) {
+        #section {
+            width: 100%;
+        }
+
+        .backgroundBox {
+            width: 66.6%;
+            left: 25%;
+            img{
+                width: 51rem;
+            }
+        }
+    }
+
+    @media screen and (min-width: 1200px) {
+        #section {
+            width: 1200px;
+            margin: auto;
+
+        }
+
+        .backgroundBox {
+            left: 280px;
+        }
+    }
+
     .index {
         display: flex;
         flex-direction: column;
+        width: 100%;
 
-        & > #section {
+         #section {
             flex-grow: 1;
+            padding: 0 1rem;
         }
         .guideBox{
             box-shadow:0 10px 20px 10px #F3F3F3;
@@ -141,13 +166,12 @@
             background-repeat: no-repeat;
             position: absolute;
             overflow: hidden;
-            top: 120px;
-            left: 230px;
+            top: 7.5rem;
 
         }
         .actionBox {
             position: relative;
-            height: 720px;
+            height: 45rem;
         }
         .title {
             height: 100%;

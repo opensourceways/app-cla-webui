@@ -36,6 +36,11 @@
             font-size: 12px;
         }
     }
+    @media screen and (min-width: 100px) and (max-width:768px) {
+        html {
+            font-size: 10px;
+        }
+    }
 
     #nav {
         padding: 30px;

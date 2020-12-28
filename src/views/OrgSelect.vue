@@ -97,7 +97,7 @@
     }
 
     .el-input--suffix .el-input__inner {
-        padding-right: 30px;
+        padding-right: 2rem;
         height: 3rem;
         width: 100%;
         border-radius: 1.5rem;

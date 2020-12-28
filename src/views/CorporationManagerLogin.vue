@@ -244,7 +244,7 @@
         }
 
         & .el-form-item:not(:last-child) {
-            margin-bottom: 28px
+            margin-bottom: 1.8rem
         }
 
         & .el-form-item:last-child {
@@ -288,9 +288,14 @@
 
     #forgetPwd {
         font-family: FZLTHJW, sans-serif;
+        font-size: 1rem;
     }
 
     #forgetPwd:hover {
         text-decoration: underline;
+
+    }
+    .el-form-item__error{
+        font-size: 0.8rem;
     }
 </style>
