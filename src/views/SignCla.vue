@@ -3,7 +3,7 @@
         <Header></Header>
         <div id="singCla_section">
             <el-row v-if="!isSendCode" class="content">
-                <el-col :offset="5" :span="14">
+                <el-col>
                     <p class="contentTitle"><span>{{apply_to}}</span>{{ $t('signPage.claTitle') }}</p>
                     <el-row class="marginTop3rem" id="claBox">
                     </el-row>
@@ -463,7 +463,7 @@
                     }
                     this.signPageData.forEach((item, index) => {
                         if (item.language === this.lang) {
-                            this.cla_lang=item.language;
+                            this.cla_lang = item.language;
                             this.value = index;
                             this.cla_hash = item.cla_hash;
                             this.setClaText(index);
@@ -941,6 +941,13 @@
     @import "../assets/font/css/Roboto-Black.css";
     @import "../assets/font/css/Roboto-Light.css";
 
+    @media screen and (min-width: 1200px) {
+        #singCla_section {
+            width: 1200px;
+            margin: auto;
+        }
+    }
+
     .signBtBox {
         display: flex;
         justify-content: center;
@@ -1138,6 +1145,7 @@
         #singCla_section {
             flex-grow: 1;
             font-family: Roboto-Light, sans-serif;
+            padding: 0 1rem;
 
             & .button {
                 font-family: Roboto-Light, sans-serif;
