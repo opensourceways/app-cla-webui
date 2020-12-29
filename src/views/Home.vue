@@ -1,11 +1,11 @@
 <template>
     <div id="home" :style="home">
         <Header></Header>
-        <el-row>
-            <el-col :offset="5" :span="14" id="section">
+        <div>
+            <div id="section">
                 <router-view></router-view>
-            </el-col>
-        </el-row>
+            </div>
+        </div>
 
         <Footer></Footer>
     </div>
@@ -33,23 +33,22 @@
                 },
             }
         },
-        provide(){
-            return{
-                setClientHeight:this.setClientHeight
+        provide() {
+            return {
+                setClientHeight: this.setClientHeight
             }
         },
         methods: {
             setClientHeight() {
                 this.$nextTick(() => {
-                    document.getElementById("home").style.minHeight='0px';
+                    document.getElementById("home").style.minHeight = '0px';
                     if (until.getClientHeight() > document.getElementById('home').offsetHeight) {
                         document.getElementById("home").style.minHeight = until.getClientHeight() + 'px'
-                    }else{
+                    } else {
                         document.getElementById("home").style.minHeight = document.getElementById('home').offsetHeight + 'px'
                     }
                 })
             },
-
 
 
         },
@@ -62,9 +61,17 @@
 </script>
 
 <style lang="less">
-    .el-table th>.cell{
+    @media screen and (min-width: 1200px) {
+        #section {
+            width: 1200px;
+            margin: auto;
+        }
+    }
+
+    .el-table th > .cell {
         word-break: keep-all;
     }
+
     #home {
         display: flex;
         flex-direction: column;
@@ -76,6 +83,7 @@
             flex-grow: 1;
             text-align: left;
             background-color: #f9f9f9;
+            padding: 0 1rem;
         }
 
         .el-dropdown-link {
