@@ -517,8 +517,6 @@
                 }).then(res => {
                     if (res.data && res.data.data.corp_clas) {
                         this.corpClaData = res.data.data.corp_clas;
-                    } else {
-
                     }
                 }).catch(err => {
                     if (err.data && err.data.hasOwnProperty('data')) {
