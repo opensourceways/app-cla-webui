@@ -125,6 +125,7 @@
             <el-tab-pane :label="$t('org.corporation_cla')" name="third" class="margin-top-1rem">
                 <div class="tableStyle">
                     <el-table
+                            v-if="corpClaData.length"
                             :empty-text="$t('corp.no_data')"
                             :data="corpClaData"
                             align="center"
@@ -152,11 +153,10 @@
                                         trigger="hover"
                                         placement="right">
                                     <div class="menuBT">
-                                        <!--<el-button @click="uploadOrgSignature(scope.row)" size="mini">upload</el-button>-->
-                                        <el-button @click="downloadOrgSignature(scope.row)" type="" size="mini">
+                                        <el-button @click="downloadOrgSignature(scope.row)" size="mini">
                                             {{$t('org.download')}}
                                         </el-button>
-                                        <el-button @click="previewOrgSignature(scope.row)" type="" size="mini">
+                                        <el-button @click="previewOrgSignature(scope.row)" size="mini">
                                             {{$t('org.preview')}}
                                         </el-button>
                                     </div>
@@ -174,7 +174,7 @@
                                     </span>
                                     <el-dropdown-menu slot="dropdown">
                                         <!--<el-dropdown-item>-->
-                                            <!--{{$t('org.modify_field')}}-->
+                                        <!--{{$t('org.modify_field')}}-->
                                         <!--</el-dropdown-item>-->
                                         <el-dropdown-item @click.native="addCorpCla(scope.row)">
                                             {{$t('org.add_cla_for_other_language')}}
@@ -185,6 +185,7 @@
                         </el-table-column>
 
                     </el-table>
+                    <el-button v-else @click="createCorpCla">{{$t('org.addCorpCla')}}</el-button>
                 </div>
             </el-tab-pane>
         </el-tabs>
@@ -281,9 +282,9 @@
             ReLoginDialog,
         },
         computed: {
-            platform(){
-              return this.$store.state.platform.toLowerCase()
-            } ,
+            platform() {
+                return this.$store.state.platform.toLowerCase()
+            },
             reLoginDialogVisible() {
                 return this.$store.state.orgReLoginDialogVisible
             },
@@ -328,6 +329,10 @@
         },
         inject: ['setClientHeight'],
         methods: {
+            createCorpCla() {
+                this.$router.push('/addCorpCla');
+                this.setCheckInfo();
+            },
             addIndividualCla(row) {
                 this.$router.push('/addIndividualCla');
                 this.setIndividualPD(row)
@@ -358,12 +363,15 @@
                 this.$router.push('/addCorpCla');
                 this.setCorpPD(row)
             },
-            setCorpPD(row) {
+            setCheckInfo() {
                 this.$store.commit('setChooseOrg', this.$store.state.corpItem.org_id);
                 this.$store.commit('setChooseRepo', this.$store.state.corpItem.repo_id);
                 this.$store.commit('setOrgAlias', this.$store.state.corpItem.org_alias);
                 this.$store.commit('setEmail', this.$store.state.corpItem.org_email);
                 this.$store.commit('setBindType', 'add-bind');
+            },
+            setCorpPD(row) {
+                this.setCheckInfo();
                 if (row.fields.length > 4) {
                     let data = [];
                     row.fields.forEach((item, index) => {
@@ -507,7 +515,7 @@
                 http({
                     url: `${url.getCla}/${link_id}`
                 }).then(res => {
-                    if (res && res.data.data.corp_clas) {
+                    if (res.data && res.data.data.corp_clas) {
                         this.corpClaData = res.data.data.corp_clas;
                     } else {
 
@@ -1059,6 +1067,7 @@
         & .button:focus {
             outline: none;
         }
+
         .cancelBt {
             width: 6rem;
             height: 2rem;
