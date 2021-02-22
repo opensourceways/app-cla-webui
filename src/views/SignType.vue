@@ -753,14 +753,13 @@
     import * as util from '../util/util'
     import * as url from '../util/api'
     import http from '../util/http'
-    import Select from '@components/Select'
+    import _cookie from 'js-cookie'
     import {mapActions} from 'vuex'
     import ReTryDialog from '../components/ReTryDialog'
     import EmailReTryDialog from '../components/EmailReTryDialog'
     export default {
         name: 'SignType',
         components: {
-            Select,
             NewHeader,
             NewFooter,
             ReTryDialog,
@@ -847,7 +846,7 @@
                         let cookieKeyValue = cookieArr[i].split('=');
                         let name = cookieKeyValue[0].trim();
                         let value = cookieKeyValue[1].trim();
-                        this.$cookie.remove(name, {path: '/'});
+                        _cookie.remove(name, {path: '/'});
                         if (name === "error_code") {
                             switch (value) {
                                 case 'auth_failed':

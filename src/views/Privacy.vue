@@ -20,6 +20,7 @@
     import Header from '../components/NewHeader'
     import * as url from '../util/api'
     import * as util from '../util/util'
+    import axios from 'axios'
 
     window.onresize = () => {
         if (util.getClientHeight() > document.getElementById('privacyBox').offsetHeight) {
@@ -50,7 +51,7 @@
                 })
             },
             getPrivacy() {
-                this.$axios({
+                axios({
                     url: '/api' + url.getPrivacy
                 }).then(res => {
                     this.privacyText = res.data;

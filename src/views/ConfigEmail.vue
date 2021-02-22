@@ -74,6 +74,7 @@
 <script>
     import * as url from '../util/api'
     import http from '../util/http'
+    import _cookie from 'js-cookie'
     import ReLoginDialog from '../components/ReLoginDialog'
     import ReTryDialog from '../components/ReTryDialog'
 
@@ -211,53 +212,6 @@
             },
             changeEmailType(value) {
             },
-            getEmailTypeArr() {
-                this.$axios({
-                    url: '/api' + url.getEmailTypeArr,
-                }).then(res => {
-                    this.emailTypeArr = res.data
-                }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
-                })
-            },
             init() {
                 this.$store.commit('setEmail', '');
                 this.$store.commit('setIsEmail', false);
@@ -279,7 +233,7 @@
                         cookieArr.forEach((item) => {
                             let arr = item.split('=');
                             let name = arr[0].trim();
-                            vm.$cookie.remove(name, {path: '/'});
+                            _cookie.remove(name, {path: '/'});
                         });
                     } else {
                         vm.init();

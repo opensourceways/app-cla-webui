@@ -168,6 +168,7 @@
     import * as util from '../util/util'
     import pdf from 'vue-pdf'
     import http from '../util/http'
+    import _cookie from 'js-cookie'
     import ReLoginDialog from '../components/ReLoginDialog'
     import ReTryDialog from '../components/ReTryDialog'
 
@@ -496,7 +497,7 @@
                         } else if (name === 'access_token') {
                             access_token = value;
                         }
-                        this.$cookie.remove(name, {path: '/'});
+                        _cookie.remove(name, {path: '/'});
                     });
                     let data = {access_token, refresh_token, platform_token, resolve};
                     this.setTokenAct(data);

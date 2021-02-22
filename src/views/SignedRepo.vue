@@ -14,6 +14,7 @@
 <script>
     import * as url from '../util/api'
     import * as util from '../util/util'
+    import axios from 'axios'
     import Header from '@components/NewHeader'
     import Footer from '@components/NewFooter'
 
@@ -63,7 +64,7 @@
             },
             changeActive(id, active) {
                 let data = {id: id, active: active}
-                this.$axios({
+                axios({
                     url: `/api${url.changeActive}`,
                     method: 'post',
                     data: data,
@@ -74,7 +75,7 @@
                 })
             },
             deleteContributor() {
-                this.$axios({
+                axios({
                     url: `/api${url.deleteCon}/${this.deleteId}`,
                     method: 'delete',
                 }).then(res => {

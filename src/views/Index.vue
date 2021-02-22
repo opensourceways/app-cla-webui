@@ -36,7 +36,6 @@
     import NewHeader from '@components/NewHeader'
     import NewFooter from '@components/NewFooter'
     import * as util from '../util/util'
-    import Select from '@components/Select'
     import {mapActions} from 'vuex'
 
     window.onresize = () => {
@@ -47,7 +46,6 @@
     export default {
         name: 'Login',
         components: {
-            Select,
             NewHeader,
             NewFooter
         },
