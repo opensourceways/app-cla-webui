@@ -219,8 +219,6 @@
 
 <style lang="less">
     @import "../assets/font/css/Roboto-Regular.css";
-    @import "../assets/font/css/FZLTHJW.css";
-
     #corpManagerLogin {
         .formBack_Box {
             width: 100%;
@@ -295,7 +293,6 @@
         }
 
         #forgetPwd {
-            font-family: FZLTHJW, sans-serif;
             font-size: 1rem;
         }
 

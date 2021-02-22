@@ -132,6 +132,7 @@
     import {mapActions} from 'vuex'
     import http from '../util/sign_http'
     import axios from '../util/_axios'
+    import cookie from 'js-cookie'
     import ReLoginDialog from '../components/ReLoginDialog'
     import ReTryDialog from '../components/ReTryDialog'
     import SignSuccessDialog from '../components/SignSuccessDialog'
@@ -531,7 +532,7 @@
                         } else if (name === 'error_code') {
                             error_code = value;
                         }
-                        this.$cookie.remove(name, {path: '/'});
+                        cookie.remove(name, {path: '/'});
                     });
                     let data = {access_token, refresh_token, platform_token, resolve};
                     this.$store.commit('setSignToken', data);

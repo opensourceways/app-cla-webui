@@ -72,8 +72,6 @@
 </script>
 <style scoped lang="less">
     @import "../assets/font/css/Roboto-Bold.css";
-    @import "../assets/font/css/Roboto-Regular.css";
-
     .loginTypeSelect {
         font-family: Roboto-Bold, sans-serif;
 

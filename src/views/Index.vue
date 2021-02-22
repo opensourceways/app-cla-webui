@@ -36,7 +36,6 @@
     import NewHeader from '@components/NewHeader'
     import NewFooter from '@components/NewFooter'
     import * as util from '../util/util'
-    import Select from '@components/Select'
     import {mapActions} from 'vuex'
 
     window.onresize = () => {
@@ -47,7 +46,6 @@
     export default {
         name: 'Login',
         components: {
-            Select,
             NewHeader,
             NewFooter
         },
@@ -85,8 +83,6 @@
 </script>
 <style lang="less">
     @import "../assets/font/css/Roboto-Bold.css";
-    @import "../assets/font/css/Roboto-Black.css";
-    @import "../assets/font/css/Roboto-Light.css";
     @import "../assets/font/css/Roboto-Regular.css";
 
     @media screen and (min-width: 100px) and (max-width: 1200px) {
