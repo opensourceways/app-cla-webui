@@ -91,7 +91,6 @@ const routes = [
             },
             {
                 path: '/addIndividualCla',
-                name: 'AddIndividualCla',
                 component: () => import('../views/AddIndividualCla.vue'),
                 children: [
                     {
@@ -107,7 +106,6 @@ const routes = [
             },
             {
                 path: '/addCorpCla',
-                name: 'AddCorpCla',
                 component: () => import('../views/AddCorpCla.vue'),
                 children: [
                     {

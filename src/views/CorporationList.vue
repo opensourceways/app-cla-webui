@@ -264,7 +264,6 @@
     import * as url from '../util/api'
     import * as util from '../util/util'
     import http from '../util/http'
-    import pdf from 'vue-pdf'
     import ReLoginDialog from '../components/ReLoginDialog'
     import ReTryDialog from '../components/ReTryDialog'
     import download from 'downloadjs'

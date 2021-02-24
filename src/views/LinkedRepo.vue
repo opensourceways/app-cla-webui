@@ -166,7 +166,6 @@
     import {mapActions} from 'vuex'
     import * as url from '../util/api'
     import * as util from '../util/util'
-    import pdf from 'vue-pdf'
     import http from '../util/http'
     import _cookie from 'js-cookie'
     import ReLoginDialog from '../components/ReLoginDialog'
@@ -175,7 +174,6 @@
     export default {
         name: "linkedRepo",
         components: {
-            pdf,
             ReLoginDialog,
             ReTryDialog
         },

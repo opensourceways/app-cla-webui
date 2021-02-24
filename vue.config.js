@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 
 function resolve(dir) {
     return path.join(__dirname, dir)
@@ -36,8 +36,8 @@ module.exports = {
     },
 
     chainWebpack: config => {
-        const svgRule = config.module.rule('svg')
-        svgRule.uses.clear()
+        const svgRule = config.module.rule('svg');
+        svgRule.uses.clear();
         svgRule
             .test(/\.svg$/)
             .include.add(path.resolve(__dirname, './src/icons'))
@@ -46,15 +46,15 @@ module.exports = {
             .loader('svg-sprite-loader')
             .options({
                 symbolId: 'icon-[name]'
-            })
-        const fileRule = config.module.rule('file')
-        fileRule.uses.clear()
+            });
+        const fileRule = config.module.rule('file');
+        fileRule.uses.clear();
         fileRule
             .test(/\.svg$/)
             .exclude.add(path.resolve(__dirname, './src/icons'))
             .end()
             .use('file-loader')
-            .loader('file-loader')
+            .loader('file-loader');
 
         config.resolve.alias
             .set('@', resolve('src'))
