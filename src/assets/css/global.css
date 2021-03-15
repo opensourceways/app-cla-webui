@@ -285,6 +285,7 @@
     color: #319E55;
     border-color: #319E55;
 }
+
 .reset_pwd_button {
     font-family: Roboto-Light, sans-serif;
     width: 15rem;
@@ -297,15 +298,39 @@
     background: linear-gradient(to right, #97DB30, #319E55);
     margin: 1rem 0;
 }
+
 .reset_pwd_button:focus {
     outline: none;
 }
-.findPwdBox{
+
+.findPwdBox {
     width: 500px;
     margin: 5rem auto 0;
     background-color: white;
     padding: 5rem 2rem 2rem;
     border-radius: 1rem;
     box-shadow: 0 0 20px 10px #F3F3F3;
+}
 
+.el-tabs--border-card > .el-tabs__header .el-tabs__item.is-active {
+    color: #319e55;
+}
+
+.el-tabs--border-card > .el-tabs__header .el-tabs__item:not(.is-disabled):hover {
+    color: #319e55;
+}
+
+.el-tabs--border-card {
+    border-radius: 1rem;
+}
+
+.el-tabs--border-card > .el-tabs__header .el-tabs__item.is-active {
+    border-top-color: #dcdfe6;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
+}
+
+.el-tabs--border-card > .el-tabs__header {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
 }

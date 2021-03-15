@@ -1,6 +1,6 @@
 <template>
     <div id="corporationList">
-        <el-tabs v-model="activeName" @tab-click="tabsHandleClick">
+        <el-tabs v-model="activeName" type="border-card" @tab-click="tabsHandleClick">
             <el-tab-pane :label="$t('org.signed_corporation')" name="first" class="margin-top-1rem">
                 <el-tabs v-model="corpActiveName" @tab-click="corpTabsHandleClick">
                     <el-tab-pane :label="$t('org.not_complete')" name="first" class="margin-top-1rem">
@@ -23,17 +23,17 @@
                                         :label="$t('org.config_cla_field_corp_default_title1')">
                                 </el-table-column>
                                 <el-table-column
-                                        min-width="15"
+                                        min-width="25"
                                         prop="admin_email"
                                         :label="$t('org.to_email')">
                                 </el-table-column>
                                 <el-table-column
-                                        min-width="15"
+                                        min-width="10"
                                         prop="cla_language"
                                         :label="$t('org.cla_language')">
                                 </el-table-column>
                                 <el-table-column
-                                        min-width="15"
+                                        min-width="10"
                                         prop="date"
                                         :label="$t('org.date')">
                                 </el-table-column>
@@ -109,22 +109,22 @@
                                         :label="$t('org.corporation_name')">
                                 </el-table-column>
                                 <el-table-column
-                                        min-width="10"
+                                        min-width="15"
                                         prop="admin_name"
                                         :label="$t('org.config_cla_field_corp_default_title1')">
                                 </el-table-column>
                                 <el-table-column
-                                        min-width="20"
+                                        min-width="25"
                                         prop="admin_email"
                                         :label="$t('org.to_email')">
                                 </el-table-column>
                                 <el-table-column
-                                        min-width="15"
+                                        min-width="10"
                                         prop="cla_language"
                                         :label="$t('org.cla_language')">
                                 </el-table-column>
                                 <el-table-column
-                                        min-width="15"
+                                        min-width="10"
                                         prop="date"
                                         :label="$t('org.date')">
                                 </el-table-column>
@@ -194,17 +194,17 @@
                                     class="tableClass"
                                     style="width: 100%;">
                                 <el-table-column
-                                        min-width="20"
+                                        min-width="25"
                                         prop="corporation_name"
                                         :label="$t('org.corporation_name')">
                                 </el-table-column>
                                 <el-table-column
-                                        min-width="10"
+                                        min-width="15"
                                         prop="admin_name"
                                         :label="$t('org.config_cla_field_corp_default_title1')">
                                 </el-table-column>
                                 <el-table-column
-                                        min-width="20"
+                                        min-width="25"
                                         prop="admin_email"
                                         :label="$t('org.to_email')">
                                 </el-table-column>
@@ -214,7 +214,7 @@
                                         :label="$t('org.cla_language')">
                                 </el-table-column>
                                 <el-table-column
-                                        min-width="15"
+                                        min-width="10"
                                         prop="date"
                                         :label="$t('org.date')">
                                 </el-table-column>
@@ -509,7 +509,6 @@
                 fileList: [],
                 uploadDialogVisible: false,
                 item: '',
-                tableData: [],
                 currentPage: 1,
                 tableTotal: 0,
             }
@@ -517,6 +516,9 @@
         inject: ['setClientHeight'],
         methods: {
             sortDate(dataArr) {
+                if (!(dataArr && dataArr.length)) {
+                    return
+                }
                 dataArr.forEach(item => {
                     let dateNum = parseInt(item.date.replace(/-/g, ''));
                     Object.assign(item, {dateNum: dateNum})
@@ -1008,18 +1010,20 @@
                 http({
                     url: `${url.getCorporationSigning}/${this.$store.state.corpItem.link_id}`,
                 }).then(resp => {
-                    this.tableData = resp.data.data;
-                    this.signedCompleted = [];
-                    this.signedNotCompleted = [];
-                    this.tableData.forEach(item => {
-                        if (item.admin_added) {
-                            this.signedCompleted.push(item)
-                        } else {
-                            this.signedNotCompleted.push(item)
-                        }
-                    })
-                    this.sortDate(this.signedCompleted)
-                    this.sortDate(this.signedNotCompleted)
+                    if (resp.data.data && resp.data.data.length) {
+                        let tableData = resp.data.data;
+                        this.signedCompleted = [];
+                        this.signedNotCompleted = [];
+                        tableData.forEach(item => {
+                            if (item.admin_added) {
+                                this.signedCompleted.push(item)
+                            } else {
+                                this.signedNotCompleted.push(item)
+                            }
+                        });
+                        this.sortDate(this.signedCompleted);
+                        this.sortDate(this.signedNotCompleted)
+                    }
                 }).catch(err => {
                     if (err.data && err.data.hasOwnProperty('data')) {
                         switch (err.data.data.error_code) {

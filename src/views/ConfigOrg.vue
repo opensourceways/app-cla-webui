@@ -58,6 +58,7 @@
     import CustomDialog from '../components/CustomDialog'
     import * as url from '../util/api'
     import _axios from '../util/_axios'
+    import platform_http from '../util/platform_http'
 
     export default {
         name: "ConfigOne",
@@ -141,13 +142,18 @@
         methods: {
             checkRepo(org, repo) {
                 let _url = '';
+                let obj = {};
+                let _http = '';
                 if (this.$store.state.platform === 'Gitee') {
-                    _url = `https://gitee.com/api/v5/repos/${org}/${repo}`
+                    _url = `https://gitee.com/api/v5/repos/${org}/${repo}`;
+                    obj = {access_token: this.$store.state.platform_token};
+                    _http = _axios;
                 } else if (this.$store.state.platform === 'Github') {
                     _url = `https://api.github.com/repos/${org}/${repo}`
+                    _http = platform_http;
                 }
-                let obj = {access_token: this.$store.state.platform_token};
-                _axios({
+                obj = {access_token: this.$store.state.platform_token};
+                _http({
                     url: _url,
                     params: obj,
                 }).then(res => {
@@ -220,7 +226,6 @@
                     this.org = this.orgOptions[value].label;
                     this.org_id = this.orgOptions[value].id;
                     this.$store.commit('setOrgChoose', true);
-                    this.getRepositoriesOfOrg(this.orgOptions[value].label, this.orgOptions[value].id)
                 }
             },
             getRepositoriesOfOrg(org, org_id) {
@@ -256,13 +261,18 @@
             },
             getOrgsInfo() {
                 let _url = '';
+                let _http = '';
+                let obj = {};
                 if (this.$store.state.platform === 'Gitee') {
-                    _url = url.getGiteeOrgsInfo
+                    _url = url.getGiteeOrgsInfo;
+                    _http = _axios;
+                    obj = {access_token: this.$store.state.platform_token, admin: true, page: 1, per_page: 100};
                 } else if (this.$store.state.platform === 'Github') {
-                    _url = url.getGithubOrgsInfo
+                    _url = url.getGithubOrgsInfo;
+                    _http = platform_http;
+                    obj = {accept: 'application/vnd.github.v3+json', page: 1, per_page: 100};
                 }
-                let obj = {access_token: this.$store.state.platform_token, admin: true, page: 1, per_page: 100};
-                _axios({
+                _http({
                     url: _url,
                     params: obj,
                 }).then(res => {

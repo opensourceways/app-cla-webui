@@ -27,7 +27,6 @@
         },
         data() {
             return {
-
             }
         },
         provide() {
@@ -62,8 +61,6 @@
             margin: auto;
         }
     }
-
-
 
     #home {
         display: flex;
