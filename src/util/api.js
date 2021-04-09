@@ -38,4 +38,6 @@ export const addCla = 'v1/cla';                                                 
 export const findPwdSendCode = 'v1/findPwdSendCode';                                //忘记密码发送验证码     方式  参数：
 export const submitVerifyCode = 'v1/submitVerifyCode';                              //忘记密码比对验证码     方式  参数：
 export const submitNewPassword = 'v1/submitNewPassword';                            //提交新密码        方式  参数：
+export const getOrg = 'v1/org-repo';                                                //获取org列表      方式get
+export const checkRepo = 'v1/org-repo';                                             //检查repo是否存在   方式get  参数   /:org/:repo
 
