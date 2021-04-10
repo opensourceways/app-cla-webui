@@ -184,7 +184,6 @@
                 language: '',
                 languageArr: LANGUAGE_ARR,
                 downloadPageVisible: false,
-                org_id: '',
                 org: this.$store.state.chooseOrg,
             }
         },
