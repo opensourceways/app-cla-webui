@@ -625,7 +625,11 @@
                     method: 'delete'
                 }).then(res => {
                     util.successMessage(this);
-                    this.getIndividualClaInfo()
+                    if (this.delete_apply === 'corporation') {
+                        this.getCorpClaInfo()
+                    }else{
+                        this.getIndividualClaInfo()
+                    }
                 }).catch(err => {
                     if (err.data && err.data.hasOwnProperty('data')) {
                         switch (err.data.data.error_code) {
@@ -645,6 +649,12 @@
                                 this.$store.commit('errorSet', {
                                     dialogVisible: true,
                                     dialogMessage: this.$t('tips.missing_token'),
+                                });
+                                break;
+                            case 'cla.unauthorized_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unauthorized_token'),
                                 });
                                 break;
                             case 'cla.unknown_token':
@@ -788,7 +798,12 @@
                                     dialogMessage: this.$t('tips.unknown_token'),
                                 });
                                 break;
-
+                            case 'cla.unauthorized_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unauthorized_token'),
+                                });
+                                break;
                             case 'cla.system_error':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -843,6 +858,12 @@
                                 this.$store.commit('errorSet', {
                                     dialogVisible: true,
                                     dialogMessage: this.$t('tips.missing_token'),
+                                });
+                                break;
+                            case 'cla.unauthorized_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unauthorized_token'),
                                 });
                                 break;
                             case 'cla.unknown_token':
@@ -928,7 +949,12 @@
                                     dialogMessage: this.$t('tips.unknown_token'),
                                 });
                                 break;
-
+                            case 'cla.unauthorized_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unauthorized_token'),
+                                });
+                                break;
                             case 'cla.system_error':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -987,7 +1013,12 @@
                                     dialogMessage: this.$t('tips.unknown_token'),
                                 });
                                 break;
-
+                            case 'cla.unauthorized_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unauthorized_token'),
+                                });
+                                break;
                             case 'cla.system_error':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -1056,6 +1087,12 @@
                                     dialogMessage: this.$t('tips.unknown_token'),
                                 });
                                 break;
+                            case 'cla.unauthorized_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unauthorized_token'),
+                                });
+                                break;
                             case 'cla.system_error':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -1111,7 +1148,12 @@
                                     dialogMessage: this.$t('tips.unknown_token'),
                                 });
                                 break;
-
+                            case 'cla.unauthorized_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unauthorized_token'),
+                                });
+                                break;
                             case 'cla.system_error':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -1171,7 +1213,12 @@
                                     dialogMessage: this.$t('tips.unknown_token'),
                                 });
                                 break;
-
+                            case 'cla.unauthorized_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unauthorized_token'),
+                                });
+                                break;
                             case 'cla.system_error':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -1234,7 +1281,12 @@
                                     dialogMessage: this.$t('tips.unknown_token'),
                                 });
                                 break;
-
+                            case 'cla.unauthorized_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unauthorized_token'),
+                                });
+                                break;
                             case 'cla.system_error':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -1303,7 +1355,12 @@
                                     dialogMessage: this.$t('tips.unknown_token'),
                                 });
                                 break;
-
+                            case 'cla.unauthorized_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unauthorized_token'),
+                                });
+                                break;
                             case 'cla.system_error':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -1429,7 +1486,12 @@
                                     dialogMessage: this.$t('tips.unknown_token'),
                                 });
                                 break;
-
+                            case 'cla.unauthorized_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unauthorized_token'),
+                                });
+                                break;
                             case 'cla.system_error':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -1567,6 +1629,12 @@
                                     dialogMessage: this.$t('tips.unknown_token'),
                                 });
                                 break;
+                            case 'cla.unauthorized_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unauthorized_token'),
+                                });
+                                break;
                             case 'cla.no_pdf_of_corp':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -1608,7 +1676,8 @@
                     method: 'delete',
                 }).then(res => {
                     util.successMessage(this);
-                    this.getCorporationInfo()
+                    this.getCorporationInfo();
+                    this.getDeletedCorpInfo()
                 }).catch(err => {
                     if (err.data && err.data.hasOwnProperty('data')) {
                         switch (err.data.data.error_code) {
@@ -1634,6 +1703,12 @@
                                 this.$store.commit('errorSet', {
                                     dialogVisible: true,
                                     dialogMessage: this.$t('tips.unknown_token'),
+                                });
+                                break;
+                            case 'cla.unauthorized_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unauthorized_token'),
                                 });
                                 break;
                             case 'cla.no_pdf_of_corp':
@@ -1702,6 +1777,12 @@
                                 this.$store.commit('errorSet', {
                                     dialogVisible: true,
                                     dialogMessage: this.$t('tips.unknown_token'),
+                                });
+                                break;
+                            case 'cla.unauthorized_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.unauthorized_token'),
                                 });
                                 break;
                             case 'cla.no_pdf_of_corp':
