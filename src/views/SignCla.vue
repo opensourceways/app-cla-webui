@@ -254,6 +254,7 @@
         },
         data() {
             return {
+                action:'',
                 lang: '',
                 cla_hash: '',
                 second: '',
@@ -494,10 +495,23 @@
                     this.getUserInfo()
                 }
             },
+            getActionFromCookie(){
+                if (document.cookie) {
+                    let cookieArr = document.cookie.split(';');
+                    cookieArr.forEach((item) => {
+                        let arr = item.split('=');
+                        let name = arr[0].trim();
+                        let value = arr[1].trim();
+                        if (name === 'action') {
+                            this.action = value;
+                        }
+                    });
+                }
+            },
             getCookieData(resolve) {
                 if (document.cookie) {
                     let cookieArr = document.cookie.split(';');
-                    let access_token, refresh_token, platform_token, error_code = '';
+                    let access_token, refresh_token, platform_token, error_code, action = '';
                     cookieArr.forEach((item) => {
                         let arr = item.split('=');
                         let name = arr[0].trim();
@@ -1078,6 +1092,11 @@
             },
         },
         created() {
+            if (document.hidden !== undefined) {
+                document.addEventListener('visibilitychange', () => {
+                    console.debug(document.hidden)
+                })
+            }
             new Promise((resolve, reject) => {
                 this.getCookieData(resolve);
             }).then(res => {
