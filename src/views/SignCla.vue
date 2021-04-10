@@ -1094,7 +1094,7 @@
         created() {
             if (document.hidden !== undefined) {
                 document.addEventListener('visibilitychange', () => {
-                    console.debug(document.hidden)
+                    console.log(document.hidden)
                 })
             }
             new Promise((resolve, reject) => {
