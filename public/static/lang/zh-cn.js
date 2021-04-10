@@ -61,7 +61,7 @@ module.exports = {
         no_corp_manager: '该公司尚未添加任何管理员。你无法签署',
         has_not_signed: '该公司尚未签署',
         invalid_token: 'Token已过期，请重新登录',
-        missing_token: 'Token无效，请重新登陆',
+        missing_token: 'Token缺失，请重新登陆',
         unknown_token: 'Token无效，请重新登陆',
         unauthorized_token: 'Token权限不匹配，请重新授权登陆',
         uncompleted_signing: '该公司的签署流程还未完成',
