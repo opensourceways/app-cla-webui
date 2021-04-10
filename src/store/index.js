@@ -45,6 +45,7 @@ export default new Vuex.Store({
         reTryDialogVisible: false,
         signSuccessDialogVisible: false,
         signReLoginDialogVisible: false,
+        tokenErrorDialogVisible: false,
         orgReLoginDialogVisible: false,
         pwdIsChanged: false,
         cla_link: sessionStorage.getItem('cla_link') || undefined,
@@ -308,6 +309,10 @@ export default new Vuex.Store({
         },
         setSignReLogin(state, obj) {
             state.signReLoginDialogVisible = obj.dialogVisible;
+            state.dialogMessage = obj.dialogMessage
+        },
+        setTokenErrorReLogin(state, obj) {
+            state.tokenErrorDialogVisible = obj.dialogVisible;
             state.dialogMessage = obj.dialogMessage
         },
         setOrgReLogin(state, obj) {

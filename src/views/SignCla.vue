@@ -121,6 +121,8 @@
         <ReTryDialog :dialogVisible="reTryDialogVisible" :message="reLoginMsg"></ReTryDialog>
         <SignSuccessDialog :dialogVisible="signSuccessDialogVisible" :message="reLoginMsg"></SignSuccessDialog>
         <SignReLoginDialog :dialogVisible="signReLoginDialogVisible" :message="reLoginMsg"></SignReLoginDialog>
+        <TokenErrorDialog @checkAction="checkTokenType" :dialogVisible="tokenErrorDialogVisible"
+                          :message="reLoginMsg"></TokenErrorDialog>
     </el-row>
 </template>
 
@@ -137,6 +139,7 @@
     import ReTryDialog from '../components/ReTryDialog'
     import SignSuccessDialog from '../components/SignSuccessDialog'
     import SignReLoginDialog from '../components/SignReLoginDialog'
+    import TokenErrorDialog from '../components/TokenErrorDialog'
 
     export default {
 
@@ -185,6 +188,9 @@
             },
             signReLoginDialogVisible() {
                 return this.$store.state.signReLoginDialogVisible
+            },
+            tokenErrorDialogVisible() {
+                return this.$store.state.tokenErrorDialogVisible
             },
             sendBtTextFromLang: {
                 get: function () {
@@ -251,9 +257,11 @@
             ReTryDialog,
             SignSuccessDialog,
             SignReLoginDialog,
+            TokenErrorDialog,
         },
         data() {
             return {
+                action: '',
                 lang: '',
                 cla_hash: '',
                 second: '',
@@ -474,8 +482,6 @@
                     this.$message.closeAll();
                     this.$message.error(this.$t('tips.not_fill_email'))
                 }
-
-
             },
             getNowDate() {
                 let date = new Date();
@@ -494,10 +500,24 @@
                     this.getUserInfo()
                 }
             },
+            getActionFromCookie() {
+                if (document.cookie) {
+                    this.action = '';
+                    let cookieArr = document.cookie.split(';');
+                    cookieArr.forEach((item) => {
+                        let arr = item.split('=');
+                        let name = arr[0].trim();
+                        let value = arr[1].trim();
+                        if (name === 'action') {
+                            this.action = value;
+                        }
+                    });
+                }
+            },
             getCookieData(resolve) {
                 if (document.cookie) {
                     let cookieArr = document.cookie.split(';');
-                    let access_token, refresh_token, platform_token, error_code = '';
+                    let access_token, refresh_token, platform_token, error_code, action = '';
                     cookieArr.forEach((item) => {
                         let arr = item.split('=');
                         let name = arr[0].trim();
@@ -1076,8 +1096,28 @@
                     }
                 })
             },
+            checkTokenType() {
+                this.getActionFromCookie()
+                console.log('sign-cla-1095', document.cookie);
+                console.log(this.action);
+                if (this.action === 'login') {
+                    this.$store.commit('setTokenErrorReLogin', {
+                        dialogVisible: true,
+                        dialogMessage: this.$t('tips.quitLoginTip', {platform: this.$store.state.platform}),
+                    });
+                }
+            },
         },
         created() {
+            if (document.hidden !== undefined) {
+                document.addEventListener('visibilitychange', () => {
+                    console.log(document.hidden)
+                    if (!document.hidden) {
+                        this.checkTokenType()
+                    }
+                })
+            }
+            this.checkTokenType()
             new Promise((resolve, reject) => {
                 this.getCookieData(resolve);
             }).then(res => {
