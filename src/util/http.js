@@ -5,7 +5,7 @@ let instance = axios.create({
 });
 instance.interceptors.request.use(req => {
     let token = sessionStorage.getItem('token');
-    token && (req.headers['Token'] = `${token}`);
+    token && token !=='undefined' && (req.headers['Token'] = `${token}`);
     return req
 }, error => Promise.reject(error));
 instance.interceptors.response.use(response => {

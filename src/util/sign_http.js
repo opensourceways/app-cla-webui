@@ -1,12 +1,13 @@
 import axios from 'axios'
 import router from '../router/index'
+
 let instance = axios.create({
     timeout: 10000,
     baseURL: '/api',
 });
 instance.interceptors.request.use(req => {
     let token = sessionStorage.getItem('sign_access_token');
-    token && (req.headers['Token'] = `${token}`);
+    token && token !== 'undefined' && (req.headers['Token'] = `${token}`);
     return req
 }, error => Promise.reject(error));
 instance.interceptors.response.use(response => {
