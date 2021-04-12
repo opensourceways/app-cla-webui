@@ -69,12 +69,9 @@
                                     </span>
                                 <el-dropdown-menu slot="dropdown">
                                     <el-dropdown-item :command="{command:'a',row:scope.row}">
-                                        {{$t('org.toSign')}}
-                                    </el-dropdown-item>
-                                    <el-dropdown-item :command="{command:'b',row:scope.row}">
                                         {{$t('org.copy_address')}}
                                     </el-dropdown-item>
-                                    <el-dropdown-item :command="{command:'c',row:scope.row}">
+                                    <el-dropdown-item :command="{command:'b',row:scope.row}">
                                         {{$t('org.toDetail')}}
                                     </el-dropdown-item>
                                 </el-dropdown-menu>
@@ -227,12 +224,9 @@
             menuCommand(command) {
                 switch (command.command) {
                     case 'a':
-                        this.toSignPage(command.row);
-                        break;
-                    case 'b':
                         this.copyAddress(command.row);
                         break;
-                    case 'c':
+                    case 'b':
                         this.checkCorporationList(command.row);
                         break;
                 }
@@ -451,18 +445,6 @@
                 copyInput.className = "copyInput";
                 copyInput.style.display = "none";
                 document.body.removeChild(document.getElementsByClassName('copyInput')[0])
-            },
-            toSignPage(row) {
-                let params = '';
-                if (row.repo_id) {
-                    params = `${row.platform.toLowerCase()}/${row.org_id}/${row.repo_id}`
-                } else {
-                    params = `${row.platform.toLowerCase()}/${row.org_id}`
-                }
-                let base64Params = util.strToBase64(params)
-                let address = window.location.href.split('/linkedRepo')[0];
-                let url = `${address}${this.signRouter}/${base64Params}`
-                window.open(url)
             },
             submitUpload() {
                 this.$refs.uploadPdf.submit();
