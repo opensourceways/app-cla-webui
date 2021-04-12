@@ -1098,8 +1098,6 @@
             },
             checkTokenType() {
                 this.getActionFromCookie()
-                console.log('sign-cla-1095', document.cookie);
-                console.log(this.action);
                 if (this.action === 'login') {
                     this.$store.commit('setTokenErrorReLogin', {
                         dialogVisible: true,
@@ -1109,15 +1107,6 @@
             },
         },
         created() {
-            if (document.hidden !== undefined) {
-                document.addEventListener('visibilitychange', () => {
-                    console.log(document.hidden)
-                    if (!document.hidden) {
-                        this.checkTokenType()
-                    }
-                })
-            }
-            this.checkTokenType()
             new Promise((resolve, reject) => {
                 this.getCookieData(resolve);
             }).then(res => {
@@ -1127,8 +1116,7 @@
             }).then(res => {
                 this.getNowDate()
             })
-        }
-        ,
+        },
         mounted() {
             this.setClientHeight();
             window.onresize = () => {
