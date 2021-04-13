@@ -134,8 +134,9 @@ module.exports = {
         checkRepoMessage: '您输入的仓库不属于该组织或者该仓库为私有仓库或者该仓库不存在，是否继续？',
         cla_is_used: '该CLA已经被使用',
         go_to_sign_employee_cla: '你所在的公司已经签署企业CLA，所以你只能签署员工CLA',
-        quitLogin:'已退出',
-        quitLoginTip:'你的{platform}账户已经授权登陆了社区管理，请退出后再继续',
+        quitLogin: '已退出',
+        quitLoginTip: '你的{platform}账户已经授权登陆了社区管理，请退出后再继续',
+        copyError: '复制失败',
     },
     header: {
         home: '首页',

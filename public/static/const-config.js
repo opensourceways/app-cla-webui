@@ -123,4 +123,7 @@ const PWD_MAX_LENGTH = 16;
 const PWD_MIN_ASCII = 33;
 const PWD_MAX_ASCII = 126;
 const LANGUAGE_ARR = [{label:'English',value:'english'},{label:'中文',value:'chinese'}];
+const LOCAL_ADDRESS = 'http://cla.osinfra.cn:60031';
+const TEST_ADDRESS = 'https://test-clasign.osinfra.cn';
+const PRODUCTION_ADDRESS = 'https://clasign.osinfra.cn';
 

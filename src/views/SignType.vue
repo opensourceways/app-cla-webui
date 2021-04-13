@@ -871,7 +871,7 @@
                         let cookieKeyValue = cookieArr[i].split('=');
                         let name = cookieKeyValue[0].trim();
                         let value = cookieKeyValue[1].trim();
-                        _cookie.remove(name, {path: '/'});
+                        // _cookie.remove(name, {path: '/'});
                         if (name === "error_code") {
                             switch (value) {
                                 case 'auth_failed':

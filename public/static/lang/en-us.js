@@ -134,8 +134,9 @@ module.exports = {
         checkRepoMessage: 'The repository you entered does not belong to the organization, or the repository is private or does not exist. Do you want to continue?',
         cla_is_used: 'The cla has been used',
         go_to_sign_employee_cla: 'Your company has signed corporation CLA, so you can only sign employee cla',
-        quitLogin:'Exited',
-        quitLoginTip:'Your {platform} account has been authorized to log in to community management, please exit and continue',
+        quitLogin: 'Exited',
+        quitLoginTip: 'Your {platform} account has been authorized to log in to community management, please exit and continue',
+        copyError: 'Copy error',
     },
     header: {
         home: 'Home',
