@@ -29,9 +29,6 @@ export default new Vuex.Store({
         access_token: sessionStorage.getItem('token') || undefined,
         refresh_token: sessionStorage.getItem('refresh_token') || undefined,
         platform_token: sessionStorage.getItem('platform_token') || undefined,
-        sign_access_token: sessionStorage.getItem('sign_access_token') || undefined,
-        sign_refresh_token: sessionStorage.getItem('sign_refresh_token') || undefined,
-        sign_platform_token: sessionStorage.getItem('sign_platform_token') || undefined,
         user: {
             userId: sessionStorage.getItem('userId') || undefined,
             userName: sessionStorage.getItem('userName') || undefined,
@@ -65,9 +62,7 @@ export default new Vuex.Store({
         corpLanguage: sessionStorage.getItem('corpLanguage') || undefined,
         corpFDName: sessionStorage.getItem('corpFDName') || undefined,
         claData: JSON.parse(sessionStorage.getItem('claData')) || undefined,
-        sign_email: sessionStorage.getItem('sign_email') || undefined,
         sign_user: sessionStorage.getItem('sign_user') || undefined,
-        sign_id: sessionStorage.getItem('sign_id') || undefined,
         bindType: sessionStorage.getItem('bindType') || undefined,
         addLang: sessionStorage.getItem('addLang') || undefined,
         add_bind_first: sessionStorage.getItem('add_bind_first') || undefined,
@@ -93,17 +88,9 @@ export default new Vuex.Store({
             state.bindType = data;
             sessionStorage.setItem('bindType', data);
         },
-        setSignEmail(state, data) {
-            state.sign_email = data;
-            sessionStorage.setItem('sign_email', data);
-        },
         setSignUser(state, data) {
             state.sign_user = data;
             sessionStorage.setItem('sign_user', data);
-        },
-        setSignID(state, data) {
-            state.sign_id = data;
-            sessionStorage.setItem('sign_id', data);
         },
         setClaData(state, data) {
             state.claData = data;
@@ -206,15 +193,6 @@ export default new Vuex.Store({
             sessionStorage.setItem('token', data.access_token);
             sessionStorage.setItem('refresh_token', data.refresh_token);
             sessionStorage.setItem('platform_token', data.platform_token);
-            data.resolve('complete')
-        },
-        setSignToken(state, data) {
-            state.sign_access_token = data.access_token;
-            state.sign_refresh_token = data.refresh_token;
-            state.sign_platform_token = data.platform_token;
-            sessionStorage.setItem('sign_access_token', data.access_token);
-            sessionStorage.setItem('sign_refresh_token', data.refresh_token);
-            sessionStorage.setItem('sign_platform_token', data.platform_token);
             data.resolve('complete')
         },
         setLoginUser(state, data) {
