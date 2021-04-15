@@ -9,9 +9,9 @@ const POLICERECORD = '粤公网安备 44030702003822号';
 const POLICERECORDLINK = 'http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030702003822';
 const INDIVIDUALMETADATAARR_EN = [
     {
-        title: `${sessionStorage.getItem('platform')}-ID`,
-        type: 'platform_id',
-        description: 'The ID of your authorized account',
+        title: 'Name',
+        type: 'name',
+        description: 'Your name',
         required: true,
     },
     {
@@ -20,30 +20,21 @@ const INDIVIDUALMETADATAARR_EN = [
         description: 'The email of your authorized account',
         required: true,
     },
-    {
-        title: 'Name',
-        type: 'name',
-        description: 'Your name',
-        required: true,
-    },];
+];
 const INDIVIDUALMETADATAARR_ZH = [
-    {
-        title: `${sessionStorage.getItem('platform')}-ID`,
-        type: 'platform_id',
-        description: '授权账号的ID',
-        required: true,
-    }, {
-        title: '邮箱',
-        type: 'email',
-        description: '授权账号的邮箱',
-        required: true,
-    },
     {
         title: '姓名',
         type: 'name',
         description: '你的姓名',
         required: true,
-    },];
+    },
+    {
+        title: '邮箱',
+        type: 'email',
+        description: '授权账号的邮箱',
+        required: true,
+    },
+];
 const CORPORATIONMETADATAARR_EN = [
     {
         title: 'Authorized Representative',
@@ -122,7 +113,7 @@ const PWD_MIN_LENGTH = 6;
 const PWD_MAX_LENGTH = 16;
 const PWD_MIN_ASCII = 33;
 const PWD_MAX_ASCII = 126;
-const LANGUAGE_ARR = [{label:'English',value:'english'},{label:'中文',value:'chinese'}];
+const LANGUAGE_ARR = [{label: 'English', value: 'english'}, {label: '中文', value: 'chinese'}];
 const LOCAL_ADDRESS = 'http://cla.osinfra.cn:60031';
 const TEST_ADDRESS = 'https://test-clasign.osinfra.cn';
 const PRODUCTION_ADDRESS = 'https://clasign.osinfra.cn';

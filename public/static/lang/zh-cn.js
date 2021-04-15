@@ -45,7 +45,8 @@ module.exports = {
         reSendCode: '{second}秒重发',
         sign: '签 署',
         verifyCodeHolder: '请输入验证码',
-        holder: '请输入{title}'
+        holder: '请输入{title}',
+        sendCodeTip: '发送验证码到邮箱',
     },
     tips: {
         failedTitle: '失败',

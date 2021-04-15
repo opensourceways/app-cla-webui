@@ -45,7 +45,8 @@ module.exports = {
         reSendCode: '{second}s can resend',
         sign: 'SIGN',
         verifyCodeHolder: 'please input verify code',
-        holder: 'please input {title}'
+        holder: 'please input {title}',
+        sendCodeTip: 'Send verification code to email',
     },
     tips: {
         failedTitle: 'Failed',

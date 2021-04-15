@@ -394,7 +394,6 @@
                                                                 {{ $t('signType.corpBt') }}
                                                             </button>
                                                         </div>
-
                                                     </el-tooltip>
                                                 </div>
                                                 <div>
@@ -965,61 +964,7 @@
 
             submit(loginType) {
                 this.setLoginTypeAct(loginType);
-                if (loginType === 'individual' || loginType === 'employee') {
-                    http({
-                        url: `${url.getAuthCodeUrl}/${this.platform}/sign`,
-                    }).then(res => {
-                        window.location.href = res.data.data.url
-                    }).catch(err => {
-                        if (err.data.hasOwnProperty('data')) {
-                            switch (err.data.data.error_code) {
-                                case 'cla.invalid_parameter':
-                                    let repoInfo = this.$store.state.repoInfo;
-                                    let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`
-                                    let path = `${this.signRouter}/${util.strToBase64(params)}`;
-                                    this.$router.replace(path)
-                                    break;
-                                case 'cla.invalid_token':
-                                    this.$store.commit('setSignReLogin', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.invalid_token'),
-                                    });
-                                    break;
-                                case 'cla.missing_token':
-                                    this.$store.commit('setSignReLogin', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.missing_token'),
-                                    });
-                                    break;
-                                case 'cla.unknown_token':
-                                    this.$store.commit('setSignReLogin', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.unknown_token'),
-                                    });
-                                    break;
-                                case 'cla.system_error':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.system_error'),
-                                    });
-                                    break;
-                                default :
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.unknown_error'),
-                                    });
-                                    break;
-                            }
-                        } else {
-                            this.$store.commit('errorCodeSet', {
-                                dialogVisible: true,
-                                dialogMessage: this.$t('tips.system_error'),
-                            })
-                        }
-                    })
-                } else {
-                    this.$router.push('/sign-cla')
-                }
+                this.$router.push('/sign-cla')
             },
             clickSignTypeGuide(type) {
                 this.signType = type;
