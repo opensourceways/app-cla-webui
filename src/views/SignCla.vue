@@ -822,7 +822,7 @@
                 this.sign(myUrl, obj)
             },
             sign(myUrl, obj) {
-                if (myUrl) {
+                if (!myUrl) {
                     return
                 }
                 http({
