@@ -9,7 +9,7 @@ RUN npm install -g vue && \
     npm install && \
     npm run build
 
-FROM nginx:1.19.2
+FROM nginx:1.20.0
 COPY --from=Builder /home/cla-webui/dist /usr/share/nginx/html/
 COPY ./deploy/default.conf /etc/nginx/conf.d/
 RUN chmod -R 755 /usr/share/nginx/html
