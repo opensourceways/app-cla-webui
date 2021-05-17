@@ -3,7 +3,9 @@
         <div id="singCla_section">
             <el-row class="content">
                 <el-col>
+                    <p class="contentTitle">{{ $t('signPage.claTitle') }}</p>
                     <el-row class="marginTop3rem" id="claBox">
+                        <iframe id="pdf_iframe" ref="pdf_iframe" class="iframeClass" :src="claTextUrl" frameborder="0"></iframe>
                     </el-row>
                     <el-row v-if="cla_lang" class="marginTop3rem form">
                         <el-col>
@@ -134,7 +136,6 @@
     import SignReLoginDialog from '../components/SignReLoginDialog'
 
     export default {
-
         name: "SignCla",
         computed: {
             loginType() {
@@ -197,10 +198,11 @@
                 }
                 this.signPageData.forEach((item, index) => {
                     if (item.language === this.lang) {
+                        document.getElementById('claBox').style.display = 'block';
                         this.cla_lang = item.language;
                         this.value = index;
                         this.cla_hash = item.cla_hash;
-                        this.setClaText(this.value);
+                        this.$refs.pdf_iframe.contentWindow.postMessage({link_id:this.link_id,lang:this.lang,hash:this.cla_hash}, this.claTextUrl)
                         this.fields = this.signPageData[this.value].fields;
                         if (Object.keys(this.rules).length === 0) {
                             this.setFieldsData();
@@ -209,7 +211,7 @@
                 });
                 this.getUserInfo();
                 if (!this.cla_lang) {
-                    document.getElementById('claBox').innerHTML = '';
+                    document.getElementById('claBox').style.display = 'none';
                     this.fields = [];
                     this.$message.closeAll();
                     this.$message.error({
@@ -239,6 +241,9 @@
         },
         data() {
             return {
+                claTextUrl: 'http://cla.osinfra.cn:60031/cla-pdf',
+                claText: '',
+                numPages: null,
                 lang: '',
                 cla_hash: '',
                 second: '',
@@ -278,6 +283,14 @@
         },
         methods: {
             ...mapActions(['setTokenAct', 'setRepoInfoAct', 'viewPrivacy']),
+            getNumPages(url) {
+                let loadingTask = pdf.createLoadingTask(url)
+                loadingTask.promise.then(pdf => {
+                    this.numPages = pdf.numPages
+                }).catch(err => {
+                    console.error('pdf 加载失败', err);
+                })
+            },
             previewPrivacy() {
                 this.$router.push('/privacy')
             },
@@ -544,7 +557,7 @@
                                 this.cla_lang = item.language;
                                 this.value = index;
                                 this.cla_hash = item.cla_hash;
-                                this.setClaText(this.value);
+                                this.setClaText({link_id:this.link_id,lang:this.lang,hash:this.cla_hash});
                                 this.setFields(this.value);
                                 this.setFieldsData();
                                 resolve('complete')
@@ -736,8 +749,12 @@
                     }
                 }
             },
-            setClaText(key) {
-                document.getElementById('claBox').innerHTML = this.signPageData[key].text;
+            setClaText(obj) {
+                this.$nextTick(() => {
+                    this.$refs.pdf_iframe.contentWindow.onload = ()=>{
+                        this.$refs.pdf_iframe.contentWindow.postMessage(obj, this.claTextUrl)
+                    }
+                })
             },
             setFields(key) {
                 for (let i = 0; i < this.signPageData[key].fields.length; i++) {
@@ -1082,6 +1099,11 @@
                 })
             },
         },
+        activated(){
+            this.$refs.pdf_iframe.contentWindow.onload = ()=>{
+                this.$refs.pdf_iframe.contentWindow.postMessage({link_id:this.link_id,lang:this.lang,hash:this.cla_hash}, this.claTextUrl)
+            }
+        },
         created() {
             new Promise((resolve, reject) => {
                 this.getCookieData(resolve);
@@ -1092,8 +1114,7 @@
             }).then(res => {
                 this.getNowDate()
             })
-        }
-        ,
+        },
         mounted() {
             this.setClientHeight();
         }
@@ -1281,19 +1302,27 @@
         margin-top: 3rem;
     }
 
+    .iframeClass {
+        width: 100%;
+        height: 900px;
+        box-shadow: 0 0 20px 10px #F3F3F3;
+        border-radius: 1rem;
+    }
+
     #claBox {
         margin-bottom: 2rem;
         border-radius: 1.25rem;
         white-space: pre-wrap;
         font-size: 1.2rem;
-        box-shadow: 0 0 20px 10px #F3F3F3;
-        padding: 2rem;
+        /*box-shadow: 0 0 20px 10px #F3F3F3;*/
+        /*padding: 2rem;*/
     }
 
     .contentTitle {
         font-size: 2rem;
         font-weight: bold;
         margin: 2rem 0;
+        text-align: center;
     }
 
     .size_s {

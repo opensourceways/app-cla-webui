@@ -299,6 +299,14 @@ const routes = [
             }],
     },
     {
+        path: '/cla-pdf',
+        name: 'ClaPdf',
+        meta: {
+            title: 'cla-pdf',
+        },
+        component: () => import('../views/ClaPdf.vue')
+    },
+    {
         path: '*',
         name: 'ErrorPath',
         meta: {

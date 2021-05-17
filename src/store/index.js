@@ -69,14 +69,19 @@ export default new Vuex.Store({
         bindType: sessionStorage.getItem('bindType') || undefined,
         addLang: sessionStorage.getItem('addLang') || undefined,
         add_bind_first: sessionStorage.getItem('add_bind_first') || undefined,
-        findPwdEmail:sessionStorage.getItem('findPwdEmail') || undefined,
+        findPwdEmail: sessionStorage.getItem('findPwdEmail') || undefined,
+        pafData: JSON.parse(sessionStorage.getItem('pafData')) || undefined,
     },
     mutations: {
-        setFindPwdEmail(state, data){
+        setPafData(state, data) {
+            state.pafData = data;
+            sessionStorage.setItem('pafData',  JSON.stringify(data));
+        },
+        setFindPwdEmail(state, data) {
             state.findPwdEmail = data;
             sessionStorage.setItem('findPwdEmail', data);
         },
-        setAddBindFirst(state, data){
+        setAddBindFirst(state, data) {
             state.add_bind_first = data;
             sessionStorage.setItem('add_bind_first', data);
         },

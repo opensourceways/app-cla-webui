@@ -30,6 +30,7 @@ module.exports = {
         not_support_individual: '暂不支持个人签署'
     },
     signPage: {
+        claTitle: "贡献者许可协议",
         corp: "企业",
         emp: "员工",
         individual: "个人",
@@ -308,7 +309,7 @@ module.exports = {
         reduction: '还原',
         deleteCompletely: '彻底删除',
         date: '日期',
-        cla_language:'CLA语言',
+        cla_language: 'CLA语言',
         not_complete: '未完成',
         complete: '已完成',
     },

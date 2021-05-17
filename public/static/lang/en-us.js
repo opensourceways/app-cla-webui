@@ -30,6 +30,7 @@ module.exports = {
         not_support_individual: 'Individual signing is not supported at the moment'
     },
     signPage: {
+        claTitle: "Contributor License Agreement",
         corp: "Corporation ",
         emp: "Employee ",
         individual: "Individual ",
