@@ -254,6 +254,7 @@
                 if (parseInt(localStorage.getItem('lang'))) {
                     this.value = parseInt(localStorage.getItem('lang'))
                 }
+                console.log(this.value);
                 switch (this.value) {
                     case 0:
                         this.language = 'English';
