@@ -250,6 +250,7 @@
                 this.isActive = !this.isActive;
             },
             init() {
+                console.log('init');
                 if (parseInt(localStorage.getItem('lang'))) {
                     this.value = parseInt(localStorage.getItem('lang'))
                 }
