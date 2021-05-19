@@ -1,9 +1,9 @@
 <template>
     <el-row id="signPage">
-        <Header :langOptions = langOptions></Header>
+        <Header ref="header" :langOptions=langOptions></Header>
         <div id="content">
             <keep-alive>
-                <router-view @getLangOptions='getLangOptions'></router-view>
+                <router-view @getLangOptions='getLangOptions' @initHeader='initHeader'></router-view>
             </keep-alive>
         </div>
         <Footer></Footer>
@@ -32,6 +32,9 @@
             }
         },
         methods: {
+            initHeader() {
+                this.$refs.header.init();
+            },
             getLangOptions(data) {
                 this.langOptions = data
             },
