@@ -572,7 +572,7 @@
                             }
                         });
                         if (!this.cla_lang) {
-                            this.lang = this.signPageData[0].label
+                            this.lang = this.signPageData[0].language
                             this.value = 0;
                             this.cla_hash = this.signPageData[0].cla_hash;
                             this.setClaText({link_id: this.link_id, lang: this.lang, hash: this.cla_hash});
