@@ -275,13 +275,6 @@
                 rules: {},
                 isRead: false,
                 value: '',
-                languageOptions: [{
-                    value: 0,
-                    label: 'English'
-                }, {
-                    value: 1,
-                    label: 'Chinese'
-                },],
                 metadataArr: [],
                 cla_lang: '',
             }
@@ -556,7 +549,6 @@
                 if (res && res.data.data) {
                     if (res.data.data.clas && res.data.data.clas.length) {
                         this.signPageData = res.data.data.clas;
-                        this.languageOptions = [];
                         this.link_id = res.data.data.link_id;
                         if (localStorage.getItem('lang') === '0') {
                             this.lang = 'english'
@@ -564,9 +556,11 @@
                             this.lang = 'chinese'
                         }
                         let langOptions = [];
+                        let originalLangArr = []
                         let langLabel = '';
                         this.signPageData.forEach((item, index) => {
                             langLabel = this.upperFirstCase(item.language)
+                            originalLangArr.push({value: index, label: item.language});
                             langOptions.push({value: index, label: langLabel});
                             this.$emit('getLangOptions',langOptions)
                             if (item.language === this.lang) {
@@ -578,14 +572,14 @@
                                 this.setFieldsData();
                                 resolve('complete')
                             }
-                            this.languageOptions.push({value: index, label: item.language})
                         });
                         if (!this.cla_lang) {
-                            this.$message.closeAll();
-                            this.$message.error({
-                                message: this.$t('tips.no_lang', {language: this.lang}),
-                                duration: 8000
-                            })
+                            this.lang = originalLangArr[0].label
+                            this.value = 0;
+                            this.cla_hash = originalLangArr[0].cla_hash;
+                            this.setClaText({link_id: this.link_id, lang: this.lang, hash: this.cla_hash});
+                            this.setFields(this.value);
+                            this.setFieldsData();
                         }
                     } else {
                         let message = '';
