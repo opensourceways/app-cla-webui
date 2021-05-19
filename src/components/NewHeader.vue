@@ -52,7 +52,7 @@
                             </el-row>
                             <div id="my_option" :class="{'visible':isActive}">
                                 <div
-                                        v-for="item in options"
+                                        v-for="item in langOptions"
                                         :key="item.value"
                                         :label="item.label"
                                         :value="item.value">
@@ -92,13 +92,12 @@
                 isActive: true,
                 language: 'English',
                 value: 0,
-                options: [{value: 0, label: 'English'}, {value: 1, label: '中文'}],
                 visible: {
                     visibility: 'hidden',
                 },
             }
         },
-
+        props: {langOptions: {type: Array, default: [{value: 0, label: 'English'}, {value: 1, label: '中文'}]}},
         methods: {
             toIndex() {
                 if (this.$route.path === '/corporationManagerLogin' || this.$route.path === '/platformSelect') {

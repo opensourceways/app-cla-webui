@@ -98,7 +98,7 @@
                 },
             }
         },
-
+        props: ['langOptions'],
         methods: {
             toIndex() {
                 if (this.$route.path === '/corporationManagerLogin' || this.$route.path === '/platformSelect') {
