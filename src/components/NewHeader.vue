@@ -267,6 +267,9 @@
                         this.value = parseInt(localStorage.getItem('lang'))
                     }
                 }
+                console.log(this.langOptions);
+                console.log(this.value);
+                console.log(this.langOptions[this.value]);
                 this.language = this.langOptions[this.value].label;
                 this.changeI18N(this.language)
                 if (this.$store.state.loginInfo) {
