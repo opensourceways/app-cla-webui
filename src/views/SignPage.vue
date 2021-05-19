@@ -32,8 +32,8 @@
             }
         },
         methods: {
-            initHeader() {
-                this.$refs.header.init();
+            initHeader(value) {
+                this.$refs.header.init(value);
             },
             getLangOptions(data) {
                 this.langOptions = data

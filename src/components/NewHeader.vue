@@ -249,11 +249,15 @@
             clickSelect() {
                 this.isActive = !this.isActive;
             },
-            init() {
-                console.log('init');
-                if (parseInt(localStorage.getItem('lang'))) {
-                    this.value = parseInt(localStorage.getItem('lang'))
+            init(value) {
+                if (value !== '') {
+                    this.value = value
+                }else{
+                    if (parseInt(localStorage.getItem('lang'))) {
+                        this.value = parseInt(localStorage.getItem('lang'))
+                    }
                 }
+                console.log('init');
                 console.log(this.value);
                 switch (this.value) {
                     case 0:
