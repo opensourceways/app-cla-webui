@@ -234,7 +234,7 @@
                 if (this.value !== value) {
                     this.value = value
                     localStorage.setItem('lang', value)
-                    this.language = this.options[value].label;
+                    this.language = this.langOptions[value].label;
                     switch (value) {
                         case 0:
                             this.$i18n.locale = 'en-us';
