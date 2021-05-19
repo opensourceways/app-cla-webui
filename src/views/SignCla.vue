@@ -5,7 +5,8 @@
                 <el-col>
                     <p class="contentTitle">{{ $t('signPage.claTitle') }}</p>
                     <el-row class="marginTop3rem" id="claBox">
-                        <iframe id="pdf_iframe" ref="pdf_iframe" class="iframeClass" :src="claTextUrl" frameborder="0"></iframe>
+                        <iframe id="pdf_iframe" ref="pdf_iframe" class="iframeClass" :src="claTextUrl"
+                                frameborder="0"></iframe>
                     </el-row>
                     <el-row v-if="cla_lang" class="marginTop3rem form">
                         <el-col>
@@ -202,7 +203,11 @@
                         this.cla_lang = item.language;
                         this.value = index;
                         this.cla_hash = item.cla_hash;
-                        this.$refs.pdf_iframe.contentWindow.postMessage({link_id:this.link_id,lang:this.lang,hash:this.cla_hash}, this.claTextUrl)
+                        this.$refs.pdf_iframe.contentWindow.postMessage({
+                            link_id: this.link_id,
+                            lang: this.lang,
+                            hash: this.cla_hash
+                        }, this.claTextUrl)
                         this.fields = this.signPageData[this.value].fields;
                         if (Object.keys(this.rules).length === 0) {
                             this.setFieldsData();
@@ -541,6 +546,12 @@
                     resolve('complete');
                 }
             },
+            upperFirstCase(word) {
+                let initials = word.substring(0, 1);
+                let upper = initials.toUpperCase();
+                let end = word.substring(1);
+                return upper + end
+            },
             setData(res, resolve) {
                 if (res && res.data.data) {
                     if (res.data.data.clas && res.data.data.clas.length) {
@@ -552,12 +563,17 @@
                         } else if (localStorage.getItem('lang') === '1') {
                             this.lang = 'chinese'
                         }
+                        let langOptions = [];
+                        let langLabel = '';
                         this.signPageData.forEach((item, index) => {
+                            langLabel = this.upperFirstCase(item.language)
+                            langOptions.push({value: index, label: langLabel});
+                            this.$emit('getLangOptions',langOptions)
                             if (item.language === this.lang) {
                                 this.cla_lang = item.language;
                                 this.value = index;
                                 this.cla_hash = item.cla_hash;
-                                this.setClaText({link_id:this.link_id,lang:this.lang,hash:this.cla_hash});
+                                this.setClaText({link_id: this.link_id, lang: this.lang, hash: this.cla_hash});
                                 this.setFields(this.value);
                                 this.setFieldsData();
                                 resolve('complete')
@@ -751,7 +767,7 @@
             },
             setClaText(obj) {
                 this.$nextTick(() => {
-                    this.$refs.pdf_iframe.contentWindow.onload = ()=>{
+                    this.$refs.pdf_iframe.contentWindow.onload = () => {
                         this.$refs.pdf_iframe.contentWindow.postMessage(obj, this.claTextUrl)
                     }
                 })
@@ -1099,9 +1115,13 @@
                 })
             },
         },
-        activated(){
-            this.$refs.pdf_iframe.contentWindow.onload = ()=>{
-                this.$refs.pdf_iframe.contentWindow.postMessage({link_id:this.link_id,lang:this.lang,hash:this.cla_hash}, this.claTextUrl)
+        activated() {
+            this.$refs.pdf_iframe.contentWindow.onload = () => {
+                this.$refs.pdf_iframe.contentWindow.postMessage({
+                    link_id: this.link_id,
+                    lang: this.lang,
+                    hash: this.cla_hash
+                }, this.claTextUrl)
             }
         },
         created() {

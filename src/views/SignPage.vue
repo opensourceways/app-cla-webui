@@ -1,9 +1,9 @@
 <template>
     <el-row id="signPage">
-        <Header></Header>
+        <Header :langOptions = langOptions></Header>
         <div id="content">
             <keep-alive>
-                <router-view></router-view>
+                <router-view @getLangOptions='getLangOptions'></router-view>
             </keep-alive>
         </div>
         <Footer></Footer>
@@ -14,6 +14,7 @@
     import Header from '@components/NewHeader'
     import Footer from '@components/NewFooter'
     import * as util from '../util/util'
+
     export default {
         name: "SignPage",
         components: {
@@ -25,7 +26,15 @@
                 setClientHeight: this.setClientHeight
             }
         },
+        data() {
+            return {
+                langOptions: [],
+            }
+        },
         methods: {
+            getLangOptions(data) {
+                this.langOptions = data
+            },
             setClientHeight() {
                 this.$nextTick(() => {
                     document.getElementById("signPage").style.minHeight = '0px';
