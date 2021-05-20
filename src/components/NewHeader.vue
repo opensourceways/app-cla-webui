@@ -238,14 +238,7 @@
                     this.value = value
                     localStorage.setItem('lang', value)
                     this.language = this.options[value].label;
-                    switch (value) {
-                        case 0:
-                            this.$i18n.locale = 'en-us';
-                            break;
-                        case 1:
-                            this.$i18n.locale = 'zh-cn';
-                            break;
-                    }
+                    this.changeI18N(this.language)
                 }
                 this.isActive = true;
             },
