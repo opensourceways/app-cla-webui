@@ -589,7 +589,11 @@
                     method: 'delete'
                 }).then(res => {
                     util.successMessage(this);
-                    this.getIndividualClaInfo()
+                    if (this.delete_apply === 'individual') {
+                        this.getIndividualClaInfo()
+                    } else if (this.delete_apply === 'corporation') {
+                        this.getCorpClaInfo()
+                    }
                 }).catch(err => {
                     if (err.data && err.data.hasOwnProperty('data')) {
                         switch (err.data.data.error_code) {
