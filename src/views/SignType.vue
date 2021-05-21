@@ -386,7 +386,7 @@
                                         <el-col align="right" class="buttonBox">
                                             <div id="btBox">
                                                 <div>
-                                                    <el-tooltip :content="corpBtTooltip" placement="top" effect="light"
+                                                    <el-tooltip :content="corpBtTooltip" placement="left" effect="light"
                                                                 popper-class="my_tooltip" :enterable="false">
                                                         <div class="display-inline-block margin-1D2rem border-radius-2rem">
                                                             <button :disabled="!isBindCorpCLA" class="button"
@@ -398,7 +398,7 @@
                                                     </el-tooltip>
                                                 </div>
                                                 <div>
-                                                    <el-tooltip :content="empBtTooltip" placement="top" effect="light"
+                                                    <el-tooltip :content="empBtTooltip" placement="left" effect="light"
                                                                 popper-class="my_tooltip" :enterable="false">
                                                         <div class="display-inline-block margin-1D2rem border-radius-2rem">
                                                             <button :disabled="!isBindCorpCLA"
@@ -410,7 +410,7 @@
 
                                                     </el-tooltip>
                                                 </div>
-                                                <el-tooltip :content="individualBtTooltip" placement="top"
+                                                <el-tooltip :content="individualBtTooltip" placement="left"
                                                             effect="light" :enterable="false"
                                                             popper-class="my_tooltip">
                                                     <div class="display-inline-block margin-1D2rem border-radius-2rem">
