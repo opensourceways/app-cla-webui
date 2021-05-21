@@ -98,6 +98,21 @@ export const successMessage = (_this)=>{
     _this.$message.closeAll();
     _this.$message.success(_this.$t('tips.successTitle'))
 };
+export const getMenuState = (_this)=>{
+    let name = _this.$route.name;
+    let path = _this.$route.path;
+    if (name === 'SignType' || name === 'SignType_back' || path === '/sign-cla' || path === '/index'
+        || path === '/platformSelect' || path === '/corporationManagerLogin' || path === '/orgSelect'
+        || path === '/verify-email' || path === '/reset-password' || path === '/privacy') {
+       return false
+    } else if (path === '/home' || path === '/linkedRepo' || path === '/corporationList' || path === '/bind-cla'
+        || path === '/config-org' ||path === '/config-cla-link' || path === '/config-fields'
+        || path === '/config-email' || path === '/config-check' || path === '/addIndividualUrl' || path === '/addCorpUrl') {
+        return 'org'
+    } else {
+        return 'corp'
+    }
+};
 
 
 

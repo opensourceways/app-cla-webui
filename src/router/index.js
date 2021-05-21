@@ -340,17 +340,6 @@ router.beforeEach((to, from, next) => {
     } else {
         next()
     }
-    if (to.name === 'SignType' || to.name === 'SignType_back' || to.path === '/sign-cla' || to.path === '/index'
-        || to.path === '/platformSelect' || to.path === '/corporationManagerLogin' || to.path === '/orgSelect'
-        || to.path === '/verify-email' || to.path === '/reset-password' || to.path === '/privacy') {
-        sessionStorage.setItem('showHeaderMenu', 'false')
-    } else if (to.path === '/home' || to.path === '/linkedRepo' || to.path === '/corporationList' || to.path === '/bind-cla'
-        || to.path === '/config-org' || to.path === '/config-cla-link' || to.path === '/config-fields'
-        || to.path === '/config-email' || to.path === '/config-check' || to.path === '/addIndividualUrl' || to.path === '/addCorpUrl') {
-        sessionStorage.setItem('showHeaderMenu', 'org')
-    } else {
-        sessionStorage.setItem('showHeaderMenu', 'corp')
-    }
 });
 router.afterEach((to, from, next) => {
     window.scrollTo(0, 0);

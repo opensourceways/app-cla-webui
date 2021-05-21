@@ -419,7 +419,6 @@
                                                             {{ $t('signType.individualBt') }}
                                                         </button>
                                                     </div>
-
                                                 </el-tooltip>
                                             </div>
                                         </el-col>
