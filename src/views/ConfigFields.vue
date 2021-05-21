@@ -294,7 +294,7 @@
                 return {individualArr, corpArr};
             },
             addRow(index) {
-                let metadata = this.individualCustomMetadataArr;
+                let metadata = JSON.parse(JSON.stringify(this.individualCustomMetadataArr));
                 metadata.splice(index + 1, 0, {
                     title: '',
                     type: '',
@@ -304,7 +304,7 @@
                 this.$store.commit('setIndividualCustomMetadataArr', metadata)
             },
             myDeleteRow(index) {
-                let metadata = this.individualCustomMetadataArr;
+                let metadata = JSON.parse(JSON.stringify(this.individualCustomMetadataArr));
                 if (metadata.length === 1) {
                     metadata[0].type = '';
                     metadata[0].title = '';
@@ -315,7 +315,7 @@
                 this.$store.commit('setIndividualCustomMetadataArr', metadata)
             },
             addCorpRow(index) {
-                let metadata = this.corporationCustomMetadataArr;
+                let metadata =JSON.parse(JSON.stringify(this.corporationCustomMetadataArr))
                 metadata.splice(index + 1, 0, {
                     title: '',
                     type: '',
@@ -325,7 +325,7 @@
                 this.$store.commit('setCorporationCustomMetadataArr', metadata)
             },
             myCorpDeleteRow(index) {
-                let metadata = this.corporationCustomMetadataArr;
+                let metadata = JSON.parse(JSON.stringify(this.corporationCustomMetadataArr))
                 if (metadata.length === 1) {
                     metadata[0].type = '';
                     metadata[0].title = '';
