@@ -30,7 +30,7 @@ module.exports = {
         not_support_individual: '暂不支持个人签署'
     },
     signPage: {
-        claTitle: "贡献者许可协议",
+        claTitle: "签署CLA",
         corp: "企业",
         emp: "员工",
         individual: "个人",

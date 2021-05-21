@@ -190,12 +190,15 @@
             sign_id() {
                 return this.$store.state.sign_id;
             },
-            claTextUrl(){
+            claTextUrl() {
                 return `${this.$store.state.domain}/cla-pdf`
             },
         },
         watch: {
             '$i18n.locale'() {
+                if (this.$route.path !== '/sign-cla') {
+                    return
+                }
                 this.cla_lang = '';
                 this.lang = this.signPageData[parseInt(localStorage.getItem('lang'))].language
                 this.signPageData.forEach((item, index) => {
@@ -927,7 +930,7 @@
                         this.tipsMessage = this.$t('tips.corp_sign')
                     } else if (this.$store.state.loginType === 'employee') {
                         this.tipsMessage = this.$t('tips.emp_sign')
-                    }else if (this.$store.state.loginType === 'individual') {
+                    } else if (this.$store.state.loginType === 'individual') {
                         this.tipsMessage = this.$t('tips.individual_sign')
                     }
                     this.$store.commit('setSignSuccess', {
