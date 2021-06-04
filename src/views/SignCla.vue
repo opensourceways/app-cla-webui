@@ -45,8 +45,8 @@
                                 </div>
                                 <div class="margin-top-1rem fontSize12">
                                     <el-checkbox v-model="isRead"><span>{{$t('signPage.checkBoxText1')}}<span
-                                            class="privacy" @click="previewPrivacy()">{{$t('signPage.privacy')}}</span>{{$t('signPage.checkBoxText2')}}<span
-                                            class="privacy" @click="toIndex()">{{$t('signPage.claSignPlatform')}}</span>{{$t('signPage.checkBoxText3')}}</span>
+                                            class="privacy" @click="previewPrivacy()">{{$t('signPage.privacy')}}</span>{{$t('signPage.checkBoxText2')}}<span>
+                                        {{$t('signPage.claSignPlatform')}}</span>{{$t('signPage.checkBoxText3')}}</span>
                                     </el-checkbox>
                                 </div>
                                 <el-form-item label-width="0" class="margin-top-1rem signBtBox">
@@ -90,8 +90,8 @@
                                 </div>
                                 <div class="margin-top-1rem fontSize12">
                                     <el-checkbox v-model="isRead"><span>{{$t('signPage.checkBoxText1')}}<span
-                                            class="privacy" @click="previewPrivacy()">{{$t('signPage.privacy')}}</span>{{$t('signPage.checkBoxText2')}}<span
-                                            class="privacy" @click="toIndex()">{{$t('signPage.claSignPlatform')}}</span>{{$t('signPage.checkBoxText3')}}</span>
+                                            class="privacy" @click="previewPrivacy()">{{$t('signPage.privacy')}}</span>{{$t('signPage.checkBoxText2')}}<span>
+                                        {{$t('signPage.claSignPlatform')}}</span>{{$t('signPage.checkBoxText3')}}</span>
                                     </el-checkbox>
                                 </div>
                                 <el-form-item label-width="0" class="margin-top-1rem signBtBox">
@@ -225,7 +225,7 @@
                 tipsMessage: this.$t('tips.individual_sign'),
                 tipsDialogVisible: false,
                 signPageData: '',
-                link_id: '',
+                link_id: this.$store.state.linkId,
                 claOrgIdArr: [],
                 fields: [],
                 claIdArr: [],
@@ -260,20 +260,6 @@
             },
             previewPrivacy() {
                 util.toPrivacy(this);
-            },
-            toIndex() {
-                let date = new Date();
-                date.setTime(date.getTime() - 10000);
-                document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
-                let repoInfo = this.$store.state.repoInfo;
-                let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`;
-                let path = '';
-                if (sessionStorage.getItem('orgAddress')) {
-                    path = `${SIGN_ROUTER}/${util.strToBase64(params)}/${sessionStorage.getItem('orgAddress')}`;
-                } else {
-                    path = `${SIGN_ROUTER}/${util.strToBase64(params)}`;
-                }
-                window.open(`${this.domain}${path}`);
             },
             async requireVerifyTel(rule, value, callback) {
                 if (value) {
@@ -412,9 +398,8 @@
             },
             setData(res, resolve) {
                 if (res && res.data.data) {
-                    if (res.data.data.clas && res.data.data.clas.length) {
-                        this.signPageData = res.data.data.clas;
-                        this.link_id = res.data.data.link_id;
+                    if (res.data.data && res.data.data.length) {
+                        this.signPageData = res.data.data;
                         if (localStorage.getItem('lang') !== undefined) {
                             this.lang = localStorage.getItem('lang').toLowerCase();
                         }
@@ -475,15 +460,8 @@
             },
             getSignPage(resolve) {
                 let applyTo = '';
-                let _url = '';
                 this.loginType === this.corporation ? applyTo = this.loginType : applyTo = this.individual;
-                try {
-                    if (this.$store.state.repoInfo.repo_id) {
-                        _url = `${url.getSignPage}/${this.$store.state.repoInfo.platform}/${this.$store.state.repoInfo.org_id}:${this.$store.state.repoInfo.repo_id}/${applyTo}`;
-                    } else {
-                        _url = `${url.getSignPage}/${this.$store.state.repoInfo.platform}/${this.$store.state.repoInfo.org_id}/${applyTo}`;
-                    }
-                } catch (e) {
+                if (!this.$store.state.linkId) {
                     this.$store.commit('errorCodeSet', {
                         dialogVisible: true,
                         dialogMessage: this.$t('tips.page_error')
@@ -491,7 +469,7 @@
                     return;
                 }
                 axios({
-                    url: _url
+                    url: `${url.getSignPage}/${this.$store.state.linkId}/${applyTo}`
                 }).then(res => {
                     this.setData(res, resolve);
                 }).catch(err => {

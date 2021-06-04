@@ -17,7 +17,7 @@ export default new Vuex.Store({
         orgOptions: JSON.parse(sessionStorage.getItem('orgOptions')) || undefined,
         userLimit: sessionStorage.getItem('userLimit') || undefined,
         loginInfo: JSON.parse(sessionStorage.getItem('loginInfo')) || undefined,
-        repoInfo: JSON.parse(sessionStorage.getItem('repoInfo')) || undefined,
+        linkId: sessionStorage.getItem('linkId') || undefined,
         loginType: sessionStorage.getItem('loginType') || undefined,
         platform: sessionStorage.getItem('platform') || undefined,
         domain: sessionStorage.getItem('domain') || undefined,
@@ -168,9 +168,9 @@ export default new Vuex.Store({
             state.loginType = loginType;
             sessionStorage.setItem('loginType', loginType);
         },
-        setRepoInfo(state, obj) {
-            state.repoInfo = obj;
-            sessionStorage.setItem('repoInfo', JSON.stringify(obj));
+        setLinkId(state, link_id) {
+            state.linkId = link_id;
+            sessionStorage.setItem('linkId', link_id);
         },
         setLoginInfo(state, obj) {
             state.loginInfo = obj;
@@ -249,8 +249,8 @@ export default new Vuex.Store({
         setLoginInfoAct({commit}, obj) {
             commit('setLoginInfo', obj);
         },
-        setRepoInfoAct({commit}, obj) {
-            commit('setRepoInfo', obj);
+        setLinkIdAct({commit}, link_id) {
+            commit('setLinkId', link_id);
         },
         setLoginTypeAct({commit}, loginType) {
             commit('setLoginType', loginType);

@@ -120,4 +120,5 @@ const TITLE_OPTIONS_ZH = [
     {label: '地址', value: '地址'},
     {label: '传真', value: '传真'}
 ];
+const SIGN_LINK = 'sign-link';
 
