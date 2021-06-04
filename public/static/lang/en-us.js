@@ -144,6 +144,7 @@ module.exports = {
         not_support_platform: 'Privacy policy of this platform is not supported at present. Please store the privacy policy in the public warehouse of Gitee or Github',
         has_same_lang_privacy: 'Do not configure privacy policy in the same language',
         privacy_conf_err: 'Privacy policy configuration error',
+        unknown_email: 'Invalid email address.Enter an administrator or manager email address.'
     },
     header: {
         home: 'Home',
@@ -190,9 +191,8 @@ module.exports = {
         newPwd_length_err: 'the length of password should be between 6 and 16',
         newPwd_contains_Illegal_character: 'The new password contains illegal characters',
         email_input_holder: 'Please input email',
-        find_pwd_step1: 'Verify email',
-        find_pwd_step2: 'Reset password',
-        find_pwd_step3: 'Done',
+        find_pwd_step1: 'Reset password',
+        find_pwd_step2: 'Done',
         resetSuccess: 'Reset successfully',
         goToLogin: 'Go to login',
         managerName: 'Manager Name',

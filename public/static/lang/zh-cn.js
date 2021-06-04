@@ -144,6 +144,7 @@ module.exports = {
         not_support_platform: '暂不支持该平台的隐私声明，请将隐私声明存储到Gitee或者Github的公开仓库',
         has_same_lang_privacy: '请勿配置相同语言的隐私声明',
         privacy_conf_err: '隐私声明配置错误',
+        unknown_email: '该邮箱不是管理员的邮箱'
     },
     header: {
         home: '首页',
@@ -190,9 +191,8 @@ module.exports = {
         newPwd_length_err: '新密码长度必须是6-16位',
         newPwd_contains_Illegal_character: '新密码包含非法字符',
         email_input_holder: '请输入邮箱',
-        find_pwd_step1: '验证邮箱',
-        find_pwd_step2: '重置密码',
-        find_pwd_step3: '完成',
+        find_pwd_step1: '重置密码',
+        find_pwd_step2: '完成',
         resetSuccess: '重置成功',
         goToLogin: '去登陆',
         managerName: '管理员姓名',

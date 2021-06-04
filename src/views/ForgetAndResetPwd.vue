@@ -1,5 +1,5 @@
 <template>
-    <div id="verifyEmail" class="margin-top-3rem margin-bottom-3rem">
+    <div id="forgetAndResetPwd" class="margin-top-3rem margin-bottom-3rem">
         <Step class="margin-top-5rem margin-bottom-2rem" :steping="0"></Step>
         <div class="findPwdBox">
             <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="0">
@@ -21,6 +21,16 @@
                         </el-col>
                     </el-row>
                 </el-form-item>
+                <el-form-item prop="newPassword">
+                    <el-input :placeholder="$t('corp.input_new_pwd')" clearable=""
+                              type="password"
+                              v-model="ruleForm.newPassword"></el-input>
+                </el-form-item>
+                <el-form-item prop="newPasswordAgain">
+                    <el-input :disabled="!haveNewPwd" :placeholder="$t('corp.input_new_pwd_again')" clearable=""
+                              type="password"
+                              v-model="ruleForm.newPasswordAgain"></el-input>
+                </el-form-item>
                 <el-form-item>
                     <button class="reset_pwd_button" type="button" @click="submitForm('ruleForm')">
                         {{$t('corp.submit')}}
@@ -28,6 +38,7 @@
                 </el-form-item>
             </el-form>
         </div>
+        <ReTryDialog :dialogVisible="reTryDialogVisible" :message="reLoginMsg"></ReTryDialog>
     </div>
 </template>
 
@@ -35,13 +46,22 @@
     import Step from '../components/FindPwdSteps';
     import http from '../util/_axios';
     import * as url from '../util/api';
+    import * as util from '../util/util';
+    import ReTryDialog from '../components/ReTryDialog';
 
     export default {
-        name: 'verifyEmail',
+        name: 'ForgetAndResetPwd',
         components: {
-            Step
+            Step,
+            ReTryDialog
         },
         computed: {
+            reLoginMsg() {
+                return this.$store.state.dialogMessage;
+            },
+            reTryDialogVisible() {
+                return this.$store.state.reTryDialogVisible;
+            },
             sendBtTextFromLang: {
                 get: function () {
                     return this.sendBtText;
@@ -66,20 +86,52 @@
             }
         },
         data() {
+            var validateNewPwd = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error(this.$t('corp.input_new_pwd')));
+                } else if (value.length < PWD_MIN_LENGTH || value.length > PWD_MAX_LENGTH) {
+                    callback(new Error(this.$t('corp.newPwd_length_err')));
+                } else if (this.checkIllegalChar(value)) {
+                    callback(new Error(this.$t('corp.newPwd_contains_Illegal_character')));
+                } else {
+                    this.haveNewPwd = true;
+                    callback();
+                }
+            };
+            var validateNewPwdAgain = (rule, value, callback) => {
+                if (value === '') {
+                    callback(new Error(this.$t('corp.input_new_pwd_again')));
+                } else if (value !== this.ruleForm.newPassword) {
+                    callback(new Error(this.$t('corp.newPwd_diff')));
+                } else {
+                    callback();
+                }
+            };
             return {
+                second: '',
+                haveNewPwd: false,
                 sendBtText: this.$t('signPage.sendCode'),
-                ruleForm: {email: '', code: ''},
+                ruleForm: {email: '', code: '', newPassword: '', newPasswordAgain: ''},
                 rules: {
                     email: [{required: true, validator: this.verifyFormEmail, trigger: ['blur', 'change']}],
-                    code: [{required: true, validator: this.verifyCodeCheck, trigger: ['blur', 'change']}]
+                    code: [{required: true, validator: this.verifyCodeCheck, trigger: ['blur', 'change']}],
+                    newPassword: [{required: true, validator: validateNewPwd, trigger: ['blur', 'change']}],
+                    newPasswordAgain: [{required: true, validator: validateNewPwdAgain, trigger: ['blur', 'change']}]
                 }
             };
         },
         methods: {
+            checkIllegalChar(str) {
+                for (let char of str) {
+                    if (char.charCodeAt() > PWD_MAX_ASCII || char.charCodeAt() < PWD_MIN_ASCII) {
+                        return true;
+                    }
+                }
+                return false;
+            },
             async verifyFormEmail(rule, value, callback) {
                 let email = value.trim();
-                let reg = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,6}$/;
-                if (reg.test(email)) {
+                if (EMAIL_REG.test(email)) {
                     callback();
                 } else {
                     callback(new Error(this.$t('tips.invalid_email')));
@@ -93,14 +145,34 @@
                 }
             },
             submitVerifyCode() {
+                let org_repo = {
+                    platform: this.$store.state.repoInfo.platform,
+                    org_id: this.$store.state.repoInfo.org_id
+                };
+                try {
+                    if (this.$store.state.repoInfo.repo_id) {
+                        org_repo.repo_id = this.$store.state.repoInfo.repo_id;
+                    }
+                } catch (e) {
+                    this.$store.commit('errorCodeSet', {
+                        dialogVisible: true,
+                        dialogMessage: this.$t('tips.page_error')
+                    });
+                    return;
+                }
                 http({
                     url: url.submitVerifyCode,
                     method: 'post',
-                    data: {email: this.ruleForm.email, verifyCode: this.ruleForm.code}
+                    data: {
+                        code: this.ruleForm.code.trim(),
+                        email: this.ruleForm.email.trim(),
+                        org_repo: org_repo,
+                        password: this.ruleForm.newPassword.trim()
+                    }
                 }).then(res => {
-                    this.$store.commit('setFindPwdEmail', this.ruleForm.email);
-                    this.$router.push('/reset-password');
+                    this.$router.push('/reset-done');
                 }).catch(err => {
+                    util.catchErr(err, '', this);
                 });
             },
             submitForm(formName) {
@@ -113,30 +185,52 @@
                 });
             },
             sendCode() {
-                let reg = new RegExp('^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$');
-                let email = this.ruleForm.email;
-                if (email && reg.test(email)) {
+                let email = this.ruleForm.email.trim();
+                if (email && EMAIL_REG.test(email)) {
+                    let _url = '';
+                    try {
+                        if (this.$store.state.repoInfo.repo_id) {
+                            _url = `${url.findPwdSendCode}/${this.$store.state.repoInfo.platform}/${this.$store.state.repoInfo.org_id}:${this.$store.state.repoInfo.repo_id}/${email}`;
+                        } else {
+                            _url = `${url.findPwdSendCode}/${this.$store.state.repoInfo.platform}/${this.$store.state.repoInfo.org_id}/${email}`;
+                        }
+                    } catch (e) {
+                        this.$store.commit('errorCodeSet', {
+                            dialogVisible: true,
+                            dialogMessage: this.$t('tips.page_error')
+                        });
+                        return;
+                    }
                     http({
-                        url: url.findPwdSendCode,
-                        method: 'post',
-                        data: {email: email}
+                        url: _url,
+                        method: 'post'
                     }).then(res => {
-                        console.log(res);
+                        this.$message.closeAll();
+                        this.$message.success({message: this.$t('tips.sending_email'), duration: 5000});
+                        this.second = 60;
+                        let codeInterval = setInterval(() => {
+                            if (this.second !== 0) {
+                                this.second--;
+                                this.sendBtTextFromLang = this.$t('signPage.reSendCode', {second: this.second});
+                            } else {
+                                this.sendBtTextFromLang = this.$t('signPage.sendCode');
+                                clearInterval(codeInterval);
+                            }
+                        }, 1000);
                     }).catch(err => {
-                        console.log(err);
+                        util.catchErr(err, '', this);
                     });
                 } else {
                     this.$message.closeAll();
                     this.$message.error(this.$t('tips.not_fill_email'));
                 }
-
             }
         }
     };
 </script>
 
 <style lang="less">
-    #verifyEmail {
+    #forgetAndResetPwd {
         .el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover {
             cursor: pointer;
             border: none;

@@ -5,15 +5,16 @@
                 <div class="formBack">
                     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="0">
                         <el-form-item :required="true" prop="userName">
-                            <el-input v-model="ruleForm.userName" autocomplete="off" :placeholder="$t('corp.id')"
+                            <el-input clearable="" v-model="ruleForm.userName" autocomplete="off"
+                                      :placeholder="$t('corp.id')"
                                       @keydown.native="pressEnter"></el-input>
                         </el-form-item>
                         <el-form-item :required="true" label="" prop="pwd">
-                            <el-input type="password" v-model="ruleForm.pwd" autocomplete="off"
+                            <el-input clearable="" type="password" v-model="ruleForm.pwd" autocomplete="off"
                                       :placeholder="$t('corp.pwd')" @keydown.native="pressEnter"></el-input>
                         </el-form-item>
                         <el-form-item style="text-align: right">
-                            <span class="pointer" id="forgetPwd">{{$t('corp.forget_pwd')}}</span>
+                            <span @click="findPwd" class="pointer" id="forgetPwd">{{$t('corp.forget_pwd')}}</span>
                         </el-form-item>
                         <el-form-item style="text-align: center">
                             <button class="button" type="button" @click="submitForm('ruleForm')">
@@ -88,6 +89,9 @@
                 if (event.keyCode === 13) {
                     this.submitForm('ruleForm');
                 }
+            },
+            findPwd() {
+                this.$router.push('/password');
             },
             login(userName, pwd) {
                 let platform = '';
