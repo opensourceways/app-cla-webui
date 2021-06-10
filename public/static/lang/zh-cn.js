@@ -146,6 +146,8 @@ module.exports = {
         quitLogin: '已退出',
         quitLoginTip: '你的{platform}账户已经授权登陆了社区管理，请退出后再继续',
         copyError: '复制失败',
+        chooseEmailType: '请选择邮箱类型',
+        not_support_auth_way: '错误的授权方式',
     },
     header: {
         home: '首页',
@@ -218,6 +220,7 @@ module.exports = {
         operation: '操作',
         toSign: '签署',
         copy_address: '复制地址',
+        email_authorize: '邮箱授权',
         toDetail: '详情',
         unlink_p: '你确定想要解绑?',
         unlink_will: '解绑将会...',
@@ -342,5 +345,8 @@ module.exports = {
         config_cla_first_tips: '提示：绑定前需要准备一个与CLA语言相同的签名文件，单击此处',
         blank_signature: '空白页',
         complete_information: '并填写完整信息',
+        email_reauthorize_title: '该组织绑定的邮箱是{email},如果当前系统不能正常发送邮件，请对邮箱重新授权',
+        select_email_type: '请选择要重新授权的邮件类型',
+        email_reauthorize_confirm: '更新所有绑定了此邮箱的社区的授权信息',
     },
 };

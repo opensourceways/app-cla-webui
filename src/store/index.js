@@ -67,8 +67,13 @@ export default new Vuex.Store({
         addLang: sessionStorage.getItem('addLang') || undefined,
         add_bind_first: sessionStorage.getItem('add_bind_first') || undefined,
         findPwdEmail: sessionStorage.getItem('findPwdEmail') || undefined,
+        reAuthEmail: sessionStorage.getItem('reAuthEmail') || undefined,
     },
     mutations: {
+        setReAuthEmail(state, data) {
+            state.reAuthEmail = data;
+            sessionStorage.setItem('reAuthEmail', data);
+        },
         setFindPwdEmail(state, data) {
             state.findPwdEmail = data;
             sessionStorage.setItem('findPwdEmail', data);

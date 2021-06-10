@@ -276,14 +276,21 @@
 .margin-bottom-3rem {
     margin-bottom: 3rem;
 }
+
 .padding-3rem {
     padding: 3rem;
 }
+
 .padding-5rem {
     padding: 5rem;
 }
+
 .align_left {
     text-align: left;
+}
+
+.font-size-11rem {
+    font-size: 1.1rem;
 }
 
 .el-step__head.is-finish, .el-step__title.is-finish {
@@ -345,9 +352,19 @@
     cursor: pointer;
     color: #319E55;
 }
+
 .font-size-1rem {
     font-size: 1rem;
 }
-.display-inline-block{
+
+.display-inline-block {
     display: inline-block;
+}
+
+.align_center {
+    text-align: center;
+}
+
+.keep_all {
+    word-break: keep-all;
 }

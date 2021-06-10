@@ -28,11 +28,11 @@
                 :visible.sync="emailDialogVisible"
                 width="35%">
             <div>
-                <p :class="{word_break:this.lang==='1'}" class="dialogDesc">
+                <p :class="{keep_all:this.lang==='1'}" class="dialogDesc">
                     {{$t('org.config_cla_email_platform_select')}}</p>
                 <div>
                     <el-row>
-                        <el-col :offset="4" :span="16">
+                        <el-col :offset="2" :span="20">
                             <el-select
                                     class="my-select"
                                     :placeholder="$t('org.config_cla_email_platform_select_placeholder')"
@@ -52,7 +52,7 @@
                 <el-row class="authorize_desc">
                     <el-col :offset="2" :span="20">
                         <p class="align_center">{{$t('org.config_cla_email_authorize_desc')}}</p>
-                        <ul class="align_left" :class="{word_break:this.lang==='1'}">
+                        <ul class="align_left" :class="{keep_all:this.lang==='1'}">
                             <li>{{$t('org.config_cla_email_authorize_desc1')}}</li>
                             <li>{{$t('org.config_cla_email_authorize_desc2')}}</li>
                             <li>{{$t('org.config_cla_email_authorize_desc3')}}</li>
@@ -72,6 +72,7 @@
 
 <script>
     import * as url from '../util/api'
+    import * as util from '../util/util'
     import http from '../util/http'
     import _cookie from 'js-cookie'
     import ReLoginDialog from '../components/ReLoginDialog'
@@ -111,14 +112,14 @@
         inject: ['setClientHeight'],
         methods: {
             toPreviousPage() {
-                this.$router.replace('/config-org').then(route=>{
-                }).catch(err=>{
+                this.$router.replace('/config-org').then(route => {
+                }).catch(err => {
                 })
             },
             toNextPage() {
                 if (this.email) {
-                    this.$router.replace('/config-cla-link').then(route=>{
-                    }).catch(err=>{
+                    this.$router.replace('/config-cla-link').then(route => {
+                    }).catch(err => {
                     })
                 } else {
                     this.$message.closeAll();
@@ -128,7 +129,7 @@
             getCookieData() {
                 if (document.cookie !== '') {
                     let cookieArr = document.cookie.split(';');
-                    let email = '';
+                    let email, error_code = '';
                     cookieArr.forEach((item) => {
                         let arr = item.split('=');
                         let name = arr[0].trim();
@@ -151,6 +152,11 @@
                 this.emailDialogVisible = true;
             },
             authorizeEmail() {
+                if (!this.emailType) {
+                    this.$message.closeAll();
+                    this.$message.error(this.$t('tips.chooseEmailType'))
+                    return
+                }
                 let myUrl = '';
                 switch (this.emailType) {
                     case 'G-Mail':
@@ -159,54 +165,11 @@
                 }
                 http({
                     url: myUrl,
+                    method: 'patch'
                 }).then(res => {
                     window.location.href = res.data.data.url;
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
+                    util.catchErr(err, 'setOrgReLogin', this)
                 })
             },
             changeEmailType(value) {
@@ -220,7 +183,7 @@
         created() {
             this.getCookieData();
         },
-        mounted(){
+        mounted() {
             this.setClientHeight();
         },
         beforeRouteEnter(to, from, next) {
@@ -253,23 +216,15 @@
             text-align: center;
         }
 
-        .word_break {
-            word-break: break-all;
-        }
-
-        .align_center {
-            text-align: center;
-        }
-
         .dialogDesc {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin: 2rem 0;
             text-align: center;
         }
 
         .authorize_desc {
             padding: 2rem 0;
-            font-size: 1.3rem
+            font-size: 1rem
         }
 
         .email_button {

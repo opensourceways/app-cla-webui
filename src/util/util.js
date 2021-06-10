@@ -98,6 +98,65 @@ export const successMessage = (_this)=>{
     _this.$message.closeAll();
     _this.$message.success(_this.$t('tips.successTitle'))
 };
+export const catchErr = (err,commit,_this)=>{
+    if (err.data && err.data.hasOwnProperty('data')) {
+        switch (err.data.data.error_code) {
+            case 'cla.invalid_token':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.invalid_token'),
+                });
+                break;
+            case 'cla.unauthorized_token':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.unauthorized_token'),
+                });
+                break;
+            case 'cla.missing_token':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.missing_token'),
+                });
+                break;
+            case 'cla.expired_token':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.invalid_token'),
+                });
+                break;
+            case 'cla.unknown_token':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.unknown_token'),
+                });
+                break;
+            case 'cla.not_support_auth_way':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.not_support_auth_way'),
+                });
+                break;
+            case 'cla.system_error':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.system_error'),
+                });
+                break;
+            default :
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.unknown_error'),
+                });
+                break;
+        }
+    } else {
+        _this.$store.commit('errorCodeSet', {
+            dialogVisible: true,
+            dialogMessage: _this.$t('tips.system_error'),
+        })
+    }
+};
 
 
 

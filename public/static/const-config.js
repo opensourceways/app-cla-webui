@@ -106,7 +106,7 @@ const DATATYPEOPTIONS = [
 ];
 const EMAIL_UNAUTHORIZE = 'refuse_to_authorize_email';
 const NO_PUBLIC_EMAIL = 'no_public_email';
-const SYSTEM_ERROR = 'system_error';
+const SYSTEM_ERROR = 'error_code';
 const GITEE_CHECK_REPO_401_ERROR_PRIVATE = '401 Unauthorized: no \'projects\' scope';
 const GITEE_CHECK_REPO_401_ERROR_TOKEN_EXIST = '401 Unauthorized: Access token does not exist';
 const PWD_MIN_LENGTH = 6;
