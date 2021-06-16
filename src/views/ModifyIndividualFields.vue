@@ -6,7 +6,7 @@
                     <el-tooltip class="item" effect="dark"
                                 content="The information you want contributors to fill in when they sign the cla.Title and type are required, otherwise the field will fail to be added"
                                 placement="right">
-                        <svg-icon icon-class="bangzhu"></svg-icon>
+                        <svg-icon icon-class="tips"></svg-icon>
                     </el-tooltip>
                 </p>
             </div>

@@ -6,7 +6,7 @@
                     <el-tooltip class="item" effect="dark"
                                 :content="$t('org.config_cla_fields_desc')"
                                 placement="right">
-                        <svg-icon icon-class="bangzhu"></svg-icon>
+                        <svg-icon icon-class="tips"></svg-icon>
                     </el-tooltip>
                 </p>
             </div>

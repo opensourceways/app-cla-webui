@@ -389,7 +389,6 @@
                     }).catch(err => {
                         if (err.data && err.data.hasOwnProperty('data')) {
                             switch (err.data.data.error_code) {
-
                                 case 'cla.invalid_parameter':
                                     this.$store.commit('setSignReLogin', {
                                         dialogVisible: true,

@@ -1,7 +1,7 @@
 <template>
     <el-row id="userList">
         <el-col>
-            <p id="tabName">{{$t('header.manager')}}</p>
+            <p class="tabName">{{$t('header.manager')}}</p>
             <el-row class="tableBox">
                 <el-col>
                     <el-row>
@@ -173,6 +173,12 @@
                                     dialogMessage: this.$t('tips.missing_token'),
                                 });
                                 break;
+                            case 'cla.expired_token':
+                                this.$store.commit('errorSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.invalid_token'),
+                                });
+                                break;
                             case 'cla.unknown_token':
                                 this.$store.commit('errorSet', {
                                     dialogVisible: true,
@@ -222,7 +228,7 @@
                                 });
                                 break;
                             case 'cla.expired_token':
-                                this.$store.commit('setSignReLogin', {
+                                this.$store.commit('errorSet', {
                                     dialogVisible: true,
                                     dialogMessage: this.$t('tips.invalid_token'),
                                 });
@@ -269,51 +275,6 @@
 
     #userList {
         padding: 2rem 0;
-
-        .actionRow {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .tableBox {
-            border-radius: 1.5rem;
-            margin-bottom: 2rem;
-            padding: 3rem;
-            background-color: white;
-        }
-
-        & .tableClass {
-            border: 1px solid black;
-            border-radius: 1.5rem;
-        }
-
-        & .el-dialog {
-            border-radius: 1rem;
-        }
-
-        & .button {
-            width: 10rem;
-            height: 2rem;
-            border-radius: 1rem;
-            border: none;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            background: linear-gradient(to right, #97DB30, #319E55);
-            margin-bottom: 1rem;
-            user-select: none;
-        }
-
-        & .button:focus {
-            outline: none;
-        }
-
-        & #tabName {
-            user-select: none;
-            font-family: Roboto-Regular, sans-serif;
-            font-size: 2rem;
-            text-align: left;
-        }
 
         & .el-checkbox__inner {
             border: 1px solid #319E55;

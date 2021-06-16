@@ -6,7 +6,7 @@
                 <el-tooltip class="item" effect="light"
                             :content="$t('org.config_cla_paste_url_title_tooltips')"
                             placement="right">
-                    <svg-icon icon-class="bangzhu"></svg-icon>
+                    <svg-icon icon-class="tips"></svg-icon>
                 </el-tooltip>
             </div>
             <div>

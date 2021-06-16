@@ -32,15 +32,18 @@
                                     {{$t('header.emp')}}
                                 </div>
                                 <div v-if="loginRole==='corp'&&role==='admin'" @click="handleCommand('d')">
+                                    {{$t('header.SubEmail')}}
+                                </div>
+                                <div v-if="loginRole==='corp'&&role==='admin'" @click="handleCommand('e')">
                                     {{$t('header.createManager')}}
                                 </div>
-                                <div v-if="loginRole==='corp'" @click="handleCommand('e')">
+                                <div v-if="loginRole==='corp'" @click="handleCommand('f')">
                                     {{$t('header.resetPwd')}}
                                 </div>
-                                <div v-if="loginRole==='corp'&&role==='admin'" @click="handleCommand('f')">
+                                <div v-if="loginRole==='corp'&&role==='admin'" @click="handleCommand('g')">
                                     {{$t('header.corpCla')}}
                                 </div>
-                                <div @click="handleCommand('g')">
+                                <div @click="handleCommand('h')">
                                     {{$t('header.loginOut')}}
                                 </div>
                             </div>
@@ -90,12 +93,12 @@
 
     export default {
         name: "NewHeader",
-        computed:{
-            communityInfo(){
+        computed: {
+            communityInfo() {
                 if (this.$store.state.loginInfo.userInfo[0].repo_id) {
                     return `${this.$store.state.loginInfo.userInfo[0].org_id}/${this.$store.state.loginInfo.userInfo[0].repo_id}`
                 }
-                    return this.$store.state.loginInfo.userInfo[0].org_id
+                return this.$store.state.loginInfo.userInfo[0].org_id
             },
         },
         data() {
@@ -132,6 +135,8 @@
                     } else {
                         this.$router.push('/managerList')
                     }
+                } else if (this.$route.path === '/add-subemail') {
+                    this.$router.push('/subemail')
                 } else if (this.$route.path === '/privacy') {
                     this.$router.push('/sign-cla')
                 }
@@ -151,15 +156,18 @@
                         this.toEmployee();
                         break;
                     case 'd':
-                        this.toCreateManager();
+                        this.toAddSubEmail();
                         break;
                     case 'e':
-                        this.toResetPwd();
+                        this.toCreateManager();
                         break;
                     case 'f':
-                        this.toCLA();
+                        this.toResetPwd();
                         break;
                     case 'g':
+                        this.toCLA();
+                        break;
+                    case 'h':
                         this.loginOut();
                         break;
                 }
@@ -177,6 +185,11 @@
             toEmployee() {
                 if (this.$route.path !== '/employeeList') {
                     this.$router.push('/employeeList')
+                }
+            },
+            toAddSubEmail() {
+                if (this.$route.path !== '/subemail') {
+                    this.$router.push('/subemail')
                 }
             },
             toCreateManager() {

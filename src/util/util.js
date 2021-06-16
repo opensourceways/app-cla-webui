@@ -115,6 +115,131 @@ export const getMenuState = (_this) => {
         return 'corp'
     }
 };
+export const catchErr = (err,commit,_this) => {
+    if (err.data && err.data.hasOwnProperty('data')) {
+        switch (err.data.data.error_code) {
+            case 'cla.invalid_token':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.invalid_token'),
+                });
+                break;
+            case 'cla.expired_token':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.invalid_token'),
+                });
+                break;
+            case 'cla.missing_token':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.missing_token'),
+                });
+                break;
+            case 'cla.unknown_token':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.unknown_token'),
+                });
+                break;
+            case 'cla.unauthorized_token':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.unauthorized_token'),
+                });
+                break;
+            case 'cla.failed_to_send_email':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.failed_to_send_email'),
+                });
+                break;
+            case 'cla.unknown_email_platform':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.unknown_email'),
+                });
+                break;
+            case 'cla.wrong_verification_code':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.wrong_verification_code'),
+                });
+                break;
+            case 'cla.restricted_email_suffix':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.restricted_email_suffix'),
+                });
+                break;
+            case 'cla.expired_verification_code':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.expired_verification_code'),
+                });
+                break;
+            case 'cla.no_link_or_unsigned':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.no_link_or_unsigned'),
+                });
+                break;
+            case 'cla.not_an_email':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.not_fill_email'),
+                });
+                break;
+            case 'cla.unmatch_email_domain':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.subemailErr'),
+                });
+                break;
+            case 'cla.not_same_corp':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.not_same_corp'),
+                });
+                break;
+            case 'cla.error_parsing_api_body':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.error_parsing_api_body'),
+                });
+                break;
+            case 'cla.no_db_record':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.id_pwd_err'),
+                });
+                break;
+            case 'cla.wrong_id_or_pw':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.id_pwd_err'),
+                });
+                break;
+            case 'cla.system_error':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.system_error'),
+                });
+                break;
+            default :
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.unknown_error'),
+                });
+                break;
+        }
+    } else {
+        _this.$store.commit('errorCodeSet', {
+            dialogVisible: true,
+            dialogMessage: _this.$t('tips.system_error'),
+        })
+    }
+};
 
 
 

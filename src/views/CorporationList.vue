@@ -352,10 +352,8 @@
                                     :multiple="false"
                                     :headers="uploadHeaders"
                                     :http-request="upload"
-                                    :on-preview="handlePreview"
                                     :on-remove="handleRemove"
                                     :before-remove="beforeRemove"
-                                    :before-upload="beforeUpload"
                                     :auto-upload="false"
                                     :on-change="handleChange"
                                     :limit="1"
@@ -500,66 +498,6 @@
             },
             submitDeleteCorpComplete() {
                 this.deleteCompleteVisible = false;
-                // http({
-                //     url: `${url.corporationManager}/${this.$store.state.corpItem.link_id}/${email}`,
-                //     method: 'patch',
-                // }).then(res => {
-                //     util.successMessage(this);
-                //     this.getCorporationInfo()
-                // }).catch(err => {
-                //     if (err.data && err.data.hasOwnProperty('data')) {
-                //         switch (err.data.data.error_code) {
-                //             case 'cla.invalid_token':
-                //                 this.$store.commit('errorSet', {
-                //                     dialogVisible: true,
-                //                     dialogMessage: this.$t('tips.invalid_token'),
-                //                 });
-                //                 break;
-                //             case 'cla.missing_token':
-                //                 this.$store.commit('errorSet', {
-                //                     dialogVisible: true,
-                //                     dialogMessage: this.$t('tips.missing_token'),
-                //                 });
-                //                 break;
-                //             case 'cla.unknown_token':
-                //                 this.$store.commit('errorSet', {
-                //                     dialogVisible: true,
-                //                     dialogMessage: this.$t('tips.unknown_token'),
-                //                 });
-                //                 break;
-                //             case 'cla.no_pdf_of_corp':
-                //                 this.$store.commit('errorCodeSet', {
-                //                     dialogVisible: true,
-                //                     dialogMessage: this.$t('tips.no_pdf_of_corp'),
-                //                 });
-                //                 break;
-                //             case 'cla.unuploaded':
-                //                 this.$store.commit('errorCodeSet', {
-                //                     dialogVisible: true,
-                //                     dialogMessage: this.$t('tips.no_pdf_of_corp'),
-                //                 });
-                //                 break;
-                //
-                //             case 'cla.system_error':
-                //                 this.$store.commit('errorCodeSet', {
-                //                     dialogVisible: true,
-                //                     dialogMessage: this.$t('tips.system_error'),
-                //                 });
-                //                 break;
-                //             default :
-                //                 this.$store.commit('errorCodeSet', {
-                //                     dialogVisible: true,
-                //                     dialogMessage: this.$t('tips.unknown_error'),
-                //                 });
-                //                 break;
-                //         }
-                //     } else {
-                //         this.$store.commit('errorCodeSet', {
-                //             dialogVisible: true,
-                //             dialogMessage: this.$t('tips.system_error'),
-                //         })
-                //     }
-                // })
             },
             cancelDeleteCorpComplete() {
                 this.deleteCompleteVisible = false;
@@ -898,6 +836,12 @@
                                     dialogMessage: this.$t('tips.unknown_token'),
                                 });
                                 break;
+                            case 'cla.no_link':
+                                this.$store.commit('errorCodeSet', {
+                                    dialogVisible: true,
+                                    dialogMessage: this.$t('tips.no_link'),
+                                });
+                                break;
                             case 'cla.system_error':
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
@@ -1181,8 +1125,6 @@
                     this.$message.error('Please select file first')
                 }
             },
-            beforeUpload(file) {
-            },
             handleChange(file, fileList) {
                 let max_size = this.file_size * 1024 * 1024;
                 if (/.(PDF|pdf)$/.test(file.name)) {
@@ -1217,9 +1159,6 @@
                     this.fileList.splice(0, 1);
                     i--;
                 }
-            },
-            handlePreview(file) {
-
             },
             handleExceed(files, fileList) {
                 this.$message.warning(this.$t('org.file_limit_tips'));
@@ -1322,66 +1261,6 @@
             deleteCompletely(email) {
                 console.log('deleteCompletely');
                 this.deleteCompleteVisible = true;
-                // http({
-                //     url: `${url.corporationManager}/${this.$store.state.corpItem.link_id}/${email}`,
-                //     method: 'patch',
-                // }).then(res => {
-                //     util.successMessage(this);
-                //     this.getCorporationInfo()
-                // }).catch(err => {
-                //     if (err.data && err.data.hasOwnProperty('data')) {
-                //         switch (err.data.data.error_code) {
-                //             case 'cla.invalid_token':
-                //                 this.$store.commit('errorSet', {
-                //                     dialogVisible: true,
-                //                     dialogMessage: this.$t('tips.invalid_token'),
-                //                 });
-                //                 break;
-                //             case 'cla.missing_token':
-                //                 this.$store.commit('errorSet', {
-                //                     dialogVisible: true,
-                //                     dialogMessage: this.$t('tips.missing_token'),
-                //                 });
-                //                 break;
-                //             case 'cla.unknown_token':
-                //                 this.$store.commit('errorSet', {
-                //                     dialogVisible: true,
-                //                     dialogMessage: this.$t('tips.unknown_token'),
-                //                 });
-                //                 break;
-                //             case 'cla.no_pdf_of_corp':
-                //                 this.$store.commit('errorCodeSet', {
-                //                     dialogVisible: true,
-                //                     dialogMessage: this.$t('tips.no_pdf_of_corp'),
-                //                 });
-                //                 break;
-                //             case 'cla.unuploaded':
-                //                 this.$store.commit('errorCodeSet', {
-                //                     dialogVisible: true,
-                //                     dialogMessage: this.$t('tips.no_pdf_of_corp'),
-                //                 });
-                //                 break;
-                //
-                //             case 'cla.system_error':
-                //                 this.$store.commit('errorCodeSet', {
-                //                     dialogVisible: true,
-                //                     dialogMessage: this.$t('tips.system_error'),
-                //                 });
-                //                 break;
-                //             default :
-                //                 this.$store.commit('errorCodeSet', {
-                //                     dialogVisible: true,
-                //                     dialogMessage: this.$t('tips.unknown_error'),
-                //                 });
-                //                 break;
-                //         }
-                //     } else {
-                //         this.$store.commit('errorCodeSet', {
-                //             dialogVisible: true,
-                //             dialogMessage: this.$t('tips.system_error'),
-                //         })
-                //     }
-                // })
             },
             reductionCorp(email) {
                 console.log(email);

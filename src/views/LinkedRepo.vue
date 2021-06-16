@@ -476,7 +476,7 @@
             },
             getCookieData(resolve) {
                 if (document.cookie) {
-                    let cookieArr = document.cookie.split(';')
+                    let cookieArr = document.cookie.split(';');
                     let access_token, refresh_token, platform_token = '';
                     cookieArr.forEach((item, index) => {
                         let arr = item.split('=');

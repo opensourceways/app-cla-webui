@@ -200,6 +200,22 @@ const routes = [
                 component: () => import('../views/ManagerList.vue'),
             },
             {
+                path: '/subemail',
+                name: 'Subemail',
+                meta: {
+                    title: 'subemail',
+                },
+                component: () => import('../views/Subemail.vue'),
+            },
+            {
+                path: '/add-subemail',
+                name: 'AddSubemail',
+                meta: {
+                    title: 'add-subemail',
+                },
+                component: () => import('../views/AddSubemail.vue'),
+            },
+            {
                 path: '/createManager',
                 name: 'CreateManager',
                 meta: {
