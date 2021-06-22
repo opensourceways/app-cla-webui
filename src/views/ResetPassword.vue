@@ -81,10 +81,10 @@
             var validatePass2 = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error(this.$t('corp.input_new_pwd')));
-                    } else if (value.length < PWD_MIN_LENGTH || value.length > PWD_MAX_LENGTH) {
-                        callback(new Error(this.$t('corp.newPwd_length_err')));
-                    } else if (this.checkIllegalChar(value)) {
-                        callback(new Error(this.$t('corp.newPwd_contains_Illegal_character')));
+                } else if (value.length < PWD_MIN_LENGTH || value.length > PWD_MAX_LENGTH) {
+                    callback(new Error(this.$t('corp.newPwd_length_err')));
+                } else if (this.checkIllegalChar(value)) {
+                    callback(new Error(this.$t('corp.newPwd_contains_Illegal_character')));
                 } else if (value === this.ruleForm.oldPassword) {
                     callback(new Error(this.$t('corp.newPwd_diff_with_oldPwd')));
                 } else {
@@ -288,6 +288,22 @@
             margin-bottom: 2rem
         }
 
+        .cancelBt {
+            width: 6rem;
+            height: 3rem;
+            border-radius: 1.5rem;
+            border: 1px solid black;
+            color: black;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: white;
+            margin-left: 1rem;
+        }
+
+        .cancelBt:focus {
+            outline: none;
+        }
+
         & .button {
             width: 6rem;
             height: 3rem;
@@ -304,21 +320,5 @@
             outline: none;
         }
 
-    }
-
-    .cancelBt {
-        width: 6rem;
-        height: 3rem;
-        border-radius: 1.5rem;
-        border: 1px solid black;
-        color: black;
-        font-size: 1rem;
-        cursor: pointer;
-        background-color: white;
-        margin-left: 1rem;
-    }
-
-    .cancelBt:focus {
-        outline: none;
     }
 </style>

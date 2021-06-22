@@ -5,6 +5,8 @@
                 title=""
                 align="center"
                 :show-close="false"
+                :close-on-click-modal="false"
+                :close-on-press-escape="false"
                 :visible.sync="deleteVisible">
             <el-row align="center">
                 {{deleteMessage}}

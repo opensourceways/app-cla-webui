@@ -7,7 +7,7 @@
                 </div>
                 <div>
                     <div v-if="showHeaderMenu==='corp'">
-                        <div>
+                        <div class="grayColor">
                             <span>{{communityInfo}}</span>
                             <span class="margin-left-1rem">{{this.$store.state.loginInfo.userName}}</span>
                         </div>
