@@ -464,12 +464,6 @@
                     }
                 }
             },
-            upperFirstCase(word) {
-                let initials = word.substring(0, 1);
-                let upper = initials.toUpperCase();
-                let end = word.substring(1);
-                return upper + end;
-            },
             setData(res, resolve) {
                 if (res && res.data.data) {
                     if (res.data.data.clas && res.data.data.clas.length) {
@@ -481,7 +475,7 @@
                         let langOptions = [];
                         let langLabel = '';
                         this.signPageData.forEach((item, index) => {
-                            langLabel = this.upperFirstCase(item.language);
+                            langLabel = util.upperFirstCase(item.language);
                             langOptions.push({value: index, label: langLabel});
                             if (item.language === this.lang) {
                                 this.cla_lang = item.language;
@@ -512,9 +506,9 @@
                             });
                             this.setFields(this.value);
                             this.setFieldsData();
-                            localStorage.setItem('lang', this.upperFirstCase(this.lang));
+                            localStorage.setItem('lang', util.upperFirstCase(this.lang));
                         }
-                        this.$emit('initHeader', this.upperFirstCase(this.lang));
+                        this.$emit('initHeader', util.upperFirstCase(this.lang));
                     } else {
                         let message = '';
                         if (this.$store.state.loginType === this.corporation) {
@@ -994,7 +988,7 @@
                 let langLabel = '';
                 this.cla_lang = '';
                 this.signPageData.forEach((item, index) => {
-                    langLabel = this.upperFirstCase(item.language);
+                    langLabel = util.upperFirstCase(item.language);
                     langOptions.push({value: index, label: langLabel});
                     if (item.language === this.lang) {
                         this.cla_lang = item.language;
@@ -1021,9 +1015,9 @@
                         pdfData: this.pdfData
                     });
                     this.setFields(this.value);
-                    localStorage.setItem('lang', this.upperFirstCase(this.lang));
+                    localStorage.setItem('lang', util.upperFirstCase(this.lang));
                 }
-                this.$emit('initHeader', this.upperFirstCase(this.lang));
+                this.$emit('initHeader', util.upperFirstCase(this.lang));
                 this.$refs.pdf_iframe.contentWindow.onload = () => {
                     this.$refs.pdf_iframe.contentWindow.postMessage({
                         link_id: this.link_id,
