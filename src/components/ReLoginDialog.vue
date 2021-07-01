@@ -44,7 +44,6 @@
         data() {
             return {
                 domain: this.$store.state.domain,
-                signRouter:this.$store.state.signRouter,
                 chinese:'Chinese',
                 english:'English',
             }

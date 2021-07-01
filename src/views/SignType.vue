@@ -42,6 +42,10 @@
                                                         @click="submit('individual')">
                                                     {{ $t('signType.individualBt') }}
                                                 </button>
+                                                <button class="mobile_button"
+                                                        @click="submit('corporationManager')">
+                                                    {{$t('index.corp_login')}}
+                                                </button>
                                             </div>
                                         </el-col>
                                     </el-row>
@@ -382,7 +386,7 @@
                         <el-col :span="10" style="height: 100%;">
                             <el-row class="signType" style="height: 100%">
                                 <div id="sign">
-                                    <el-row style="height: 60%">
+                                    <el-row style="height: 75%">
                                         <el-col align="right" class="buttonBox">
                                             <div id="btBox">
                                                 <div>
@@ -417,6 +421,16 @@
                                                         <button class="button"
                                                                 @click="submit('individual')">
                                                             {{ $t('signType.individualBt') }}
+                                                        </button>
+                                                    </div>
+                                                </el-tooltip>
+                                                <el-tooltip :content="$t('index.corp_bt_tip')" placement="left"
+                                                            effect="light" :enterable="false"
+                                                            popper-class="my_tooltip">
+                                                    <div class="display-inline-block margin-1D2rem border-radius-2rem">
+                                                        <button class="button"
+                                                                @click="submit('corporationManager')">
+                                                            {{$t('index.corp_login')}}
                                                         </button>
                                                     </div>
                                                 </el-tooltip>
@@ -912,7 +926,7 @@
                         this.repo = ''
                     }
                     let base64Params = util.strToBase64(params);
-                    this.$router.replace(`${this.$store.state.signRouter}/${base64Params}`);
+                    this.$router.replace(`${SIGN_ROUTER}/${base64Params}`);
                 } else {
                     let repoInfoParams = '';
                     if (params.indexOf('/') !== -1) {
@@ -967,7 +981,11 @@
 
             submit(loginType) {
                 this.setLoginTypeAct(loginType);
-                this.$router.push('/sign-cla')
+                if (loginType === 'corporationManager') {
+                    this.$router.push('/corporationManagerLogin')
+                }else {
+                    this.$router.push('/sign-cla')
+                }
             },
             clickSignTypeGuide(type) {
                 this.signType = type;

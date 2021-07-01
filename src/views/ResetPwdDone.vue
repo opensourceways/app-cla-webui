@@ -1,6 +1,6 @@
 <template>
     <div class="margin-top-5rem margin-bottom-3rem">
-        <Step class="margin-top-5rem margin-bottom-2rem" :steping="2"></Step>
+        <Step class="margin-top-5rem margin-bottom-2rem" :steping="1"></Step>
         <div class="findPwdBox">
             <p class="margin-bottom-2rem">{{$t('corp.resetSuccess')}}</p>
             <button class="reset_pwd_button" @click="toLogin">{{$t('corp.goToLogin')}}</button>

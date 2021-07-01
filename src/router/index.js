@@ -287,23 +287,15 @@ const routes = [
         children: [
             {
                 path: '/',
-                redirect: '/verify-email'
+                redirect: '/find-password'
             },
             {
-                path: '/verify-email',
-                name: 'VerifyEmail',
-                meta: {
-                    title: 'verify email',
-                },
-                component: () => import('../views/VerifyEmail.vue'),
-            },
-            {
-                path: '/reset-password',
-                name: 'FindPassword',
+                path: '/find-password',
+                name: 'ForgetAndResetPwd',
                 meta: {
                     title: 'find password',
                 },
-                component: () => import('../views/FindPassword.vue'),
+                component: () => import('../views/ForgetAndResetPwd.vue'),
             },
             {
                 path: '/reset-done',

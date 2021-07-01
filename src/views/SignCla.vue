@@ -224,7 +224,6 @@
                 cla_hash: '',
                 second: '',
                 sendBtText: this.$t('signPage.sendCode'),
-                signRouter: this.$store.state.signRouter,
                 domain: this.$store.state.domain,
                 tipsTitle: '',
                 tipsMessage: this.$t('tips.individual_sign'),
@@ -267,9 +266,9 @@
                 let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`;
                 let path = '';
                 if (sessionStorage.getItem('orgAddress')) {
-                    path = `${this.signRouter}/${util.strToBase64(params)}/${sessionStorage.getItem('orgAddress')}`
+                    path = `${SIGN_ROUTER}/${util.strToBase64(params)}/${sessionStorage.getItem('orgAddress')}`
                 } else {
-                    path = `${this.signRouter}/${util.strToBase64(params)}`
+                    path = `${SIGN_ROUTER}/${util.strToBase64(params)}`
                 }
                 window.open(`${this.domain}${path}`)
             },

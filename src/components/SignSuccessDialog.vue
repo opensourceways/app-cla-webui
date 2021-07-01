@@ -46,7 +46,6 @@
         data() {
             return {
                 domain: this.$store.state.domain,
-                signRouter: this.$store.state.signRouter,
                 chinese: 'Chinese',
                 english: 'English',
             }
@@ -59,7 +58,7 @@
                 });
                 let repoInfo = this.$store.state.repoInfo
                 let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`
-                let path = `${this.signRouter}/${util.strToBase64(params)}`;
+                let path = `${SIGN_ROUTER}/${util.strToBase64(params)}`;
                 this.$router.replace(path)
             }
         },

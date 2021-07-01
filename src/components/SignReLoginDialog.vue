@@ -46,7 +46,6 @@
         data() {
             return {
                 domain: this.$store.state.domain,
-                signRouter: this.$store.state.signRouter,
                 chinese:'Chinese',
                 english:'English',
             }
@@ -65,9 +64,9 @@
                 let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`
                 let path = '';
                 if (sessionStorage.getItem('orgAddress')) {
-                    path = `${this.signRouter}/${util.strToBase64(params)}/${sessionStorage.getItem('orgAddress')}`
+                    path = `${SIGN_ROUTER}/${util.strToBase64(params)}/${sessionStorage.getItem('orgAddress')}`
                 } else {
-                    path = `${this.signRouter}/${util.strToBase64(params)}`
+                    path = `${SIGN_ROUTER}/${util.strToBase64(params)}`
                 }
 
                 this.$router.replace(path)

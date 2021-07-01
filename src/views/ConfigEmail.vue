@@ -135,7 +135,7 @@
                         let value = arr[1].trim();
                         if (name === 'email') {
                             email = value
-                        } else if (name === SYSTEM_ERROR) {
+                        } else if (name === EMAIL_ERROR) {
                             this.$store.commit('errorCodeSet', {
                                 dialogVisible: true,
                                 dialogMessage: this.$t('tips.email_system_error'),
