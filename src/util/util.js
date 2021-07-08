@@ -148,6 +148,12 @@ export const catchErr = (err,commit,_this) => {
                     dialogMessage: _this.$t('tips.unauthorized_token'),
                 });
                 break;
+            case 'cla.no_link_or_no_manager':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.no_link_or_no_manager'),
+                });
+                break;
             case 'cla.failed_to_send_email':
                 _this.$store.commit('errorCodeSet', {
                     dialogVisible: true,

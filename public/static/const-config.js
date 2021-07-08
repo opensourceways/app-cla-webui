@@ -13,7 +13,7 @@ const INDIVIDUALMETADATAARR_EN = [
         description: 'Email for signing CLA',
         required: true,
     },
-   ];
+];
 const INDIVIDUALMETADATAARR_ZH = [
     {
         title: '姓名',
@@ -21,13 +21,13 @@ const INDIVIDUALMETADATAARR_ZH = [
         description: '你的姓名',
         required: true,
     },
-   {
+    {
         title: '邮箱',
         type: 'email',
         description: '签署CLA的邮箱',
         required: true,
     },
-   ];
+];
 const CORPORATIONMETADATAARR_EN = [
     {
         title: 'Authorized Representative',
@@ -100,6 +100,7 @@ const DATATYPEOPTIONS = [
 const EMAIL_UNAUTHORIZE = 'refuse_to_authorize_email';
 const NO_PUBLIC_EMAIL = 'no_public_email';
 const SYSTEM_ERROR = 'system_error';
+const EMAIL_ERROR = 'error_code';
 const GITEE_CHECK_REPO_401_ERROR_PRIVATE = '401 Unauthorized: no \'projects\' scope';
 const GITEE_CHECK_REPO_401_ERROR_TOKEN_EXIST = '401 Unauthorized: Access token does not exist';
 const PWD_MIN_LENGTH = 6;
@@ -107,6 +108,6 @@ const PWD_MAX_LENGTH = 16;
 const PWD_MIN_ASCII = 33;
 const PWD_MAX_ASCII = 126;
 const EMAIL_REG = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,6}$/;
-
+const SIGN_ROUTER = '/sign';
 
 

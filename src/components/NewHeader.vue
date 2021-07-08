@@ -7,13 +7,13 @@
                 </div>
                 <div>
                     <div v-if="showHeaderMenu==='corp'">
-                        <div class="grayColor">
+                        <div v-if="this.$store.state.loginInfo" class="grayColor">
                             <span>{{communityInfo}}</span>
                             <span class="margin-left-1rem">{{this.$store.state.loginInfo.userName}}</span>
                         </div>
                     </div>
                     <div>
-                        <div v-if="showHeaderMenu" class="menuBox">
+                        <div v-if="showHeaderMenu && this.$store.state.loginInfo" class="menuBox">
                             <div class="userImgBox" id="imgBox">
                                 <div id="svgCover" class="svgCover" @click="openOrCloseMenu()">
 
@@ -95,10 +95,10 @@
         name: "NewHeader",
         computed: {
             communityInfo() {
-                if (this.$store.state.loginInfo.userInfo[0].repo_id) {
+                if (this.$store.state.loginInfo && this.$store.state.loginInfo.userInfo[0].repo_id) {
                     return `${this.$store.state.loginInfo.userInfo[0].org_id}/${this.$store.state.loginInfo.userInfo[0].repo_id}`
                 }
-                return this.$store.state.loginInfo.userInfo[0].org_id
+                return this.$store.state.loginInfo && this.$store.state.loginInfo.userInfo[0].org_id
             },
         },
         data() {
@@ -121,7 +121,7 @@
                 this.options = data
             },
             toIndex() {
-                if (this.$route.path === '/corporationManagerLogin' || this.$route.path === '/platformSelect') {
+                if (this.$route.path === '/platformSelect') {
                     this.$router.push('/')
                 } else if (this.$route.path === '/corporationList' || this.$route.path === '/addCorpUrl' || this.$route.path === '/config-check'
                     || this.$route.path === '/addIndividualUrl' || this.$route.path === '/config-org' || this.$route.path === '/config-email'
@@ -139,6 +139,26 @@
                     this.$router.push('/subemail')
                 } else if (this.$route.path === '/privacy') {
                     this.$router.push('/sign-cla')
+                } else if (this.$route.path === '/corporationManagerLogin') {
+                    let params = '';
+                    let repoInfo = {};
+                    if (this.$store.state.repoInfo) {
+                        repoInfo = this.$store.state.repoInfo;
+                    } else {
+                        this.$store.commit('errorCodeSet', {
+                            dialogVisible: true,
+                            dialogMessage: this.$t('tips.page_error'),
+                        });
+                        return
+                    }
+                    if (repoInfo.repo_id) {
+                        params = `${repoInfo.platform.toLowerCase()}/${repoInfo.org_id}/${repoInfo.repo_id}`
+                    } else {
+                        params = `${repoInfo.platform.toLowerCase()}/${repoInfo.org_id}`
+                    }
+                    let base64Params = util.strToBase64(params)
+                    let address = window.location.href.split('/')[0];
+                    location.href = `${address}${SIGN_ROUTER}/${base64Params}`
                 }
             },
             openOrCloseMenu() {
@@ -213,50 +233,11 @@
                         window.open(`../../static/pdf_source/web/viewer.html?file=${encodeURIComponent(url)}`)
                     }
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
+                    util.catchErr(err, 'errorSet', this)
                 })
             },
             loginOut() {
-                sessionStorage.clear();
+                util.clearManagerSession(this)
                 if (this.loginRole === 'corp') {
                     this.$router.push('/corporationManagerLogin')
                 } else {
