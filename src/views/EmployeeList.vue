@@ -233,7 +233,7 @@
                 data = this.inactiveData.slice((this.inactiveCurrentPage - 1) * this.pageSize, this.inactiveCurrentPage * this.pageSize);
                 if (data.length === 0 && this.inactiveCurrentPage > 1) {
                     this.inactiveCurrentPage--;
-                    return this.getInactivePageData();
+                    this.getInactivePageData();
                 } else {
                     return data;
                 }

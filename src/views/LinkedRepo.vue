@@ -160,7 +160,6 @@
     import * as url from '../util/api';
     import * as util from '../util/util';
     import http from '../util/http';
-    import _cookie from 'js-cookie';
     import ReLoginDialog from '../components/ReLoginDialog';
     import ReTryDialog from '../components/ReTryDialog';
 
@@ -220,12 +219,7 @@
         created() {
             this.setDomain();
             this.clearConfigSession();
-            new Promise((resolve, reject) => {
-                this.getCookieData(resolve);
-            }).then(res => {
-                this.getLinkedRepoList();
-            });
-
+            this.getLinkedRepoList();
         },
         updated() {
             this.setClientHeight();
@@ -381,29 +375,6 @@
             beforeRemove(file, fileList) {
                 return this.$confirm(`Are you sure you want to remove ${file.name}？`);
             },
-            getCookieData(resolve) {
-                if (document.cookie) {
-                    let cookieArr = document.cookie.split(';');
-                    let access_token, refresh_token, platform_token = '';
-                    cookieArr.forEach((item, index) => {
-                        let arr = item.split('=');
-                        let name = arr[0].trim();
-                        let value = arr[1].trim();
-                        if (name === 'refresh_token') {
-                            refresh_token = value;
-                        } else if (name === 'platform_token') {
-                            platform_token = value;
-                        } else if (name === 'access_token') {
-                            access_token = value;
-                        }
-                        _cookie.remove(name, {path: '/'});
-                    });
-                    let data = {access_token, refresh_token, platform_token, resolve};
-                    this.setTokenAct(data);
-                } else {
-                    resolve('complete');
-                }
-            },
             unlinkHandleClick(scope) {
                 this.unlinkId = scope.row.link_id;
                 this.unLinkDialogVisible = true;
@@ -413,9 +384,6 @@
                 sessionStorage.removeItem('corpItem');
                 this.$store.commit('setCorpItem', item);
                 this.$router.push('/corporationList');
-            },
-            newWindow(repo) {
-                window.open(`https://gitee.com/${repo}`);
             },
             unLinkRepositoryFun() {
                 this.loading = util.getLoading(this, 'tips.loading');
