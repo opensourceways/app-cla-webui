@@ -45,6 +45,7 @@
     import * as url from '../util/api';
     import reTryDialog from '../components/ReTryDialog';
     import http from '../util/http';
+    import * as util from '../util/util';
 
     export default {
         name: 'PlatformSelect',
@@ -55,7 +56,6 @@
             corpReLoginMsg() {
                 return this.$store.state.dialogMessage;
             },
-
             corpReTryDialogVisible() {
                 return this.$store.state.reTryDialogVisible;
             }
@@ -79,49 +79,7 @@
                         }).then(res => {
                             window.location.href = res.data.data.url;
                         }).catch(err => {
-                            if (err.data.hasOwnProperty('data')) {
-                                switch (err.data.data.error_code) {
-                                    case 'cla.invalid_token':
-                                        this.$store.commit('errorSet', {
-                                            dialogVisible: true,
-                                            dialogMessage: this.$t('tips.invalid_token')
-                                        });
-                                        break;
-                                    case 'cla.missing_token':
-                                        this.$store.commit('errorSet', {
-                                            dialogVisible: true,
-                                            dialogMessage: this.$t('tips.missing_token')
-                                        });
-                                        break;
-                                    case 'cla.unknown_token':
-                                        this.$store.commit('errorSet', {
-                                            dialogVisible: true,
-                                            dialogMessage: this.$t('tips.unknown_token')
-                                        });
-                                        break;
-                                    case 'cla.invalid_parameter':
-                                        this.$router.replace('/platformSelect');
-                                        break;
-
-                                    case 'cla.system_error':
-                                        this.$store.commit('errorCodeSet', {
-                                            dialogVisible: true,
-                                            dialogMessage: this.$t('tips.system_error')
-                                        });
-                                        break;
-                                    default :
-                                        this.$store.commit('errorCodeSet', {
-                                            dialogVisible: true,
-                                            dialogMessage: this.$t('tips.unknown_error')
-                                        });
-                                        break;
-                                }
-                            } else {
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                            }
+                            util.catchErr(err, 'errorSet', this);
                         });
                         clearInterval(interval);
                     }

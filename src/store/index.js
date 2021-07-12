@@ -51,9 +51,14 @@ export default new Vuex.Store({
         findPwdEmail: sessionStorage.getItem('findPwdEmail') || undefined,
         pafData: '',
         privacyData: '',
-        emailSuffixArr: JSON.parse(sessionStorage.getItem('emailSuffixArr')) || undefined
+        emailSuffixArr: JSON.parse(sessionStorage.getItem('emailSuffixArr')) || undefined,
+        reAuthEmail: sessionStorage.getItem('reAuthEmail') || undefined
     },
     mutations: {
+        setReAuthEmail(state, data) {
+            state.reAuthEmail = data;
+            sessionStorage.setItem('reAuthEmail', data);
+        },
         setEmailSuffix(state, data) {
             state.emailSuffixArr = data;
             sessionStorage.setItem('emailSuffixArr', JSON.stringify(data));

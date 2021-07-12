@@ -350,3 +350,15 @@
 .grayColor {
     color: gray;
 }
+
+.align_center {
+    text-align: center;
+}
+
+.keep_all {
+    word-break: keep-all;
+}
+
+.font-size-1D1rem {
+    font-size: 1.1rem;
+}
