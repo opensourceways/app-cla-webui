@@ -80,7 +80,7 @@
 <script>
     import http from '../util/http'
     import * as url from '../util/api'
-    import cookie from 'js-cookie'
+    import * as util from '../util/util'
 
     export default {
         name: "NewHeader",
@@ -182,47 +182,8 @@
                         window.open(`../../static/pdf_source/web/viewer.html?file=${encodeURIComponent(url)}`)
                     }
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
-                })
+                    util.catchErr(err, 'errorSet', this);
+                });
             },
             loginOut() {
                 sessionStorage.clear();
@@ -234,8 +195,8 @@
             },
             chooseLng(value) {
                 if (this.value !== value) {
-                    this.value = value
-                    localStorage.setItem('lang', value)
+                    this.value = value;
+                    localStorage.setItem('lang', value);
                     this.language = this.options[value].label;
                     switch (value) {
                         case 0:
@@ -248,23 +209,52 @@
                 }
                 this.isActive = true;
             },
+            changeI18N(language) {
+                switch (language) {
+                    case 0:
+                        this.$i18n.locale = 'en-us';
+                        break;
+                    case 1:
+                        this.$i18n.locale = 'zh-cn';
+                        break;
+                    default:
+                        this.$i18n.locale = 'en-us';
+                        break;
+                }
+            },
+            setLangValue(language) {
+                for (let i = 0; i < this.options.length; i++) {
+                    if (this.options[i].label === language) {
+                        this.value = i;
+                    }
+                }
+            },
             clickSelect() {
                 this.isActive = !this.isActive;
             },
             init() {
-                if (parseInt(localStorage.getItem('lang'))) {
-                    this.value = parseInt(localStorage.getItem('lang'))
-                }
-                switch (this.value) {
-                    case 0:
+                let lang = localStorage.getItem('lang');
+                switch (lang) {
+                    case '0':
+                    case 'English':
                         this.language = 'English';
-                        this.$i18n.locale = 'en-us';
+                        this.value= 0;
+                        localStorage.setItem('lang', '0');
                         break;
-                    case 1:
-                        this.language = '中文';
-                        this.$i18n.locale = 'zh-cn';
+                    case '1':
+                    case 'Chinese':
+                        this.language = 'Chinese';
+                        this.value= 1;
+                        localStorage.setItem('lang', '1');
+                        break;
+                    default:
+                        this.language = 'English';
+                        this.value= 0;
+                        localStorage.setItem('lang', '0');
                         break;
                 }
+                this.changeI18N(this.value);
+                this.setLangValue(this.language);
                 if (this.$store.state.loginInfo) {
                     this.role = this.$store.state.loginInfo.userInfo[0].role;
                 }

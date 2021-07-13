@@ -94,11 +94,11 @@ export const clearManagerSession = (_this) => {
     sessionStorage.removeItem('loginInfo');
     sessionStorage.removeItem('pwdIsChanged');
 };
-export const successMessage = (_this)=>{
+export const successMessage = (_this) => {
     _this.$message.closeAll();
     _this.$message.success(_this.$t('tips.successTitle'))
 };
-export const catchErr = (err,commit,_this)=>{
+export const catchErr = (err, commit, _this) => {
     if (err.data && err.data.hasOwnProperty('data')) {
         switch (err.data.data.error_code) {
             case 'cla.invalid_token':
