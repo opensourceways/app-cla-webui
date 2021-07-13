@@ -20,7 +20,7 @@
                             </el-table-column>
                             <el-table-column
                                     prop="email"
-                                    :label="$t('corp.SubEmail')">
+                                    :label="$t('header.SubEmail')">
                             </el-table-column>
                         </el-table>
                     </el-row>
