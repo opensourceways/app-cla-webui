@@ -148,6 +148,8 @@ module.exports = {
         copyError: '复制失败',
         chooseEmailType: '请选择邮箱类型',
         not_support_auth_way: '错误的授权方式',
+        not_support_platform: '暂不支持该平台的隐私声明，请将隐私声明存储到Gitee或者Github的公开仓库',
+        privacy_conf_err: '隐私声明配置错误',
     },
     header: {
         home: '首页',

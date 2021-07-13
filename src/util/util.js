@@ -157,6 +157,13 @@ export const catchErr = (err,commit,_this)=>{
         })
     }
 };
+export const upperFirstCase = (word) => {
+    let initials = word.substring(0, 1);
+    let upper = initials.toUpperCase();
+    let end = word.substring(1);
+    return upper + end
+};
+
 
 
 
