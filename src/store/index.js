@@ -50,7 +50,7 @@ export default new Vuex.Store({
         add_bind_first: sessionStorage.getItem('add_bind_first') || undefined,
         findPwdEmail: sessionStorage.getItem('findPwdEmail') || undefined,
         pafData: '',
-        privacyData: '',
+        privacyTextObj: {},
         emailSuffixArr: JSON.parse(sessionStorage.getItem('emailSuffixArr')) || undefined
     },
     mutations: {
@@ -59,7 +59,7 @@ export default new Vuex.Store({
             sessionStorage.setItem('emailSuffixArr', JSON.stringify(data));
         },
         setPrivacyData(state, data) {
-            state.privacyData = data;
+            state.privacyTextObj = data;
         },
         setPafData(state, data) {
             state.pafData = data;

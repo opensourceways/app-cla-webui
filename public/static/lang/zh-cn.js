@@ -140,7 +140,10 @@ module.exports = {
         subemailErr: '请输入符合邮箱扩展规则的子邮箱',
         noSession: '系统错误，请刷新邮箱域名列表后再试',
         sameEmailSuffix: '邮箱域名已存在，请勿重复添加',
-        no_link_or_unsigned: '无效的绑定信息'
+        no_link_or_unsigned: '无效的绑定信息',
+        not_support_platform: '暂不支持该平台的隐私声明，请将隐私声明存储到Gitee或者Github的公开仓库',
+        has_same_lang_privacy: '请勿配置相同语言的隐私声明',
+        privacy_conf_err: '隐私声明配置错误',
     },
     header: {
         home: '首页',

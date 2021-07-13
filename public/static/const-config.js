@@ -111,6 +111,16 @@ const ICP = '蜀ICP备20009468号-1';
 const ICP_LINK = 'https://icp.chinaz.com/home/info?host=osinfra.cn';
 const POLICE_RECORD = '粤公网安备 44030702003822号';
 const POLICE_RECORD_LINK = 'http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030702003822';
+const PRIVACY_POLICY_DATA = [                            //如需添加其他语言的隐私声明，只需按照数组中对象的格式添加一个对象即可
+    {
+        platform: 'github',                              //隐私声明存储的平台，支持gitee和github
+        owner: 'opensourceways',                         //隐私声明存储的公开组织
+        repo: 'app-cla-server',                          //隐私声明存储的公开仓库
+        path: 'clasign_privacy_policy_20210513.md',      //隐私声明在仓库中的路径
+        language: 'Chinese'                             //隐私声明的语言类别
+    }
+];
+
 
 
 
