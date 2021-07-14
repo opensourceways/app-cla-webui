@@ -153,7 +153,7 @@ module.exports = {
         loginOut: '退出'
     },
     corp: {
-        number: '序号',
+        number: '编号',
         id: '账号',
         name: '姓名',
         email: '邮箱',

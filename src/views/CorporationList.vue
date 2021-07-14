@@ -3,7 +3,8 @@
         <el-tabs v-model="activeName" type="border-card" @tab-click="tabsHandleClick">
             <el-tab-pane :label="$t('org.signed_corporation')" name="first" class="margin-top-1rem">
                 <el-tabs v-model="corpActiveName" @tab-click="corpTabsHandleClick">
-                    <el-tab-pane :label="$t('org.not_complete')" name="first" class="margin-top-1rem">
+                    <el-tab-pane :label="notCompleteLabel" name="first"
+                                 class="margin-top-1rem">
                         <div class="tableStyle">
                             <el-table
                                     :empty-text="$t('corp.no_data')"
@@ -13,6 +14,11 @@
                                     class="tableClass"
                                     style="width: 100%;">
                                 <el-table-column
+                                        min-width="5"
+                                        type="index"
+                                        :label="$t('corp.number')">
+                                </el-table-column>
+                                <el-table-column
                                         min-width="20"
                                         prop="corporation_name"
                                         :label="$t('org.corporation_name')">
@@ -23,7 +29,7 @@
                                         :label="$t('org.config_cla_field_corp_default_title1')">
                                 </el-table-column>
                                 <el-table-column
-                                        min-width="25"
+                                        min-width="20"
                                         prop="admin_email"
                                         :label="$t('org.to_email')">
                                 </el-table-column>
@@ -94,7 +100,7 @@
                             </el-table>
                         </div>
                     </el-tab-pane>
-                    <el-tab-pane :label="$t('org.complete')" name="second" class="margin-top-1rem">
+                    <el-tab-pane :label="completeLabel" name="second" class="margin-top-1rem">
                         <div class="tableStyle">
                             <el-table
                                     :empty-text="$t('corp.no_data')"
@@ -104,7 +110,12 @@
                                     align="center"
                                     style="width: 100%;">
                                 <el-table-column
-                                        min-width="20"
+                                        min-width="5"
+                                        type="index"
+                                        :label="$t('corp.number')">
+                                </el-table-column>
+                                <el-table-column
+                                        min-width="25"
                                         prop="corporation_name"
                                         :label="$t('org.corporation_name')">
                                 </el-table-column>
@@ -157,35 +168,11 @@
                                         </el-popover>
                                     </template>
                                 </el-table-column>
-                                <el-table-column
-                                        min-width="10"
-                                        :label="$t('org.operation')">
-                                    <template slot-scope="scope">
-                                        <el-dropdown placement="bottom-start" trigger="hover" @command="menuCommand">
-                                    <span class="el-dropdown-link">
-                                        <svg-icon icon-class="operation"></svg-icon>
-                                    </span>
-                                            <el-dropdown-menu slot="dropdown">
-                                                <el-dropdown-item :disabled="scope.row.admin_added"
-                                                                  :command="{command:'a',row:scope.row}">
-                                                    {{$t('org.create_administrator')}}
-                                                </el-dropdown-item>
-                                                <el-dropdown-item :disabled="scope.row.pdf_uploaded"
-                                                                  :command="{command:'b',row:scope.row}">
-                                                    {{$t('org.resend_email')}}
-                                                </el-dropdown-item>
-                                                <el-dropdown-item :disabled="scope.row.admin_added"
-                                                                  :command="{command:'c',row:scope.row}">
-                                                    {{$t('corp.delete')}}
-                                                </el-dropdown-item>
-                                            </el-dropdown-menu>
-                                        </el-dropdown>
-                                    </template>
-                                </el-table-column>
                             </el-table>
                         </div>
                     </el-tab-pane>
-                    <el-tab-pane :label="$t('org.invalidSignature')" name="third" class="margin-top-1rem">
+                    <el-tab-pane :label="deletedLabel" name="third"
+                                 class="margin-top-1rem">
                         <div class="tableStyle">
                             <el-table
                                     :empty-text="$t('corp.no_data')"
@@ -193,6 +180,11 @@
                                     align="center"
                                     class="tableClass"
                                     style="width: 100%;">
+                                <el-table-column
+                                        min-width="5"
+                                        type="index"
+                                        :label="$t('corp.number')">
+                                </el-table-column>
                                 <el-table-column
                                         min-width="25"
                                         prop="corporation_name"
@@ -204,7 +196,7 @@
                                         :label="$t('org.config_cla_field_corp_default_title1')">
                                 </el-table-column>
                                 <el-table-column
-                                        min-width="25"
+                                        min-width="20"
                                         prop="admin_email"
                                         :label="$t('org.to_email')">
                                 </el-table-column>
@@ -414,6 +406,15 @@
             DeleteDialog
         },
         computed: {
+            notCompleteLabel() {
+                return `${this.$t('org.not_complete')}[${this.notCompleteCount}]`;
+            },
+            completeLabel() {
+                return `${this.$t('org.complete')}[${this.completeCount}]`;
+            },
+            deletedLabel() {
+                return `${this.$t('org.invalidSignature')}[${this.deletedCount}]`;
+            },
             completeDeleteMessage() {
                 return this.$t('corp.completeDeleteTips');
             },
@@ -435,6 +436,9 @@
         },
         data() {
             return {
+                notCompleteCount: '',
+                completeCount: '',
+                deletedCount: '',
                 signedCompleted: [],
                 signedNotCompleted: [],
                 deletedCorpInfo: [],
@@ -654,7 +658,9 @@
             },
             corpTabsHandleClick(tab, event) {
                 if (tab.index === '0') {
+                    this.getCorporationInfo();
                 } else if (tab.index === '1') {
+                    this.getCorporationInfo();
                 } else if (tab.index === '2') {
                     this.getDeletedCorpInfo();
                 }
@@ -804,6 +810,8 @@
                         this.sortDate(this.signedCompleted);
                         this.sortDate(this.signedNotCompleted);
                     }
+                    this.notCompleteCount = this.signedNotCompleted.length;
+                    this.completeCount = this.signedCompleted.length;
                 }).catch(err => {
                     if (err.data && err.data.hasOwnProperty('data')) {
                         switch (err.data.data.error_code) {
@@ -864,53 +872,9 @@
                 }).then(resp => {
                     this.deletedCorpInfo = resp.data.data;
                     this.sortDate(this.deletedCorpInfo);
+                    this.deletedCount = this.deletedCorpInfo.length;
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'errorSet', this);
                 });
 
             },
@@ -1466,6 +1430,7 @@
         created() {
             util.clearSession(this);
             this.getCorporationInfo();
+            this.getDeletedCorpInfo();
         },
         mounted() {
             this.setClientHeight();
