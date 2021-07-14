@@ -228,6 +228,7 @@ module.exports = {
         upload: '上传',
         corporation_name: '企业名称',
         signed_corporation: '已签署的企业',
+        signed_individual: '已签署的个人',
         create_administrator: '创建超级管理员',
         resend_email: '重发邮件',
         individual_cla: '个人CLA',

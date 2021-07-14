@@ -227,6 +227,7 @@ module.exports = {
         upload: 'upload',
         corporation_name: 'Corporation Name',
         signed_corporation: 'Signed Corporation',
+        signed_individual: 'Signed Individual',
         create_administrator: 'Create Administrator',
         resend_email: 'Resend Email',
         individual_cla: 'Individual CLA',
