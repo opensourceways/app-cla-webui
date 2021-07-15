@@ -419,6 +419,130 @@ export const upperFirstCase = (word) => {
     let end = word.substring(1);
     return upper + end;
 };
+export const individualFiledExchangeToZh = (individualFieldData) => {
+    individualFieldData.forEach(item => {
+        switch (item.type) {
+            case 'date':
+                item.title = '日期';
+                item.description = '签署日期';
+                break;
+            case 'address':
+                item.title = '地址';
+                item.description = '个人家庭地址';
+                break;
+            case 'telephone':
+                item.title = '电话';
+                item.description = '个人电话';
+                break;
+            case 'fax':
+                item.title = '传真';
+                item.description = '个人传真';
+                break;
+        }
+    });
+};
+export const individualFiledExchangeToEn = (individualFieldData) => {
+    individualFieldData.forEach(item => {
+        switch (item.type) {
+            case 'date':
+                item.title = 'Date';
+                item.description = 'Date of signing';
+                break;
+            case 'address':
+                item.title = 'Address';
+                item.description = 'Personal home address';
+                break;
+            case 'telephone':
+                item.title = 'Telephone';
+                item.description = 'Personal phone';
+                break;
+            case 'fax':
+                item.title = 'Fax';
+                item.description = 'Personal fax';
+                break;
+        }
+    });
+};
+export const corpFiledExchangeToEn = (corpFieldData) => {
+    corpFieldData.forEach(item => {
+        switch (item.type) {
+            case 'date':
+                item.title = 'Date';
+                item.description = 'Date of signing';
+                break;
+            case 'address':
+                item.title = 'Address';
+                item.description = 'Address of the corporation';
+                break;
+            case 'telephone':
+                item.title = 'Telephone';
+                item.description = 'Telephone of the corporation';
+                break;
+            case 'fax':
+                item.title = 'Fax';
+                item.description = 'Fax of the corporation';
+                break;
+        }
+    });
+};
+export const corpFiledExchangeToZh = (corpFieldData) => {
+    corpFieldData.forEach(item => {
+        switch (item.type) {
+            case 'date':
+                item.title = '日期';
+                item.description = '签署日期';
+                break;
+            case 'address':
+                item.title = '地址';
+                item.description = '公司的地址';
+                break;
+            case 'telephone':
+                item.title = '电话';
+                item.description = '公司的电话';
+                break;
+            case 'fax':
+                item.title = '传真';
+                item.description = '公司的传真';
+                break;
+        }
+    });
+};
+export const changeCorpTitle = (e, item) => {
+    switch (e) {
+        case 'Date':
+            item.type = 'date';
+            item.description = 'Date of signing';
+            break;
+        case 'Address':
+            item.type = 'address';
+            item.description = 'Address of the corporation';
+            break;
+        case 'Telephone':
+            item.type = 'telephone';
+            item.description = 'Telephone of the corporation';
+            break;
+        case 'Fax':
+            item.type = 'fax';
+            item.description = 'Fax of the corporation';
+            break;
+        case '日期':
+            item.type = 'date';
+            item.description = '签署日期';
+            break;
+        case '地址':
+            item.type = 'address';
+            item.description = '公司的地址';
+            break;
+        case '电话':
+            item.type = 'telephone';
+            item.description = '公司的电话';
+            break;
+        case '传真':
+            item.type = 'fax';
+            item.description = '公司的传真';
+            break;
+    }
+};
 
 
 

@@ -101,16 +101,16 @@
                                 </el-col>
                             </el-row>
                         </div>
-                        <div>
+                        <div v-if="!add_bind_first">
                             <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
                                     v-for="(item,index) in individualCustomMetadataArr">
                                 <el-col :span="5">
-                                    <el-input v-model="item.title" size="medium"
+                                    <el-input disabled="" v-model="item.title" size="medium"
                                               :placeholder="$t('org.config_cla_fields_title_placeholder')">
                                     </el-input>
                                 </el-col>
                                 <el-col :span="5">
-                                    <el-select :disabled="!add_bind_first" style="width: 100%" v-model="item.type"
+                                    <el-select disabled="" style="width: 100%" v-model="item.type"
                                                :placeholder="$t('org.config_cla_fields_type_placeholder')"
                                                size="medium">
                                         <el-option
@@ -122,17 +122,13 @@
                                     </el-select>
                                 </el-col>
                                 <el-col :span="5" style="height: 100%">
-                                    <el-input v-model="item.description" size="medium"
+                                    <el-input disabled="" v-model="item.description" size="medium"
                                               :placeholder="$t('org.config_cla_fields_desc_placeholder')"></el-input>
                                 </el-col>
                                 <el-col :span="5" style="height: 100%">
-                                    <el-checkbox :disabled="!add_bind_first" v-model="item.required">
+                                    <el-checkbox disabled="" v-model="item.required">
                                         {{$t('org.config_cla_fields_required')}}
                                     </el-checkbox>
-                                </el-col>
-                                <el-col v-show="add_bind_first" :span="4">
-                                    <button class="add_button" @click="addRow(index)">+</button>
-                                    <button class="deleteBt" @click="myDeleteRow(index)">-</button>
                                 </el-col>
                             </el-row>
                         </div>
@@ -150,6 +146,7 @@
 <script>
     import ReTryDialog from '../components/ReTryDialog';
     import ReLoginDialog from '../components/ReLoginDialog';
+    import * as util from '../util/util';
 
     export default {
         name: 'AddIndividualCla',
@@ -171,15 +168,7 @@
                 return this.$store.state.dialogMessage;
             },
             individualCustomMetadataArr() {
-                if (this.$store.state.add_bind_first) {
-                    if (this.$store.state.individualCustomMetadataArr && this.$store.state.individualCustomMetadataArr.length) {
-                        return this.$store.state.individualCustomMetadataArr;
-                    } else {
-                        return this.initIndividualCustomMetadata;
-                    }
-                } else {
-                    return this.$store.state.individualCustomMetadataArr;
-                }
+                return this.$store.state.individualCustomMetadataArr;
             },
             cla_link_individual: {
                 get() {
@@ -201,34 +190,13 @@
         data() {
             return {
                 individualMetadata: [],
-                dataTypeOptions: DATATYPEOPTIONS,
                 languageOptions: [{value: 'english', label: 'English'}, {value: 'chinese', label: '中文'}],
                 individualMetadataArr: INDIVIDUALMETADATAARR_EN,
-                initIndividualCustomMetadata: INITCUSTOMMETADATA
+                initIndividualCustomMetadata: JSON.parse(JSON.stringify(INITCUSTOMMETADATA)),
+                individualTitleOptions: TITLE_OPTIONS_EN
             };
         },
         methods: {
-            addRow(index) {
-                let metadata = this.individualCustomMetadataArr;
-                metadata.splice(index + 1, 0, {
-                    title: '',
-                    type: '',
-                    description: '',
-                    required: false
-                });
-                this.$store.commit('setIndividualCustomMetadataArr', metadata);
-            },
-            myDeleteRow(index) {
-                let metadata = this.individualCustomMetadataArr;
-                if (metadata.length === 1) {
-                    metadata[0].type = '';
-                    metadata[0].title = '';
-                    metadata[0].description = '';
-                } else {
-                    metadata.splice(index, 1);
-                }
-                this.$store.commit('setIndividualCustomMetadataArr', metadata);
-            },
             initMetadata(lang) {
                 if (lang === 'chinese') {
                     this.individualMetadataArr = INDIVIDUALMETADATAARR_ZH;
@@ -287,6 +255,13 @@
                 return individualArr;
             },
             changeIndividualLanguage(value) {
+                if (value === 'chinese') {
+                    this.individualTitleOptions = TITLE_OPTIONS_ZH;
+                    util.individualFiledExchangeToZh(this.individualCustomMetadataArr);
+                } else if (value === 'english') {
+                    this.individualTitleOptions = TITLE_OPTIONS_EN;
+                    util.individualFiledExchangeToEn(this.individualCustomMetadataArr);
+                }
                 this.initMetadata(value);
                 this.$store.commit('setIndividualLanguage', value);
                 this.$store.commit('setAddLang', value);
