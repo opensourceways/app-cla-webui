@@ -54,26 +54,26 @@
                         </div>
                         <div>
                             <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
-                                    v-for="(item,index) in individualCustomMetadataArr">
+                                    v-for="(item,index) in individualCustomMetadataArr" :key="index">
                                 <el-col :span="5">
-                                    <el-input v-model="item.title" size="medium"
-                                              :placeholder="$t('org.config_cla_fields_title_placeholder')">
-                                    </el-input>
-                                </el-col>
-                                <el-col :span="5">
-                                    <el-select style="width: 100%" v-model="item.type"
-                                               :placeholder="$t('org.config_cla_fields_type_placeholder')"
+                                    <el-select style="width: 100%" v-model="item.title"
+                                               :placeholder="$t('org.config_cla_fields_title_placeholder')"
+                                               @change="changeIndividualTitle($event,item)"
                                                size="medium">
                                         <el-option
-                                                v-for="i in dataTypeOptions"
+                                                v-for="i in individualTitleOptions"
                                                 :key="i.value"
                                                 :label="i.label"
                                                 :value="i.value">
                                         </el-option>
                                     </el-select>
                                 </el-col>
+                                <el-col :span="5">
+                                    <el-input disabled="" v-model="item.type" size="medium"
+                                              :placeholder="$t('org.config_cla_fields_type_placeholder')"></el-input>
+                                </el-col>
                                 <el-col :span="5" style="height: 100%">
-                                    <el-input v-model="item.description" size="medium"
+                                    <el-input disabled="" v-model="item.description" size="medium"
                                               :placeholder="$t('org.config_cla_fields_desc_placeholder')"></el-input>
                                 </el-col>
                                 <el-col :span="5" style="height: 100%">
@@ -114,7 +114,6 @@
                                 v-for="(item,index) in corporationMetadataArr">
                             <el-col :span="5">
                                 <el-input disabled="" v-model="item.title" size="medium" readonly="">
-
                                 </el-input>
                             </el-col>
                             <el-col :span="5">
@@ -132,26 +131,26 @@
                     </div>
                     <div>
                         <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
-                                v-for="(item,index) in corporationCustomMetadataArr">
+                                v-for="(item,index) in corporationCustomMetadataArr" :key="index">
                             <el-col :span="5">
-                                <el-input v-model="item.title" size="medium"
-                                          :placeholder="$t('org.config_cla_fields_title_placeholder')">
-                                </el-input>
-                            </el-col>
-                            <el-col :span="5">
-                                <el-select style="width: 100%" v-model="item.type"
-                                           :placeholder="$t('org.config_cla_fields_type_placeholder')"
+                                <el-select style="width: 100%" v-model="item.title"
+                                           :placeholder="$t('org.config_cla_fields_title_placeholder')"
+                                           @change="changeCorpTitle($event,item)"
                                            size="medium">
                                     <el-option
-                                            v-for="i in dataTypeOptions"
+                                            v-for="i in corpTitleOptions"
                                             :key="i.value"
                                             :label="i.label"
                                             :value="i.value">
                                     </el-option>
                                 </el-select>
                             </el-col>
+                            <el-col :span="5">
+                                <el-input disabled="" v-model="item.type" size="medium"
+                                          :placeholder="$t('org.config_cla_fields_type_placeholder')"></el-input>
+                            </el-col>
                             <el-col :span="5" style="height: 100%">
-                                <el-input v-model="item.description" size="medium"
+                                <el-input disabled="" v-model="item.description" size="medium"
                                           :placeholder="$t('org.config_cla_fields_desc_placeholder')"></el-input>
                             </el-col>
                             <el-col :span="5" style="height: 100%">
@@ -175,6 +174,8 @@
 </template>
 
 <script>
+    import * as util from '../util/util';
+
     export default {
         name: 'ConfigFields',
         computed: {
@@ -197,11 +198,12 @@
             return {
                 individualMetadata: [],
                 corpMetadata: [],
-                dataTypeOptions: DATATYPEOPTIONS,
                 individualMetadataArr: INDIVIDUALMETADATAARR_EN,
                 corporationMetadataArr: CORPORATIONMETADATAARR_EN,
-                initIndividualCustomMetadata: INITCUSTOMMETADATA,
-                initCorpCustomMetadata: INITCUSTOMMETADATA
+                initIndividualCustomMetadata: JSON.parse(JSON.stringify(INITCUSTOMMETADATA)),
+                initCorpCustomMetadata: JSON.parse(JSON.stringify(INITCUSTOMMETADATA)),
+                individualTitleOptions: TITLE_OPTIONS_EN,
+                corpTitleOptions: TITLE_OPTIONS_EN
             };
         },
         beforeRouteEnter(to, from, next) {
@@ -213,12 +215,92 @@
         },
         inject: ['setClientHeight'],
         methods: {
+            changeCorpTitle(e, item) {
+                switch (e) {
+                    case 'Date':
+                        item.type = 'date';
+                        item.description = 'Date of signing';
+                        break;
+                    case 'Address':
+                        item.type = 'address';
+                        item.description = 'Address of the corporation';
+                        break;
+                    case 'Telephone':
+                        item.type = 'telephone';
+                        item.description = 'Telephone of the corporation';
+                        break;
+                    case 'Fax':
+                        item.type = 'fax';
+                        item.description = 'Fax of the corporation';
+                        break;
+                    case '日期':
+                        item.type = 'date';
+                        item.description = '签署日期';
+                        break;
+                    case '地址':
+                        item.type = 'address';
+                        item.description = '公司的地址';
+                        break;
+                    case '电话':
+                        item.type = 'telephone';
+                        item.description = '公司的电话';
+                        break;
+                    case '传真':
+                        item.type = 'fax';
+                        item.description = '公司的传真';
+                        break;
+                }
+            },
+            changeIndividualTitle(e, item) {
+                switch (e) {
+                    case 'Date':
+                        item.type = 'date';
+                        item.description = 'Date of signing';
+                        break;
+                    case 'Address':
+                        item.type = 'address';
+                        item.description = 'Personal home address';
+                        break;
+                    case 'Telephone':
+                        item.type = 'telephone';
+                        item.description = 'Personal phone';
+                        break;
+                    case 'Fax':
+                        item.type = 'fax';
+                        item.description = 'Personal fax';
+                        break;
+                    case '日期':
+                        item.type = 'date';
+                        item.description = '签署日期';
+                        break;
+                    case '地址':
+                        item.type = 'address';
+                        item.description = '个人家庭地址';
+                        break;
+                    case '电话':
+                        item.type = 'telephone';
+                        item.description = '个人电话';
+                        break;
+                    case '传真':
+                        item.type = 'fax';
+                        item.description = '个人传真';
+                        break;
+                }
+            },
             init() {
                 if (this.$store.state.individualLanguage === 'chinese') {
                     this.individualMetadataArr = INDIVIDUALMETADATAARR_ZH;
+                    this.individualTitleOptions = TITLE_OPTIONS_ZH;
+                    util.individualFiledExchangeToZh(this.individualCustomMetadataArr);
+                } else if (this.$store.state.individualLanguage === 'english') {
+                    util.individualFiledExchangeToEn(this.individualCustomMetadataArr);
                 }
                 if (this.$store.state.corpLanguage === 'chinese') {
                     this.corporationMetadataArr = CORPORATIONMETADATAARR_ZH;
+                    this.corpTitleOptions = TITLE_OPTIONS_ZH;
+                    util.corpFiledExchangeToZh(this.corporationCustomMetadataArr);
+                } else if (this.$store.state.corpLanguage === 'english') {
+                    util.corpFiledExchangeToEn(this.corporationCustomMetadataArr);
                 }
             },
             flashInit() {
@@ -233,6 +315,8 @@
                 sessionStorage.removeItem('corporationCustomMetadataArr');
             },
             toConfigClaLink() {
+                this.$store.commit('setIndividualCustomMetadataArr', this.individualCustomMetadataArr);
+                this.$store.commit('setCorporationCustomMetadataArr', this.corporationCustomMetadataArr);
                 this.$router.replace('/config-cla-link');
             },
             toNextPage() {

@@ -245,6 +245,94 @@ export const toPrivacy = (_this) => {
         _this.$router.push('/privacy');
     }
 };
+export const individualFiledExchangeToZh = (individualFieldData) => {
+    individualFieldData.forEach(item => {
+        switch (item.type) {
+            case 'date':
+                item.title = '日期';
+                item.description = '签署日期';
+                break;
+            case 'address':
+                item.title = '地址';
+                item.description = '个人家庭地址';
+                break;
+            case 'telephone':
+                item.title = '电话';
+                item.description = '个人电话';
+                break;
+            case 'fax':
+                item.title = '传真';
+                item.description = '个人传真';
+                break;
+        }
+    });
+};
+export const individualFiledExchangeToEn = (individualFieldData) => {
+    individualFieldData.forEach(item => {
+        switch (item.type) {
+            case 'date':
+                item.title = 'Date';
+                item.description = 'Date of signing';
+                break;
+            case 'address':
+                item.title = 'Address';
+                item.description = 'Personal home address';
+                break;
+            case 'telephone':
+                item.title = 'Telephone';
+                item.description = 'Personal phone';
+                break;
+            case 'fax':
+                item.title = 'Fax';
+                item.description = 'Personal fax';
+                break;
+        }
+    });
+};
+export const corpFiledExchangeToEn = (corpFieldData) => {
+    corpFieldData.forEach(item => {
+        switch (item.type) {
+            case 'date':
+                item.title = 'Date';
+                item.description = 'Date of signing';
+                break;
+            case 'address':
+                item.title = 'Address';
+                item.description = 'Address of the corporation';
+                break;
+            case 'telephone':
+                item.title = 'Telephone';
+                item.description = 'Telephone of the corporation';
+                break;
+            case 'fax':
+                item.title = 'Fax';
+                item.description = 'Fax of the corporation';
+                break;
+        }
+    });
+};
+export const corpFiledExchangeToZh = (corpFieldData) => {
+    corpFieldData.forEach(item => {
+        switch (item.type) {
+            case 'date':
+                item.title = '日期';
+                item.description = '签署日期';
+                break;
+            case 'address':
+                item.title = '地址';
+                item.description = '公司的地址';
+                break;
+            case 'telephone':
+                item.title = '电话';
+                item.description = '公司的电话';
+                break;
+            case 'fax':
+                item.title = '传真';
+                item.description = '公司的传真';
+                break;
+        }
+    });
+};
 
 
 

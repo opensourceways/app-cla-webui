@@ -281,7 +281,7 @@ module.exports = {
         config_cla_fields_desc: 'The information you want contributors to fill in when they sign the CLA.Title and type are required, otherwise the field will fail to be added',
         config_cla_individual_metadata: 'For Individual Metadata',
         config_cla_individual_metadata_desc: 'Configure the field information for individual and employee signers',
-        config_cla_fields_title_placeholder: 'please input title',
+        config_cla_fields_title_placeholder: 'please select title',
         config_cla_fields_type_placeholder: 'select data type',
         config_cla_fields_desc_placeholder: 'description',
         config_cla_fields_required: 'required',

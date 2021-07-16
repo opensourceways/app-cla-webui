@@ -105,24 +105,24 @@
                             <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
                                     v-for="(item,index) in individualCustomMetadataArr">
                                 <el-col :span="5">
-                                    <el-input v-model="item.title" size="medium"
-                                              :placeholder="$t('org.config_cla_fields_title_placeholder')">
-                                    </el-input>
-                                </el-col>
-                                <el-col :span="5">
-                                    <el-select :disabled="!add_bind_first" style="width: 100%" v-model="item.type"
-                                               :placeholder="$t('org.config_cla_fields_type_placeholder')"
+                                    <el-select :disabled="!add_bind_first" style="width: 100%" v-model="item.title"
+                                               :placeholder="$t('org.config_cla_fields_title_placeholder')"
+                                               @change="changeIndividualTitle($event,item)"
                                                size="medium">
                                         <el-option
-                                                v-for="i in dataTypeOptions"
+                                                v-for="i in individualTitleOptions"
                                                 :key="i.value"
                                                 :label="i.label"
                                                 :value="i.value">
                                         </el-option>
                                     </el-select>
                                 </el-col>
+                                <el-col :span="5">
+                                    <el-input disabled="" v-model="item.type" size="medium"
+                                              :placeholder="$t('org.config_cla_fields_type_placeholder')"></el-input>
+                                </el-col>
                                 <el-col :span="5" style="height: 100%">
-                                    <el-input v-model="item.description" size="medium"
+                                    <el-input disabled="" v-model="item.description" size="medium"
                                               :placeholder="$t('org.config_cla_fields_desc_placeholder')"></el-input>
                                 </el-col>
                                 <el-col :span="5" style="height: 100%">
@@ -150,6 +150,7 @@
 <script>
     import ReTryDialog from '../components/ReTryDialog';
     import ReLoginDialog from '../components/ReLoginDialog';
+    import * as util from '../util/util';
 
     export default {
         name: 'AddIndividualCla',
@@ -204,10 +205,47 @@
                 dataTypeOptions: DATATYPEOPTIONS,
                 languageOptions: [{value: 'english', label: 'English'}, {value: 'chinese', label: '中文'}],
                 individualMetadataArr: INDIVIDUALMETADATAARR_EN,
-                initIndividualCustomMetadata: INITCUSTOMMETADATA
+                initIndividualCustomMetadata: JSON.parse(JSON.stringify(INITCUSTOMMETADATA)),
+                individualTitleOptions: TITLE_OPTIONS_EN
             };
         },
         methods: {
+            changeIndividualTitle(e, item) {
+                switch (e) {
+                    case 'Date':
+                        item.type = 'date';
+                        item.description = 'Date of signing';
+                        break;
+                    case 'Address':
+                        item.type = 'address';
+                        item.description = 'Personal home address';
+                        break;
+                    case 'Telephone':
+                        item.type = 'telephone';
+                        item.description = 'Personal phone';
+                        break;
+                    case 'Fax':
+                        item.type = 'fax';
+                        item.description = 'Personal fax';
+                        break;
+                    case '日期':
+                        item.type = 'date';
+                        item.description = '签署日期';
+                        break;
+                    case '地址':
+                        item.type = 'address';
+                        item.description = '个人家庭地址';
+                        break;
+                    case '电话':
+                        item.type = 'telephone';
+                        item.description = '个人电话';
+                        break;
+                    case '传真':
+                        item.type = 'fax';
+                        item.description = '个人传真';
+                        break;
+                }
+            },
             addRow(index) {
                 let metadata = this.individualCustomMetadataArr;
                 metadata.splice(index + 1, 0, {
@@ -287,6 +325,13 @@
                 return individualArr;
             },
             changeIndividualLanguage(value) {
+                if (value === 'chinese') {
+                    this.individualTitleOptions = TITLE_OPTIONS_ZH;
+                    util.individualFiledExchangeToZh(this.individualCustomMetadataArr);
+                } else if (value === 'english') {
+                    this.individualTitleOptions = TITLE_OPTIONS_EN;
+                    util.individualFiledExchangeToEn(this.individualCustomMetadataArr);
+                }
                 this.initMetadata(value);
                 this.$store.commit('setIndividualLanguage', value);
                 this.$store.commit('setAddLang', value);

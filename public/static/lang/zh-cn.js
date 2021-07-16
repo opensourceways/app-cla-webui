@@ -282,7 +282,7 @@ module.exports = {
         config_cla_fields_desc: '这些信息是你希望贡献者再签署协议的时候需要填写的信息，标题和类型是必填的，否则将设置失败',
         config_cla_individual_metadata: '用于个人签署的字段',
         config_cla_individual_metadata_desc: '配置用于个人签署者和员工签署者的字段信息',
-        config_cla_fields_title_placeholder: '输入标题',
+        config_cla_fields_title_placeholder: '选择标题',
         config_cla_fields_type_placeholder: '选择类型',
         config_cla_fields_desc_placeholder: '描述',
         config_cla_fields_required: '必填',

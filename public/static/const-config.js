@@ -111,6 +111,18 @@ const ICP = '蜀ICP备20009468号-1';
 const ICP_LINK = 'https://icp.chinaz.com/home/info?host=osinfra.cn';
 const POLICE_RECORD = '粤公网安备 44030702003822号';
 const POLICE_RECORD_LINK = 'http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=44030702003822';
+const TITLE_OPTIONS_EN = [
+    {label: 'Date', value: 'Date'},
+    {label: 'Telephone', value: 'Telephone'},
+    {label: 'Address', value: 'Address'},
+    {label: 'Fax', value: 'Fax'}
+];
+const TITLE_OPTIONS_ZH = [
+    {label: '日期', value: '日期'},
+    {label: '电话', value: '电话'},
+    {label: '地址', value: '地址'},
+    {label: '传真', value: '传真'}
+];
 
 
 
