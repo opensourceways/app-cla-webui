@@ -412,15 +412,6 @@
                                 this.cla_lang = item.language;
                                 this.value = index;
                                 this.cla_hash = item.cla_hash;
-                                this.setClaText({
-                                    link_id: this.link_id,
-                                    lang: this.lang,
-                                    hash: this.cla_hash,
-                                    pdfData: this.pdfData
-                                });
-                                this.setFields(this.value);
-                                this.setFieldsData();
-                                resolve('complete');
                             }
                         });
                         this.$emit('getLangOptions', langOptions);
@@ -429,17 +420,18 @@
                             this.cla_lang = this.signPageData[0].language;
                             this.value = 0;
                             this.cla_hash = this.signPageData[0].cla_hash;
-                            this.setClaText({
-                                link_id: this.link_id,
-                                lang: this.lang,
-                                hash: this.cla_hash,
-                                pdfData: this.pdfData
-                            });
-                            this.setFields(this.value);
-                            this.setFieldsData();
-                            localStorage.setItem('lang', util.upperFirstCase(this.lang));
+                            localStorage.setItem('lang', this.upperFirstCase(this.lang));
                         }
-                        this.$emit('initHeader', util.upperFirstCase(this.lang));
+                        this.setClaText({
+                            link_id: this.link_id,
+                            lang: this.lang,
+                            hash: this.cla_hash,
+                            pdfData: this.pdfData
+                        });
+                        this.setFields(this.value);
+                        this.setFieldsData();
+                        resolve('complete');
+                        this.$emit('initHeader', this.upperFirstCase(this.lang));
                     } else {
                         let message = '';
                         if (this.$store.state.loginType === this.corporation) {
