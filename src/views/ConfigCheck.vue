@@ -362,51 +362,7 @@
                     util.clearSession(this);
                     this.$router.push('/corporationList');
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-                            case 'cla.cla_exists':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.cla_exists', {lang: this.$store.state.addLang})
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'setOrgReLogin', this);
                 });
             },
             newBinding() {
@@ -473,51 +429,7 @@
                     util.successMessage(this);
                     this.$router.push('/home');
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            case 'cla.link_exists':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.link_exists')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'setOrgReLogin', this);
                 });
             }
         },

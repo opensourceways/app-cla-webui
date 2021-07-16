@@ -528,57 +528,7 @@
                         this.getCorpClaInfo();
                     }
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-                            case 'cla.cla_is_used':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.cla_is_used')
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'errorSet', this);
                 });
             },
             createdAdmin(param) {
@@ -679,52 +629,7 @@
                         this.corpClaData = res.data.data.corp_clas;
                     }
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'errorSet', this);
                 });
             },
             getIndividualClaInfo() {
@@ -738,52 +643,7 @@
 
                     }
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'errorSet', this);
                 });
             },
             getCorporationInfo() {
@@ -805,57 +665,7 @@
                         this.sortDate(this.signedNotCompleted);
                     }
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-                            case 'cla.no_link':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.no_link')
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'errorSet', this);
                 });
             },
             getDeletedCorpInfo() {
@@ -865,54 +675,8 @@
                     this.deletedCorpInfo = resp.data.data;
                     this.sortDate(this.deletedCorpInfo);
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'errorSet', this);
                 });
-
             },
             previewClaFile(row) {
                 http({
@@ -925,52 +689,7 @@
                         window.open(`../../static/pdf_source/web/viewer.html?file=${encodeURIComponent(url)}`);
                     }
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'errorSet', this);
                 });
             },
             downloadClaFile(row) {
@@ -988,52 +707,7 @@
                         });
                     }
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'errorSet', this);
                 });
             },
             uploadClaFile(row) {
@@ -1057,52 +731,7 @@
                     util.successMessage(this);
                     this.getCorporationInfo();
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'errorSet', this);
                 });
             },
             submitUpload() {
@@ -1183,52 +812,7 @@
                     this.resendEmailDialogVisible = false;
                     util.successMessage(this);
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'errorSet', this);
                 });
             },
             menuCommand(command) {
@@ -1265,64 +849,7 @@
                     util.successMessage(this);
                     this.getCorporationInfo();
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-                            case 'cla.no_pdf_of_corp':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.no_pdf_of_corp')
-                                });
-                                break;
-                            case 'cla.unuploaded':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.no_pdf_of_corp')
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'errorSet', this);
                 });
             },
             deleteCorp(email) {
@@ -1334,64 +861,7 @@
                     util.successMessage(this);
                     this.getCorporationInfo();
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-                            case 'cla.no_pdf_of_corp':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.no_pdf_of_corp')
-                                });
-                                break;
-                            case 'cla.unuploaded':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.no_pdf_of_corp')
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'errorSet', this);
                 });
             },
             createRoot(email) {
@@ -1402,64 +872,7 @@
                     util.successMessage(this);
                     this.getCorporationInfo();
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-                            case 'cla.no_pdf_of_corp':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.no_pdf_of_corp')
-                                });
-                                break;
-                            case 'cla.unuploaded':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.no_pdf_of_corp')
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error')
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        });
-                    }
+                    util.catchErr(err, 'errorSet', this);
                 });
             }
         },

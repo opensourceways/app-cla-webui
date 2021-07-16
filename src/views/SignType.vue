@@ -976,6 +976,7 @@
                         }
                     }
                 }).catch(err => {
+                    util.catchErr(err, '', this);
                 });
             },
 
