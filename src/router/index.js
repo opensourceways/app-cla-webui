@@ -241,15 +241,6 @@ const routes = [
         component: () => import('../views/SignType.vue')
     },
     {
-        path: '/sign/:params/:orgAddress',
-        name: 'SignType_back',
-        meta: {
-            title: 'sign'
-        },
-        component: () => import('../views/SignType.vue')
-    },
-
-    {
         path: '/sign-page',
         name: 'SignPage',
         meta: {

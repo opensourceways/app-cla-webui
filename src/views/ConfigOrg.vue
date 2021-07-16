@@ -57,6 +57,7 @@
     import ReLoginDialog from '../components/ReLoginDialog';
     import CustomDialog from '../components/CustomDialog';
     import * as url from '../util/api';
+    import * as util from '../util/util';
     import _axios from '../util/_axios';
     import platform_http from '../util/platform_http';
 
@@ -134,62 +135,26 @@
         },
         data() {
             return {
-                org_id: '',
                 org: this.$store.state.chooseOrg
             };
         },
         inject: ['setClientHeight'],
         methods: {
             checkRepo(org, repo) {
-                let _url = '';
-                let obj = {};
-                let _http = '';
-                if (this.$store.state.platform === 'Gitee') {
-                    _url = `https://gitee.com/api/v5/repos/${org}/${repo}`;
-                    obj = {access_token: this.$store.state.platform_token};
-                    _http = _axios;
-                } else if (this.$store.state.platform === 'Github') {
-                    _url = `https://api.github.com/repos/${org}/${repo}`;
-                    _http = platform_http;
-                }
-                obj = {access_token: this.$store.state.platform_token};
-                _http({
-                    url: _url,
-                    params: obj
+                let _url = `${url.checkRepo}/${org}/${repo}`;
+                _axios({
+                    url: _url
                 }).then(res => {
-                    this.$router.replace('/config-email');
-                }).catch(err => {
-                    switch (err.status) {
-                        case 401:
-                            if (err.data.message === GITEE_CHECK_REPO_401_ERROR_PRIVATE) {
-                                this.$store.commit('setCustomVisible', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.checkRepoMessage')
-                                });
-                            } else if (err.data.message === GITEE_CHECK_REPO_401_ERROR_TOKEN_EXIST)
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                            break;
-                        case 403:
-                            this.$store.commit('setOrgReLogin', {
-                                dialogVisible: true,
-                                dialogMessage: this.$t('tips.missing_token')
-                            });
-                            break;
-                        case 404:
-                            this.$store.commit('setCustomVisible', {
-                                dialogVisible: true,
-                                dialogMessage: this.$t('tips.checkRepoMessage')
-                            });
-                            break;
-                        default:
-                            this.$store.commit('errorCodeSet', {
-                                dialogVisible: true,
-                                dialogMessage: this.$t('tips.system_error')
-                            });
+                    if (res && res.data.data) {
+                        this.$router.replace('/config-email');
+                    } else {
+                        this.$store.commit('setCustomVisible', {
+                            dialogVisible: true,
+                            dialogMessage: this.$t('tips.checkRepoMessage')
+                        });
                     }
+                }).catch(err => {
+                    util.catchErr(err, 'setOrgReLogin', this);
                 });
             },
             toConfigClaLink() {
@@ -219,90 +184,26 @@
                 if (value === '') {
                     this.$store.commit('setChooseOrg', '');
                     this.org = '';
-                    this.org_id = '';
                     this.$store.commit('setOrgChoose', false);
                 } else {
                     this.$store.commit('setChooseOrg', this.orgOptions[value].label);
                     this.org = this.orgOptions[value].label;
-                    this.org_id = this.orgOptions[value].id;
                     this.$store.commit('setOrgChoose', true);
                 }
             },
-            getRepositoriesOfOrg(org, org_id) {
-                let _url = '';
-                if (this.$store.state.platform === 'Gitee') {
-                    _url = `https://gitee.com/api/v5/orgs/${org}/repos`;
-                } else if (this.$store.state.platform === 'Github') {
-                    _url = `https://api.github.com/orgs/${org}/repos`;
-                }
-                let obj = {access_token: this.$store.state.platform_token, org: org, page: 1, per_page: 100};
-                _axios({
-                    url: _url,
-                    params: obj
-                }).then(res => {
-                    let repositoryOptions = [];
-                    res.data.forEach((item, index) => {
-                        repositoryOptions.push({
-                            value: index,
-                            org: org,
-                            org_id: org_id,
-                            repoName: item.name,
-                            label: item.name,
-                            id: item.id
-                        });
-                    });
-                    this.$store.commit('setRepositoryOptions', repositoryOptions);
-                }).catch(err => {
-                    this.$store.commit('errorCodeSet', {
-                        dialogVisible: true,
-                        dialogMessage: this.$t('tips.system_error')
-                    });
-                });
-            },
             getOrgsInfo() {
-                let _url = '';
-                let _http = '';
-                let obj = {};
-                if (this.$store.state.platform === 'Gitee') {
-                    _url = url.getGiteeOrgsInfo;
-                    _http = _axios;
-                    obj = {access_token: this.$store.state.platform_token, admin: true, page: 1, per_page: 100};
-                } else if (this.$store.state.platform === 'Github') {
-                    _url = url.getGithubOrgsInfo;
-                    _http = platform_http;
-                    obj = {accept: 'application/vnd.github.v3+json', page: 1, per_page: 100};
-                }
-                _http({
-                    url: _url,
-                    params: obj
+                _axios({
+                    url: url.getOrg
                 }).then(res => {
-                    if (res.status === 200) {
+                    if (res && res.data.data) {
                         let orgOptions = [];
-                        res.data.forEach((item, index) => {
-                            orgOptions.push({value: index, label: item.login, id: item.id});
+                        res.data.data.forEach((item, index) => {
+                            orgOptions.push({value: index, label: item});
                         });
                         this.$store.commit('setOrgOption', orgOptions);
                     }
                 }).catch(err => {
-                    switch (err.status) {
-                        case 401:
-                            this.$store.commit('setOrgReLogin', {
-                                dialogVisible: true,
-                                dialogMessage: this.$t('tips.not_authorize_group')
-                            });
-                            break;
-                        case 403:
-                            this.$store.commit('setOrgReLogin', {
-                                dialogVisible: true,
-                                dialogMessage: this.$t('tips.invalid_token')
-                            });
-                            break;
-                        default:
-                            this.$store.commit('errorCodeSet', {
-                                dialogVisible: true,
-                                dialogMessage: this.$t('tips.system_error')
-                            });
-                    }
+                    util.catchErr(err, 'setOrgReLogin', this);
                 });
             },
             init() {

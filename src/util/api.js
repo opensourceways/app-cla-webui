@@ -37,4 +37,6 @@ export const addSubEmail = 'v1/corporation-email-domain';                       
 export const submitNewPassword = 'v1/submitNewPassword';                            //提交新密码        方式  参数：
 export const getBlankSignature = 'v1/org-signature/blank';
 export const getCLAPdf = 'v1/cla';                                                  //下载cla的PDF文件    方式 get  参数   /:link_id/:apply_to/:language/:hash
+export const getOrg = 'v1/org-repo';                                                //获取org列表      方式get
+export const checkRepo = 'v1/org-repo';                                             //检查repo是否存在   方式get  参数   /:org/:repo
 
