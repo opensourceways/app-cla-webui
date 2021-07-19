@@ -148,6 +148,8 @@ module.exports = {
         copyError: 'Copy error',
         chooseEmailType: 'Please select email type',
         not_support_auth_way: 'Wrong authorization way',
+        not_support_platform: 'Privacy policy of this platform is not supported at present. Please store the privacy policy in the public warehouse of Gitee or Github',
+        privacy_conf_err: 'Privacy policy configuration error',
     },
     header: {
         home: 'Home',

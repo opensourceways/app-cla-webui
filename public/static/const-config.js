@@ -114,4 +114,20 @@ const PWD_MAX_LENGTH = 16;
 const PWD_MIN_ASCII = 33;
 const PWD_MAX_ASCII = 126;
 const LANGUAGE_ARR = [{label: 'English', value: 'english'}, {label: '中文', value: 'chinese'}];
+const PRIVACY_POLICY_DATA = [                           
+    {
+        platform: 'gitee',                              //隐私声明存储的平台，支持gitee和github
+        owner: 'pityonline',                              //隐私声明存储的公开组织
+        repo: 'cla-test',                                    //隐私声明存储的公开仓库
+        path: 'privacy.md',                           //隐私声明在仓库中的路径
+        language: 'English',                             //隐私声明的语言类别
+    },
+    {
+        platform: 'github',                              //隐私声明存储的平台，支持gitee和github
+        owner: 'opensourceways',                         //隐私声明存储的公开组织
+        repo: 'app-cla-server',                          //隐私声明存储的公开仓库
+        path: 'clasign_privacy_policy_20210513.md',      //隐私声明在仓库中的路径
+        language: 'Chinese',                             //隐私声明的语言类别
+    },
+];
 
