@@ -29,7 +29,7 @@
             <el-col :span="21" class="tableStyle">
                 <el-table
                         empty-text="No data"
-                        :data="boundTableData"
+                        :data="showBoundTableData"
                         class="tableClass"
                         style="width: 100%;">
                     <el-table-column
@@ -39,7 +39,7 @@
                         <template slot-scope="scope">
                             <svg-icon icon-class="repository"/>
                             <span class="pointer hoverUnderline"
-                                  @click="checkCorporationList(scope.row)"
+                                  @click="checkCorporationList(scope.$index)"
                                   style="margin-left: 10px;">{{scope.row.org_id}}<span v-if="scope.row.repo_id">/{{scope.row.repo_id}}</span></span>
                         </template>
                     </el-table-column>
@@ -74,7 +74,7 @@
                                     <el-dropdown-item :command="{command:'b',row:scope.row}">
                                         {{$t('org.copy_address')}}
                                     </el-dropdown-item>
-                                    <el-dropdown-item :command="{command:'c',row:scope.row}">
+                                    <el-dropdown-item :command="{command:'c',index:scope.$index}">
                                         {{$t('org.toDetail')}}
                                     </el-dropdown-item>
                                 </el-dropdown-menu>
@@ -213,7 +213,8 @@
                 unlinkId: '',
                 unLinkDialogVisible: false,
                 tableTotal: 0,
-                currentPage: 1
+                currentPage: 1,
+                showBoundTableData: []
             };
         },
         created() {
@@ -240,7 +241,7 @@
                         this.copyAddress(command.row);
                         break;
                     case 'c':
-                        this.checkCorporationList(command.row);
+                        this.checkCorporationList(command.index);
                         break;
                 }
             },
@@ -269,6 +270,8 @@
                     }
                 });
                 this.boundTableData = newData;
+                this.showBoundTableData = JSON.parse(JSON.stringify(newData));
+                util.exchangeEmailData(this.showBoundTableData, 'org_email');
             },
             clickOrg(row, column, cell, event) {
                 this.organization = row.Organization;
@@ -279,25 +282,8 @@
                     url: url.getLinkedRepoList
                 }).then(res => {
                     if (res.data.data && res.data.data.length) {
-                        let data = res.data.data;
-                        let count = res.data.data.length;
-                        data.forEach((item, index) => {
-                            new Promise((resolve, reject) => {
-                                let claName = this.getClaName(item.id);
-                                resolve(claName);
-                            }).then(res => {
-                                Object.assign(data[index], {claName: res});
-                                count--;
-                            }, err => {
-                            });
-                        });
-                        let setDataInterval = setInterval(() => {
-                            if (count === 0) {
-                                this.tableData = data;
-                                this.getOrgTableData(data);
-                                clearInterval(setDataInterval);
-                            }
-                        }, 20);
+                        this.tableData = res.data.data;
+                        this.getOrgTableData(res.data.data);
                     } else {
                         this.tableData = [];
                         this.boundTableData = [];
@@ -307,27 +293,11 @@
                     util.catchErr(err, 'setOrgReLogin', this);
                 });
             },
-            async getClaName(org_cla_id) {
-                if (org_cla_id) {
-                    let name = '';
-                    await http({
-                        url: `${url.getClaInfo}/${org_cla_id}/cla`
-                    }).then(res => {
-                        if (res.data && res.data.data && res.data.data.name) {
-                            name = res.data.data.name;
-                        }
-                    }).catch(err => {
-                        util.catchErr(err, 'setOrgReLogin', this);
-                    });
-                    return name;
-                }
-            },
             getOrgTableData(data) {
                 let orgData = [];
                 data.forEach((item, index) => {
                     orgData.push({Organization: item.org_id});
                 });
-
                 for (let i = 0; i < orgData.length; i++) {
                     for (let j = i + 1; j < orgData.length; j++) {
                         if (orgData[i].Organization === orgData[j].Organization) {
@@ -337,7 +307,7 @@
                     }
                 }
                 this.orgTableData = orgData;
-                this.orgTableData.length > 0 ? this.organization = this.orgTableData[0].Organization : this.organization = [];
+                this.orgTableData.length > 0 ? this.organization = this.orgTableData[0].Organization : this.organization = '';
                 this.getBoundTableData();
             },
             copyAddress(row) {
@@ -407,10 +377,10 @@
                 this.unlinkId = scope.row.link_id;
                 this.unLinkDialogVisible = true;
             },
-            checkCorporationList(item) {
+            checkCorporationList(index) {
                 this.$store.commit('setCorpItem', {});
                 sessionStorage.removeItem('corpItem');
-                this.$store.commit('setCorpItem', item);
+                this.$store.commit('setCorpItem', this.boundTableData[index]);
                 this.$router.push('/corporationList');
             },
             newWindow(repo) {

@@ -13,9 +13,7 @@
                         <el-table
                                 :empty-text="$t('corp.no_data')"
                                 class="tableClass"
-                                @selection-change="handleSelectionChange"
-                                ref="multipleTable"
-                                :data="tableData">
+                                :data="showTableData">
                             <el-table-column
                                     prop="id"
                                     :label="$t('corp.id')">
@@ -34,30 +32,16 @@
                             </el-table-column>
                             <el-table-column
                                     :label="$t('corp.operation')"
-                                    v-if="!multipleChoice"
                                     key="2"
                                     align="center"
                                     width="200">
                                 <template slot-scope="scope">
-                                    <button class="deleteBt" @click="deleteUser(scope.row)">
+                                    <button class="deleteBt" @click="deleteUser(scope.row,scope.$index)">
                                         {{$t('corp.delete')}}
                                     </button>
                                 </template>
                             </el-table-column>
-                            <el-table-column
-                                    key="3"
-                                    v-if="multipleChoice"
-                                    type="selection"
-                                    align="center"
-                                    width="200">
-                            </el-table-column>
                         </el-table>
-                    </el-row>
-                    <el-row style="margin-top: 20px" v-if="multipleChoice">
-                        <el-col align="left">
-                            <button class="deleteBt" @click="deleteUser()">{{$t('corp.delete')}}</button>
-                            <button class="cancelBt" @click="cancel()">{{$t('corp.cancel')}}</button>
-                        </el-col>
                     </el-row>
                 </el-col>
             </el-row>
@@ -111,11 +95,10 @@
         data() {
             return {
                 emails: [],
-                multipleChoice: false,
-                multipleSelection: [],
                 row: '',
                 deleteUserVisible: false,
-                tableData: []
+                tableData: [],
+                showTableData: []
             };
         },
         created() {
@@ -133,23 +116,9 @@
             createManager() {
                 this.$router.push('/createManager');
             },
-            cancel() {
-                this.$refs.multipleTable.clearSelection();
-                this.multipleChoice = false;
-
-            },
-            handleSelectionChange(val) {
-                this.multipleSelection = val;
-            },
-            deleteUser(row) {
+            deleteUser(row, index) {
                 this.emails = [];
-                if (this.multipleChoice) {
-                    this.multipleSelection.forEach(item => {
-                        this.emails.push({email: item.email});
-                    });
-                } else {
-                    this.emails.push({email: row.email});
-                }
+                this.emails.push({email: this.tableData[index].email});
                 this.deleteUserVisible = true;
             },
             getEmployeeManager() {
@@ -157,6 +126,10 @@
                     url: `${url.queryEmployeeManager}`
                 }).then(res => {
                     this.tableData = res.data.data;
+                    this.showTableData = JSON.parse(JSON.stringify(this.tableData));
+                    this.showTableData.forEach(item => {
+                        item.email = util.coverEmail(item.email);
+                    });
                     this.$store.commit('setManagerList', res.data.data);
                     this.setUserLimitAct(res.data.data.length);
                 }).catch(err => {

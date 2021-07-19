@@ -9,13 +9,13 @@
                             <el-input
                                     clearable
                                     :placeholder="$t('corp.email_input_holder')"
-                                    @input="searchEmail(inactiveSearchValue,inactiveOriginData)"
+                                    @input="searchEmail(inactiveSearchValue,showInactiveData)"
                                     v-model="inactiveSearchValue">
                                 <i slot="prefix" class="el-input__icon el-icon-search"></i>
                             </el-input>
                         </el-col>
                         <el-col :span="3">
-                            <el-button @click="searchEmail(inactiveSearchValue,inactiveOriginData)"
+                            <el-button @click="searchEmail(inactiveSearchValue,showInactiveData)"
                                        class="searchButton">
                                 {{$t('corp.search')}}
                             </el-button>
@@ -42,7 +42,7 @@
                                 <el-row class="mySwitch">
                                     <el-col :offset="4" :span="8">
                                         <el-switch
-                                                @change="changeActive(scope.row.cla_org_id,scope.row.email,scope.row.enabled)"
+                                                @change="changeActive(scope.row.cla_org_id,scope.$index,scope.row.enabled)"
                                                 v-model="scope.row.enabled"
                                                 class="mySwitch"
                                                 :disabled="scope.row.enabled"
@@ -52,11 +52,10 @@
                                                 :inactive-text="$t('corp.inactive')"
                                                 inactive-color="#EBEEF5">
                                         </el-switch>
-
                                     </el-col>
                                     <el-col :span="8">
                                         <button class="deleteBt"
-                                                @click="deleteEmployee(scope.row.cla_org_id,scope.row.email,scope.row.enabled)">
+                                                @click="deleteEmployee(scope.row.cla_org_id,scope.$index,scope.row.enabled)">
                                             {{$t('corp.delete')}}
                                         </button>
                                     </el-col>
@@ -84,13 +83,13 @@
                             <el-input
                                     clearable
                                     :placeholder="$t('corp.email_input_holder')"
-                                    @input="searchEmail(activeSearchValue,activeOriginData)"
+                                    @input="searchEmail(activeSearchValue,showActiveData)"
                                     v-model="activeSearchValue">
                                 <i slot="prefix" class="el-input__icon el-icon-search"></i>
                             </el-input>
                         </el-col>
                         <el-col :span="3">
-                            <el-button @click="searchEmail(activeSearchValue,activeOriginData)" class="searchButton">
+                            <el-button @click="searchEmail(activeSearchValue,showActiveData)" class="searchButton">
                                 {{$t('corp.search')}}
                             </el-button>
                         </el-col>
@@ -115,7 +114,7 @@
                             <template slot-scope="scope">
                                 <el-row class="mySwitch">
                                     <el-switch
-                                            @change="changeActive(scope.row.cla_org_id,scope.row.email,scope.row.enabled)"
+                                            @change="changeActive(scope.row.cla_org_id,scope.$index,scope.row.enabled)"
                                             v-model="scope.row.enabled"
                                             class="mySwitch"
                                             width="3rem"
@@ -179,7 +178,9 @@
                 inactiveOriginData: [],
                 activeOriginData: [],
                 activeData: [],
-                deleteData: ''
+                deleteData: '',
+                showInactiveData: [],
+                showActiveData: []
             };
         },
         computed: {
@@ -273,18 +274,24 @@
                     util.catchErr(err, 'errorSet', this);
                 });
             },
-            deleteEmployee(cla_org_id, email, enabled) {
+            deleteEmployee(cla_org_id, index, enabled) {
                 this.deleteData = {
                     cla_org_id: cla_org_id,
-                    email: email,
+                    email: this.inactiveOriginData[(this.inactiveCurrentPage - 1) * this.pageSize + index].email,
                     enabled: enabled
                 };
                 this.deleteUserVisible = true;
             },
-            changeActive(cla_org_id, email, enabled) {
+            changeActive(cla_org_id, index, enabled) {
                 let data = {
                     enabled: enabled
                 };
+                let email = '';
+                if (enabled) {
+                    email = this.inactiveOriginData[(this.inactiveCurrentPage - 1) * this.pageSize + index].email;
+                } else {
+                    email = this.activeOriginData[(this.activeCurrentPage - 1) * this.pageSize + index].email;
+                }
                 http({
                     url: `${url.enableEmployee}/${email}`,
                     method: 'put',
@@ -304,9 +311,17 @@
                     data.forEach((item, index) => {
                         item.enabled === false ? inactiveArr.push(item) : activeArr.push(item);
                     });
-                    this.inactiveData = inactiveArr;
+                    this.showActiveData = JSON.parse(JSON.stringify(activeArr));
+                    this.showActiveData.forEach(item => {
+                        item.email = util.coverEmail(item.email);
+                    });
+                    this.showInactiveData = JSON.parse(JSON.stringify(inactiveArr));
+                    this.showInactiveData.forEach(item => {
+                        item.email = util.coverEmail(item.email);
+                    });
+                    this.activeData = this.showActiveData;
+                    this.inactiveData = this.showInactiveData;
                     this.inactiveOriginData = inactiveArr;
-                    this.activeData = activeArr;
                     this.activeOriginData = activeArr;
                     this.inactivePageData = this.getInactivePageData();
                     this.activePageData = this.getActivePageData();

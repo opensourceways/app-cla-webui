@@ -538,6 +538,21 @@ export const changeCorpTitle = (e, item) => {
             break;
     }
 };
+export const coverEmail = (email) => {
+    let emailStrArr = email.split('@');
+    let subEmailStr = '';
+    if (emailStrArr[0].length > 4) {
+        subEmailStr = emailStrArr[0].substring(0, emailStrArr[0].length - 4);
+    } else {
+        subEmailStr = emailStrArr[0].substring(0, 1);
+    }
+    return subEmailStr + '****@' + emailStrArr[1];
+};
+export const exchangeEmailData = (data, emailKey) => {
+    data.forEach(item => {
+        item[emailKey] = coverEmail(item[emailKey]);
+    });
+};
 
 
 
