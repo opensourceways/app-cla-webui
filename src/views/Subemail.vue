@@ -1,5 +1,5 @@
 <template>
-    <el-row id="subemail">
+    <el-row>
         <el-col>
             <p class="tabName">{{$t('header.SubEmail')}}</p>
             <el-row class="tableBox">
@@ -88,7 +88,4 @@
 </script>
 
 <style scoped lang="less">
-    #subemail {
-
-    }
 </style>

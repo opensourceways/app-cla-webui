@@ -2,7 +2,7 @@
     <div id="signedRepo" :style="section">
         <Header></Header>
         <div>
-            <div id="signedRepo_section">
+            <div id="signedRepo_section" class="padding-top-bottom-2rem">
                 <router-view></router-view>
             </div>
         </div>

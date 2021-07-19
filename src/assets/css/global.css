@@ -350,3 +350,7 @@
 .grayColor {
     color: gray;
 }
+
+.padding-top-bottom-2rem {
+    padding: 2rem 0;
+}

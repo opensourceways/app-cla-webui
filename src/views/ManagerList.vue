@@ -275,8 +275,6 @@
     @import "../assets/font/css/Roboto-Regular.css";
 
     #userList {
-        padding: 2rem 0;
-
         & .el-checkbox__inner {
             border: 1px solid #319E55;
         }
