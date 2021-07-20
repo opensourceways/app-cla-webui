@@ -251,7 +251,6 @@ const routes = [
 
     {
         path: '/sign-page',
-        name: 'SignPage',
         meta: {
             title: 'sign-page'
         },

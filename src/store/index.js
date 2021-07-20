@@ -49,8 +49,8 @@ export default new Vuex.Store({
         addLang: sessionStorage.getItem('addLang') || undefined,
         add_bind_first: sessionStorage.getItem('add_bind_first') || undefined,
         findPwdEmail: sessionStorage.getItem('findPwdEmail') || undefined,
-        pdfData: '',
-        privacyData: '',
+        pafData: '',
+        privacyTextObj: {},
         emailSuffixArr: JSON.parse(sessionStorage.getItem('emailSuffixArr')) || undefined
     },
     mutations: {
@@ -59,7 +59,7 @@ export default new Vuex.Store({
             sessionStorage.setItem('emailSuffixArr', JSON.stringify(data));
         },
         setPrivacyData(state, data) {
-            state.privacyData = data;
+            state.privacyTextObj = data;
         },
         setPdfData(state, data) {
             state.pdfData = data;

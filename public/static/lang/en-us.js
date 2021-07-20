@@ -140,7 +140,10 @@ module.exports = {
         subemailErr: 'Please input a subemail that meets the email Extension Rules',
         noSession: 'System error, please refresh the email domain list and try again',
         sameEmailSuffix: 'Email domain already exists, please do not add it repeatedly',
-        no_link_or_unsigned: 'Invalid binding information'
+        no_link_or_unsigned: 'Invalid binding information',
+        not_support_platform: 'Privacy policy of this platform is not supported at present. Please store the privacy policy in the public warehouse of Gitee or Github',
+        has_same_lang_privacy: 'Do not configure privacy policy in the same language',
+        privacy_conf_err: 'Privacy policy configuration error',
     },
     header: {
         home: 'Home',

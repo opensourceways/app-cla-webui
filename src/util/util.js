@@ -245,6 +245,12 @@ export const toPrivacy = (_this) => {
         _this.$router.push('/privacy');
     }
 };
+export const upperFirstCase = (word) => {
+    let initials = word.substring(0, 1);
+    let upper = initials.toUpperCase();
+    let end = word.substring(1);
+    return upper + end;
+};
 
 
 
