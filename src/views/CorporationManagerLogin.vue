@@ -55,7 +55,6 @@
                 } else {
                     callback();
                 }
-
             };
             var validatePass = (rule, value, callback) => {
                 if (value === '') {
@@ -91,9 +90,26 @@
                 }
             },
             login(userName, pwd) {
+                let platform = '';
+                let org = '';
+                let repo = '';
+                if (this.$store.state.repoInfo) {
+                    platform = this.$store.state.repoInfo.platform;
+                    org = this.$store.state.repoInfo.org_id;
+                    repo = this.$store.state.repoInfo.repo_id;
+                } else {
+                    this.$store.commit('errorCodeSet', {
+                        dialogVisible: true,
+                        dialogMessage: this.$t('tips.page_error')
+                    });
+                    return;
+                }
                 let obj = {
                     user: userName.trim(),
-                    password: pwd.trim()
+                    password: pwd.trim(),
+                    platform: platform,
+                    org_id: org,
+                    repo_id: repo
                 };
                 http({
                     url: url.corporationManagerAuth,
