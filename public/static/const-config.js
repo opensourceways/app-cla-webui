@@ -10,8 +10,13 @@ const INDIVIDUALMETADATAARR_EN = [
         title: 'E-Mail',
         type: 'email',
         description: 'Email for signing CLA',
+<<<<<<< HEAD
         required: true
     }
+=======
+        required: true,
+    },
+>>>>>>> 78b28dce... move corp login to sign index
 ];
 const INDIVIDUALMETADATAARR_ZH = [
     {
@@ -24,8 +29,13 @@ const INDIVIDUALMETADATAARR_ZH = [
         title: '邮箱',
         type: 'email',
         description: '签署CLA的邮箱',
+<<<<<<< HEAD
         required: true
     }
+=======
+        required: true,
+    },
+>>>>>>> 78b28dce... move corp login to sign index
 ];
 const CORPORATIONMETADATAARR_EN = [
     {
@@ -99,6 +109,7 @@ const DATATYPEOPTIONS = [
 const EMAIL_UNAUTHORIZE = 'refuse_to_authorize_email';
 const NO_PUBLIC_EMAIL = 'no_public_email';
 const SYSTEM_ERROR = 'system_error';
+const EMAIL_ERROR = 'error_code';
 const GITEE_CHECK_REPO_401_ERROR_PRIVATE = '401 Unauthorized: no \'projects\' scope';
 const GITEE_CHECK_REPO_401_ERROR_TOKEN_EXIST = '401 Unauthorized: Access token does not exist';
 const PWD_MIN_LENGTH = 6;
@@ -120,7 +131,7 @@ const PRIVACY_POLICY_DATA = [                            //如需添加其他语
         language: 'Chinese'                             //隐私声明的语言类别
     }
 ];
-
+const SIGN_ROUTER = '/sign';
 
 
 
