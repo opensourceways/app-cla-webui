@@ -404,6 +404,12 @@ export const catchErr = (err, commit, _this) => {
                     dialogMessage: _this.$t('tips.id_pwd_err')
                 });
                 break;
+            case 'cla.account_locked':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.account_locked')
+                });
+                break;
             case 'cla.system_error':
                 _this.$store.commit('errorCodeSet', {
                     dialogVisible: true,

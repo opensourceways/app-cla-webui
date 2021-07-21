@@ -152,7 +152,8 @@ module.exports = {
         illegal_link: 'Illegal link',
         send_reset_password_email: 'An email to reset your password has been sent to your mailbox',
         loading: 'Loading',
-        select_file: 'Please select file first'
+        select_file: 'Please select file first',
+        account_locked: 'Account locked, please try again 5 minutes later'
     },
     header: {
         home: 'Home',

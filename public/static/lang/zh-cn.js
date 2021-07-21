@@ -152,7 +152,8 @@ module.exports = {
         illegal_link: '非法链接',
         send_reset_password_email: '已向您的邮箱发送了重置密码的邮件',
         loading: '加载中',
-        select_file: '请先选择需要上传的文件'
+        select_file: '请先选择需要上传的文件',
+        account_locked: '账户已被封锁，请5分钟后再试'
     },
     header: {
         home: '首页',
