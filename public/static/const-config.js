@@ -10,13 +10,8 @@ const INDIVIDUALMETADATAARR_EN = [
         title: 'E-Mail',
         type: 'email',
         description: 'Email for signing CLA',
-<<<<<<< HEAD
         required: true
     }
-=======
-        required: true,
-    },
->>>>>>> 78b28dce... move corp login to sign index
 ];
 const INDIVIDUALMETADATAARR_ZH = [
     {
@@ -29,13 +24,8 @@ const INDIVIDUALMETADATAARR_ZH = [
         title: '邮箱',
         type: 'email',
         description: '签署CLA的邮箱',
-<<<<<<< HEAD
         required: true
     }
-=======
-        required: true,
-    },
->>>>>>> 78b28dce... move corp login to sign index
 ];
 const CORPORATIONMETADATAARR_EN = [
     {
