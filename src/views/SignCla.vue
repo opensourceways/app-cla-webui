@@ -193,11 +193,7 @@
                         }
                     }
                 });
-                if (this.sendBtTextFromLang === 'send code' || this.sendBtTextFromLang === '发送验证码') {
-                    this.sendBtTextFromLang = this.$t('signPage.sendCode');
-                } else {
-                    this.sendBtTextFromLang = this.$t('signPage.reSendCode', {second: this.second});
-                }
+                this.setSendBtText();
                 this.$refs['ruleForm'] && this.$refs['ruleForm'].fields.forEach(item => {
                     if (item.validateState === 'error') {
                         this.$refs['ruleForm'].validateField(item.labelFor);
@@ -248,6 +244,13 @@
         },
         methods: {
             ...mapActions(['setTokenAct', 'setRepoInfoAct']),
+            setSendBtText() {
+                if (this.sendBtTextFromLang === 'send code' || this.sendBtTextFromLang === '发送验证码') {
+                    this.sendBtTextFromLang = this.$t('signPage.sendCode');
+                } else {
+                    this.sendBtTextFromLang = this.$t('signPage.reSendCode', {second: this.second});
+                }
+            },
             setIframeEventListener() {
                 window.addEventListener('message', (event) => {
                     if (event.data instanceof Array && event.origin === this.$store.state.domain) {
@@ -1025,6 +1028,7 @@
                         pdfData: this.pdfData
                     }, this.claTextUrl);
                 };
+                this.setSendBtText();
             }
         },
         created() {
