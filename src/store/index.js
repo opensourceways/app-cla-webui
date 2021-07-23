@@ -6,7 +6,7 @@ export default new Vuex.Store({
     state: {
         chooseRepo: sessionStorage.getItem('chooseRepo') || undefined,
         chooseOrg: sessionStorage.getItem('chooseOrg') || undefined,
-        signRouter: '/sign',
+        claChoose: sessionStorage.getItem('claChoose') || undefined,
         orgChoose: sessionStorage.getItem('orgChoose') || undefined,
         repositoryChoose: sessionStorage.getItem('repositoryChoose') || undefined,
         isEmail: sessionStorage.getItem('isEmail') || undefined,

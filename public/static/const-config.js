@@ -123,5 +123,3 @@ const PRIVACY_POLICY_DATA = [                            //如需添加其他语
 ];
 const SIGN_ROUTER = '/sign';
 
-
-

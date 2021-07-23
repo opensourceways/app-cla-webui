@@ -151,7 +151,7 @@ export const catchErr = (err, commit, _this) => {
             case 'cla.no_link_or_no_manager':
                 _this.$store.commit('errorCodeSet', {
                     dialogVisible: true,
-                    dialogMessage: _this.$t('tips.no_link_or_no_manager'),
+                    dialogMessage: _this.$t('tips.unknown_email')
                 });
                 break;
             case 'cla.failed_to_send_email':
