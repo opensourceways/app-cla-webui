@@ -306,9 +306,14 @@ export const catchErr = (err, commit, _this) => {
                 });
                 break;
             case 'cla.wrong_verification_code':
+                if (_this.$route.path === '/sign-cla') {
+                    message = _this.$t('tips.wrong_verification_code');
+                } else {
+                    message = _this.$t('tips.link_expired');
+                }
                 _this.$store.commit('errorCodeSet', {
                     dialogVisible: true,
-                    dialogMessage: _this.$t('tips.wrong_verification_code')
+                    dialogMessage: message
                 });
                 break;
             case 'cla.too_short_or_long_password':
@@ -320,7 +325,7 @@ export const catchErr = (err, commit, _this) => {
             case 'cla.invalid_password':
                 _this.$store.commit('errorCodeSet', {
                     dialogVisible: true,
-                    dialogMessage: _this.$t('tips.newPwd_contains_Illegal_character')
+                    dialogMessage: _this.$t('corp.newPwd_contains_Illegal_character')
                 });
                 break;
             case 'cla.invalid_account_or_pw':
@@ -347,9 +352,22 @@ export const catchErr = (err, commit, _this) => {
                 });
                 break;
             case 'cla.expired_verification_code':
+                if (_this.$route.path === '/sign-cla') {
+                    message = _this.$t('tips.expired_verification_code');
+                } else {
+                    message = _this.$t('tips.link_expired');
+                }
                 _this.$store.commit('errorCodeSet', {
                     dialogVisible: true,
-                    dialogMessage: _this.$t('tips.expired_verification_code')
+                    dialogMessage: message
+                });
+                break;
+            case 'cla.retrieve_pw_encrypt_failure':
+            case 'cla.retrieve_pw_decrypt_failure':
+            case 'cla.retrieve_pw_validate_failure':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.illegal_link')
                 });
                 break;
             case 'cla.no_link_or_unsigned':
@@ -538,6 +556,23 @@ export const changeCorpTitle = (e, item) => {
             break;
     }
 };
+export const checkIllegalChar = (str) => {
+    for (let char of str) {
+        if (char.charCodeAt() > PWD_MAX_ASCII || char.charCodeAt() < PWD_MIN_ASCII) {
+            return true;
+        }
+    }
+    return false;
+};
+
+export const verifyMsgChangeLang = (ruleForm, _this) => {
+    _this.$refs[ruleForm] && _this.$refs[ruleForm].fields.forEach(item => {
+        if (item.validateState === 'error') {
+            _this.$refs[ruleForm].validateField(item.labelFor);
+        }
+    });
+};
+
 
 
 

@@ -83,7 +83,7 @@
                     callback(new Error(this.$t('corp.input_new_pwd')));
                 } else if (value.length < PWD_MIN_LENGTH || value.length > PWD_MAX_LENGTH) {
                     callback(new Error(this.$t('corp.newPwd_length_err')));
-                } else if (this.checkIllegalChar(value)) {
+                } else if (util.checkIllegalChar(value)) {
                     callback(new Error(this.$t('corp.newPwd_contains_Illegal_character')));
                 } else if (value === this.ruleForm.oldPassword) {
                     callback(new Error(this.$t('corp.newPwd_diff_with_oldPwd')));
@@ -119,19 +119,10 @@
                     checkPwd: [
                         {require: true, validator: validatePass3, trigger: 'blur'}
                     ]
-
                 }
             };
         },
         methods: {
-            checkIllegalChar(str) {
-                for (let char of str) {
-                    if (char.charCodeAt() > PWD_MAX_ASCII || char.charCodeAt() < PWD_MIN_ASCII) {
-                        return true;
-                    }
-                }
-                return false;
-            },
             pressEnter() {
                 if (event.keyCode === 13) {
                     this.submit('ruleForm');

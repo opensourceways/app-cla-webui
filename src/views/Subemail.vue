@@ -6,7 +6,7 @@
                 <el-col>
                     <el-row>
                         <el-col align="left">
-                            <button class="button" @click="addSubEmail">{{$t('corp.addSubEmail')}}</button>
+                            <button class="create_button" @click="addSubEmail">{{$t('corp.addSubEmail')}}</button>
                         </el-col>
                     </el-row>
                     <el-row>

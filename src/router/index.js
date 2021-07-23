@@ -278,7 +278,7 @@ const routes = [
             }]
     },
     {
-        path: '/password',
+        path: '/password/:link_id',
         meta: {
             title: 'password'
         },
@@ -286,23 +286,23 @@ const routes = [
         children: [
             {
                 path: '/',
-                redirect: '/find-password'
+                redirect: '/retrieve-password/:link_id'
             },
             {
-                path: '/find-password',
+                path: '/retrieve-password/:link_id',
                 name: 'ForgetAndResetPwd',
                 meta: {
-                    title: 'find password'
+                    title: 'retrieve password'
                 },
-                component: () => import('../views/ForgetAndResetPwd.vue')
+                component: () => import('../views/ForgetAndSendEmail.vue')
             },
             {
-                path: '/reset-done',
-                name: 'ResetDone',
+                path: '/reset-password',
+                name: 'FindResetPassword',
                 meta: {
-                    title: 'reset done'
+                    title: 'password retrieve'
                 },
-                component: () => import('../views/ResetPwdDone.vue')
+                component: () => import('../views/FindResetPassword.vue')
             }]
     },
     {

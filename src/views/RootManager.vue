@@ -89,23 +89,6 @@
         border-radius: 1rem;
     }
 
-    .button {
-        width: 10rem;
-        height: 2rem;
-        border-radius: 1rem;
-        border: none;
-        color: white;
-        font-size: 1rem;
-        cursor: pointer;
-        background: linear-gradient(to right, #97DB30, #319E55);
-        margin-bottom: 1rem;
-        user-select: none;
-    }
-
-    .button:focus {
-        outline: none;
-    }
-
     .tabName {
         user-select: none;
         font-family: Roboto-Regular, sans-serif;

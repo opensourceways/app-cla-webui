@@ -56,9 +56,8 @@
                     dialogVisible: false,
                     dialogMessage: ''
                 });
-                let repoInfo = this.$store.state.repoInfo;
-                let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`;
-                let path = `${SIGN_ROUTER}/${util.strToBase64(params)}`;
+                let linkId = this.$store.state.linkId;
+                let path = `${SIGN_ROUTER}/${util.strToBase64(`${SIGN_LINK}/${linkId}`)}`;
                 this.$router.replace(path);
             }
         }

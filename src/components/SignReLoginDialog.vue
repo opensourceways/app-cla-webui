@@ -56,17 +56,8 @@
                     dialogVisible: false,
                     dialogMessage: ''
                 });
-                let date = new Date();
-                date.setTime(date.getTime() - 10000);
-                document.cookie = `_mark=; expire=${date.toUTCString()}; Domain=${this.domain}; path=/`;
-                let repoInfo = this.$store.state.repoInfo;
-                let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`;
-                let path = '';
-                if (sessionStorage.getItem('orgAddress')) {
-                    path = `${SIGN_ROUTER}/${util.strToBase64(params)}/${sessionStorage.getItem('orgAddress')}`;
-                } else {
-                    path = `${SIGN_ROUTER}/${util.strToBase64(params)}`;
-                }
+                let linkId = this.$store.state.linkId;
+                let path = `${SIGN_ROUTER}/${util.strToBase64(`${SIGN_LINK}/${linkId}`)}`;
                 this.$router.replace(path);
             }
         }
