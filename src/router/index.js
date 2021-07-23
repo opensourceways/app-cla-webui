@@ -300,7 +300,7 @@ const routes = [
                 path: '/reset-password',
                 name: 'FindResetPassword',
                 meta: {
-                    title: 'password retrieve'
+                    title: 'reset password'
                 },
                 component: () => import('../views/FindResetPassword.vue')
             }]
