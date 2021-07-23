@@ -199,7 +199,6 @@
                         this.$refs['ruleForm'].validateField(item.labelFor);
                     }
                 });
-
             }
         },
         inject: ['setClientHeight'],
@@ -420,7 +419,7 @@
                             this.cla_lang = this.signPageData[0].language;
                             this.value = 0;
                             this.cla_hash = this.signPageData[0].cla_hash;
-                            localStorage.setItem('lang', this.upperFirstCase(this.lang));
+                            localStorage.setItem('lang', util.upperFirstCase(this.lang));
                         }
                         this.setClaText({
                             link_id: this.link_id,
@@ -431,7 +430,7 @@
                         this.setFields(this.value);
                         this.setFieldsData();
                         resolve('complete');
-                        this.$emit('initHeader', this.upperFirstCase(this.lang));
+                        this.$emit('initHeader', util.upperFirstCase(this.lang));
                     } else {
                         let message = '';
                         if (this.$store.state.loginType === this.corporation) {
@@ -447,7 +446,6 @@
                             dialogMessage: message
                         });
                     }
-
                 }
             },
             getSignPage(resolve) {

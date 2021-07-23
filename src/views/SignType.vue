@@ -773,7 +773,6 @@
         </div>
         <NewFooter></NewFooter>
         <ReTryDialog :dialogVisible="reTryDialogVisible" :message="reLoginMsg"></ReTryDialog>
-        <EmailReTryDialog :dialogVisible="emailReTryDialogVisible"></EmailReTryDialog>
     </el-row>
 </template>
 <script>
@@ -784,7 +783,6 @@
     import _axios from '../util/_axios';
     import {mapActions} from 'vuex';
     import ReTryDialog from '../components/ReTryDialog';
-    import EmailReTryDialog from '../components/EmailReTryDialog';
 
     export default {
         name: 'SignType',
@@ -792,7 +790,6 @@
             NewHeader,
             NewFooter,
             ReTryDialog,
-            EmailReTryDialog
         },
         computed: {
             corpBtTooltip() {
@@ -811,9 +808,6 @@
             },
             individualBtTooltip() {
                 return `${this.$t('signType.individualStep1_1')}${this.$t('signType.individualBt')}${this.$t('signType.corpStep1_2')}`;
-            },
-            emailReTryDialogVisible() {
-                return this.$store.state.emailErrVisible;
             },
             reTryDialogVisible() {
                 return this.$store.state.reTryDialogVisible;
@@ -885,9 +879,9 @@
                     this.$router.push({name: 'ErrorPath'});
                 }
             },
-            getSignPage(lin_id, applyTo) {
+            getSignPage(link_id, applyTo) {
                 _axios({
-                    url: `${url.getSignPage}/${lin_id}/${applyTo}`
+                    url: `${url.getSignPage}/${link_id}/${applyTo}`
                 }).then(res => {
                     if (res && res.data.data) {
                         if (res.data.data.length && applyTo === 'corporation') {

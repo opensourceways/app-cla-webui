@@ -91,6 +91,7 @@
                 }
             },
             findPwd() {
+                this.$router.push(`/password/${this.$store.state.linkId}`);
             },
             login(userName, pwd) {
                 let linkId = '';

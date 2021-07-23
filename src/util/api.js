@@ -33,6 +33,7 @@ export const corporationPdf = '/v1/corporation-pdf';                            
 export const resend_pdf = '/v1/corporation-signing';                                //重发企业签名pdf      方式post  参数：/link_id/email
 export const addCla = 'v1/cla';                                                     //增加其他语言的CLA     方式post  参数：/:link_id/:apply_to
 export const addSubEmail = 'v1/corporation-email-domain';                           //添加邮箱后缀       方式post   参数：verification_code,sub_email
-export const submitVerifyCode = '/v1/corporation-manager/retrieve_pw';              //忘记密码提交新密码     方式 post  参数：{code: ,email: ,org_repo: {platform: ,org_id: ,repo_id: },password: }
+export const findPwdSendEmail = 'v1/password-retrieval';                             //忘记密码发送重置密码的邮件     方式post  参数：/:link_id    body:{email}
+export const findPwdResetPwd = 'v1/password-retrieval/';                              //忘记密码重置密码      方式post  /:link_id 参数：{password}
 export const getCLAPdf = 'v1/cla';                                                  //下载cla的PDF文件    方式 get  参数   /:link_id/:apply_to/:language/:hash
 

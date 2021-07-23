@@ -89,6 +89,7 @@ module.exports = {
         invalid_email: '无效的电子邮件',
         sending_email: '已向您的邮箱发送了验证码',
         not_fill_email: '请输入正确的电子邮箱',
+        send_find_pwd_email: '已向您的邮箱发送了重置密码的邮件，请根据提示完成密码重置',
         no_public_email_1: '抱歉，无法从您的{platform}帐户获取提交代码的电子邮件，请',
         click_here: '点击此处',
         gitee_no_public_email_2: '进入邮箱设置页面，取消勾选不公开我的邮箱地址选项，如果您还未为你的账户绑定任何邮箱，请点击新增，绑定邮箱后再试',
@@ -144,7 +145,11 @@ module.exports = {
         not_support_platform: '暂不支持该平台的隐私声明，请将隐私声明存储到Gitee或者Github的公开仓库',
         has_same_lang_privacy: '请勿配置相同语言的隐私声明',
         privacy_conf_err: '隐私声明配置错误',
-        unknown_email: '该邮箱不是管理员的邮箱'
+        unknown_email: '该邮箱不是管理员的邮箱',
+        reset_password_success: '重置密码成功',
+        link_expired: '链接已失效',
+        illegal_link: '非法链接',
+        send_reset_password_email: '已向您的邮箱发送了重置密码的邮件'
     },
     header: {
         home: '首页',
@@ -191,10 +196,8 @@ module.exports = {
         newPwd_length_err: '新密码长度必须是6-16位',
         newPwd_contains_Illegal_character: '新密码包含非法字符',
         email_input_holder: '请输入邮箱',
-        find_pwd_step1: '重置密码',
-        find_pwd_step2: '完成',
-        resetSuccess: '重置成功',
-        goToLogin: '去登陆',
+        find_pwd_step1: '发送邮件',
+        find_pwd_step2: '重置密码',
         managerName: '管理员姓名',
         managerEmail: '管理员邮箱',
         managerId: '管理员用户名',
@@ -202,7 +205,8 @@ module.exports = {
         search: '查询',
         corpName: '公司名称',
         addSubEmail: '添加邮箱域名',
-        subEmailDesc: '在下方的输入框内输入一个包含你需要添加的域名的邮箱，通过验证之后，即可添加成功，员工就能使用与子邮箱域名相同的邮箱进行员工签署'
+        subEmailDesc: '在下方的输入框内输入一个包含你需要添加的域名的邮箱，通过验证之后，即可添加成功，员工就能使用与子邮箱域名相同的邮箱进行员工签署',
+        send: '发送'
     },
     index: {
         org_login: '开源社区管理员',

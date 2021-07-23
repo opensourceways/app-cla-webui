@@ -6,7 +6,7 @@
                 <el-col>
                     <el-row>
                         <el-col align="left">
-                            <button class="button" @click="createManager">{{$t('header.createManager')}}</button>
+                            <button class="create_button" @click="createManager">{{$t('header.createManager')}}</button>
                         </el-col>
                     </el-row>
                     <el-row>
