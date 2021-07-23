@@ -13,7 +13,7 @@
                         </div>
                     </div>
                     <div>
-                        <div v-if="showHeaderMenu && this.$store.state.loginInfo" class="menuBox">
+                        <div v-if="showHeaderMenu" class="menuBox">
                             <div class="userImgBox" id="imgBox">
                                 <div id="svgCover" class="svgCover" @click="openOrCloseMenu()">
 

@@ -564,7 +564,6 @@ export const checkIllegalChar = (str) => {
     }
     return false;
 };
-
 export const verifyMsgChangeLang = (ruleForm, _this) => {
     _this.$refs[ruleForm] && _this.$refs[ruleForm].fields.forEach(item => {
         if (item.validateState === 'error') {
@@ -580,6 +579,7 @@ export const setComponentHeight = (_this, id) => {
         document.getElementById(id).style.minHeight = clientHeight > offsetHeight ? clientHeight + 'px' : offsetHeight + 'px';
     });
 };
+
 
 
 
