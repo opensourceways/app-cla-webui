@@ -76,6 +76,7 @@
             }
         },
         mounted() {
+            this.$store.commit('', '');
             this.setClientHeight();
         }
     };

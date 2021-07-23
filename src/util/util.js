@@ -117,6 +117,7 @@ export const getMenuState = (_this) => {
 };
 export const catchErr = (err, commit, _this) => {
     if (err.data && err.data.hasOwnProperty('data')) {
+        let message = '';
         switch (err.data.data.error_code) {
             case 'cla.invalid_token':
                 _this.$store.commit(commit, {
@@ -154,6 +155,84 @@ export const catchErr = (err, commit, _this) => {
                     dialogMessage: _this.$t('tips.unknown_email')
                 });
                 break;
+            case 'cla.no_cla_binding':
+                if (_this.$store.state.loginType === _this.corporation) {
+                    message = _this.$t('tips.no_cla_binding_corp');
+                } else if (_this.$store.state.loginType === _this.employee) {
+                    message = _this.$t('tips.no_cla_binding_emp');
+                } else if (_this.$store.state.loginType === _this.individual) {
+                    message = _this.$t('tips.no_cla_binding_individual');
+                }
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: message
+                });
+                break;
+            case 'cla.no_corp_manager':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.no_corp_manager')
+                });
+                break;
+            case 'cla.has_not_signed':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.has_not_signed')
+                });
+                break;
+            case 'cla.uncompleted_signing':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.uncompleted_signing')
+                });
+                break;
+            case 'cla.not_ready_to_sign':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.not_ready_to_sign')
+                });
+                break;
+            case 'cla.resigned':
+                if (_this.$store.state.loginType === _this.corporation) {
+                    message = _this.$t('tips.corp_has_signed');
+                } else {
+                    message = _this.$t('tips.has_signed');
+                }
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: message
+                });
+                break;
+            case 'cla.go_to_sign_employee_cla':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.go_to_sign_employee_cla')
+                });
+                break;
+            case 'cla.no_employee_manager':
+                _this.$store.commit(commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.no_corp_manager')
+                });
+                break;
+            case 'cla.no_link':
+                let _commit = '';
+                if (_this.$route.path === 'sign-cla') {
+                    _commit = commit;
+                } else {
+                    _commit = 'errorCodeSet';
+                }
+                _this.$store.commit(_commit, {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.no_link')
+                });
+                break;
+            case 'cla.unmatched_cla':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.unmatched_cla')
+                });
+                break;
             case 'cla.failed_to_send_email':
                 _this.$store.commit('errorCodeSet', {
                     dialogVisible: true,
@@ -166,10 +245,105 @@ export const catchErr = (err, commit, _this) => {
                     dialogMessage: _this.$t('tips.unknown_email')
                 });
                 break;
+            case 'cla.link_exists':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.link_exists')
+                });
+                break;
+            case 'cla.cla_is_used':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.cla_is_used')
+                });
+                break;
+            case 'cla.no_pdf_of_corp':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.no_pdf_of_corp')
+                });
+                break;
+            case 'cla.unuploaded':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.no_pdf_of_corp')
+                });
+                break;
+            case 'cla.not_an_email':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.invalid_email')
+                });
+                break;
+            case 'cla.many_employee_managers':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.many_employee_managers')
+                });
+                break;
+            case 'cla.invalid_manager_id':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.invalid_id')
+                });
+                break;
+            case 'cla.num_of_corp_managers_exceeded':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.num_of_corp_managers_exceeded')
+                });
+                break;
+            case 'cla.corp_manager_exists':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.corp_manager_exists')
+                });
+                break;
+            case 'cla.admin_as_manager':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('corp.manager_email_same_with_admin')
+                });
+                break;
+            case 'cla.cla_exists':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.cla_exists', {lang: _this.$store.state.addLang})
+                });
+                break;
             case 'cla.wrong_verification_code':
                 _this.$store.commit('errorCodeSet', {
                     dialogVisible: true,
                     dialogMessage: _this.$t('tips.wrong_verification_code')
+                });
+                break;
+            case 'cla.too_short_or_long_password':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.newPwd_length_err')
+                });
+                break;
+            case 'cla.invalid_password':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.newPwd_contains_Illegal_character')
+                });
+                break;
+            case 'cla.invalid_account_or_pw':
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: _this.$t('tips.invalid_account_or_pw')
+                });
+                break;
+            case 'cla.no_db_record':
+                if (_this.$route.path === '/corporationManagerLogin') {
+                    message = _this.$t('tips.id_pwd_err');
+                } else if (_this.$route.path === '/resetPassword') {
+                    message = _this.$t('tips.invalid_account_or_pw');
+                }
+                _this.$store.commit('errorCodeSet', {
+                    dialogVisible: true,
+                    dialogMessage: message
                 });
                 break;
             case 'cla.restricted_email_suffix':
@@ -190,12 +364,6 @@ export const catchErr = (err, commit, _this) => {
                     dialogMessage: _this.$t('tips.no_link_or_unsigned')
                 });
                 break;
-            case 'cla.not_an_email':
-                _this.$store.commit('errorCodeSet', {
-                    dialogVisible: true,
-                    dialogMessage: _this.$t('tips.not_fill_email')
-                });
-                break;
             case 'cla.unmatch_email_domain':
                 _this.$store.commit('errorCodeSet', {
                     dialogVisible: true,
@@ -212,12 +380,6 @@ export const catchErr = (err, commit, _this) => {
                 _this.$store.commit('errorCodeSet', {
                     dialogVisible: true,
                     dialogMessage: _this.$t('tips.error_parsing_api_body')
-                });
-                break;
-            case 'cla.no_db_record':
-                _this.$store.commit('errorCodeSet', {
-                    dialogVisible: true,
-                    dialogMessage: _this.$t('tips.id_pwd_err')
                 });
                 break;
             case 'cla.wrong_id_or_pw':
