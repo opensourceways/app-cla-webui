@@ -52,40 +52,6 @@
                                 </el-col>
                             </el-row>
                         </div>
-                        <div>
-                            <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
-                                    v-for="(item,index) in individualCustomMetadataArr">
-                                <el-col :span="5">
-                                    <el-input v-model="item.title" size="medium"
-                                              :placeholder="$t('org.config_cla_fields_title_placeholder')">
-                                    </el-input>
-                                </el-col>
-                                <el-col :span="5">
-                                    <el-select style="width: 100%" v-model="item.type"
-                                               :placeholder="$t('org.config_cla_fields_type_placeholder')"
-                                               size="medium">
-                                        <el-option
-                                                v-for="i in dataTypeOptions"
-                                                :key="i.value"
-                                                :label="i.label"
-                                                :value="i.value">
-                                        </el-option>
-                                    </el-select>
-                                </el-col>
-                                <el-col :span="5" style="height: 100%">
-                                    <el-input v-model="item.description" size="medium"
-                                              :placeholder="$t('org.config_cla_fields_desc_placeholder')"></el-input>
-                                </el-col>
-                                <el-col :span="5" style="height: 100%">
-                                    <el-checkbox v-model="item.required">{{$t('org.config_cla_fields_required')}}
-                                    </el-checkbox>
-                                </el-col>
-                                <el-col :span="4">
-                                    <button class="add_button" @click="addRow(index)">+</button>
-                                    <button class="deleteBt" @click="myDeleteRow(index)">-</button>
-                                </el-col>
-                            </el-row>
-                        </div>
                     </div>
                 </div>
                 <div v-if="this.$store.state.claLinkCorp" class="margin-top-1rem">
@@ -114,7 +80,6 @@
                                 v-for="(item,index) in corporationMetadataArr">
                             <el-col :span="5">
                                 <el-input disabled="" v-model="item.title" size="medium" readonly="">
-
                                 </el-input>
                             </el-col>
                             <el-col :span="5">
@@ -132,26 +97,26 @@
                     </div>
                     <div>
                         <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
-                                v-for="(item,index) in corporationCustomMetadataArr">
+                                v-for="(item,index) in corporationCustomMetadataArr" :key="index">
                             <el-col :span="5">
-                                <el-input v-model="item.title" size="medium"
-                                          :placeholder="$t('org.config_cla_fields_title_placeholder')">
-                                </el-input>
-                            </el-col>
-                            <el-col :span="5">
-                                <el-select style="width: 100%" v-model="item.type"
-                                           :placeholder="$t('org.config_cla_fields_type_placeholder')"
+                                <el-select style="width: 100%" v-model="item.title"
+                                           :placeholder="$t('org.config_cla_fields_title_placeholder')"
+                                           @change="changeCorpTitle($event,item)"
                                            size="medium">
                                     <el-option
-                                            v-for="i in dataTypeOptions"
+                                            v-for="i in corpTitleOptions"
                                             :key="i.value"
                                             :label="i.label"
                                             :value="i.value">
                                     </el-option>
                                 </el-select>
                             </el-col>
+                            <el-col :span="5">
+                                <el-input disabled="" v-model="item.type" size="medium"
+                                          :placeholder="$t('org.config_cla_fields_type_placeholder')"></el-input>
+                            </el-col>
                             <el-col :span="5" style="height: 100%">
-                                <el-input v-model="item.description" size="medium"
+                                <el-input disabled="" v-model="item.description" size="medium"
                                           :placeholder="$t('org.config_cla_fields_desc_placeholder')"></el-input>
                             </el-col>
                             <el-col :span="5" style="height: 100%">
@@ -175,6 +140,8 @@
 </template>
 
 <script>
+    import * as util from '../util/util';
+
     export default {
         name: 'ConfigFields',
         computed: {
@@ -197,11 +164,12 @@
             return {
                 individualMetadata: [],
                 corpMetadata: [],
-                dataTypeOptions: DATATYPEOPTIONS,
                 individualMetadataArr: INDIVIDUALMETADATAARR_EN,
                 corporationMetadataArr: CORPORATIONMETADATAARR_EN,
-                initIndividualCustomMetadata: INITCUSTOMMETADATA,
-                initCorpCustomMetadata: INITCUSTOMMETADATA
+                initIndividualCustomMetadata: JSON.parse(JSON.stringify(INITCUSTOMMETADATA)),
+                initCorpCustomMetadata: JSON.parse(JSON.stringify(INITCUSTOMMETADATA)),
+                individualTitleOptions: TITLE_OPTIONS_EN,
+                corpTitleOptions: TITLE_OPTIONS_EN
             };
         },
         beforeRouteEnter(to, from, next) {
@@ -213,34 +181,36 @@
         },
         inject: ['setClientHeight'],
         methods: {
+            changeCorpTitle(e, item) {
+                util.changeCorpTitle(e, item);
+            },
             init() {
                 if (this.$store.state.individualLanguage === 'chinese') {
                     this.individualMetadataArr = INDIVIDUALMETADATAARR_ZH;
                 }
                 if (this.$store.state.corpLanguage === 'chinese') {
                     this.corporationMetadataArr = CORPORATIONMETADATAARR_ZH;
+                    this.corpTitleOptions = TITLE_OPTIONS_ZH;
+                    util.corpFiledExchangeToZh(this.corporationCustomMetadataArr);
+                } else if (this.$store.state.corpLanguage === 'english') {
+                    util.corpFiledExchangeToEn(this.corporationCustomMetadataArr);
                 }
             },
             flashInit() {
                 this.init();
-                this.$store.commit('setIndividualMetadata', this.individualMetadataArr);
-                this.$store.commit('setCorpMetadata', this.corporationMetadataArr);
-                this.$store.commit('setIndividualCustomMetadataArr', this.initIndividualCustomMetadata);
                 this.$store.commit('setCorporationCustomMetadataArr', this.initCorpCustomMetadata);
-                sessionStorage.removeItem('individualMetadata');
-                sessionStorage.removeItem('corporationMetadata');
-                sessionStorage.removeItem('individualCustomMetadataArr');
                 sessionStorage.removeItem('corporationCustomMetadataArr');
             },
             toConfigClaLink() {
+                this.$store.commit('setIndividualCustomMetadataArr', this.individualCustomMetadataArr);
+                this.$store.commit('setCorporationCustomMetadataArr', this.corporationCustomMetadataArr);
                 this.$router.replace('/config-cla-link');
             },
             toNextPage() {
-                let metadataObj = this.checkMetadata();
-                if (metadataObj) {
-                    this.$store.commit('setIndividualMetadata', metadataObj.individualArr);
-                    this.$store.commit('setCorpMetadata', metadataObj.corpArr);
-                    this.$store.commit('setIndividualCustomMetadataArr', this.individualMetadata);
+                let corpArr = this.checkMetadata();
+                if (corpArr) {
+                    this.$store.commit('setIndividualMetadata', this.individualMetadataArr);
+                    this.$store.commit('setCorpMetadata', corpArr);
                     this.$store.commit('setCorporationCustomMetadataArr', this.corpMetadata);
                     this.$router.replace('/config-check');
                 } else {
@@ -249,27 +219,13 @@
                 }
             },
             checkMetadata() {
-                let individualMetadata = [];
                 let corpMetadata = [];
-                this.individualCustomMetadataArr.forEach((item) => {
-                    if (item.title !== '' && item.type !== '') {
-                        individualMetadata.push(item);
-                    }
-                });
                 this.corporationCustomMetadataArr.forEach((item) => {
                     if (item.title !== '' && item.type !== '') {
                         corpMetadata.push(item);
                     }
                 });
-                let individualArr = this.individualMetadataArr.concat(individualMetadata);
                 let corpArr = this.corporationMetadataArr.concat(corpMetadata);
-                for (let i = 0; i < individualArr.length; i++) {
-                    for (let j = i + 1; j < individualArr.length; j++) {
-                        if (individualArr[i].title === individualArr[j].title || individualArr[i].type === individualArr[j].type) {
-                            return false;
-                        }
-                    }
-                }
                 for (let i = 0; i < corpArr.length; i++) {
                     for (let j = i + 1; j < corpArr.length; j++) {
                         if (corpArr[i].title === corpArr[j].title || corpArr[i].type === corpArr[j].type) {
@@ -277,42 +233,14 @@
                         }
                     }
                 }
-                individualMetadata.push({
-                    title: '',
-                    type: '',
-                    description: '',
-                    required: false
-                });
                 corpMetadata.push({
                     title: '',
                     type: '',
                     description: '',
                     required: false
                 });
-                this.individualMetadata = individualMetadata;
                 this.corpMetadata = corpMetadata;
-                return {individualArr, corpArr};
-            },
-            addRow(index) {
-                let metadata = JSON.parse(JSON.stringify(this.individualCustomMetadataArr));
-                metadata.splice(index + 1, 0, {
-                    title: '',
-                    type: '',
-                    description: '',
-                    required: false
-                });
-                this.$store.commit('setIndividualCustomMetadataArr', metadata);
-            },
-            myDeleteRow(index) {
-                let metadata = JSON.parse(JSON.stringify(this.individualCustomMetadataArr));
-                if (metadata.length === 1) {
-                    metadata[0].type = '';
-                    metadata[0].title = '';
-                    metadata[0].description = '';
-                } else {
-                    metadata.splice(index, 1);
-                }
-                this.$store.commit('setIndividualCustomMetadataArr', metadata);
+                return corpArr;
             },
             addCorpRow(index) {
                 let metadata = JSON.parse(JSON.stringify(this.corporationCustomMetadataArr));

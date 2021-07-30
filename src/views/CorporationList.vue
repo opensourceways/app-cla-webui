@@ -554,10 +554,10 @@
             },
             setIndividualPD(row) {
                 this.setCheckInfo();
-                if (row.fields.length > 3) {
+                if (row.fields.length > 2) {
                     let data = [];
                     row.fields.forEach((item, index) => {
-                        if (index > 2) {
+                        if (index > 1) {
                             let field = {};
                             for (let key in item) {
                                 if (key !== 'id') {
@@ -824,21 +824,17 @@
                         this.openResendPdf(command.row.admin_email);
                         break;
                     case 'c':
-                        console.log(command.row);
                         this.openDeleteCorp(command.row.admin_email);
                         break;
                     case 'd':
-                        console.log(command.row);
                         this.reductionCorp(command.row.admin_email);
                         break;
                     case 'e':
-                        console.log(command.row);
                         this.deleteCompletely(command.row.admin_email);
                         break;
                 }
             },
             deleteCompletely(email) {
-                console.log('deleteCompletely');
                 this.deleteCompleteVisible = true;
             },
             reductionCorp(email) {

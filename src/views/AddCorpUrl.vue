@@ -106,24 +106,24 @@
                             <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
                                     v-for="(item,index) in corporationCustomMetadataArr">
                                 <el-col :span="5">
-                                    <el-input v-model="item.title" size="medium"
-                                              :placeholder="$t('org.config_cla_fields_title_placeholder')">
-                                    </el-input>
-                                </el-col>
-                                <el-col :span="5">
-                                    <el-select :disabled="!add_bind_first" style="width: 100%" v-model="item.type"
-                                               :placeholder="$t('org.config_cla_fields_type_placeholder')"
+                                    <el-select :disabled="!add_bind_first" style="width: 100%" v-model="item.title"
+                                               :placeholder="$t('org.config_cla_fields_title_placeholder')"
+                                               @change="changeCorpTitle($event,item)"
                                                size="medium">
                                         <el-option
-                                                v-for="i in dataTypeOptions"
+                                                v-for="i in corpTitleOptions"
                                                 :key="i.value"
                                                 :label="i.label"
                                                 :value="i.value">
                                         </el-option>
                                     </el-select>
                                 </el-col>
+                                <el-col :span="5">
+                                    <el-input disabled="" v-model="item.type" size="medium"
+                                              :placeholder="$t('org.config_cla_fields_type_placeholder')"></el-input>
+                                </el-col>
                                 <el-col :span="5" style="height: 100%">
-                                    <el-input v-model="item.description" size="medium"
+                                    <el-input disabled="" v-model="item.description" size="medium"
                                               :placeholder="$t('org.config_cla_fields_desc_placeholder')"></el-input>
                                 </el-col>
                                 <el-col :span="5" style="height: 100%">
@@ -152,8 +152,6 @@
 <script>
     import ReTryDialog from '../components/ReTryDialog';
     import ReLoginDialog from '../components/ReLoginDialog';
-    import http from '../util/http';
-    import * as url from '../util/api';
     import * as util from '../util/util';
 
     export default {
@@ -206,13 +204,16 @@
         data() {
             return {
                 corpMetadata: [],
-                dataTypeOptions: DATATYPEOPTIONS,
                 languageOptions: [{value: 'english', label: 'English'}, {value: 'chinese', label: '中文'}],
                 corporationMetadataArr: CORPORATIONMETADATAARR_EN,
-                initCorpCustomMetadata: INITCUSTOMMETADATA
+                initCorpCustomMetadata: JSON.parse(JSON.stringify(INITCUSTOMMETADATA)),
+                corpTitleOptions: TITLE_OPTIONS_EN
             };
         },
         methods: {
+            changeCorpTitle(e, item) {
+                util.changeCorpTitle(e, item);
+            },
             addCorpRow(index) {
                 let metadata = this.corporationCustomMetadataArr;
                 metadata.splice(index + 1, 0, {
@@ -292,6 +293,13 @@
                 return corpArr;
             },
             changeCorpLanguage(value) {
+                if (value === 'english') {
+                    this.corpTitleOptions = TITLE_OPTIONS_EN;
+                    util.corpFiledExchangeToEn(this.corporationCustomMetadataArr);
+                } else {
+                    this.corpTitleOptions = TITLE_OPTIONS_ZH;
+                    util.corpFiledExchangeToZh(this.corporationCustomMetadataArr);
+                }
                 this.initMetadata(value);
                 this.$store.commit('setCorpLanguage', value);
                 this.$store.commit('setAddLang', value);

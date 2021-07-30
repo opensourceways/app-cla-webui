@@ -84,18 +84,6 @@ const INITCUSTOMMETADATA = [{
     description: '',
     required: false
 }];
-const DATATYPEOPTIONS = [
-    {label: 'name', value: 'name'}, {
-        label: 'corporationName',
-        value: 'corporationName'
-    }, {label: 'date', value: 'date'}, {
-        label: 'telephone',
-        value: 'telephone'
-    }, {label: 'address', value: 'address'}, {label: 'email', value: 'email'}, {
-        label: 'fax',
-        value: 'fax'
-    }
-];
 const EMAIL_UNAUTHORIZE = 'refuse_to_authorize_email';
 const NO_PUBLIC_EMAIL = 'no_public_email';
 const SYSTEM_ERROR = 'system_error';
@@ -122,4 +110,14 @@ const PRIVACY_POLICY_DATA = [                            //如需添加其他语
     }
 ];
 const SIGN_ROUTER = '/sign';
+const TITLE_OPTIONS_EN = [
+    {label: 'Telephone', value: 'Telephone'},
+    {label: 'Address', value: 'Address'},
+    {label: 'Fax', value: 'Fax'}
+];
+const TITLE_OPTIONS_ZH = [
+    {label: '电话', value: '电话'},
+    {label: '地址', value: '地址'},
+    {label: '传真', value: '传真'}
+];
 
