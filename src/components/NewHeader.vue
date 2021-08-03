@@ -138,25 +138,17 @@
                 } else if (this.$route.path === '/privacy') {
                     this.$router.push('/sign-cla');
                 } else if (this.$route.path === '/corporationManagerLogin') {
-                    let params = '';
-                    let repoInfo = {};
-                    if (this.$store.state.repoInfo) {
-                        repoInfo = this.$store.state.repoInfo;
+                    if (this.$store.state.linkId) {
+                        let params = '';
+                        params = `${SIGN_LINK}/${this.$store.state.linkId}`;
+                        let base64Params = util.strToBase64(params);
+                        this.$router.replace(`${SIGN_ROUTER}/${base64Params}`);
                     } else {
                         this.$store.commit('errorCodeSet', {
                             dialogVisible: true,
                             dialogMessage: this.$t('tips.page_error')
                         });
-                        return;
                     }
-                    if (repoInfo.repo_id) {
-                        params = `${repoInfo.platform.toLowerCase()}/${repoInfo.org_id}/${repoInfo.repo_id}`;
-                    } else {
-                        params = `${repoInfo.platform.toLowerCase()}/${repoInfo.org_id}`;
-                    }
-                    let base64Params = util.strToBase64(params);
-                    let address = window.location.href.split('/')[0];
-                    location.href = `${address}${SIGN_ROUTER}/${base64Params}`;
                 }
             },
             openOrCloseMenu() {

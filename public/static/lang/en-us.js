@@ -144,7 +144,7 @@ module.exports = {
         not_support_platform: 'Privacy policy of this platform is not supported at present. Please store the privacy policy in the public warehouse of Gitee or Github',
         has_same_lang_privacy: 'Do not configure privacy policy in the same language',
         privacy_conf_err: 'Privacy policy configuration error',
-        unknown_email: 'Invalid email address.Enter an administrator or manager email address.'
+        unknown_email: 'Invalid email address. Enter an administrator or manager email address.'
     },
     header: {
         home: 'Home',

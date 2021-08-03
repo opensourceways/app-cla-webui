@@ -782,7 +782,6 @@
     import * as util from '../util/util';
     import * as url from '../util/api';
     import _axios from '../util/_axios';
-    import _cookie from 'js-cookie';
     import {mapActions} from 'vuex';
     import ReTryDialog from '../components/ReTryDialog';
     import EmailReTryDialog from '../components/EmailReTryDialog';
@@ -848,7 +847,7 @@
             };
         },
         methods: {
-            ...mapActions(['setLoginTypeAct', 'setRepoInfoAct']),
+            ...mapActions(['setLoginTypeAct', 'setLinkIdAct']),
             clickIndividualGuide() {
                 this.individualGuideIsOpen = !this.individualGuideIsOpen;
             },
@@ -877,101 +876,21 @@
             },
             getRepoInfo() {
                 this.setLangLocale();
-                let params = window.location.href.split('/sign/')[1];
-                if (params === 'auth_failed') {
-                    let cookie = document.cookie;
-                    let cookieArr = cookie.split(';');
-                    for (let i = 0; i < cookieArr.length; i++) {
-                        let cookieKeyValue = cookieArr[i].split('=');
-                        let name = cookieKeyValue[0].trim();
-                        let value = cookieKeyValue[1].trim();
-                        _cookie.remove(name, {path: '/'});
-                        if (name === 'error_code') {
-                            switch (value) {
-                                case 'auth_failed':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.refuse_authorize', {platform: this.$store.state.repoInfo.platform})
-                                    });
-                                    break;
-                                case EMAIL_UNAUTHORIZE:
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.not_authorize_email')
-                                    });
-                                    break;
-                                case NO_PUBLIC_EMAIL:
-                                    this.$store.commit('setEmailErr', true);
-                                    break;
-                                case SYSTEM_ERROR:
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.system_error')
-                                    });
-                                    break;
-                            }
-                        }
-                    }
-
-                    let params = '';
-                    let repoInfo = this.$store.state.repoInfo;
-                    this.platform = repoInfo.platform;
-                    this.org = repoInfo.org_id;
-
-                    if (repoInfo.repo_id) {
-                        this.repo = repoInfo.repo_id;
-                        params = `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}`;
-                    } else {
-                        params = `${repoInfo.platform}/${repoInfo.org_id}`;
-                        this.repo = '';
-                    }
-                    let base64Params = util.strToBase64(params);
-                    this.$router.replace(`${SIGN_ROUTER}/${base64Params}`);
+                let params = util.base64ToStr(window.location.href.split('/sign/')[1]);
+                let paramsArr = params.split('/');
+                if (paramsArr.length === 2 && paramsArr[0] === SIGN_LINK) {
+                    this.setLinkIdAct(paramsArr[1]);
+                    this.getSignPage(paramsArr[1], 'corporation');
                 } else {
-                    let repoInfoParams = '';
-                    if (params.indexOf('/') !== -1) {
-                        repoInfoParams = params.substring(0, params.indexOf('/'));
-                        let orgAddress = params.substring(params.indexOf('/') + 1);
-                        sessionStorage.setItem('orgAddress', orgAddress);
-                    } else {
-                        sessionStorage.removeItem('orgAddress');
-                        repoInfoParams = params;
-                    }
-                    let arg = util.base64ToStr(repoInfoParams);
-                    if (arg) {
-                        let args = arg.split('/');
-                        if (args.length < 2) {
-                            this.$router.push({name: 'ErrorPath'});
-                        } else {
-                            this.platform = args[0];
-                            this.org = args[1];
-                            if (args[2]) {
-                                this.repo = args[2];
-                            } else {
-                                this.repo = '';
-                            }
-                            this.setRepoInfoAct({platform: this.platform, org_id: this.org, repo_id: this.repo});
-                            this.getSignPage(this.platform, this.org, this.repo, 'corporation');
-                        }
-                    } else {
-                        this.$router.push({name: 'ErrorPath'});
-                    }
-
+                    this.$router.push({name: 'ErrorPath'});
                 }
-
             },
-            getSignPage(platform, org_id, repo_id, applyTo) {
-                let _url = '';
-                if (repo_id) {
-                    _url = `${url.getSignPage}/${platform}/${org_id}:${repo_id}/${applyTo}`;
-                } else {
-                    _url = `${url.getSignPage}/${platform}/${org_id}/${applyTo}`;
-                }
+            getSignPage(lin_id, applyTo) {
                 _axios({
-                    url: _url
+                    url: `${url.getSignPage}/${lin_id}/${applyTo}`
                 }).then(res => {
-                    if (res && res.data.data && res.data.data.clas) {
-                        if (res.data.data.clas.length && applyTo === 'corporation') {
+                    if (res && res.data.data) {
+                        if (res.data.data.length && applyTo === 'corporation') {
                             this.isBindCorpCLA = true;
                         }
                     }

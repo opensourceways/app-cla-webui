@@ -91,16 +91,11 @@
                 }
             },
             findPwd() {
-                this.$router.push('/password');
             },
             login(userName, pwd) {
-                let platform = '';
-                let org = '';
-                let repo = '';
-                if (this.$store.state.repoInfo) {
-                    platform = this.$store.state.repoInfo.platform;
-                    org = this.$store.state.repoInfo.org_id;
-                    repo = this.$store.state.repoInfo.repo_id;
+                let linkId = '';
+                if (this.$store.state.linkId) {
+                    linkId = this.$store.state.linkId;
                 } else {
                     this.$store.commit('errorCodeSet', {
                         dialogVisible: true,
@@ -111,9 +106,7 @@
                 let obj = {
                     user: userName.trim(),
                     password: pwd.trim(),
-                    platform: platform,
-                    org_id: org,
-                    repo_id: repo
+                    link_id: linkId
                 };
                 http({
                     url: url.corporationManagerAuth,

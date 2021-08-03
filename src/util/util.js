@@ -281,12 +281,6 @@ export const catchErr = (err, commit, _this) => {
                     dialogMessage: _this.$t('tips.many_employee_managers')
                 });
                 break;
-            case 'cla.invalid_manager_id':
-                _this.$store.commit('errorCodeSet', {
-                    dialogVisible: true,
-                    dialogMessage: _this.$t('tips.invalid_id')
-                });
-                break;
             case 'cla.num_of_corp_managers_exceeded':
                 _this.$store.commit('errorCodeSet', {
                     dialogVisible: true,
@@ -382,6 +376,7 @@ export const catchErr = (err, commit, _this) => {
                     dialogMessage: _this.$t('tips.error_parsing_api_body')
                 });
                 break;
+            case 'cla.invalid_manager_id':
             case 'cla.wrong_id_or_pw':
                 _this.$store.commit('errorCodeSet', {
                     dialogVisible: true,

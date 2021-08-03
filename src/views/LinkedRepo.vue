@@ -342,11 +342,7 @@
             },
             copyAddress(row) {
                 let params = '';
-                if (row.repo_id) {
-                    params = `${row.platform.toLowerCase()}/${row.org_id}/${row.repo_id}`;
-                } else {
-                    params = `${row.platform.toLowerCase()}/${row.org_id}`;
-                }
+                params = `${SIGN_LINK}/${row.link_id}`;
                 let base64Params = util.strToBase64(params);
                 let address = window.location.href.split('/linkedRepo')[0];
                 let url = `${address}${SIGN_ROUTER}/${base64Params}`;
@@ -361,11 +357,7 @@
             },
             toSignPage(row) {
                 let params = '';
-                if (row.repo_id) {
-                    params = `${row.platform.toLowerCase()}/${row.org_id}/${row.repo_id}`;
-                } else {
-                    params = `${row.platform.toLowerCase()}/${row.org_id}`;
-                }
+                params = `${SIGN_LINK}/${row.link_id}`;
                 let base64Params = util.strToBase64(params);
                 let url = `${this.address}${SIGN_ROUTER}/${base64Params}`;
                 window.open(url);
