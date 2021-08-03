@@ -10,6 +10,11 @@
     export default {
         name: 'ConfigCla',
         inject: ['setClientHeight'],
+        watch: {
+            '$i18n.locale'() {
+                this.setTitle();
+            }
+        },
         data() {
             return {
                 title: '',
@@ -21,7 +26,7 @@
         methods: {
             setTitle() {
                 if (this.$store.state.bindType === 'add-bind') {
-                    if (this.$store.state.cla_link_corporation) {
+                    if (this.$store.state.claLinkCorp) {
                         this.title = this.$t('org.addCorpCla');
                     } else {
                         this.title = this.$t('org.addIndividualCla');
