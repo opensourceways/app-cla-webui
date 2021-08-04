@@ -7,7 +7,7 @@
                         <div class="tableStyle">
                             <el-table
                                     :empty-text="$t('corp.no_data')"
-                                    :data="signedNotCompleted"
+                                    :data="showSignedNotCompleted"
                                     align="center"
                                     :row-class-name="createdAdmin"
                                     class="tableClass"
@@ -50,15 +50,17 @@
                                                 trigger="hover"
                                                 placement="right">
                                             <div class="menuBT">
-                                                <el-button @click="uploadClaFile(scope.row)" size="mini">
+                                                <el-button
+                                                        @click="uploadClaFile(signedNotCompleted[scope.$index].admin_email)"
+                                                        size="mini">
                                                     {{$t('org.upload')}}
                                                 </el-button>
                                                 <el-button v-if="scope.row.pdf_uploaded"
-                                                           @click="downloadClaFile(scope.row)"
+                                                           @click="downloadClaFile(signedNotCompleted[scope.$index].admin_email,signedNotCompleted[scope.$index].corporation_name)"
                                                            size="mini">{{$t('org.download')}}
                                                 </el-button>
                                                 <el-button v-if="scope.row.pdf_uploaded"
-                                                           @click="previewClaFile(scope.row)"
+                                                           @click="previewClaFile(signedNotCompleted[scope.$index].admin_email)"
                                                            type="" size="mini">{{$t('org.preview')}}
                                                 </el-button>
                                             </div>
@@ -76,15 +78,15 @@
                                     </span>
                                             <el-dropdown-menu slot="dropdown">
                                                 <el-dropdown-item :disabled="scope.row.admin_added"
-                                                                  :command="{command:'a',row:scope.row}">
+                                                                  :command="{command:'a',index:scope.$index}">
                                                     {{$t('org.create_administrator')}}
                                                 </el-dropdown-item>
                                                 <el-dropdown-item :disabled="scope.row.pdf_uploaded"
-                                                                  :command="{command:'b',row:scope.row}">
+                                                                  :command="{command:'b',index:scope.$index}">
                                                     {{$t('org.resend_email')}}
                                                 </el-dropdown-item>
                                                 <el-dropdown-item :disabled="scope.row.admin_added"
-                                                                  :command="{command:'c',row:scope.row}">
+                                                                  :command="{command:'c',index:scope.$index}">
                                                     {{$t('corp.delete')}}
                                                 </el-dropdown-item>
                                             </el-dropdown-menu>
@@ -98,7 +100,7 @@
                         <div class="tableStyle">
                             <el-table
                                     :empty-text="$t('corp.no_data')"
-                                    :data="signedCompleted"
+                                    :data="showSignedCompleted"
                                     class="tableClass"
                                     :row-class-name="createdAdmin"
                                     align="center"
@@ -141,15 +143,17 @@
                                                 trigger="hover"
                                                 placement="right">
                                             <div class="menuBT">
-                                                <el-button @click="uploadClaFile(scope.row)" size="mini">
+                                                <el-button
+                                                        @click="uploadClaFile(signedCompleted[scope.$index].admin_email)"
+                                                        size="mini">
                                                     {{$t('org.upload')}}
                                                 </el-button>
                                                 <el-button v-if="scope.row.pdf_uploaded"
-                                                           @click="downloadClaFile(scope.row)"
+                                                           @click="downloadClaFile(signedCompleted[scope.$index].admin_email,signedCompleted[scope.$index].corporation_name)"
                                                            size="mini">{{$t('org.download')}}
                                                 </el-button>
                                                 <el-button v-if="scope.row.pdf_uploaded"
-                                                           @click="previewClaFile(scope.row)"
+                                                           @click="previewClaFile(signedCompleted[scope.$index].admin_email)"
                                                            type="" size="mini">{{$t('org.preview')}}
                                                 </el-button>
                                             </div>
@@ -189,7 +193,7 @@
                         <div class="tableStyle">
                             <el-table
                                     :empty-text="$t('corp.no_data')"
-                                    :data="deletedCorpInfo"
+                                    :data="showDeletedCorpInfo"
                                     align="center"
                                     class="tableClass"
                                     style="width: 100%;">
@@ -227,10 +231,12 @@
                                         <svg-icon icon-class="operation"></svg-icon>
                                     </span>
                                             <el-dropdown-menu slot="dropdown">
-                                                <el-dropdown-item disabled="" :command="{command:'d',row:scope.row}">
+                                                <el-dropdown-item disabled=""
+                                                                  :command="{command:'d',index:scope.$index}">
                                                     {{$t('org.reduction')}}
                                                 </el-dropdown-item>
-                                                <el-dropdown-item disabled="" :command="{command:'e',row:scope.row}">
+                                                <el-dropdown-item disabled=""
+                                                                  :command="{command:'e',index:scope.$index}">
                                                     {{$t('org.deleteCompletely')}}
                                                 </el-dropdown-item>
                                             </el-dropdown-menu>
@@ -435,8 +441,11 @@
         },
         data() {
             return {
+                showSignedNotCompleted: [],
+                showSignedCompleted: [],
                 signedCompleted: [],
                 signedNotCompleted: [],
+                showDeletedCorpInfo: [],
                 deletedCorpInfo: [],
                 corpActiveName: 'first',
                 deleteCompleteVisible: false,
@@ -663,6 +672,10 @@
                         });
                         this.sortDate(this.signedCompleted);
                         this.sortDate(this.signedNotCompleted);
+                        this.showSignedCompleted = JSON.parse(JSON.stringify(this.signedCompleted));
+                        util.exchangeEmailData(this.showSignedCompleted, 'admin_email');
+                        this.showSignedNotCompleted = JSON.parse(JSON.stringify(this.signedNotCompleted));
+                        util.exchangeEmailData(this.showSignedNotCompleted, 'admin_email');
                     }
                 }).catch(err => {
                     util.catchErr(err, 'errorSet', this);
@@ -674,13 +687,15 @@
                 }).then(resp => {
                     this.deletedCorpInfo = resp.data.data;
                     this.sortDate(this.deletedCorpInfo);
+                    this.showDeletedCorpInfo = JSON.parse(JSON.stringify(this.deletedCorpInfo));
+                    util.exchangeEmailData(this.showDeletedCorpInfo, 'admin_email');
                 }).catch(err => {
                     util.catchErr(err, 'errorSet', this);
                 });
             },
-            previewClaFile(row) {
+            previewClaFile(email) {
                 http({
-                    url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${row.admin_email}`,
+                    url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${email}`,
                     responseType: 'blob'
                 }).then(res => {
                     if (res && res.data) {
@@ -692,14 +707,14 @@
                     util.catchErr(err, 'errorSet', this);
                 });
             },
-            downloadClaFile(row) {
+            downloadClaFile(email, corporationName) {
                 http({
-                    url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${row.admin_email}`,
+                    url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${email}`,
                     responseType: 'blob'
                 }).then(res => {
                     if (res.data) {
                         let time = util.getNowDateToTime();
-                        download((new Blob([res.data])), `${row.corporation_name}_signature${time}.pdf`, 'application/pdf');
+                        download((new Blob([res.data])), `${corporationName}_signature${time}.pdf`, 'application/pdf');
                     } else {
                         this.$store.commit('errorCodeSet', {
                             dialogVisible: true,
@@ -710,8 +725,8 @@
                     util.catchErr(err, 'errorSet', this);
                 });
             },
-            uploadClaFile(row) {
-                this.uploadUrl = `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${row.admin_email}`;
+            uploadClaFile(email) {
+                this.uploadUrl = `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${email}`;
                 this.uploadDialogVisible = true;
             },
             upload(fileObj) {
@@ -818,19 +833,19 @@
             menuCommand(command) {
                 switch (command.command) {
                     case 'a':
-                        this.createRoot(command.row.admin_email);
+                        this.createRoot(this.signedNotCompleted[command.index].admin_email);
                         break;
                     case 'b':
-                        this.openResendPdf(command.row.admin_email);
+                        this.openResendPdf(this.showSignedNotCompleted[command.index].admin_email);
                         break;
                     case 'c':
-                        this.openDeleteCorp(command.row.admin_email);
+                        this.openDeleteCorp(this.showSignedNotCompleted[command.index].admin_email);
                         break;
                     case 'd':
-                        this.reductionCorp(command.row.admin_email);
+                        this.reductionCorp(this.deletedCorpInfo[command.index].admin_email);
                         break;
                     case 'e':
-                        this.deleteCompletely(command.row.admin_email);
+                        this.deleteCompletely(this.deletedCorpInfo[command.index].admin_email);
                         break;
                 }
             },
