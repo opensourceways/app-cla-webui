@@ -325,8 +325,6 @@
     @import "../assets/font/css/Roboto-Regular.css";
 
     #employeeList {
-        padding: 2rem 0;
-
         & .el-dialog {
             border-radius: 1rem;
         }

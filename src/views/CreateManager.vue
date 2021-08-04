@@ -38,7 +38,7 @@
                     </el-col>
                     <el-col :span="4" align="right">
                         <button class="deleteBt" @click="myDeleteRow(index)">-</button>
-                        <button class="button" @click="addRow(index)">+</button>
+                        <button class="add-button" @click="addRow(index)">+</button>
                     </el-col>
                 </el-row>
 
@@ -232,8 +232,6 @@
     @import "../assets/font/css/Roboto-Regular.css";
 
     #createUser {
-        padding: 2rem 0;
-
         .requireText {
             font-family: Roboto-Regular, sans-serif;
         }
@@ -289,7 +287,7 @@
             outline: none;
         }
 
-        & .button {
+        & .add-button {
             width: 3rem;
             height: 3rem;
             border-radius: 1.5rem;
@@ -300,7 +298,7 @@
             background: linear-gradient(to right, #97DB30, #319E55);
         }
 
-        & .button:focus {
+        & .add-button:focus {
             outline: none;
         }
 

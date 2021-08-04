@@ -577,7 +577,7 @@
             setCheckInfo() {
                 this.$store.commit('setBindType', 'add-bind');
                 this.$store.commit('setChooseOrg', this.$store.state.corpItem.org_id);
-                this.$store.commit('setChooseRepo', this.$store.state.corpItem.repo_id);
+                this.$store.commit('setRepo', this.$store.state.corpItem.repo_id);
                 this.$store.commit('setOrgAlias', this.$store.state.corpItem.org_alias);
                 this.$store.commit('setEmail', this.$store.state.corpItem.org_email);
             },

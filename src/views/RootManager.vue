@@ -2,7 +2,7 @@
     <div id="rootManager">
         <Header></Header>
         <div>
-            <div id="rootManager_section">
+            <div id="rootManager_section" class="padding-top-bottom-2rem">
                 <router-view></router-view>
             </div>
         </div>
