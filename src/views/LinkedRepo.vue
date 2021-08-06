@@ -11,7 +11,7 @@
             </el-tab-pane>
         </el-tabs>
         <el-row :gutter="20" class="table-back">
-            <el-col :span="3" class="orgTableStyle tableStyle">
+            <el-col :span="5" class="orgTableStyle tableStyle">
                 <el-table
                         empty-text="No data"
                         :data="orgTableData"
@@ -26,7 +26,7 @@
                     </el-table-column>
                 </el-table>
             </el-col>
-            <el-col :span="21" class="tableStyle">
+            <el-col :span="19" class="tableStyle">
                 <el-table
                         empty-text="No data"
                         :data="boundTableData"
@@ -60,7 +60,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                            min-width="20"
+                            min-width="10"
                             :label="$t('org.operation')">
                         <template slot-scope="scope">
                             <el-dropdown placement="bottom-start" trigger="hover" @command="menuCommand">
