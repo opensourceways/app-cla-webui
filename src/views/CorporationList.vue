@@ -732,6 +732,7 @@
                     this.getCorporationInfo();
                 }).catch(err => {
                     util.catchErr(err, 'errorSet', this);
+                    this.uploadLoading.close();
                 });
             },
             submitUpload() {
