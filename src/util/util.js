@@ -579,7 +579,15 @@ export const setComponentHeight = (_this, id) => {
         document.getElementById(id).style.minHeight = clientHeight > offsetHeight ? clientHeight + 'px' : offsetHeight + 'px';
     });
 };
-
+export const getLoading = (_this, langText) => {
+    return _this.$loading({
+        lock: true,
+        text: _this.$t(langText),
+        spinner: 'el-icon-loading',
+        customClass: 'loading_class',
+        background: 'rgba(0, 0, 0, 0.7)'
+    });
+};
 
 
 

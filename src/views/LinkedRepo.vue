@@ -190,6 +190,7 @@
         },
         data() {
             return {
+                loading: false,
                 copyAddressValue: '',
                 organization: '',
                 signAddress: '',
@@ -417,14 +418,17 @@
                 window.open(`https://gitee.com/${repo}`);
             },
             unLinkRepositoryFun() {
+                this.loading = util.getLoading(this, 'tips.loading');
                 http({
                     url: `${url.unLinkRepository}/${this.unlinkId}`,
                     method: 'delete'
                 }).then(res => {
+                    this.loading.close();
                     util.successMessage(this);
                     this.unLinkDialogVisible = false;
                     this.getLinkedRepoList();
                 }).catch(err => {
+                    this.loading.close();
                     util.catchErr(err, 'setOrgReLogin', this);
                 });
             },

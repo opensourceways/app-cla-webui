@@ -277,6 +277,10 @@
     margin-bottom: 3rem;
 }
 
+.padding-top-bottom-1rem {
+    padding: 1rem 0;
+}
+
 .align_left {
     text-align: left;
 }

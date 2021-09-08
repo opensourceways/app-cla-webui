@@ -277,6 +277,7 @@
         },
         data() {
             return {
+                loading: false,
                 isVerify: false,
                 previewShow: false,
                 loginType: this.$store.state.loginType,
@@ -334,6 +335,7 @@
                 }
             },
             addBinding() {
+                this.loading = util.getLoading(this, 'tips.loading');
                 let formData = new FormData();
                 let obj = {};
                 let _url = '';
@@ -358,14 +360,17 @@
                     method: 'post',
                     data: formData
                 }).then(res => {
+                    this.loading.close();
                     util.successMessage(this);
                     util.clearSession(this);
                     this.$router.push('/corporationList');
                 }).catch(err => {
+                    this.loading.close();
                     util.catchErr(err, 'setOrgReLogin', this);
                 });
             },
             newBinding() {
+                this.loading = util.getLoading(this, 'tips.loading');
                 let formData = new FormData();
                 let obj = {};
                 let corpCla = {};
@@ -426,9 +431,11 @@
                     method: 'post',
                     data: formData
                 }).then(res => {
+                    this.loading.close();
                     util.successMessage(this);
                     this.$router.push('/home');
                 }).catch(err => {
+                    this.loading.close();
                     util.catchErr(err, 'setOrgReLogin', this);
                 });
             }

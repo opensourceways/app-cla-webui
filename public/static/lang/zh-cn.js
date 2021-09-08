@@ -44,6 +44,7 @@ module.exports = {
         sendCode: '发送验证码',
         reSendCode: '{second}秒重发',
         sign: '签 署',
+        signing: '签 署 中',
         verifyCodeHolder: '请输入验证码',
         holder: '请输入{title}',
         sendCodeTip: '发送验证码到邮箱'
@@ -149,7 +150,9 @@ module.exports = {
         reset_password_success: '重置密码成功',
         link_expired: '链接已失效',
         illegal_link: '非法链接',
-        send_reset_password_email: '已向您的邮箱发送了重置密码的邮件'
+        send_reset_password_email: '已向您的邮箱发送了重置密码的邮件',
+        loading: '加载中',
+        select_file: '请先选择需要上传的文件'
     },
     header: {
         home: '首页',
@@ -187,6 +190,7 @@ module.exports = {
         pwd: '密码',
         forget_pwd: '忘记密码？',
         login_in: '登陆',
+        logining: '登陆中',
         inactive: '未激活',
         active: '已激活',
         no_data: '暂无数据',
