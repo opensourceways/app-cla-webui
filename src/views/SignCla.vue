@@ -71,6 +71,7 @@
                                               @blur="setMyForm(item.type,ruleForm[item.id])"></el-input>
                                 </el-form-item>
                                 <el-form-item
+                                        class="sendCodeClass"
                                         v-if="rules.code"
                                         :label="$t('signPage.verifyCode')"
                                         prop="code">
@@ -94,10 +95,14 @@
                                         {{$t('signPage.claSignPlatform')}}</span>{{$t('signPage.checkBoxText3')}}</span>
                                     </el-checkbox>
                                 </div>
-                                <el-form-item label-width="0" class="margin-top-1rem signBtBox">
-                                    <button class="button" type="button" @click="submitForm('ruleForm')">
-                                        {{$t('signPage.sign')}}
-                                    </button>
+                                <el-form-item label-width="0" class="margin-top-1rem padding-top-bottom-1rem signBtBox">
+                                    <HttpButton :text="$t(`signPage.${signText}`)"
+                                                :buttonDisable="signButtonDisable"
+                                                :width="signButtonWidth"
+                                                :height="signButtonHeight"
+                                                :borderRaduis="signButtonBorderRadius"
+                                                @httpSubmit="submitForm('ruleForm')">
+                                    </HttpButton>
                                 </el-form-item>
                             </el-form>
                         </el-col>
@@ -121,6 +126,7 @@
     import ReTryDialog from '../components/ReTryDialog';
     import SignSuccessDialog from '../components/SignSuccessDialog';
     import SignReLoginDialog from '../components/SignReLoginDialog';
+    import HttpButton from '../components/HttpButton';
 
     export default {
         name: 'SignCla',
@@ -206,10 +212,16 @@
             ReLoginDialog,
             ReTryDialog,
             SignSuccessDialog,
-            SignReLoginDialog
+            SignReLoginDialog,
+            HttpButton
         },
         data() {
             return {
+                signText: 'sign',
+                signButtonDisable: false,
+                signButtonWidth: '15rem',
+                signButtonHeight: '3rem',
+                signButtonBorderRadius: '1.5rem',
                 corporation: 'corporation',
                 individual: 'individual',
                 employee: 'employee',
@@ -642,11 +654,15 @@
                 if (!myUrl) {
                     return;
                 }
+                this.signText = 'signing';
+                this.signButtonDisable = true;
                 axios({
                     url: myUrl,
                     method: 'post',
                     data: obj
                 }).then(res => {
+                    this.signText = 'sign';
+                    this.signButtonDisable = false;
                     if (this.$store.state.loginType === this.corporation) {
                         this.tipsMessage = this.$t('tips.corp_sign');
                     } else if (this.$store.state.loginType === this.employee) {
@@ -660,6 +676,8 @@
                     });
 
                 }).catch(err => {
+                    this.signText = 'sign';
+                    this.signButtonDisable = false;
                     util.catchErr(err, 'setSignReLogin', this);
                 });
             },
@@ -831,32 +849,34 @@
         margin-bottom: 2rem;
         font-size: 1.2rem;
 
-        & .el-input.el-input--small.el-input-group.el-input-group--append {
-            position: relative;
-        }
+        .sendCodeClass {
+            & .el-input.el-input--small.el-input-group.el-input-group--append {
+                position: relative;
+            }
 
-        & .el-button.el-button--default {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 11rem;
-            height: 2.5rem;
-            border-radius: 1.25rem;
-            font-size: 1.2rem;
-            color: white;
-            margin: 0;
-            font-family: Roboto-Light, sans-serif;
-        }
+            & .el-button.el-button--default {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 11rem;
+                height: 2.5rem;
+                border-radius: 1.25rem;
+                font-size: 1.2rem;
+                color: white;
+                margin: 0;
+                font-family: Roboto-Light, sans-serif;
+            }
 
-        & .el-input-group__append {
-            position: absolute;
-            right: 0;
-            top: 0;
-            background: linear-gradient(to right, #97DB30, #319E55);
-            width: 11rem;
-            height: 2.5rem;
-            border-radius: 1.25rem;
-            padding: 0;
+            & .el-input-group__append {
+                position: absolute;
+                right: 0;
+                top: 0;
+                background: linear-gradient(to right, #97DB30, #319E55);
+                width: 11rem;
+                height: 2.5rem;
+                border-radius: 1.25rem;
+                padding: 0;
+            }
         }
 
         & .fontSize12 {

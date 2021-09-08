@@ -60,8 +60,9 @@
                     </el-col>
                 </el-row>
                 <div slot="footer" class="dialog-footer">
-                    <button class="button_submit" @click="authorizeEmail()">{{$t('org.confirm_remove')}}</button>
-                    <button class="cancelBt" @click="emailDialogVisible = false">{{$t('org.cancel_remove')}}</button>
+                    <button class="email_button" @click="authorizeEmail()">{{$t('org.confirm_remove')}}</button>
+                    <button class="email_cancel" @click="emailDialogVisible = false">{{$t('org.cancel_remove')}}
+                    </button>
                 </div>
             </div>
         </el-dialog>
@@ -103,6 +104,7 @@
         },
         data() {
             return {
+                loading: false,
                 lang: '',
                 emailDialogVisible: false,
                 emailTypeArr: [{value: 'G-Mail', label: 'G-Mail'}],
@@ -152,6 +154,7 @@
                 this.emailDialogVisible = true;
             },
             authorizeEmail() {
+                this.loading = util.getLoading(this, 'tips.loading');
                 let myUrl = '';
                 switch (this.emailType) {
                     case 'G-Mail':
@@ -163,6 +166,7 @@
                 }).then(res => {
                     window.location.href = res.data.data.url;
                 }).catch(err => {
+                    this.loading.close();
                     util.catchErr(err, 'setOrgReLogin', this);
                 });
             },
@@ -231,9 +235,9 @@
 
         .email_button {
             font-family: Roboto-Regular, sans-serif;
-            width: 5rem;
-            height: 2rem;
-            border-radius: 1rem;
+            width: 6rem;
+            height: 3rem;
+            border-radius: 1.5rem;
             border: none;
             color: white;
             font-size: 1rem;
@@ -243,6 +247,22 @@
         }
 
         .email_button:focus {
+            outline: none;
+        }
+
+        .email_cancel {
+            width: 6rem;
+            height: 3rem;
+            border-radius: 1.5rem;
+            border: 1px solid black;
+            color: black;
+            font-size: 1rem;
+            cursor: pointer;
+            background-color: white;
+            margin-left: 3rem;
+        }
+
+        .email_cancel:focus {
             outline: none;
         }
 

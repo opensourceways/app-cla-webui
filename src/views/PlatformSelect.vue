@@ -11,9 +11,10 @@
                         </div>
                         <div class="icon_box">
                             <div class="loginBt">
-                                <button class="button" @click="getLoginUrl('gitee')">
-                                    {{$t('corp.login_in')}}
-                                </button>
+                                <HttpButton :text="$t(`corp.${giteeLoginText}`)"
+                                            :buttonDisable="giteeLoginButtonDisable"
+                                            @httpSubmit="getLoginUrl('gitee')">
+                                </HttpButton>
                             </div>
                         </div>
                     </div>
@@ -27,15 +28,16 @@
                         </div>
                         <div class="icon_box">
                             <div class="loginBt">
-                                <button class="button" @click="getLoginUrl('github')">
-                                    {{$t('corp.login_in')}}
-                                </button>
+                                <HttpButton :text="$t(`corp.${githubLoginText}`)"
+                                            :buttonDisable="githubLoginButtonDisable"
+                                            @httpSubmit="getLoginUrl('github')">
+                                </HttpButton>
                             </div>
                         </div>
                     </div>
                 </el-col>
             </el-row>
-            <reTryDialog :message="corpReLoginMsg" :dialogVisible="corpReTryDialogVisible"></reTryDialog>
+            <ReTryDialog :message="corpReLoginMsg" :dialogVisible="corpReTryDialogVisible"></ReTryDialog>
         </el-col>
     </el-row>
 </template>
@@ -43,14 +45,16 @@
 <script>
     import {mapActions} from 'vuex';
     import * as url from '../util/api';
-    import reTryDialog from '../components/ReTryDialog';
     import http from '../util/http';
     import * as util from '../util/util';
+    import ReTryDialog from '../components/ReTryDialog';
+    import HttpButton from '../components/HttpButton';
 
     export default {
         name: 'PlatformSelect',
         components: {
-            reTryDialog
+            ReTryDialog,
+            HttpButton
         },
         computed: {
             corpReLoginMsg() {
@@ -63,28 +67,41 @@
         },
         data() {
             return {
+                giteeLoginText: 'login_in',
+                githubLoginText: 'login_in',
+                giteeLoginButtonDisable: false,
+                githubLoginButtonDisable: false,
                 platform: ''
             };
         },
         inject: ['setClientHeight'],
         methods: {
             ...mapActions(['setPlatformAct']),
-            submit() {
-            },
             getLoginUrl(platform) {
-                this.setPlatformAct(platform);
-                let interval = setInterval(() => {
-                    if (this.$store.state.platform) {
-                        http({
-                            url: `${url.getAuthCodeUrl}/${platform}/login`
-                        }).then(res => {
-                            window.location.href = res.data.data.url;
-                        }).catch(err => {
-                            util.catchErr(err, 'errorSet', this);
-                        });
-                        clearInterval(interval);
+                if (platform) {
+                    this.setPlatformAct(platform);
+                    if (platform === 'gitee') {
+                        this.giteeLoginButtonDisable = true;
+                        this.giteeLoginText = 'logining';
+                    } else if (platform === 'github') {
+                        this.githubLoginButtonDisable = true;
+                        this.githubLoginText = 'logining';
                     }
-                }, 100);
+                    http({
+                        url: `${url.getAuthCodeUrl}/${platform}/login`
+                    }).then(res => {
+                        window.location.href = res.data.data.url;
+                    }).catch(err => {
+                        if (platform === 'gitee') {
+                            this.giteeLoginButtonDisable = false;
+                            this.giteeLoginText = 'login_in';
+                        } else if (platform === 'github') {
+                            this.githubLoginButtonDisable = false;
+                            this.githubLoginText = 'login_in';
+                        }
+                        util.catchErr(err, 'errorSet', this);
+                    });
+                }
             }
         },
         created() {

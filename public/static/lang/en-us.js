@@ -44,6 +44,7 @@ module.exports = {
         sendCode: 'send code',
         reSendCode: '{second}s can resend',
         sign: 'SIGN',
+        signing: 'SIGNING',
         verifyCodeHolder: 'please enter verify code',
         holder: 'please enter {title}',
         sendCodeTip: 'Send verification code to email'
@@ -149,7 +150,9 @@ module.exports = {
         reset_password_success: 'Password reset successfully',
         link_expired: 'The link has expired',
         illegal_link: 'Illegal link',
-        send_reset_password_email: 'An email to reset your password has been sent to your mailbox'
+        send_reset_password_email: 'An email to reset your password has been sent to your mailbox',
+        loading: 'Loading',
+        select_file: 'Please select file first'
     },
     header: {
         home: 'Home',
@@ -187,6 +190,7 @@ module.exports = {
         pwd: 'Password',
         forget_pwd: 'Forget password?',
         login_in: 'Login in',
+        logining: 'Logining',
         inactive: 'inactive',
         active: 'active',
         no_data: 'No data',

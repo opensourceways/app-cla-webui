@@ -17,9 +17,11 @@
                             <span @click="findPwd" class="pointer" id="forgetPwd">{{$t('corp.forget_pwd')}}</span>
                         </el-form-item>
                         <el-form-item style="text-align: center">
-                            <button class="button" type="button" @click="submitForm('ruleForm')">
-                                {{$t('corp.login_in')}}
-                            </button>
+                            <HttpButton :text="$t(`corp.${loginText}`)"
+                                        :width="loginBtWidth"
+                                        :buttonDisable="loginButtonDisable"
+                                        @httpSubmit="submitForm('ruleForm')">
+                            </HttpButton>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -35,11 +37,13 @@
     import {mapActions} from 'vuex';
     import * as util from '../util/util';
     import reTryDialog from '../components/ReTryDialog';
+    import HttpButton from '../components/HttpButton';
 
     export default {
         name: 'RepoSelect',
         components: {
-            reTryDialog
+            reTryDialog,
+            HttpButton
         },
         computed: {
             corpReLoginMsg() {
@@ -65,6 +69,9 @@
                 }
             };
             return {
+                loginBtWidth: '15rem',
+                loginText: 'login_in',
+                loginButtonDisable: false,
                 myStyle: {
                     height: ''
                 },
@@ -109,6 +116,8 @@
                     password: pwd.trim(),
                     link_id: linkId
                 };
+                this.loginButtonDisable = true;
+                this.loginText = 'logining';
                 http({
                     url: url.corporationManagerAuth,
                     method: 'post',
@@ -118,6 +127,8 @@
                     if (res.data) {
                         data = res.data.data;
                     }
+                    this.loginButtonDisable = false;
+                    this.loginText = 'login_in';
                     if (data.length) {
                         new Promise((resolve, reject) => {
                             let userInfo = {userInfo: data};
@@ -151,6 +162,8 @@
                         });
                     }
                 }).catch(err => {
+                    this.loginButtonDisable = false;
+                    this.loginText = 'login_in';
                     util.catchErr(err, 'errorSet', this);
                 });
             },

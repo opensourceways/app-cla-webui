@@ -731,23 +731,18 @@
                     util.successMessage(this);
                     this.getCorporationInfo();
                 }).catch(err => {
+                    this.uploadLoading.close();
                     util.catchErr(err, 'errorSet', this);
                     this.uploadLoading.close();
                 });
             },
             submitUpload() {
                 if (this.fileList.length) {
-                    this.uploadLoading = this.$loading({
-                        lock: true,
-                        text: this.$t('org.upload_loading_text'),
-                        spinner: 'el-icon-loading',
-                        customClass: 'loading_class',
-                        background: 'rgba(0, 0, 0, 0.7)'
-                    });
+                    this.uploadLoading = util.getLoading(this, 'org.upload_loading_text');
                     this.$refs.uploadPdf.submit();
                 } else {
                     this.$message.closeAll();
-                    this.$message.error('Please select file first');
+                    this.$message.error(this.$t('tips.select_file'));
                 }
             },
             handleChange(file, fileList) {
