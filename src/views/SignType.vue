@@ -789,7 +789,7 @@
         components: {
             NewHeader,
             NewFooter,
-            ReTryDialog,
+            ReTryDialog
         },
         computed: {
             corpBtTooltip() {
@@ -869,15 +869,22 @@
                 }
             },
             getRepoInfo() {
+                let linkId;
+                let urlParams = this.$route.params.params;
                 this.setLangLocale();
-                let params = util.base64ToStr(window.location.href.split('/sign/')[1]);
-                let paramsArr = params.split('/');
-                if (paramsArr.length === 2 && paramsArr[0] === SIGN_LINK) {
-                    this.setLinkIdAct(paramsArr[1]);
-                    this.getSignPage(paramsArr[1], 'corporation');
+                if (STOCK_SIGN_LINK[urlParams]) {
+                    linkId = STOCK_SIGN_LINK[urlParams];
                 } else {
-                    this.$router.push({name: 'ErrorPath'});
+                    let params = util.base64ToStr(urlParams);
+                    let paramsArr = params.split('/');
+                    if (paramsArr[0] === SIGN_LINK) {
+                        linkId = paramsArr[1];
+                    } else {
+                        this.$router.push({name: 'ErrorPath'});
+                    }
                 }
+                this.getSignPage(linkId, 'corporation');
+                this.setLinkIdAct(linkId);
             },
             getSignPage(link_id, applyTo) {
                 _axios({
