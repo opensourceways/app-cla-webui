@@ -121,4 +121,14 @@ const TITLE_OPTIONS_ZH = [
     {label: '传真', value: '传真'}
 ];
 const SIGN_LINK = 'sign-link';
+const STOCK_SIGN_LINK = {
+    'Z2l0ZWUlMkZvcGVuZXVsZXI=': 'gitee_openeuler-1611298811283968340',
+    'Z2l0ZWUlMkZhc2NlbmQ=': 'gitee_ascend-1611222220829317930',
+    'Z2l0ZWUlMkZvcGVuZ2F1c3M=': 'gitee_opengauss-1614047760000855378',
+    'Z2l0ZWUlMkZvcGVubG9va2VuZw==': 'gitee_openlookeng-1614322910578209320',
+    'Z2l0ZWUlMkZlZGFoZWxwZXI=': 'gitee_edahelper-1620887083478580559',
+    'Z2l0ZWUlMkZIVy1QTExhYg==': 'gitee_HW-PLLab-1628740605522948013',
+    'Z2l0aHViJTJGa3VucGVuZ2NvbXB1dGU=': 'github_kunpengcompute-1623060284995657822',
+    'Z2l0ZWUlMkZtaW5kc3BvcmU=': 'gitee_mindspore-1614155835277678289'
+};
 
