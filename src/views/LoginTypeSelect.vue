@@ -13,7 +13,14 @@
                                     {{$t('index.org_login')}}
                                 </button>
                             </el-tooltip>
-
+                        </div>
+                        <div>
+                            <el-tooltip :content="$t('index.corp_bt_tip')" placement="bottom" effect="light"
+                                        popper-class="my_tooltip">
+                                <button class="button" @click="submit('corporationManager')">
+                                    {{$t('index.corp_login')}}
+                                </button>
+                            </el-tooltip>
                         </div>
                     </div>
                 </el-col>
@@ -39,6 +46,8 @@
                 this.setLoginTypeAct(loginType);
                 if (loginType === 'orgManager') {
                     this.$router.push('/platformSelect');
+                } else if (loginType === 'corporationManager') {
+                    this.$router.push('/jump-page');
                 }
             },
             clearSessionStorage() {

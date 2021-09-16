@@ -572,6 +572,14 @@ export const verifyMsgChangeLang = (ruleForm, _this) => {
         }
     });
 };
+export const setComponentHeight = (_this, id) => {
+    _this.$nextTick(() => {
+        let offsetHeight = document.getElementById(id).offsetHeight;
+        let clientHeight = getClientHeight();
+        document.getElementById(id).style.minHeight = '0px';
+        document.getElementById(id).style.minHeight = clientHeight > offsetHeight ? clientHeight + 'px' : offsetHeight + 'px';
+    });
+};
 
 
 
