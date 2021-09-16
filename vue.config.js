@@ -15,6 +15,7 @@ module.exports = {
         }
     },
     lintOnSave: false,
+    productionSourceMap: false,
     devServer: {
         hot: true,
         proxy: {

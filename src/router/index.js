@@ -12,7 +12,14 @@ const routes = [
             title: 'index'
         }
     },
-
+    {
+        path: '/jump-page',
+        name: 'JumpPage',
+        component: () => import('../views/JumpPage.vue'),
+        meta: {
+            title: 'jump-page'
+        }
+    },
     {
         path: '/index',
         component: () => import('../views/Index.vue'),

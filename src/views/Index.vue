@@ -36,7 +36,6 @@
     import NewHeader from '@components/NewHeader';
     import NewFooter from '@components/NewFooter';
     import * as util from '../util/util';
-    import {mapActions} from 'vuex';
 
     window.onresize = () => {
         if (util.getClientHeight() > document.getElementById('transparentDiv').offsetHeight) {
@@ -76,7 +75,6 @@
             }
         },
         mounted() {
-            this.$store.commit('', '');
             this.setClientHeight();
         }
     };
