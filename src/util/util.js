@@ -319,7 +319,10 @@ export const catchErr = (err, commit, _this) => {
             case 'cla.too_short_or_long_password':
                 _this.$store.commit('errorCodeSet', {
                     dialogVisible: true,
-                    dialogMessage: _this.$t('tips.newPwd_length_err')
+                    dialogMessage: _this.$t('tips.newPwd_length_err', {
+                        minLength: PWD_MIN_LENGTH,
+                        maxLength: PWD_MAX_LENGTH
+                    })
                 });
                 break;
             case 'cla.invalid_password':
@@ -557,12 +560,22 @@ export const changeCorpTitle = (e, item) => {
     }
 };
 export const checkIllegalChar = (str) => {
+    let numType = 0;
+    let upperCaseTpe = 0;
+    let lowerCaseType = 0;
+    let charType = 0;
     for (let char of str) {
-        if (char.charCodeAt() > PWD_MAX_ASCII || char.charCodeAt() < PWD_MIN_ASCII) {
-            return true;
+        if ('0' <= char && char <= '9') {
+            numType = 1;
+        } else if ('A' <= char && char <= 'Z') {
+            upperCaseTpe = 1;
+        } else if ('a' <= char && char <= 'z') {
+            lowerCaseType = 1;
+        } else {
+            charType = 1;
         }
     }
-    return false;
+    return numType + upperCaseTpe + lowerCaseType + charType < 3;
 };
 export const verifyMsgChangeLang = (ruleForm, _this) => {
     _this.$refs[ruleForm] && _this.$refs[ruleForm].fields.forEach(item => {

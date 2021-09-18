@@ -81,10 +81,11 @@
             var validatePass2 = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error(this.$t('corp.input_new_pwd')));
-                } else if (value.length < PWD_MIN_LENGTH || value.length > PWD_MAX_LENGTH) {
-                    callback(new Error(this.$t('corp.newPwd_length_err')));
-                } else if (util.checkIllegalChar(value)) {
-                    callback(new Error(this.$t('corp.newPwd_contains_Illegal_character')));
+                } else if (value.length < PWD_MIN_LENGTH || value.length > PWD_MAX_LENGTH || util.checkIllegalChar(value)) {
+                    callback(new Error(this.$t('corp.newPwd_contains_Illegal_character', {
+                        minLength: PWD_MIN_LENGTH,
+                        maxLength: PWD_MAX_LENGTH
+                    })));
                 } else if (value === this.ruleForm.oldPassword) {
                     callback(new Error(this.$t('corp.newPwd_diff_with_oldPwd')));
                 } else {
