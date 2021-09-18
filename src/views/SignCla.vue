@@ -38,7 +38,7 @@
                                 </el-form-item>
                                 <button class="margin-top-1rem mobileBt"
                                         type="button"
-                                        :disabled="sendBtTextFromLang!==$t('signPage.sendCode')"
+                                        :disabled="sendBtDisable"
                                         @click="sendCode()">{{sendBtTextFromLang}}
                                 </button>
                                 <div class="borderClass fontSize12"><span class="requiredIcon">*</span>{{$t('signPage.requireText')}}
@@ -81,7 +81,7 @@
                                                     effect="light"
                                                     popper-class="my_tooltip">
                                             <el-button
-                                                    :disabled="sendBtTextFromLang!==$t('signPage.sendCode')"
+                                                    :disabled="sendBtDisable"
                                                     @click="sendCode()">{{sendBtTextFromLang}}
                                             </el-button>
                                         </el-tooltip>
@@ -217,6 +217,7 @@
         },
         data() {
             return {
+                sendBtDisable: false,
                 signText: 'sign',
                 signButtonDisable: false,
                 signButtonWidth: '15rem',
@@ -369,6 +370,7 @@
                 let reg = new RegExp('^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$');
                 let email = this.myForm.email;
                 if (email && reg.test(email)) {
+                    this.sendBtDisable = true;
                     axios({
                         url: `${url.sendVerifyCode}/${this.link_id}/${this.myForm.email}`,
                         method: 'post'
@@ -382,6 +384,7 @@
                                 this.sendBtTextFromLang = this.$t('signPage.reSendCode', {second: this.second});
                             } else {
                                 this.sendBtTextFromLang = this.$t('signPage.sendCode');
+                                this.sendBtDisable = false;
                                 clearInterval(codeInterval);
                             }
                         }, 1000);

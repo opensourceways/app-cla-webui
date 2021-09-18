@@ -60,7 +60,7 @@ module.exports = {
         has_signed: '您已签署过这份贡献者许可协议',
         corp_has_signed: '该企业已经签署过这份贡献者许可协议',
         invalid_parameter: '参数无效，无法签署',
-        no_corp_manager: '你所属得公司暂未签署企业 CLA 或者尚未添加任何管理员。你无法进行员工签署',
+        no_corp_manager: '你所属的公司暂未签署企业 CLA 或者尚未添加任何管理员。你无法进行员工签署',
         has_not_signed: '该公司尚未签署',
         invalid_token: 'Token 已过期，请重新登录',
         missing_token: 'Token 无效，请重新登陆',
