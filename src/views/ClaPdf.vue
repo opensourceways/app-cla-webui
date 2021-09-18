@@ -54,7 +54,7 @@
             },
             setClaText(obj) {
                 let dataFromParent = obj;
-                if (dataFromParent.pdfData.length) {
+                if (dataFromParent.pdfData && dataFromParent.pdfData.length) {
                     for (let i = 0; i < dataFromParent.pdfData.length; i++) {
                         if (dataFromParent.pdfData[i].hasOwnProperty(dataFromParent.lang)) {
                             this.claText && window.URL.revokeObjectURL(this.claText);
@@ -63,6 +63,9 @@
                             return;
                         }
                     }
+                }
+                if (!dataFromParent.hasOwnProperty('pdfData')) {
+                    return;
                 }
                 http({
                     url: `${url.getCLAPdf}/${dataFromParent.link_id}/${this.apply_to}/${dataFromParent.lang}/${dataFromParent.hash}`,
