@@ -161,13 +161,6 @@
                 this.getPrivacy(this.privacyData[this.value].platform, this.privacyData[this.value].owner, this.privacyData[this.value].repo, this.privacyData[this.value].path);
             }
         },
-        activated() {
-            if (this.langOptions.length) {
-                this.$emit('getLangOptions', this.langOptions);
-                localStorage.setItem('lang', this.langOptions[this.value].label);
-                this.$emit('initHeader', this.langOptions[this.value].label);
-            }
-        },
         created() {
             this.init();
         },

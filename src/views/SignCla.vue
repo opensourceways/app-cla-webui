@@ -698,16 +698,6 @@
                     }
                 });
             },
-            setClientHeight() {
-                this.$nextTick(() => {
-                    document.getElementById('signCla').style.minHeight = '0px';
-                    if (util.getClientHeight() > document.getElementById('signCla').offsetHeight) {
-                        document.getElementById('signCla').style.minHeight = util.getClientHeight() + 'px';
-                    } else {
-                        document.getElementById('signCla').style.minHeight = document.getElementById('signCla').offsetHeight + 'px';
-                    }
-                });
-            }
         },
         activated() {
             if (this.signPageData) {

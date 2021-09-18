@@ -23,7 +23,7 @@
 
 <script>
     export default {
-        name: 'ReLoginDialog',
+        name: 'ReTryDialog',
         props: ['dialogVisible', 'message'],
         computed: {
             dialogWidth() {

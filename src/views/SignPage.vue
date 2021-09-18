@@ -2,7 +2,7 @@
     <el-row id="signPage">
         <Header ref="header"></Header>
         <div id="content">
-            <keep-alive>
+            <keep-alive exclude="Privacy">
                 <router-view @getLangOptions='getLangOptions' @initHeader='initHeader'></router-view>
             </keep-alive>
         </div>
