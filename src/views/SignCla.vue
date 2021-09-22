@@ -697,10 +697,11 @@
                         return false;
                     }
                 });
-            },
+            }
         },
         activated() {
             if (this.signPageData) {
+                this.setClientHeight();
                 if (localStorage.getItem('lang') !== undefined) {
                     this.lang = localStorage.getItem('lang').toLowerCase();
                 }
