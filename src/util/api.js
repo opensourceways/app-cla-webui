@@ -36,4 +36,6 @@ export const addSubEmail = 'v1/corporation-email-domain';                       
 export const findPwdSendEmail = 'v1/password-retrieval';                             //忘记密码发送重置密码的邮件     方式post  参数：/:link_id    body:{email}
 export const findPwdResetPwd = 'v1/password-retrieval/';                              //忘记密码重置密码      方式post  /:link_id 参数：{password}
 export const getCLAPdf = 'v1/cla';                                                  //下载cla的PDF文件    方式 get  参数   /:link_id/:apply_to/:language/:hash
+export const getOrg = 'v1/org-repo';                                                //获取org列表      方式get
+export const checkRepo = 'v1/org-repo';                                             //检查repo是否存在   方式get  参数   /:org/:repo
 
