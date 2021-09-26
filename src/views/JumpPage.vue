@@ -77,8 +77,7 @@
         },
         methods: {
             toSignIndex(linkId) {
-                let params = strToBase64(`${SIGN_LINK}/${linkId}`);
-                this.$router.push(`/sign/${params}`);
+                this.$router.push(`/sign/${linkId}`);
             }
         },
         mounted() {

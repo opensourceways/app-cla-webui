@@ -875,13 +875,7 @@
                 if (STOCK_SIGN_LINK[urlParams]) {
                     linkId = STOCK_SIGN_LINK[urlParams];
                 } else {
-                    let params = util.base64ToStr(urlParams);
-                    let paramsArr = params.split('/');
-                    if (paramsArr[0] === SIGN_LINK) {
-                        linkId = paramsArr[1];
-                    } else {
-                        this.$router.push({name: 'ErrorPath'});
-                    }
+                    linkId = urlParams;
                 }
                 this.getSignPage(linkId, 'corporation');
                 this.setLinkIdAct(linkId);

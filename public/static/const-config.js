@@ -120,7 +120,6 @@ const TITLE_OPTIONS_ZH = [
     {label: '地址', value: '地址'},
     {label: '传真', value: '传真'}
 ];
-const SIGN_LINK = 'sign-link';
 const STOCK_SIGN_LINK = {
     'Z2l0ZWUlMkZvcGVuZXVsZXI=': 'gitee_openeuler-1611298811283968340',
     'Z2l0ZWUlMkZhc2NlbmQ=': 'gitee_ascend-1611222220829317930',
