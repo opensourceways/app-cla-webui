@@ -342,11 +342,8 @@
                 this.getBoundTableData();
             },
             copyAddress(row) {
-                let params = '';
-                params = `${SIGN_LINK}/${row.link_id}`;
-                let base64Params = util.strToBase64(params);
                 let address = window.location.href.split('/linkedRepo')[0];
-                let url = `${address}${SIGN_ROUTER}/${base64Params}`;
+                let url = `${address}${SIGN_ROUTER}/${row.link_id}`;
                 let copyInput = document.createElement('input');
                 copyInput.value = url;
                 document.body.appendChild(copyInput);
@@ -357,10 +354,7 @@
                 document.body.removeChild(document.getElementsByClassName('copyInput')[0]);
             },
             toSignPage(row) {
-                let params = '';
-                params = `${SIGN_LINK}/${row.link_id}`;
-                let base64Params = util.strToBase64(params);
-                let url = `${this.address}${SIGN_ROUTER}/${base64Params}`;
+                let url = `${this.address}${SIGN_ROUTER}/${row.link_id}`;
                 window.open(url);
             },
             submitUpload() {

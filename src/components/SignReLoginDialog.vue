@@ -56,8 +56,7 @@
                     dialogVisible: false,
                     dialogMessage: ''
                 });
-                let linkId = this.$store.state.linkId;
-                let path = `${SIGN_ROUTER}/${util.strToBase64(`${SIGN_LINK}/${linkId}`)}`;
+                let path = `${SIGN_ROUTER}/${this.$store.state.linkId}`;
                 this.$router.replace(path);
             }
         }

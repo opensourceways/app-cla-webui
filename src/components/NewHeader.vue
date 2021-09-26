@@ -139,10 +139,7 @@
                     this.$router.push('/sign-cla');
                 } else if (this.$route.path === '/corporationManagerLogin') {
                     if (this.$store.state.linkId) {
-                        let params = '';
-                        params = `${SIGN_LINK}/${this.$store.state.linkId}`;
-                        let base64Params = util.strToBase64(params);
-                        this.$router.replace(`${SIGN_ROUTER}/${base64Params}`);
+                        this.$router.replace(`${SIGN_ROUTER}/${this.$store.state.linkId}`);
                     } else {
                         this.$store.commit('errorCodeSet', {
                             dialogVisible: true,
