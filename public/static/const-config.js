@@ -130,4 +130,3 @@ const STOCK_SIGN_LINK = {
     'Z2l0aHViJTJGa3VucGVuZ2NvbXB1dGU=': 'github_kunpengcompute-1623060284995657822',
     'Z2l0ZWUlMkZtaW5kc3BvcmU=': 'gitee_mindspore-1614155835277678289'
 };
-
