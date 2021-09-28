@@ -9,7 +9,8 @@ const routes = [
         name: 'Index',
         redirect: '/index',
         meta: {
-            title: 'index'
+            title: 'index',
+            pageType:'notLogin'
         }
     },
     {
@@ -17,21 +18,24 @@ const routes = [
         name: 'JumpPage',
         component: () => import('../views/JumpPage.vue'),
         meta: {
-            title: 'jump-page'
+            title: 'jump page',
+            pageType:'notLogin'
         }
     },
     {
         path: '/index',
         component: () => import('../views/Index.vue'),
         meta: {
-            title: 'index'
+            title: 'index',
+            pageType:'notLogin'
         },
         children: [
             {
                 path: '/',
                 name: 'LoginTypeSelect',
                 meta: {
-                    title: 'index'
+                    title: 'index',
+                    pageType:'notLogin'
                 },
                 component: () => import('../views/LoginTypeSelect.vue')
             },
@@ -41,7 +45,8 @@ const routes = [
                 name: 'PlatformSelect',
                 component: () => import('../views/PlatformSelect.vue'),
                 meta: {
-                    title: 'platformSelect'
+                    title: 'platform select',
+                    pageType:'notLogin'
                 }
             },
             {
@@ -49,14 +54,16 @@ const routes = [
                 name: 'CorporationManagerLogin',
                 component: () => import('../views/CorporationManagerLogin.vue'),
                 meta: {
-                    title: 'corporationManagerLogin'
+                    title: 'corporation manager login',
+                    pageType:'notLogin'
                 }
             },
             {
                 path: '/orgSelect',
                 name: 'OrgSelect',
                 meta: {
-                    title: 'orgSelect'
+                    title: 'org select',
+                    pageType:'notLogin'
                 },
                 component: () => import('../views/OrgSelect.vue')
             }
@@ -66,13 +73,15 @@ const routes = [
         path: '/home',
         component: () => import('../views/Home.vue'),
         meta: {
-            title: 'home'
+            title: 'home',
+            pageType:'org'
         },
         children: [
             {
                 path: '/',
                 meta: {
-                    title: 'linkedRepo'
+                    title: 'linked repo',
+                    pageType:'org'
                 },
                 redirect: '/linkedRepo'
             },
@@ -80,7 +89,8 @@ const routes = [
                 path: '/linkedRepo',
                 name: 'LinkedRepo',
                 meta: {
-                    title: 'linkedRepo'
+                    title: 'linked repo',
+                    pageType:'org'
                 },
                 component: () => import('../views/LinkedRepo.vue')
             },
@@ -88,7 +98,8 @@ const routes = [
                 path: '/corporationList',
                 name: 'CorporationList',
                 meta: {
-                    title: 'corporationList'
+                    title: 'corporation list',
+                    pageType:'org'
                 },
                 component: () => import('../views/CorporationList.vue')
             },
@@ -96,42 +107,61 @@ const routes = [
                 path: '/bind-cla',
                 component: () => import('../views/ConfigCla.vue'),
                 meta: {
-                    title: 'bind-cla'
+                    title: 'bind cla',
+                    pageType:'org'
                 },
                 children: [
                     {
                         path: '/',
                         redirect: '/config-org',
                         meta: {
-                            title: 'bind-cla'
+                            title: 'config org',
+                            pageType:'org'
                         }
                     },
                     {
                         path: '/config-org',
                         name: 'ConfigOrg',
                         meta: {
-                            title: 'bind-cla'
+                            title: 'config org',
+                            pageType:'org'
                         },
                         component: () => import('../views/ConfigOrg.vue')
                     },
                     {
                         path: '/config-cla-link',
                         name: 'ConfigClaLink',
+                        meta: {
+                            title: 'config cla link',
+                            pageType:'org'
+                        },
                         component: () => import('../views/ConfigClaLink.vue')
                     },
                     {
                         path: '/config-fields',
                         name: 'ConfigFields',
+                        meta: {
+                            title: 'config fields',
+                            pageType:'org'
+                        },
                         component: () => import('../views/ConfigFields.vue')
                     },
                     {
                         path: '/config-email',
                         name: 'ConfigEmail',
+                        meta: {
+                            title: 'config email',
+                            pageType:'org'
+                        },
                         component: () => import('../views/ConfigEmail.vue')
                     },
                     {
                         path: '/config-check',
                         name: 'ConfigCheck',
+                        meta: {
+                            title: 'config check',
+                            pageType:'org'
+                        },
                         component: () => import('../views/ConfigCheck.vue')
                     }]
             },
@@ -147,7 +177,8 @@ const routes = [
                         path: '/addIndividualUrl',
                         name: 'AddIndividualUrl',
                         meta: {
-                            title: 'addIndividualCla'
+                            title: 'addIndividual cla',
+                            pageType:'org'
                         },
                         component: () => import('../views/AddIndividualUrl.vue')
                     }
@@ -165,7 +196,8 @@ const routes = [
                         path: '/addCorpUrl',
                         name: 'AddCorpUrl',
                         meta: {
-                            title: 'addCorpCla'
+                            title: 'add corp cla',
+                            pageType:'org'
                         },
                         component: () => import('../views/AddCorpUrl.vue')
                     }
@@ -185,7 +217,8 @@ const routes = [
                 path: '/employeeList',
                 name: 'EmployeeList',
                 meta: {
-                    title: 'employeeList'
+                    title: 'employee list',
+                    pageType:'corp'
                 },
                 component: () => import('../views/EmployeeList.vue')
             }]
@@ -202,7 +235,8 @@ const routes = [
                 path: '/managerList',
                 name: 'ManagerList',
                 meta: {
-                    title: 'managerList'
+                    title: 'manager list',
+                    pageType:'corp'
                 },
                 component: () => import('../views/ManagerList.vue')
             },
@@ -210,7 +244,8 @@ const routes = [
                 path: '/subemail',
                 name: 'Subemail',
                 meta: {
-                    title: 'subemail'
+                    title: 'subemail',
+                    pageType:'corp'
                 },
                 component: () => import('../views/Subemail.vue')
             },
@@ -218,7 +253,8 @@ const routes = [
                 path: '/add-subemail',
                 name: 'AddSubemail',
                 meta: {
-                    title: 'add-subemail'
+                    title: 'add-subemail',
+                    pageType:'corp'
                 },
                 component: () => import('../views/AddSubemail.vue')
             },
@@ -226,7 +262,8 @@ const routes = [
                 path: '/createManager',
                 name: 'CreateManager',
                 meta: {
-                    title: 'createManager'
+                    title: 'create manager',
+                    pageType:'corp'
                 },
                 component: () => import('../views/CreateManager.vue')
             },
@@ -234,7 +271,8 @@ const routes = [
                 path: '/resetPassword',
                 name: 'resetPassword',
                 meta: {
-                    title: 'resetPassword'
+                    title: 'reset password',
+                    pageType:'corp'
                 },
                 component: () => import('../views/ResetPassword.vue')
             }]
@@ -243,7 +281,8 @@ const routes = [
         path: '/sign/:params',
         name: 'SignType',
         meta: {
-            title: 'sign'
+            title: 'sign',
+            pageType:'notLogin'
         },
         component: () => import('../views/SignType.vue')
     },
@@ -251,7 +290,8 @@ const routes = [
         path: '/sign/:params/:orgAddress',
         name: 'SignType_back',
         meta: {
-            title: 'sign'
+            title: 'sign',
+            pageType:'notLogin'
         },
         component: () => import('../views/SignType.vue')
     },
@@ -259,7 +299,8 @@ const routes = [
     {
         path: '/sign-page',
         meta: {
-            title: 'sign-page'
+            title: 'sign-page',
+            pageType:'notLogin'
         },
         component: () => import('../views/SignPage.vue'),
         children: [
@@ -271,7 +312,8 @@ const routes = [
                 path: '/sign-cla',
                 name: 'SignCla',
                 meta: {
-                    title: 'sign-cla'
+                    title: 'sign-cla',
+                    pageType:'notLogin'
                 },
                 component: () => import('../views/SignCla.vue')
             },
@@ -279,7 +321,8 @@ const routes = [
                 path: '/privacy',
                 name: 'Privacy',
                 meta: {
-                    title: 'privacy'
+                    title: 'privacy',
+                    pageType:'notLogin'
                 },
                 component: () => import('../views/Privacy.vue')
             }]
@@ -287,7 +330,8 @@ const routes = [
     {
         path: '/password/:link_id',
         meta: {
-            title: 'password'
+            title: 'password',
+            pageType:'notLogin'
         },
         component: () => import('../views/ForgetPassword.vue'),
         children: [
@@ -299,7 +343,8 @@ const routes = [
                 path: '/retrieve-password/:link_id',
                 name: 'ForgetAndResetPwd',
                 meta: {
-                    title: 'retrieve password'
+                    title: 'retrieve password',
+                    pageType:'notLogin'
                 },
                 component: () => import('../views/ForgetAndSendEmail.vue')
             },
@@ -307,7 +352,8 @@ const routes = [
                 path: '/reset-password',
                 name: 'FindResetPassword',
                 meta: {
-                    title: 'reset password'
+                    title: 'reset password',
+                    pageType:'notLogin'
                 },
                 component: () => import('../views/FindResetPassword.vue')
             }]
@@ -316,7 +362,8 @@ const routes = [
         path: '/cla-pdf',
         name: 'ClaPdf',
         meta: {
-            title: 'cla-pdf'
+            title: 'cla-pdf',
+            pageType:'notLogin'
         },
         component: () => import('../views/ClaPdf.vue')
     },
@@ -324,7 +371,8 @@ const routes = [
         path: '*',
         name: 'ErrorPath',
         meta: {
-            title: 'ErrorPath'
+            title: 'ErrorPath',
+            pageType:'notLogin'
         },
         component: () => import('../views/ErrorPath.vue')
     }
