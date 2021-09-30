@@ -56,7 +56,7 @@
                     dialogVisible: false,
                     dialogMessage: ''
                 });
-                let path = `${SIGN_ROUTER}/${this.$store.state.linkId}`;
+                let path = window.location.origin === OPENLOOKENG_SIGN_URL ? SIGN_ROUTER : `${SIGN_ROUTER}/${this.$store.state.linkId}`;
                 this.$router.replace(path);
             }
         }
