@@ -278,6 +278,15 @@ const routes = [
             }]
     },
     {
+        path: '/sign',
+        name: 'SignTypeLookeng',
+        meta: {
+            title: 'sign',
+            pageType:'notLogin'
+        },
+        component: () => import('../views/SignType.vue')
+    },
+    {
         path: '/sign/:params',
         name: 'SignType',
         meta: {
