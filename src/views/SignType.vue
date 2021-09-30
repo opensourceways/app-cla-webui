@@ -797,13 +797,18 @@
             },
             getRepoInfo() {
                 let linkId;
-                let urlParams = this.$route.params.params;
-                this.setLangLocale();
-                if (STOCK_SIGN_LINK[urlParams]) {
-                    linkId = STOCK_SIGN_LINK[urlParams];
+                let domain = window.location.origin;
+                if (domain === OPENLOOKENG_SIGN_URL) {
+                    linkId = OPENLOOKENG_LINKID;
                 } else {
-                    linkId = urlParams;
+                    let urlParams = this.$route.params.params;
+                    if (STOCK_SIGN_LINK[urlParams]) {
+                        linkId = STOCK_SIGN_LINK[urlParams];
+                    } else {
+                        linkId = urlParams;
+                    }
                 }
+                this.setLangLocale();
                 this.getSignPage(linkId, 'corporation');
                 this.setLinkIdAct(linkId);
             },
