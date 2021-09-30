@@ -217,22 +217,6 @@
                                                 </el-col>
                                                 <el-col :span="19" class="textCol">
                                                     <div class="rightText padding-left-1rem">
-                                                        {{ $t('signType.empStep2') }}
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row>
-                                                <el-col class="lineBox" :offset="1" :span="4">
-                                                    <div class="greenLine">
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row class="stepBox">
-                                                <el-col class="iconBox" :offset="1" :span="4">
-                                                    <svg-icon class="stepIcon" icon-class="send"></svg-icon>
-                                                </el-col>
-                                                <el-col :span="19" class="textCol">
-                                                    <div class="rightText padding-left-1rem">
                                                         {{ $t('signType.corpStep2') }}
                                                     </div>
                                                 </el-col>
@@ -317,22 +301,6 @@
                                                 </el-col>
                                                 <el-col :span="19" class="textCol">
                                                     <div class="rightText padding-left-1rem">
-                                                        {{ $t('signType.individualStep2') }}
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row>
-                                                <el-col class="lineBox" :offset="1" :span="4">
-                                                    <div class="greenLine">
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row class="stepBox">
-                                                <el-col class="iconBox" :offset="1" :span="4">
-                                                    <svg-icon class="stepIcon" icon-class="send"></svg-icon>
-                                                </el-col>
-                                                <el-col :span="19" class="textCol">
-                                                    <div class="rightText padding-left-1rem">
                                                         {{ $t('signType.corpStep2') }}
                                                     </div>
                                                 </el-col>
@@ -398,7 +366,6 @@
                                                                 {{ $t('signType.corpBt') }}
                                                             </button>
                                                         </div>
-
                                                     </el-tooltip>
                                                 </div>
                                                 <div>
@@ -411,7 +378,6 @@
                                                                 {{ $t('signType.empBt') }}
                                                             </button>
                                                         </div>
-
                                                     </el-tooltip>
                                                 </div>
                                                 <el-tooltip :content="individualBtTooltip" placement="left"
@@ -492,15 +458,12 @@
                                         </el-col>
                                     </el-row>
                                     <el-row>
-
                                         <el-col class="lineBox" :offset="10" :span="4">
                                             <div class="greenLine">
 
                                             </div>
                                         </el-col>
-
                                     </el-row>
-
                                     <el-row class="stepBox">
                                         <el-col :span="10" class="textCol">
                                             <div class="leftText">
@@ -629,7 +592,7 @@
                                     <el-row class="stepBox">
                                         <el-col :span="10" class="textCol">
                                             <div class="leftText">
-                                                {{ $t('signType.empStep2') }}
+                                                {{ $t('signType.corpStep2') }}
                                             </div>
                                         </el-col>
                                         <el-col class="iconBox" :span="4">
@@ -648,11 +611,11 @@
                                     </el-row>
                                     <el-row class="stepBox">
                                         <el-col class="iconBox" :offset="10" :span="4">
-                                            <svg-icon class="stepIcon" icon-class="send"></svg-icon>
+                                            <svg-icon class="stepIcon" icon-class="auth"></svg-icon>
                                         </el-col>
                                         <el-col :span="10" class="textCol">
                                             <div class="rightText">
-                                                {{ $t('signType.corpStep2') }}
+                                                {{ $t('signType.empStep4') }}
                                             </div>
                                         </el-col>
                                     </el-row>
@@ -665,30 +628,14 @@
                                     <el-row class="stepBox">
                                         <el-col :span="10" class="textCol">
                                             <div class="leftText">
-                                                {{ $t('signType.empStep4') }}
+                                                {{ $t('signType.empStep5') }}
                                             </div>
                                         </el-col>
                                         <el-col class="iconBox" :span="4">
-                                            <svg-icon class="stepIcon" icon-class="auth"></svg-icon>
+                                            <svg-icon class="stepIcon" icon-class="success"></svg-icon>
                                         </el-col>
                                         <el-col :span="10">
                                             <div>
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row>
-                                        <el-col class="lineBox" :offset="10" :span="4">
-                                            <div class="greenLine">
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row class="stepBox">
-                                        <el-col class="iconBox" :offset="10" :span="4">
-                                            <svg-icon class="stepIcon" icon-class="success"></svg-icon>
-                                        </el-col>
-                                        <el-col :span="10" class="textCol">
-                                            <div class="rightText">
-                                                {{ $t('signType.empStep5') }}
                                             </div>
                                         </el-col>
                                     </el-row>
@@ -717,7 +664,7 @@
                                     <el-row class="stepBox">
                                         <el-col :span="10" class="textCol">
                                             <div class="leftText">
-                                                {{ $t('signType.individualStep2') }}
+                                                {{ $t('signType.corpStep2') }}
                                             </div>
                                         </el-col>
                                         <el-col class="iconBox" :span="4">
@@ -736,31 +683,11 @@
                                     </el-row>
                                     <el-row class="stepBox">
                                         <el-col class="iconBox" :offset="10" :span="4">
-                                            <svg-icon class="stepIcon" icon-class="send"></svg-icon>
+                                            <svg-icon class="stepIcon" icon-class="success"></svg-icon>
                                         </el-col>
                                         <el-col :span="10" class="textCol">
                                             <div class="rightText">
-                                                {{ $t('signType.corpStep2') }}
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row>
-                                        <el-col class="lineBox" :offset="10" :span="4">
-                                            <div class="greenLine">
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row class="stepBox">
-                                        <el-col :span="10" class="textCol">
-                                            <div class="leftText">
                                                 {{ $t('signType.individualStep4') }}
-                                            </div>
-                                        </el-col>
-                                        <el-col class="iconBox" :span="4">
-                                            <svg-icon class="stepIcon" icon-class="success"></svg-icon>
-                                        </el-col>
-                                        <el-col :span="10">
-                                            <div>
                                             </div>
                                         </el-col>
                                     </el-row>
