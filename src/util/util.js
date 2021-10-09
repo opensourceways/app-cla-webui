@@ -594,8 +594,7 @@ export const getLoading = (_this, langText) => {
         background: 'rgba(0, 0, 0, 0.7)'
     });
 };
-
-
-
-
-
+export const toSignIndex = (_this) => {
+    let path = CUSTOM_SIGN_URL[window.location.origin] ? SIGN_ROUTER : `${SIGN_ROUTER}/${_this.$store.state.linkId}`;
+    _this.$router.replace(path);
+};
