@@ -165,7 +165,7 @@ module.exports = {
         loginOut: 'Login out'
     },
     corp: {
-        number: 'Number',
+        number: 'No.',
         id: 'ID',
         name: 'Name',
         email: 'Email',
