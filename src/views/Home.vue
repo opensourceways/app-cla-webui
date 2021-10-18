@@ -39,9 +39,8 @@
                     document.getElementById('home').style.minHeight = '0px';
                     if (util.getClientHeight() > document.getElementById('home').offsetHeight) {
                         document.getElementById('home').style.minHeight = util.getClientHeight() + 'px';
-                    } else {
-                        document.getElementById('home').style.minHeight = document.getElementById('home').offsetHeight + 'px';
                     }
+
                 });
             }
         },
