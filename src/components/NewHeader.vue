@@ -228,7 +228,7 @@
                 if (this.loginRole === 'corp') {
                     this.$router.push('/corporationManagerLogin');
                 } else {
-                    this.$router.push('/');
+                    this.$router.push('/index');
                 }
             },
             chooseLng(value) {
