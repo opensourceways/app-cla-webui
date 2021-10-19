@@ -798,8 +798,8 @@
             getRepoInfo() {
                 let linkId;
                 let domain = window.location.origin;
-                if (domain === OPENLOOKENG_SIGN_URL) {
-                    linkId = OPENLOOKENG_LINKID;
+                if (CUSTOM_SIGN_URL[domain]) {
+                    linkId = CUSTOM_SIGN_URL[domain];
                 } else {
                     let urlParams = this.$route.params.params;
                     if (STOCK_SIGN_LINK[urlParams]) {
