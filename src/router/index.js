@@ -10,7 +10,7 @@ const routes = [
         beforeEnter: (to, from, next) => {
             if (CUSTOM_SIGN_URL[window.location.origin]) {
                 next('/sign');
-            }else {
+            } else {
                 next('/index');
             }
         },
@@ -58,6 +58,13 @@ const routes = [
             {
                 path: '/corporationManagerLogin',
                 name: 'CorporationManagerLogin',
+                beforeEnter: (to, from, next) => {
+                    if (from.path === '/') {
+                        next('/jump-page');
+                    } else {
+                        next();
+                    }
+                },
                 component: () => import('../views/CorporationManagerLogin.vue'),
                 meta: {
                     title: 'corporation manager login',
