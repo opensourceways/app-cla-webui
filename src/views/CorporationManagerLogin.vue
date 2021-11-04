@@ -130,31 +130,16 @@
                     this.loginButtonDisable = false;
                     this.loginText = 'login_in';
                     if (data.length) {
-                        new Promise((resolve, reject) => {
-                            let userInfo = {userInfo: data};
-                            Object.assign(userInfo, {userName: userName});
-                            this.setLoginInfoAct(userInfo);
-                            if (data.length > 1) {
-                                this.$router.push('/orgSelect');
-                            } else {
-                                this.setCorpTokenAct(data[0].token);
-                                Object.assign(userInfo, {orgValue: 0});
-                                this.$store.commit('setPwdIsChanged', data[0].initial_pw_changed);
-                                this.setLoginInfoAct(userInfo);
-                                if (data[0].initial_pw_changed) {
-                                    if (data[0].role === 'admin') {
-                                        this.$router.push('/rootManager');
-                                    } else {
-                                        this.$router.push('/signedRepo');
-                                    }
-                                } else {
-                                    this.$router.push('/resetPassword');
-                                }
-                            }
-                            resolve('completed');
-                        }).then(res => {
-                        }, err => {
-                        });
+                        let userInfo = {userInfo: data};
+                        Object.assign(userInfo, {userName: userName});
+                        this.setLoginInfoAct(userInfo);
+                        this.setCorpTokenAct(data[0].token);
+                        this.$store.commit('setPwdIsChanged', data[0].initial_pw_changed);
+                        if (data[0].role === 'admin') {
+                            this.$router.push('/rootManager');
+                        } else {
+                            this.$router.push('/signedRepo');
+                        }
                     } else {
                         this.$store.commit('errorCodeSet', {
                             dialogVisible: true,

@@ -186,9 +186,6 @@
             deleteMessage() {
                 return this.$t('corp.deleteTips');
             },
-            orgValue() {
-                return this.$store.state.loginInfo.orgValue;
-            },
             userInfo() {
                 return this.$store.state.loginInfo.userInfo;
             },

@@ -10,7 +10,7 @@ const routes = [
         beforeEnter: (to, from, next) => {
             if (CUSTOM_SIGN_URL[window.location.origin]) {
                 next('/sign');
-            }else {
+            } else {
                 next('/index');
             }
         },
@@ -58,20 +58,18 @@ const routes = [
             {
                 path: '/corporationManagerLogin',
                 name: 'CorporationManagerLogin',
+                beforeEnter: (to, from, next) => {
+                    if (sessionStorage.getItem('linkId')) {
+                        next();
+                    } else {
+                        next('/jump-page');
+                    }
+                },
                 component: () => import('../views/CorporationManagerLogin.vue'),
                 meta: {
                     title: 'corporation manager login',
                     pageType: 'notLogin'
                 }
-            },
-            {
-                path: '/orgSelect',
-                name: 'OrgSelect',
-                meta: {
-                    title: 'org select',
-                    pageType: 'notLogin'
-                },
-                component: () => import('../views/OrgSelect.vue')
             }
         ]
     },
@@ -325,6 +323,13 @@ const routes = [
             {
                 path: '/sign-cla',
                 name: 'SignCla',
+                beforeEnter: (to, from, next) => {
+                    if (sessionStorage.getItem('linkId')) {
+                        next();
+                    } else {
+                        next('/jump-page');
+                    }
+                },
                 meta: {
                     title: 'sign-cla',
                     pageType: 'notLogin'
@@ -404,14 +409,21 @@ router.beforeEach((to, from, next) => {
     if (to.meta.title) {
         document.title = to.meta.title;
     }
-    if (from.path === '/resetPassword') {
-        if (to.path === '/corporationManagerLogin') {
-            next();
-        } else {
+    if (to.meta.pageType === 'corp') {
+        if (sessionStorage.getItem('token')) {
             if (sessionStorage.getItem('pwdIsChanged') === 'true') {
                 next();
             } else {
+                next('/resetPassword');
             }
+        } else {
+            next('/corporationManagerLogin');
+        }
+    } else if (to.meta.pageType === 'org') {
+        if (sessionStorage.getItem('token')) {
+            next();
+        } else {
+            next('/platformSelect');
         }
     } else {
         next();
