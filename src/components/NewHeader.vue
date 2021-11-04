@@ -139,7 +139,7 @@
                     this.$router.push('/sign-cla');
                 } else if (this.$route.path === '/corporationManagerLogin') {
                     if (this.$store.state.linkId) {
-                        this.$router.replace(`${SIGN_ROUTER}/${this.$store.state.linkId}`);
+                        util.toSignIndex(this);
                     } else {
                         this.$store.commit('errorCodeSet', {
                             dialogVisible: true,
@@ -228,7 +228,7 @@
                 if (this.loginRole === 'corp') {
                     this.$router.push('/corporationManagerLogin');
                 } else {
-                    this.$router.push('/');
+                    this.$router.push('/index');
                 }
             },
             chooseLng(value) {

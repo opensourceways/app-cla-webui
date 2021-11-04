@@ -6,6 +6,7 @@
                     <el-tab-pane :label="$t('org.not_complete')" name="first" class="margin-top-1rem">
                         <div class="tableStyle">
                             <el-table
+                                    ref="not_complete_table"
                                     :empty-text="$t('corp.no_data')"
                                     :data="signedNotCompleted"
                                     align="center"
@@ -97,6 +98,7 @@
                     <el-tab-pane :label="$t('org.complete')" name="second" class="margin-top-1rem">
                         <div class="tableStyle">
                             <el-table
+                                    ref="complete_table"
                                     :empty-text="$t('corp.no_data')"
                                     :data="signedCompleted"
                                     class="tableClass"
@@ -604,7 +606,13 @@
             },
             corpTabsHandleClick(tab, event) {
                 if (tab.index === '0') {
+                    this.$nextTick(() => {
+                        this.$refs.not_complete_table.doLayout();
+                    });
                 } else if (tab.index === '1') {
+                    this.$nextTick(() => {
+                        this.$refs.complete_table.doLayout();
+                    });
                 } else if (tab.index === '2') {
                     this.getDeletedCorpInfo();
                 }
@@ -883,7 +891,7 @@
 
 <style lang="less">
     #corporationList {
-        padding-top: 3rem;
+        padding: 3rem 0;
 
         .margin-top-1rem {
             margin-top: 1rem;
@@ -958,7 +966,6 @@
 
         .tableStyle {
             margin-bottom: 2rem;
-            padding: 3rem;
             background-color: white;
         }
 
