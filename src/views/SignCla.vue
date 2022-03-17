@@ -314,8 +314,7 @@
                 if (value) {
                     email = value.trim();
                 }
-                let reg = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,6}$/;
-                if (reg.test(email)) {
+                if (EMAIL_REG.test(email)) {
                     callback();
                 } else {
                     callback(new Error(this.$t('tips.invalid_email')));
@@ -367,9 +366,8 @@
                 this.myForm[type] = value;
             },
             sendCode() {
-                let reg = new RegExp('^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$');
                 let email = this.myForm.email;
-                if (email && reg.test(email)) {
+                if (email && EMAIL_REG.test(email)) {
                     this.sendBtDisable = true;
                     axios({
                         url: `${url.sendVerifyCode}/${this.link_id}/${this.myForm.email}`,
