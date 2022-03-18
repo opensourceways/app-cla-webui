@@ -1,4 +1,4 @@
-FROM node:alpine as Builder
+FROM node:16.10.0-alpine as Builder
 
 MAINTAINER TommyLike<tommylikehu@gmail.com>
 
