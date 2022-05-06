@@ -94,7 +94,7 @@ const PWD_MIN_LENGTH = 8;
 const PWD_MAX_LENGTH = 18;
 const PWD_MIN_ASCII = 33;
 const PWD_MAX_ASCII = 126;
-const EMAIL_REG = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,6}$/;
+const EMAIL_REG = /^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,6}$/;
 const COPYRIGHT = 'MIT Licensed | Copyright © opensourceways infrastructure | ';
 const ICP = '蜀ICP备20009468号-1';
 const ICP_LINK = 'https://icp.chinaz.com/home/info?host=osinfra.cn';
