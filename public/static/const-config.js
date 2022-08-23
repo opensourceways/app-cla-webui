@@ -105,7 +105,14 @@ const PRIVACY_POLICY_DATA = [                            //如需添加其他语
         platform: 'github',                              //隐私声明存储的平台，支持gitee和github
         owner: 'opensourceways',                         //隐私声明存储的公开组织
         repo: 'app-cla-server',                          //隐私声明存储的公开仓库
-        path: 'clasign_privacy_policy_20210513.md',      //隐私声明在仓库中的路径
+        path: 'clasign_privacy_policy_en.md',      //隐私声明在仓库中的路径
+        language: 'English'                             //隐私声明的语言类别
+    },
+    {
+        platform: 'github',                              //隐私声明存储的平台，支持gitee和github
+        owner: 'opensourceways',                         //隐私声明存储的公开组织
+        repo: 'app-cla-server',                          //隐私声明存储的公开仓库
+        path: 'clasign_privacy_policy_zh.md',      //隐私声明在仓库中的路径
         language: 'Chinese'                             //隐私声明的语言类别
     }
 ];
