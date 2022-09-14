@@ -299,7 +299,7 @@ export const catchErr = (err, commit, _this) => {
                 });
                 break;
             case 'cla.wrong_verification_code':
-                if (_this.$route.path === '/sign-cla') {
+                if (['/sign-cla', '/config-email'].includes(_this.$route.path)) {
                     message = _this.$t('tips.wrong_verification_code');
                 } else {
                     message = _this.$t('tips.link_expired');
