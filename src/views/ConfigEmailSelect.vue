@@ -99,7 +99,7 @@
     const TENCENT_EMAIL = 'txmail'
     export default {
         name: 'ConfigEmailSelect',
-        props: ['emailDialogVisible'],
+        props: ['emailDialogVisible', 'modifyEmailLinkId'],
         model: {
             prop: 'emailDialogVisible',
             event: 'closeEmailDialog',
@@ -193,6 +193,45 @@
                 }
             },
             authorizeEmail() {
+                if (this.modifyEmailLinkId) {
+                    if (this.emailType === 'G-Mail') {
+                        this.loading = util.getLoading(this, 'tips.loading');
+                        http({
+                            url: url.getAuthEmail
+                        }).then(res => {
+                            window.location.href = res.data.data.url;
+                        }).catch(err => {
+                            this.loading.close();
+                            util.catchErr(err, 'setOrgReLogin', this);
+                        });
+                    } else if (this.emailType === TENCENT_EMAIL) {
+                        this.$refs['emailForm'].validate((valid) => {
+                            if (!valid) {
+                                this.loading.close();
+                            } else {
+                                this.loading = util.getLoading(this, 'tips.loading');
+                                let formData = new FormData();
+                                const obj = {
+                                    email: this.emailForm.email,
+                                }
+                                formData.append('data', JSON.stringify(obj));
+                                http({
+                                    url: `${url.modifyAuthorizeEmail}/${this.modifyEmailLinkId}`,
+                                    method: 'post',
+                                    data: formData
+                                }).then(res => {
+                                    this.loading.close();
+                                    this.closeDialog();
+                                    this.$emit('callback');
+                                }).catch(err => {
+                                    this.loading.close();
+                                    util.catchErr(err, 'setOrgReLogin', this);
+                                });
+                            }
+                        });
+                    }
+                    return;
+                }
                 if (this.emailType === 'G-Mail') {
                     this.loading = util.getLoading(this, 'tips.loading');
                     http({
