@@ -13,7 +13,7 @@
                 <div>
                     <el-row>
                         <el-col :offset="2" :span="20">
-                            <el-form label-position="left" label-width="100px" :model="emailForm">
+                            <el-form label-position="left" :label-width="labelWidth" :model="emailForm">
                                 <el-form-item>
                                     <template slot="label">
                                         <div class="mailboxType">
@@ -40,7 +40,7 @@
                 </div>
                 <el-row v-if="emailType === TENCENT_EMAIL" class="tencent-form">
                     <el-col :offset="2" :span="20">
-                        <el-form label-position="left" label-width="100px" :model="emailForm" :rules="rules" ref="emailForm" :hide-required-asterisk="true">
+                        <el-form label-position="left" :label-width="labelWidth" :model="emailForm" :rules="rules" ref="emailForm" :hide-required-asterisk="true">
                             <el-form-item prop="email">
                                 <template slot="label">
                                     <div class="mailboxType">
@@ -53,7 +53,7 @@
                                 <template slot="label">
                                     <div class="mailboxType">
                                         {{$t('org.config_cla_authorize_code')}}
-                                        <svg-icon icon-class="tips" class="tips-icon"></svg-icon>
+                                        <svg-icon icon-class="tips" class="tips-icon" @click="goToHelp"></svg-icon>
                                     </div>
                                 </template>
                                 <el-input v-model="emailForm.authorizeCode">
@@ -123,17 +123,22 @@
                 },
                 rules: {
                     email: [
-                        { required: true, message: this.$t('tips.not_fill_address'), trigger: 'blur' },
+                        { required: true, message: this.$t('org.config_not_fill_address'), trigger: 'blur' },
                         { pattern: EMAIL_REG, message: this.$t('tips.not_fill_email'), trigger: 'blur' },
                     ],
                     authorizeCode: [
                         { required: true, message: this.$t('tips.fill_authorize_code'), trigger: 'blur' },
                     ],
                     verifyCode: [
-                        { required: true, message: this.$t('tips.fill_verification_code'), trigger: 'blur' },
+                        { required: true, message: this.$t('org.config_fill_verification_code'), trigger: 'blur' },
                     ],
                 }
             };
+        },
+        computed: {
+            labelWidth() {
+                return this.lang === 'Chinese' ? '100px' : '188px'
+            }
         },
         methods: {
             open() {
@@ -151,6 +156,9 @@
             },
             closeDialog() {
                 this.$emit('closeEmailDialog', false)
+            },
+            goToHelp() {
+                window.open('https://service.mail.qq.com/cgi-bin/help?subtype=1&id=28&no=1001256')
             },
             sendVerifyCode() {
                 const validArr = ['email', 'authorizeCode'];
