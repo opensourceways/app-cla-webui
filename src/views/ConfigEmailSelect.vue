@@ -93,7 +93,8 @@
 </template>
 
 <script>
-    import * as url from '../util/api';
+    import { els } from 'markdown-it/lib/common/entities';
+import * as url from '../util/api';
     import http from '../util/http';
     import * as util from '../util/util';
     const TENCENT_EMAIL = 'txmail'
@@ -193,42 +194,6 @@
                 }
             },
             authorizeEmail() {
-                if (this.modifyEmailLinkId) {
-                    if (this.emailType === 'G-Mail') {
-                        this.loading = util.getLoading(this, 'tips.loading');
-                        http({
-                            url: url.getAuthEmail
-                        }).then(res => {
-                            window.location.href = res.data.data.url;
-                        }).catch(err => {
-                            this.loading.close();
-                            util.catchErr(err, 'setOrgReLogin', this);
-                        });
-                    } else if (this.emailType === TENCENT_EMAIL) {
-                        this.$refs['emailForm'].validate((valid) => {
-                            if (!valid) {
-                                this.loading.close();
-                            } else {
-                                this.loading = util.getLoading(this, 'tips.loading');
-                                let formData = new FormData();
-                                formData.append('email', JSON.stringify(this.emailForm.email));
-                                http({
-                                    url: `${url.modifyAuthorizeEmail}/${this.modifyEmailLinkId}`,
-                                    method: 'post',
-                                    data: formData
-                                }).then(res => {
-                                    this.loading.close();
-                                    this.closeDialog();
-                                    this.$emit('callback');
-                                }).catch(err => {
-                                    this.loading.close();
-                                    util.catchErr(err, 'setOrgReLogin', this);
-                                });
-                            }
-                        });
-                    }
-                    return;
-                }
                 if (this.emailType === 'G-Mail') {
                     this.loading = util.getLoading(this, 'tips.loading');
                     http({
@@ -257,7 +222,24 @@
                                 method: 'post',
                                 data: formData
                             }).then(res => {
-                                window.location.reload();
+                                if (this.modifyEmailLinkId) {
+                                    let formData1 = new FormData();
+                                    formData1.append('email', JSON.stringify(this.emailForm.email));
+                                    http({
+                                        url: `${url.modifyAuthorizeEmail}/${this.modifyEmailLinkId}`,
+                                        method: 'post',
+                                        data: formData1
+                                    }).then(res => {
+                                        this.loading.close();
+                                        this.closeDialog();
+                                        this.$emit('callback');
+                                    }).catch(err => {
+                                        this.loading.close();
+                                        util.catchErr(err, 'setOrgReLogin', this);
+                                    });
+                                } else {
+                                    window.location.reload();
+                                }
                             }).catch(err => {
                                 this.loading.close();
                                 util.catchErr(err, 'setOrgReLogin', this);
