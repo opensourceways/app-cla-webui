@@ -270,7 +270,7 @@ module.exports = {
         previous_step: 'Previous Step',
         config_cla_email_title: 'Email',
         config_cla_mailbox_type: 'E-Mail Service',
-        config_cla_tencent_email: 'Tencent Exail',
+        config_cla_tencent_email: 'Tencent Exmail',
         config_cla_email_address: 'E-Mail',
         config_not_fill_address: 'Please enter E-Mail',
         config_cla_authorize_code: 'Authorization Code',

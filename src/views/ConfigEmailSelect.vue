@@ -75,7 +75,7 @@
                 <el-row class="authorize_desc">
                     <el-col :offset="2" :span="20">
                         <p class="align_center">{{$t('org.config_cla_email_authorize_desc')}}</p>
-                        <ul class="align_left" :class="{word_break:this.lang==='1'}">
+                        <ul class="align_left break_word" :class="{word_break:this.lang==='1'}">
                             <li>{{$t('org.config_cla_email_authorize_desc1')}}</li>
                             <li>{{$t('org.config_cla_email_authorize_desc2')}}</li>
                             <li>{{$t('org.config_cla_email_authorize_desc3')}}</li>
@@ -246,6 +246,10 @@
 
         .word_break {
             word-break: break-all;
+        }
+
+        .break_word {
+            word-break: break-word;
         }
 
         .align_center {
