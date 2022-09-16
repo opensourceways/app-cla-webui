@@ -24,8 +24,7 @@
                                         class="my-select"
                                         :placeholder="$t('org.config_cla_email_platform_select_placeholder')"
                                         filterable
-                                        v-model="emailType"
-                                        @change="changeEmailType">
+                                        v-model="emailType">
                                         <el-option
                                             v-for="item in emailTypeArr"
                                             :key="item.value"
@@ -110,10 +109,6 @@
                 loading: false,
                 lang: '',
                 TENCENT_EMAIL: TENCENT_EMAIL,
-                emailTypeArr: [
-                    {value: 'G-Mail', label: 'G-Mail'},
-                    {value: TENCENT_EMAIL, label: this.$t('org.config_cla_tencent_email')},
-                ],
                 emailType: '',
                 emailForm: {
                     type: TENCENT_EMAIL,
@@ -121,7 +116,20 @@
                     authorizeCode: '',
                     verifyCode: '',
                 },
-                rules: {
+            };
+        },
+        computed: {
+            labelWidth() {
+                return this.lang === 'Chinese' ? '100px' : '188px'
+            },
+            emailTypeArr() {
+                return [
+                    {value: 'G-Mail', label: 'G-Mail'},
+                    {value: TENCENT_EMAIL, label: this.$t('org.config_cla_tencent_email')},
+                ]
+            },
+            rules() {
+                return {
                     email: [
                         { required: true, message: this.$t('org.config_not_fill_address'), trigger: 'blur' },
                         { pattern: EMAIL_REG, message: this.$t('tips.not_fill_email'), trigger: 'blur' },
@@ -133,11 +141,6 @@
                         { required: true, message: this.$t('org.config_fill_verification_code'), trigger: 'blur' },
                     ],
                 }
-            };
-        },
-        computed: {
-            labelWidth() {
-                return this.lang === 'Chinese' ? '100px' : '188px'
             }
         },
         methods: {
