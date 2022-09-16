@@ -211,10 +211,7 @@
                             } else {
                                 this.loading = util.getLoading(this, 'tips.loading');
                                 let formData = new FormData();
-                                const obj = {
-                                    email: this.emailForm.email,
-                                }
-                                formData.append('data', JSON.stringify(obj));
+                                formData.append('email', JSON.stringify(this.emailForm.email));
                                 http({
                                     url: `${url.modifyAuthorizeEmail}/${this.modifyEmailLinkId}`,
                                     method: 'post',
