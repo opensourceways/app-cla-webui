@@ -100,7 +100,11 @@ import * as url from '../util/api';
     const TENCENT_EMAIL = 'txmail'
     export default {
         name: 'ConfigEmailSelect',
-        props: ['emailDialogVisible', 'modifyEmailLinkId'],
+        props: [
+            'emailDialogVisible',
+            // 调用为修改时传入
+            'modifyEmailLinkId',
+        ],
         model: {
             prop: 'emailDialogVisible',
             event: 'closeEmailDialog',
@@ -124,10 +128,15 @@ import * as url from '../util/api';
                 return this.lang === 'Chinese' ? '100px' : '188px'
             },
             emailTypeArr() {
-                return [
-                    {value: 'G-Mail', label: 'G-Mail'},
-                    {value: TENCENT_EMAIL, label: this.$t('org.config_cla_tencent_email')},
-                ]
+                // 修改时暂不支持gmail
+                return this.modifyEmailLinkId
+                    ? [
+                        {value: TENCENT_EMAIL, label: this.$t('org.config_cla_tencent_email')},
+                    ]
+                    : [
+                        {value: 'G-Mail', label: 'G-Mail'},
+                        {value: TENCENT_EMAIL, label: this.$t('org.config_cla_tencent_email')},
+                    ]
             },
             rules() {
                 return {
