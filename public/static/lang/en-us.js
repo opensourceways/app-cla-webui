@@ -268,6 +268,7 @@ module.exports = {
         config_cla_select_repo_placeholder: 'Please enter repository',
         next_step: 'Next Step',
         previous_step: 'Previous Step',
+        modify_email: 'Modify Email',
         config_cla_email_title: 'Email',
         config_cla_mailbox_type: 'E-Mail Service',
         config_cla_tencent_email: 'Tencent Exmail',

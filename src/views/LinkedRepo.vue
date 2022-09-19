@@ -78,7 +78,7 @@
                                         {{$t('org.toDetail')}}
                                     </el-dropdown-item>
                                     <el-dropdown-item :command="{command:'d',row:scope.row}">
-                                        {{$t('修改邮箱')}}
+                                        {{$t('org.modify_email')}}
                                     </el-dropdown-item>
                                 </el-dropdown-menu>
                             </el-dropdown>

@@ -269,6 +269,7 @@ module.exports = {
         config_cla_select_repo_placeholder: '请输入仓库名',
         next_step: '下一步',
         previous_step: '上一步',
+        modify_email: '修改邮箱',
         config_cla_email_title: '邮箱',
         config_cla_mailbox_type: '邮箱类型',
         config_cla_tencent_email: '腾讯邮箱',
