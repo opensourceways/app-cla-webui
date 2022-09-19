@@ -224,7 +224,7 @@ import * as url from '../util/api';
                             }).then(res => {
                                 if (this.modifyEmailLinkId) {
                                     let formData1 = new FormData();
-                                    formData1.append('email', JSON.stringify(this.emailForm.email));
+                                    formData1.append('email', this.emailForm.email);
                                     http({
                                         url: `${url.modifyAuthorizeEmail}/${this.modifyEmailLinkId}`,
                                         method: 'post',
