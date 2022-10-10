@@ -77,6 +77,9 @@
                                     <el-dropdown-item :command="{command:'c',row:scope.row}">
                                         {{$t('org.toDetail')}}
                                     </el-dropdown-item>
+                                    <el-dropdown-item :command="{command:'d',row:scope.row}">
+                                        {{$t('org.modify_email')}}
+                                    </el-dropdown-item>
                                 </el-dropdown-menu>
                             </el-dropdown>
                         </template>
@@ -153,6 +156,7 @@
         </el-dialog>
         <ReLoginDialog :dialogVisible="reLoginDialogVisible" :message="reLoginMsg"></ReLoginDialog>
         <ReTryDialog :dialogVisible="reTryVisible" :message="reLoginMsg"></ReTryDialog>
+        <ConfigEmailSelect v-model="emailDialogVisible" :modifyEmailLinkId="modifyEmailLinkId" @callback="getLinkedRepoList"></ConfigEmailSelect>
     </div>
 </template>
 <script>
@@ -163,10 +167,12 @@
     import _cookie from 'js-cookie';
     import ReLoginDialog from '../components/ReLoginDialog';
     import ReTryDialog from '../components/ReTryDialog';
+    import ConfigEmailSelect from './ConfigEmailSelect';
 
     export default {
         name: 'linkedRepo',
         components: {
+            ConfigEmailSelect,
             ReLoginDialog,
             ReTryDialog
         },
@@ -214,7 +220,9 @@
                 unlinkId: '',
                 unLinkDialogVisible: false,
                 tableTotal: 0,
-                currentPage: 1
+                currentPage: 1,
+                emailDialogVisible: false,
+                modifyEmailLinkId: '',
             };
         },
         created() {
@@ -243,7 +251,14 @@
                     case 'c':
                         this.checkCorporationList(command.row);
                         break;
+                    case 'd':
+                        this.modifyEmail(command.row);
+                        break;
                 }
+            },
+            modifyEmail(row) {
+                this.emailDialogVisible = true;
+                this.modifyEmailLinkId = row.link_id;
             },
             clearConfigSession() {
                 util.clearSession(this);

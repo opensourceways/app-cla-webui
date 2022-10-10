@@ -22,66 +22,21 @@
             <button class="step_button" @click="toPreviousPage">{{$t('org.previous_step')}}</button>
             <button class="step_button" @click="toNextPage">{{$t('org.next_step')}}</button>
         </div>
-        <el-dialog
-                top="5vh"
-                title=""
-                :visible.sync="emailDialogVisible"
-                width="35%">
-            <div>
-                <p :class="{word_break:this.lang==='1'}" class="dialogDesc">
-                    {{$t('org.config_cla_email_platform_select')}}</p>
-                <div>
-                    <el-row>
-                        <el-col :offset="4" :span="16">
-                            <el-select
-                                    class="my-select"
-                                    :placeholder="$t('org.config_cla_email_platform_select_placeholder')"
-                                    filterable
-                                    v-model="emailType"
-                                    @change="changeEmailType">
-                                <el-option
-                                        v-for="item in emailTypeArr"
-                                        :key="item.value"
-                                        :value="item.value"
-                                        :label="item.label">
-                                </el-option>
-                            </el-select>
-                        </el-col>
-                    </el-row>
-                </div>
-                <el-row class="authorize_desc">
-                    <el-col :offset="2" :span="20">
-                        <p class="align_center">{{$t('org.config_cla_email_authorize_desc')}}</p>
-                        <ul class="align_left" :class="{word_break:this.lang==='1'}">
-                            <li>{{$t('org.config_cla_email_authorize_desc1')}}</li>
-                            <li>{{$t('org.config_cla_email_authorize_desc2')}}</li>
-                            <li>{{$t('org.config_cla_email_authorize_desc3')}}</li>
-                        </ul>
-                    </el-col>
-                </el-row>
-                <div slot="footer" class="dialog-footer">
-                    <button class="email_button" @click="authorizeEmail()">{{$t('org.confirm_remove')}}</button>
-                    <button class="email_cancel" @click="emailDialogVisible = false">{{$t('org.cancel_remove')}}
-                    </button>
-                </div>
-            </div>
-        </el-dialog>
+        <ConfigEmailSelect v-model="emailDialogVisible"></ConfigEmailSelect>
         <ReLoginDialog :dialogVisible="reLoginDialogVisible" :message="reLoginMsg"></ReLoginDialog>
         <ReTryDialog :dialogVisible="reTryVisible" :message="reLoginMsg"></ReTryDialog>
     </el-row>
 </template>
 
 <script>
-    import * as url from '../util/api';
-    import http from '../util/http';
     import _cookie from 'js-cookie';
     import ReLoginDialog from '../components/ReLoginDialog';
     import ReTryDialog from '../components/ReTryDialog';
-    import * as util from '../util/util';
-
+    import ConfigEmailSelect from './ConfigEmailSelect';
     export default {
         name: 'ConfigThree',
         components: {
+            ConfigEmailSelect,
             ReLoginDialog,
             ReTryDialog
         },
@@ -105,10 +60,7 @@
         data() {
             return {
                 loading: false,
-                lang: '',
                 emailDialogVisible: false,
-                emailTypeArr: [{value: 'G-Mail', label: 'G-Mail'}],
-                emailType: ''
             };
         },
         inject: ['setClientHeight'],
@@ -150,27 +102,7 @@
                 }
             },
             toAuthorizedEmail() {
-                this.lang = localStorage.getItem('lang');
                 this.emailDialogVisible = true;
-            },
-            authorizeEmail() {
-                this.loading = util.getLoading(this, 'tips.loading');
-                let myUrl = '';
-                switch (this.emailType) {
-                    case 'G-Mail':
-                        myUrl = url.getAuthEmail;
-                        break;
-                }
-                http({
-                    url: myUrl
-                }).then(res => {
-                    window.location.href = res.data.data.url;
-                }).catch(err => {
-                    this.loading.close();
-                    util.catchErr(err, 'setOrgReLogin', this);
-                });
-            },
-            changeEmailType(value) {
             },
             init() {
                 this.$store.commit('setEmail', '');
@@ -206,66 +138,6 @@
 
 <style lang="less">
     #configThree {
-        .my-select {
-            width: 100%;
-        }
-
-        .dialog-footer {
-            text-align: center;
-        }
-
-        .word_break {
-            word-break: break-all;
-        }
-
-        .align_center {
-            text-align: center;
-        }
-
-        .dialogDesc {
-            font-size: 1.2rem;
-            margin: 2rem 0;
-            text-align: center;
-        }
-
-        .authorize_desc {
-            padding: 2rem 0;
-            font-size: 1.3rem
-        }
-
-        .email_button {
-            font-family: Roboto-Regular, sans-serif;
-            width: 6rem;
-            height: 3rem;
-            border-radius: 1.5rem;
-            border: none;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            background: linear-gradient(to right, #97DB30, #319E55);
-            margin: 1.2rem 0;
-        }
-
-        .email_button:focus {
-            outline: none;
-        }
-
-        .email_cancel {
-            width: 6rem;
-            height: 3rem;
-            border-radius: 1.5rem;
-            border: 1px solid black;
-            color: black;
-            font-size: 1rem;
-            cursor: pointer;
-            background-color: white;
-            margin-left: 3rem;
-        }
-
-        .email_cancel:focus {
-            outline: none;
-        }
-
         .stepTitle {
             font-size: 1.2rem;
             padding: .5rem;
