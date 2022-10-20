@@ -96,6 +96,7 @@
                                 dialogMessage: this.$t('tips.email_system_error')
                             });
                         }
+                        _cookie.remove(name, {path: '/'});
                     });
                     email ? this.$store.commit('setIsEmail', true) : this.$store.commit('setIsEmail', false);
                     this.$store.commit('setEmail', email);
@@ -131,7 +132,7 @@
                         cookieArr.forEach((item) => {
                             let arr = item.split('=');
                             let name = arr[0].trim();
-                            _cookie.remove(name, {path: '/'});
+                            // _cookie.remove(name, {path: '/'});
                         });
                     } else {
                         vm.init();
