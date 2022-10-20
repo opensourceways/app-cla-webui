@@ -111,6 +111,12 @@
             }
         },
         created() {
+            const modifyEmailLinkId = sessionStorage.getItem('modifyEmailLinkId')
+            // 存在modifyEmailLinkId，说明是/linkedRepo界面修改邮箱，需跳转过去
+            if (modifyEmailLinkId) {
+                this.$router.replace('/linkedRepo');
+                return;
+            }
             this.getCookieData();
         },
         mounted() {

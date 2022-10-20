@@ -12,7 +12,7 @@
                 {{deleteMessage}}
             </el-row>
             <el-row align="center" class="margin-top-1rem">
-                <button class="deleteBt" @click="submit">{{$t('corp.yes')}}</button>
+                <button :class="confirm ? 'button_submit' : 'deleteBt'" @click="submit">{{$t('corp.yes')}}</button>
                 <button class="cancelBt" @click="cancel">{{$t('corp.no')}}</button>
             </el-row>
         </el-dialog>
@@ -22,7 +22,7 @@
 <script>
     export default {
         name: 'DeleteDialog',
-        props: ['deleteVisible', 'deleteMessage'],
+        props: ['deleteVisible', 'deleteMessage', 'confirm'],
         methods: {
             submit() {
                 this.$emit('delete');

@@ -156,6 +156,8 @@
         </el-dialog>
         <ReLoginDialog :dialogVisible="reLoginDialogVisible" :message="reLoginMsg"></ReLoginDialog>
         <ReTryDialog :dialogVisible="reTryVisible" :message="reLoginMsg"></ReTryDialog>
+        <DeleteDialog :deleteMessage="confirmGMailMessage" :deleteVisible="confirmGMailVisible" confirm="true" @delete="submitGMail"
+                      @cancel="cancelGMail"></DeleteDialog>
         <ConfigEmailSelect v-model="emailDialogVisible" :modifyEmailLinkId="modifyEmailLinkId" @callback="getLinkedRepoList"></ConfigEmailSelect>
     </div>
 </template>
@@ -167,12 +169,14 @@
     import _cookie from 'js-cookie';
     import ReLoginDialog from '../components/ReLoginDialog';
     import ReTryDialog from '../components/ReTryDialog';
+    import DeleteDialog from '../components/DeleteDialog';
     import ConfigEmailSelect from './ConfigEmailSelect';
 
     export default {
         name: 'linkedRepo',
         components: {
             ConfigEmailSelect,
+            DeleteDialog,
             ReLoginDialog,
             ReTryDialog
         },
@@ -190,12 +194,19 @@
             reLoginMsg() {
                 return this.$store.state.dialogMessage;
             },
+            email() {
+                return this.$store.state.email;
+            },
+            confirmGMailMessage() {
+                return this.$t('tips.change_to_Gmail') + ' ' + this.$store.state.email + '?';
+            },
             address() {
                 return this.$store.state.domain;
             }
         },
         data() {
             return {
+                confirmGMailVisible: false,
                 loading: false,
                 copyAddressValue: '',
                 organization: '',
@@ -240,6 +251,30 @@
         },
         methods: {
             ...mapActions(['setTokenAct']),
+            submitGMail() {
+                this.confirmGMailVisible = false;
+                let formData1 = new FormData();
+                formData1.append('email', this.$store.state.email);
+                this.loading = util.getLoading(this, 'tips.loading');
+                this.modifyEmailLinkId = sessionStorage.getItem('modifyEmailLinkId');
+                sessionStorage.removeItem('modifyEmailLinkId');
+                http({
+                    url: `${url.modifyAuthorizeEmail}/${this.modifyEmailLinkId}`,
+                    method: 'post',
+                    data: formData1
+                }).then(res => {
+                    this.loading.close();
+                    util.successMessage(this);
+                    this.getLinkedRepoList();
+                }).catch(err => {
+                    this.loading.close();
+                    util.catchErr(err, 'setOrgReLogin', this);
+                });
+            },
+            cancelGMail() {
+                this.confirmGMailVisible = false;
+                sessionStorage.removeItem('modifyEmailLinkId');
+            },
             menuCommand(command) {
                 switch (command.command) {
                     case 'a':
@@ -259,6 +294,7 @@
             modifyEmail(row) {
                 this.emailDialogVisible = true;
                 this.modifyEmailLinkId = row.link_id;
+                sessionStorage.setItem('modifyEmailLinkId', this.modifyEmailLinkId);
             },
             clearConfigSession() {
                 util.clearSession(this);
@@ -266,6 +302,7 @@
                 sessionStorage.removeItem('corpItem');
             },
             configCla() {
+                sessionStorage.removeItem('modifyEmailLinkId');
                 this.$router.push('/bind-cla');
             },
             tabsHandleClick(tab, event) {
@@ -393,7 +430,7 @@
             getCookieData(resolve) {
                 if (document.cookie) {
                     let cookieArr = document.cookie.split(';');
-                    let access_token, refresh_token, platform_token = '';
+                    let email, access_token, refresh_token, platform_token = '';
                     cookieArr.forEach((item, index) => {
                         let arr = item.split('=');
                         let name = arr[0].trim();
@@ -404,11 +441,24 @@
                             platform_token = value;
                         } else if (name === 'access_token') {
                             access_token = value;
+                        } else if (name === 'email') {
+                            email = value;
+                        } else if (name === EMAIL_ERROR) {
+                            this.$store.commit('errorCodeSet', {
+                                dialogVisible: true,
+                                dialogMessage: this.$t('tips.email_system_error')
+                            });
                         }
                         _cookie.remove(name, {path: '/'});
                     });
+                    if (email) {
+                        this.$store.commit('setEmail', email);
+                        this.confirmGMailVisible = true;
+                    }
                     let data = {access_token, refresh_token, platform_token, resolve};
-                    this.setTokenAct(data);
+                    if (access_token) {
+                        this.setTokenAct(data);
+                    }
                 } else {
                     resolve('complete');
                 }

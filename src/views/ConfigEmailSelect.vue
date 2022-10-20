@@ -128,12 +128,7 @@ import * as url from '../util/api';
                 return this.lang === 'Chinese' ? '100px' : '188px'
             },
             emailTypeArr() {
-                // 修改时暂不支持gmail
-                return this.modifyEmailLinkId
-                    ? [
-                        {value: TENCENT_EMAIL, label: this.$t('org.config_cla_tencent_email')},
-                    ]
-                    : [
+                return [
                         {value: 'G-Mail', label: 'G-Mail'},
                         {value: TENCENT_EMAIL, label: this.$t('org.config_cla_tencent_email')},
                     ]
