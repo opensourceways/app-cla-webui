@@ -171,6 +171,7 @@
     import ReTryDialog from '../components/ReTryDialog';
     import DeleteDialog from '../components/DeleteDialog';
     import ConfigEmailSelect from './ConfigEmailSelect';
+import { els } from 'markdown-it/lib/common/entities';
 
     export default {
         name: 'linkedRepo',
@@ -258,6 +259,7 @@
                 this.loading = util.getLoading(this, 'tips.loading');
                 this.modifyEmailLinkId = sessionStorage.getItem('modifyEmailLinkId');
                 sessionStorage.removeItem('modifyEmailLinkId');
+                this.$store.commit('setEmail', '');
                 http({
                     url: `${url.modifyAuthorizeEmail}/${this.modifyEmailLinkId}`,
                     method: 'post',
@@ -274,6 +276,7 @@
             cancelGMail() {
                 this.confirmGMailVisible = false;
                 sessionStorage.removeItem('modifyEmailLinkId');
+                this.$store.commit('setEmail', '');
             },
             menuCommand(command) {
                 switch (command.command) {
@@ -303,6 +306,7 @@
             },
             configCla() {
                 sessionStorage.removeItem('modifyEmailLinkId');
+                this.$store.commit('setEmail', '');
                 this.$router.push('/bind-cla');
             },
             tabsHandleClick(tab, event) {
@@ -458,6 +462,8 @@
                     let data = {access_token, refresh_token, platform_token, resolve};
                     if (access_token) {
                         this.setTokenAct(data);
+                    } else {
+                        resolve('complete');
                     }
                 } else {
                     resolve('complete');
