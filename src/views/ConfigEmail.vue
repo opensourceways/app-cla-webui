@@ -132,7 +132,9 @@
                         cookieArr.forEach((item) => {
                             let arr = item.split('=');
                             let name = arr[0].trim();
-                            // _cookie.remove(name, {path: '/'});
+                            if (!['email', EMAIL_ERROR].includes(name)) {
+                                _cookie.remove(name, {path: '/'});
+                            }
                         });
                     } else {
                         vm.init();
