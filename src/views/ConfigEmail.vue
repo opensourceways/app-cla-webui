@@ -96,6 +96,7 @@
                                 dialogMessage: this.$t('tips.email_system_error')
                             });
                         }
+                        _cookie.remove(name, {path: '/'});
                     });
                     email ? this.$store.commit('setIsEmail', true) : this.$store.commit('setIsEmail', false);
                     this.$store.commit('setEmail', email);
@@ -111,6 +112,12 @@
             }
         },
         created() {
+            const modifyEmailLinkId = sessionStorage.getItem('modifyEmailLinkId')
+            // 存在modifyEmailLinkId，说明是/linkedRepo界面修改邮箱，需跳转过去
+            if (modifyEmailLinkId) {
+                this.$router.replace('/linkedRepo');
+                return;
+            }
             this.getCookieData();
         },
         mounted() {
@@ -125,7 +132,9 @@
                         cookieArr.forEach((item) => {
                             let arr = item.split('=');
                             let name = arr[0].trim();
-                            _cookie.remove(name, {path: '/'});
+                            if (!['email', EMAIL_ERROR].includes(name)) {
+                                _cookie.remove(name, {path: '/'});
+                            }
                         });
                     } else {
                         vm.init();
