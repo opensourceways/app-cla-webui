@@ -236,6 +236,7 @@ import * as url from '../util/api';
                                     }).then(res => {
                                         this.loading.close();
                                         this.closeDialog();
+                                        this.$store.commit('setEmail', this.emailForm.email);
                                         this.$emit('callback');
                                     }).catch(err => {
                                         this.loading.close();
