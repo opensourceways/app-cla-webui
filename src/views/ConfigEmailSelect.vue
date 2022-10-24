@@ -163,6 +163,7 @@ import * as url from '../util/api';
                 this.$emit('closeEmailDialog', false)
             },
             closeDialog() {
+                this.$store.commit('setEmail', this.emailForm.email);
                 this.$emit('closeEmailDialog', false)
             },
             goToHelp() {
@@ -236,14 +237,15 @@ import * as url from '../util/api';
                                     }).then(res => {
                                         this.loading.close();
                                         this.closeDialog();
-                                        this.$store.commit('setEmail', this.emailForm.email);
                                         this.$emit('callback');
                                     }).catch(err => {
                                         this.loading.close();
                                         util.catchErr(err, 'setOrgReLogin', this);
                                     });
                                 } else {
-                                    window.location.reload();
+                                    this.loading.close();
+                                    this.closeDialog();
+                                    this.$store.commit('setEmail', this.emailForm.email);
                                 }
                             }).catch(err => {
                                 this.loading.close();
