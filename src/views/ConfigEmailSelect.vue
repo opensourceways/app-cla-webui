@@ -163,7 +163,6 @@ import * as url from '../util/api';
                 this.$emit('closeEmailDialog', false)
             },
             closeDialog() {
-                this.$store.commit('setEmail', this.emailForm.email);
                 this.$emit('closeEmailDialog', false)
             },
             goToHelp() {
