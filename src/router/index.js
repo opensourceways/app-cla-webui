@@ -308,7 +308,9 @@ router.beforeEach((to, from, next) => {
             } else {
             }
         }
-    } else {
+    } else if(to.path === '/config-org'){
+        next('/')
+    }else{
         next()
     }
     if (to.name === 'SignType' || to.name === 'SignType_back' || to.path === '/sign-cla' || to.path === '/index'
