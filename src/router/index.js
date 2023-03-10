@@ -408,7 +408,10 @@ router.beforeEach((to, from, next) => {
             } else {
             }
         }
-    } else {
+    }
+    else if(to.path === '/config-org'){
+        next('/')
+    }else{
         next();
     }
 });
