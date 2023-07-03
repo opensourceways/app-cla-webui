@@ -14,15 +14,6 @@ const routes = [
         }
     },
     {
-        path: '/jump-page',
-        name: 'JumpPage',
-        component: () => import('../views/JumpPage.vue'),
-        meta: {
-            title: 'jump page',
-            pageType:'notLogin'
-        }
-    },
-    {
         path: '/index',
         component: () => import('../views/Index.vue'),
         meta: {
@@ -32,16 +23,6 @@ const routes = [
         children: [
             {
                 path: '/',
-                name: 'LoginTypeSelect',
-                meta: {
-                    title: 'index',
-                    pageType:'notLogin'
-                },
-                component: () => import('../views/LoginTypeSelect.vue')
-            },
-
-            {
-                path: '/platformSelect',
                 name: 'PlatformSelect',
                 component: () => import('../views/PlatformSelect.vue'),
                 meta: {

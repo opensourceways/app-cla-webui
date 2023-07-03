@@ -18,15 +18,17 @@ module.exports = {
     productionSourceMap: false,
     devServer: {
         hot: true,
+        https:true,
         proxy: {
             '/api': {
-                //target: 'http://159.138.58.253:8080',
-                target: 'http://119.8.126.102:9092',
+                // target: 'http://159.138.58.253:8080',
+                // target: 'http://119.8.126.102:9092',
+                target:  'https://clasign.test.myopeninfra.com',
                 secure: false,
                 changeOrigin: true,
-                pathRewrite: {
-                    '^/api': ''
-                }
+                // pathRewrite: {
+                //     '/api': ''
+                // }
             }
         }
     },
