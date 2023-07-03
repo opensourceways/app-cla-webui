@@ -33,7 +33,7 @@
                 <el-input v-model="org_alias" size="medium"
                           :placeholder="$t('org.config_cla_select_org_alias_placeholder')"></el-input>
             </div>
-            <div class="margin-top-1rem">
+            <!-- <div class="margin-top-1rem">
                 {{$t('org.config_cla_select_repo')}}
             </div>
             <el-row class="margin-top-1rem">
@@ -41,7 +41,7 @@
                     <el-input v-model="repo" size="medium"
                               :placeholder="$t('org.config_cla_select_repo_placeholder')"></el-input>
                 </el-col>
-            </el-row>
+            </el-row> -->
         </div>
         <div class="orgStepBtBox">
             <button class="step_button" @click="toConfigClaLink">{{$t('org.next_step')}}</button>
