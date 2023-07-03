@@ -101,13 +101,13 @@
                 }
 
             },
-            orgValue() {
-                if (this.$store.state.orgValue === undefined || this.$store.state.orgValue === '' || this.$store.state.orgValue === 'undefined') {
-                    return undefined;
-                } else {
-                    return Number(this.$store.state.orgValue);
-                }
-            },
+            // orgValue() {
+            //     if (this.$store.state.orgValue === undefined || this.$store.state.orgValue === '' || this.$store.state.orgValue === 'undefined') {
+            //         return undefined;
+            //     } else {
+            //         return Number(this.$store.state.orgValue);
+            //     }
+            // },
             repositoryValue() {
                 if (this.$store.state.repositoryValue === undefined || this.$store.state.repositoryValue === '' || this.$store.state.repositoryValue === 'undefined') {
                     return undefined;
@@ -135,7 +135,8 @@
         data() {
             return {
                 org_id: '',
-                org: this.$store.state.chooseOrg
+                org: this.$store.state.chooseOrg,
+                orgValue:''
             };
         },
         inject: ['setClientHeight'],
@@ -193,18 +194,20 @@
                 });
             },
             toConfigClaLink() {
-                if (this.org) {
-                    if (this.repo) {
-                        this.checkRepo(this.org, this.repo);
-                    } else {
-                        this.$router.replace('/config-email');
-                    }
-                } else {
-                    this.$store.commit('errorCodeSet', {
-                        dialogVisible: true,
-                        dialogMessage: this.$t('corp.fill_complete')
-                    });
-                }
+                // if (this.org) {
+                    // if (this.repo) {
+                    //     this.checkRepo(this.org, this.repo);
+                    // } else {
+                    //     this.$router.replace('/config-email');
+                    // }
+                    
+                // } else {
+                //     this.$store.commit('errorCodeSet', {
+                //         dialogVisible: true,
+                //         dialogMessage: this.$t('corp.fill_complete')
+                //     });
+                // }
+                this.$router.replace('/config-email');
             },
             orgVisibleChange(visible) {
                 if (visible) {
@@ -222,7 +225,8 @@
                     this.org_id = '';
                     this.$store.commit('setOrgChoose', false);
                 } else {
-                    this.$store.commit('setChooseOrg', this.orgOptions[value].label);
+                    // this.$store.commit('setChooseOrg', this.orgOptions[value].label);
+                    this.$store.commit('setChooseOrg', this.$store.state.orgValue);
                     this.org = this.orgOptions[value].label;
                     this.org_id = this.orgOptions[value].id;
                     this.$store.commit('setOrgChoose', true);
