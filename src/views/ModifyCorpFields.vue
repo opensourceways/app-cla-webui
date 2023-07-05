@@ -4,9 +4,9 @@
             <div style="padding: .5rem">
                 <p style="font-size: 1.2rem">④ Edit CLA's Fields
                     <el-tooltip class="item" effect="dark"
-                                content="The information you want contributors to fill in when they sign the cla.Title and type are required, otherwise the field will fail to be added"
+                                :content="tipContent"
                                 placement="right">
-                        <svg-icon icon-class="bangzhu"></svg-icon>
+                        <svg-icon icon-class="tips"></svg-icon>
                     </el-tooltip>
                 </p>
             </div>
@@ -82,25 +82,26 @@
 
 <script>
     export default {
-        name: "ConfigFields",
+        name: 'ConfigFields',
         computed: {
             individualCustomMetadataArr() {
                 if (this.$store.state.individualCustomMetadataArr) {
-                    return this.$store.state.individualCustomMetadataArr
+                    return this.$store.state.individualCustomMetadataArr;
                 } else {
                     return this.initIndividualCustomMetadata;
                 }
             },
             corporationCustomMetadataArr() {
                 if (this.$store.state.corporationCustomMetadataArr) {
-                    return this.$store.state.corporationCustomMetadataArr
+                    return this.$store.state.corporationCustomMetadataArr;
                 } else {
                     return this.initCorpCustomMetadata;
                 }
-            },
+            }
         },
         data() {
             return {
+                tipContent:'The information you want contributors to fill in when they sign the cla.Title and type are required, otherwise the field will fail to be added',
                 individualMetadata: [],
                 corpMetadata: [],
                 dataTypeOptions: [{label: 'name', value: 'name'}, {
@@ -112,69 +113,70 @@
                 }, {label: 'address', value: 'address'}, {label: 'email', value: 'email'}, {
                     label: 'fax',
                     value: 'fax'
-                },
+                }
                 ],
                 individualMetadataArr: [{
                     title: 'Name',
                     type: 'name',
                     description: 'your name',
-                    required: true,
+                    required: true
                 }, {
                     title: 'E-Mail',
                     type: 'email',
                     description: 'your email',
-                    required: true,
-                },],
+                    required: true
+                }],
                 corporationMetadataArr: [
 
                     {
                         title: 'Authorized Representative',
                         type: 'authorized',
                         description: 'name of Authorized Representative',
-                        required: true,
+                        required: true
                     },
                     {
                         title: 'Title',
                         type: 'title',
                         description: 'title of Authorized Representative',
-                        required: true,
+                        required: true
                     },
                     {
                         title: 'Corporation Name',
                         type: 'corporationName',
                         description: 'corporation name',
-                        required: true,
+                        required: true
                     },
 
                     {
                         title: 'E-Mail',
                         type: 'email',
                         description: 'corporation email',
-                        required: true,
-                    },],
+                        required: true
+                    }],
                 initIndividualCustomMetadata: [{
                     title: '',
                     type: '',
                     description: '',
-                    required: false,
+                    required: false
                 }],
                 initCorpCustomMetadata: [{
                     title: '',
                     type: '',
                     description: '',
-                    required: false,
-                }],
-            }
+                    required: false
+                }]
+            };
         },
         beforeRouteEnter(to, from, next) {
             next(vm => {
                 if (from.path === '/') {
                     vm.init();
                 }
-            })
+            });
         },
         methods: {
-            submitModify(){},
+            submitModify() {
+            },
             init() {
                 this.$store.commit('setIndividualMetadata', this.individualMetadataArr);
                 this.$store.commit('setCorpMetadata', this.corporationMetadataArr);
@@ -186,7 +188,7 @@
                 sessionStorage.removeItem('corporationCustomMetadataArr');
             },
             toConfigClaLink() {
-                this.$router.replace('/config-cla-link')
+                this.$router.replace('/config-cla-link');
             },
             toNextPage() {
                 let metadataObj = this.checkMetadata();
@@ -198,7 +200,7 @@
                     this.$router.replace('/config-check');
                 } else {
                     this.$message.closeAll();
-                    this.$message.error(this.$t('tips.title_type_repeat'))
+                    this.$message.error(this.$t('tips.title_type_repeat'));
                 }
             },
             checkMetadata() {
@@ -206,12 +208,12 @@
                 let corpMetadata = [];
                 this.individualCustomMetadataArr.forEach((item) => {
                     if (item.title !== '' && item.type !== '') {
-                        individualMetadata.push(item)
+                        individualMetadata.push(item);
                     }
                 });
                 this.corporationCustomMetadataArr.forEach((item) => {
                     if (item.title !== '' && item.type !== '') {
-                        corpMetadata.push(item)
+                        corpMetadata.push(item);
                     }
                 });
                 let individualArr = this.individualMetadataArr.concat(individualMetadata);
@@ -234,13 +236,13 @@
                     title: '',
                     type: '',
                     description: '',
-                    required: false,
+                    required: false
                 });
                 corpMetadata.push({
                     title: '',
                     type: '',
                     description: '',
-                    required: false,
+                    required: false
                 });
                 this.individualMetadata = individualMetadata;
                 this.corpMetadata = corpMetadata;
@@ -260,8 +262,8 @@
                                 title: item.title,
                                 type: item.type,
                                 description: item.description,
-                                required: item.required,
-                            })
+                                required: item.required
+                            });
                         }
                     });
                     corpArr.forEach((item, index) => {
@@ -271,13 +273,13 @@
                                 title: item.title,
                                 type: item.type,
                                 description: item.description,
-                                required: item.required,
-                            })
+                                required: item.required
+                            });
                         }
                     });
-                    return {individualFields, corpFields}
+                    return {individualFields, corpFields};
                 } else {
-                    return false
+                    return false;
                 }
             },
             addRow(index) {
@@ -286,20 +288,20 @@
                     title: '',
                     type: '',
                     description: '',
-                    required: false,
+                    required: false
                 });
-                this.$store.commit('setIndividualCustomMetadataArr', metadata)
+                this.$store.commit('setIndividualCustomMetadataArr', metadata);
             },
             myDeleteRow(index) {
                 let metadata = this.individualCustomMetadataArr;
                 if (metadata.length === 1) {
                     metadata[0].type = '';
                     metadata[0].title = '';
-                    metadata[0].description = ''
+                    metadata[0].description = '';
                 } else {
                     metadata.splice(index, 1);
                 }
-                this.$store.commit('setIndividualCustomMetadataArr', metadata)
+                this.$store.commit('setIndividualCustomMetadataArr', metadata);
             },
             addCorpRow(index) {
                 let metadata = this.corporationCustomMetadataArr;
@@ -307,23 +309,23 @@
                     title: '',
                     type: '',
                     description: '',
-                    required: false,
+                    required: false
                 });
-                this.$store.commit('setCorporationCustomMetadataArr', metadata)
+                this.$store.commit('setCorporationCustomMetadataArr', metadata);
             },
             myCorpDeleteRow(index) {
                 let metadata = this.corporationCustomMetadataArr;
                 if (metadata.length === 1) {
                     metadata[0].type = '';
                     metadata[0].title = '';
-                    metadata[0].description = ''
+                    metadata[0].description = '';
                 } else {
                     metadata.splice(index, 1);
                 }
-                this.$store.commit('setCorporationCustomMetadataArr', metadata)
-            },
-        },
-    }
+                this.$store.commit('setCorporationCustomMetadataArr', metadata);
+            }
+        }
+    };
 </script>
 
 <style lang="less">

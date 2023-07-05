@@ -8,35 +8,40 @@
 </template>
 <script>
     export default {
-        name: "ConfigCla",
+        name: 'ConfigCla',
         inject: ['setClientHeight'],
+        watch: {
+            '$i18n.locale'() {
+                this.setTitle();
+            }
+        },
         data() {
-          return{
-              title:'',
-              configClaStyle: {
-                  height: '',
-              },
-          }
+            return {
+                title: '',
+                configClaStyle: {
+                    height: ''
+                },
+            };
         },
         methods: {
-            setTitle(){
+            setTitle() {
                 if (this.$store.state.bindType === 'add-bind') {
-                    if (this.$store.state.cla_link_corporation) {
-                        this.title=this.$t('org.addCorpCla')
-                    }else{
-                        this.title=this.$t('org.addIndividualCla')
+                    if (this.$store.state.claLinkCorp) {
+                        this.title = this.$t('org.addCorpCla');
+                    } else {
+                        this.title = this.$t('org.addIndividualCla');
                     }
-                }else{
-                    this.title=this.$t('org.configure_bt')
+                } else {
+                    this.title = this.$t('org.configure_bt');
                 }
-            },
+            }
         },
-        created(){
+        created() {
             this.setTitle();
         },
         updated() {
             this.setClientHeight();
-        },
+        }
     };
 </script>
 
@@ -44,6 +49,7 @@
     .margin-top-2rem {
         margin-top: 2rem;
     }
+
     .margin-top-1rem {
         margin-top: 1rem;
     }

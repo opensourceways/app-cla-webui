@@ -2,7 +2,7 @@
     <div id="rootManager">
         <Header></Header>
         <div>
-            <div id="rootManager_section">
+            <div id="rootManager_section" class="padding-top-bottom-2rem">
                 <router-view></router-view>
             </div>
         </div>
@@ -10,30 +10,30 @@
     </div>
 </template>
 <script>
-    import Header from '@components/NewHeader'
-    import Footer from '@components/NewFooter'
-    import * as util from '../util/util'
+    import Header from '@components/NewHeader';
+    import Footer from '@components/NewFooter';
+    import * as util from '../util/util';
 
     window.onresize = () => {
         if (util.getClientHeight() > document.getElementById('rootManager').offsetHeight) {
-            document.getElementById("rootManager").style.height = util.getClientHeight() + 'px'
+            document.getElementById('rootManager').style.height = util.getClientHeight() + 'px';
         }
     };
     export default {
-        name: "rootManager",
+        name: 'rootManager',
         components: {
             Header,
-            Footer,
+            Footer
         },
         computed: {
             user() {
-                return this.$store.state.loginInfo
-            },
+                return this.$store.state.loginInfo;
+            }
         },
         data() {
             return {
-                active: 'first',
-            }
+                active: 'first'
+            };
         },
         mounted() {
             this.setClientHeight();
@@ -41,18 +41,18 @@
         methods: {
             setClientHeight() {
                 this.$nextTick(() => {
-                    document.getElementById("rootManager").style.minHeight = '0px';
+                    document.getElementById('rootManager').style.minHeight = '0px';
                     if (util.getClientHeight() > document.getElementById('rootManager').offsetHeight) {
-                        document.getElementById('rootManager').style.minHeight = util.getClientHeight() + 'px'
+                        document.getElementById('rootManager').style.minHeight = util.getClientHeight() + 'px';
                     } else {
-                        document.getElementById('rootManager').style.minHeight = document.getElementById('rootManager').offsetHeight + 'px'
+                        document.getElementById('rootManager').style.minHeight = document.getElementById('rootManager').offsetHeight + 'px';
                     }
-                })
-            },
-        },
-    }
+                });
+            }
+        }
+    };
 </script>
-<style scoped lang="less">
+<style lang="less">
     @media screen and (min-width: 1200px) {
         #rootManager_section {
             width: 1200px;
@@ -71,5 +71,28 @@
             padding: 0 1rem;
         }
 
+    }
+
+    .tableBox {
+        border-radius: 1.5rem;
+        margin-bottom: 2rem;
+        padding: 3rem;
+        background-color: white;
+    }
+
+    .tableClass {
+        border: 1px solid black;
+        border-radius: 1.5rem;
+    }
+
+    .el-dialog {
+        border-radius: 1rem;
+    }
+
+    .tabName {
+        user-select: none;
+        font-family: Roboto-Regular, sans-serif;
+        font-size: 2rem;
+        text-align: left;
     }
 </style>

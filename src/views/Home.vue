@@ -10,46 +10,47 @@
     </div>
 </template>
 <script>
-    import * as util from '../util/util'
-    import Header from '@components/NewHeader'
-    import Footer from '@components/NewFooter'
+    import * as util from '../util/util';
+    import Header from '@components/NewHeader';
+    import Footer from '@components/NewFooter';
 
     window.onresize = () => {
         if (util.getClientHeight() > document.getElementById('home').offsetHeight) {
-            document.getElementById("home").style.minHeight = util.getClientHeight() + 'px'
+            document.getElementById('home').style.minHeight = util.getClientHeight() + 'px';
         }
     };
     export default {
-        name: "Home",
+        name: 'Home',
         components: {
             Header,
-            Footer,
+            Footer
         },
         data() {
-            return {
-            }
+            return {};
         },
         provide() {
             return {
                 setClientHeight: this.setClientHeight
-            }
+            };
         },
         methods: {
             setClientHeight() {
                 this.$nextTick(() => {
-                    document.getElementById("home").style.minHeight = '0px';
+                    document.getElementById('home').style.minHeight = '0px';
                     if (util.getClientHeight() > document.getElementById('home').offsetHeight) {
-                        document.getElementById("home").style.minHeight = util.getClientHeight() + 'px'
+                        document.getElementById('home').style.minHeight = util.getClientHeight() + 'px';
                     } else {
-                        document.getElementById("home").style.minHeight = document.getElementById('home').offsetHeight + 'px'
+                        document.getElementById('home').style.minHeight = document.getElementById('home').offsetHeight + 'px';
                     }
-                })
-            },
+                });
+            }
         },
         updated() {
             this.setClientHeight();
-        },
+        }
+
     };
+
 </script>
 
 <style lang="less">

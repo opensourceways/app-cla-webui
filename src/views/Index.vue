@@ -33,14 +33,13 @@
     </el-row>
 </template>
 <script>
-    import NewHeader from '@components/NewHeader'
-    import NewFooter from '@components/NewFooter'
-    import * as util from '../util/util'
-    import {mapActions} from 'vuex'
+    import NewHeader from '@components/NewHeader';
+    import NewFooter from '@components/NewFooter';
+    import * as util from '../util/util';
 
     window.onresize = () => {
         if (util.getClientHeight() > document.getElementById('transparentDiv').offsetHeight) {
-            document.getElementById("transparentDiv").style.height = util.getClientHeight() + 'px';
+            document.getElementById('transparentDiv').style.height = util.getClientHeight() + 'px';
         }
     };
     export default {
@@ -52,34 +51,33 @@
         data() {
             return {
                 showGuide: false,
-                signType: 'corporation',
-            }
+                signType: 'corporation'
+            };
         },
         provide() {
             return {
                 setClientHeight: this.setClientHeight
-            }
+            };
         },
         methods: {
-            ...mapActions(['setPlatformAct']),
             clickSignTypeGuide(type) {
                 this.signType = type;
             },
             setClientHeight() {
                 this.$nextTick(() => {
-                    document.getElementById("transparentDiv").style.minHeight = '0px';
+                    document.getElementById('transparentDiv').style.minHeight = '0px';
                     if (util.getClientHeight() > document.getElementById('transparentDiv').offsetHeight) {
-                        document.getElementById('transparentDiv').style.minHeight = util.getClientHeight() + 'px'
+                        document.getElementById('transparentDiv').style.minHeight = util.getClientHeight() + 'px';
                     } else {
-                        document.getElementById('transparentDiv').style.minHeight = document.getElementById('transparentDiv').offsetHeight + 'px'
+                        document.getElementById('transparentDiv').style.minHeight = document.getElementById('transparentDiv').offsetHeight + 'px';
                     }
-                })
-            },
+                });
+            }
         },
         mounted() {
             this.setClientHeight();
         }
-    }
+    };
 </script>
 <style lang="less">
     @import "../assets/font/css/Roboto-Bold.css";
@@ -197,6 +195,5 @@
             font-size: 1.5rem;
         }
     }
-
 
 </style>

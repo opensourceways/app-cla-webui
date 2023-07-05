@@ -11,9 +11,10 @@
                         </div>
                         <div class="icon_box">
                             <div class="loginBt">
-                                <button class="button" @click="getLoginUrl('gitee')">
-                                    {{$t('corp.login_in')}}
-                                </button>
+                                <HttpButton :text="$t(`corp.${giteeLoginText}`)"
+                                            :buttonDisable="giteeLoginButtonDisable"
+                                            @httpSubmit="getLoginUrl('gitee')">
+                                </HttpButton>
                             </div>
                         </div>
                     </div>
@@ -27,115 +28,90 @@
                         </div>
                         <div class="icon_box">
                             <div class="loginBt">
-                                <button class="button" @click="getLoginUrl('github')">
-                                    {{$t('corp.login_in')}}
-                                </button>
+                                <HttpButton :text="$t(`corp.${githubLoginText}`)"
+                                            :buttonDisable="githubLoginButtonDisable"
+                                            @httpSubmit="getLoginUrl('github')">
+                                </HttpButton>
                             </div>
                         </div>
                     </div>
                 </el-col>
             </el-row>
-            <reTryDialog  :message="corpReLoginMsg" :dialogVisible="corpReTryDialogVisible"></reTryDialog>
+            <ReTryDialog :message="corpReLoginMsg" :dialogVisible="corpReTryDialogVisible"></ReTryDialog>
         </el-col>
     </el-row>
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
-    import * as url from '../util/api'
-    import reTryDialog from '../components/ReTryDialog'
-    import http from '../util/http'
+    import {mapActions} from 'vuex';
+    import * as url from '../util/api';
+    import http from '../util/http';
+    import * as util from '../util/util';
+    import ReTryDialog from '../components/ReTryDialog';
+    import HttpButton from '../components/HttpButton';
 
     export default {
-        name: "PlatformSelect",
+        name: 'PlatformSelect',
         components: {
-            reTryDialog,
+            ReTryDialog,
+            HttpButton
         },
         computed: {
             corpReLoginMsg() {
-                return this.$store.state.dialogMessage
+                return this.$store.state.dialogMessage;
             },
 
             corpReTryDialogVisible() {
-                return this.$store.state.reTryDialogVisible
-            },
+                return this.$store.state.reTryDialogVisible;
+            }
         },
         data() {
             return {
-                platform: '',
+                giteeLoginText: 'login_in',
+                githubLoginText: 'login_in',
+                giteeLoginButtonDisable: false,
+                githubLoginButtonDisable: false,
+                platform: ''
             };
         },
         inject: ['setClientHeight'],
         methods: {
             ...mapActions(['setPlatformAct']),
-            submit() {
-            },
             getLoginUrl(platform) {
-                this.setPlatformAct(platform);
-                let interval = setInterval(() => {
-                    if (this.$store.state.platform) {
-                        http({
-                            url: `${url.getAuthCodeUrl}/${platform}/login`,
-                        }).then(res => {
-                            window.location.href=res.data.data.url
-                        }).catch(err => {
-                            if (err.data.hasOwnProperty('data')) {
-                                switch (err.data.data.error_code) {
-                                    case 'cla.invalid_token':
-                                        this.$store.commit('errorSet', {
-                                            dialogVisible: true,
-                                            dialogMessage: this.$t('tips.invalid_token')
-                                        });
-                                        break;
-                                    case 'cla.missing_token':
-                                        this.$store.commit('errorSet', {
-                                            dialogVisible: true,
-                                            dialogMessage:this.$t('tips.missing_token')
-                                        });
-                                        break;
-                                    case 'cla.unknown_token':
-                                        this.$store.commit('errorSet', {
-                                            dialogVisible: true,
-                                            dialogMessage:this.$t('tips.unknown_token')
-                                        });
-                                        break;
-                                    case 'cla.invalid_parameter':
-                                        this.$router.replace('/platformSelect')
-                                        break;
-
-                                    case 'cla.system_error':
-                                        this.$store.commit('errorCodeSet', {
-                                            dialogVisible: true,
-                                            dialogMessage: this.$t('tips.system_error')
-                                        });
-                                        break;
-                                    default :
-                                        this.$store.commit('errorCodeSet', {
-                                            dialogVisible: true,
-                                            dialogMessage: this.$t('tips.unknown_error'),
-                                        });
-                                        break;
-                                }
-                            } else {
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                })
-                            }
-                        });
-                        clearInterval(interval)
+                if (platform) {
+                    this.setPlatformAct(platform);
+                    if (platform === 'gitee') {
+                        this.giteeLoginButtonDisable = true;
+                        this.giteeLoginText = 'logining';
+                    } else if (platform === 'github') {
+                        this.githubLoginButtonDisable = true;
+                        this.githubLoginText = 'logining';
                     }
-                }, 100)
-            },
+                    http({
+                        url: `${url.getAuthCodeUrl}/${platform}/login`
+                    }).then(res => {
+                        window.location.href = res.data.data.url;
+                    }).catch(err => {
+                        if (platform === 'gitee') {
+                            this.giteeLoginButtonDisable = false;
+                            this.giteeLoginText = 'login_in';
+                        } else if (platform === 'github') {
+                            this.githubLoginButtonDisable = false;
+                            this.githubLoginText = 'login_in';
+                        }
+                        util.catchErr(err, 'errorSet', this);
+                    });
+                }
+            }
         },
         created() {
-            this.setClientHeight()
-        },
-    }
+            this.setClientHeight();
+        }
+    };
 </script>
 
 <style lang="less">
-    #platformSelect{
+    #platformSelect {
         .bt_desc {
             height: 100px;
             display: flex;

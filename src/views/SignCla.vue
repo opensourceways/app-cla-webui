@@ -1,13 +1,14 @@
 <template>
     <el-row id="signCla">
-        <Header></Header>
         <div id="singCla_section">
             <el-row class="content">
                 <el-col>
-                    <p class="contentTitle"><span>{{apply_to}}</span>{{ $t('signPage.claTitle') }}</p>
-                    <el-row class="marginTop3rem" id="claBox">{{cla_text}}
+                    <p class="contentTitle">{{ $t('signPage.claTitle') }}</p>
+                    <el-row class="marginTop3rem" id="claBox">
+                        <iframe id="pdf_iframe" ref="pdf_iframe" class="iframeClass" :src="claTextUrl"
+                                frameborder="0"></iframe>
                     </el-row>
-                    <el-row v-if="cla_lang" class="marginTop3rem form">
+                    <el-row class="marginTop3rem form">
                         <el-col>
                             <el-form v-if="this.IS_MOBILE" :model="ruleForm" :rules="rules" ref="ruleForm"
                                      label-position="left"
@@ -15,24 +16,21 @@
                                      class="demo-ruleForm">
                                 <el-form-item v-for="(item,index) in fields"
                                               label-width="0"
+                                              :key="index"
                                               :required="item.required"
                                               :prop="item.id">
                                     <div><span v-if="item.required" class="requiredIcon">*</span>{{item.title}}</div>
-                                    <el-input v-if="item.type==='email'"
-                                              :placeholder="$t('signPage.holder',{title:item.title})"
-                                              v-model="ruleForm[item.id]"
-                                              size="small" @blur="setMyForm(item.type,ruleForm[item.id])"></el-input>
-                                    <el-input v-else-if="item.type==='date'" readonly="" v-model="ruleForm[item.id]"
+                                    <el-input v-if="item.type==='date'" readonly="" v-model="ruleForm[item.id]"
                                               size="small" @blur="setMyForm(item.type,ruleForm[item.id])"></el-input>
                                     <el-input v-else v-model="ruleForm[item.id]"
                                               :placeholder="$t('signPage.holder',{title:item.title})" size="small"
                                               @blur="setMyForm(item.type,ruleForm[item.id])"></el-input>
                                 </el-form-item>
                                 <el-form-item
-                                        :required="rules.code[0].required"
+                                        v-if="rules.code"
                                         label-width="0"
                                         prop="code">
-                                    <div><span v-if="rules.code[0].required" class="requiredIcon">*</span>{{$t('signPage.verifyCode')}}
+                                    <div><span class="requiredIcon">*</span>{{$t('signPage.verifyCode')}}
                                     </div>
                                     <el-input v-model="ruleForm.code" :placeholder="$t('signPage.verifyCodeHolder')"
                                               size="small">
@@ -40,15 +38,15 @@
                                 </el-form-item>
                                 <button class="margin-top-1rem mobileBt"
                                         type="button"
-                                        :disabled="sendBtTextFromLang!==$t('signPage.sendCode')"
+                                        :disabled="sendBtDisable"
                                         @click="sendCode()">{{sendBtTextFromLang}}
                                 </button>
-                                <div class="borderClass fontSize12"><span style="color: #F56C6C;">*</span>{{$t('signPage.requireText')}}
+                                <div class="borderClass fontSize12"><span class="requiredIcon">*</span>{{$t('signPage.requireText')}}
                                 </div>
                                 <div class="margin-top-1rem fontSize12">
                                     <el-checkbox v-model="isRead"><span>{{$t('signPage.checkBoxText1')}}<span
-                                            class="privacy" @click="">{{$t('signPage.privacy')}}</span>{{$t('signPage.checkBoxText2')}}
-                                        <span>{{$t('signPage.claSignPlatform')}}</span>{{$t('signPage.checkBoxText3')}}</span>
+                                            class="privacy" @click="previewPrivacy()">{{$t('signPage.privacy')}}</span>{{$t('signPage.checkBoxText2')}}<span>
+                                        {{$t('signPage.claSignPlatform')}}</span>{{$t('signPage.checkBoxText3')}}</span>
                                     </el-checkbox>
                                 </div>
                                 <el-form-item label-width="0" class="margin-top-1rem signBtBox">
@@ -64,20 +62,18 @@
                                 <el-form-item v-for="(item,index) in fields"
                                               :label="item.title"
                                               :required="item.required"
-                                              :prop="item.id">
-                                    <el-input v-if="item.type==='email'"
-                                              :placeholder="$t('signPage.holder',{title:item.title})"
-                                              v-model="ruleForm[item.id]"
-                                              size="small" @blur="setMyForm(item.type,ruleForm[item.id])"></el-input>
-                                    <el-input v-else-if="item.type==='date'" readonly="" v-model="ruleForm[item.id]"
+                                              :prop="item.id"
+                                              :key="index">
+                                    <el-input v-if="item.type==='date'" readonly="" v-model="ruleForm[item.id]"
                                               size="small" @blur="setMyForm(item.type,ruleForm[item.id])"></el-input>
                                     <el-input v-else v-model="ruleForm[item.id]"
                                               :placeholder="$t('signPage.holder',{title:item.title})" size="small"
                                               @blur="setMyForm(item.type,ruleForm[item.id])"></el-input>
                                 </el-form-item>
                                 <el-form-item
+                                        class="sendCodeClass"
+                                        v-if="rules.code"
                                         :label="$t('signPage.verifyCode')"
-                                        :required="rules.code[0].required"
                                         prop="code">
                                     <el-input v-model="ruleForm.code" :placeholder="$t('signPage.verifyCodeHolder')"
                                               size="small">
@@ -85,7 +81,7 @@
                                                     effect="light"
                                                     popper-class="my_tooltip">
                                             <el-button
-                                                    :disabled="sendBtTextFromLang!==$t('signPage.sendCode')"
+                                                    :disabled="sendBtDisable"
                                                     @click="sendCode()">{{sendBtTextFromLang}}
                                             </el-button>
                                         </el-tooltip>
@@ -95,14 +91,18 @@
                                 </div>
                                 <div class="margin-top-1rem fontSize12">
                                     <el-checkbox v-model="isRead"><span>{{$t('signPage.checkBoxText1')}}<span
-                                            class="privacy" @click="">{{$t('signPage.privacy')}}</span>{{$t('signPage.checkBoxText2')}}
-                                        <span>{{$t('signPage.claSignPlatform')}}</span>{{$t('signPage.checkBoxText3')}}</span>
+                                            class="privacy" @click="previewPrivacy()">{{$t('signPage.privacy')}}</span>{{$t('signPage.checkBoxText2')}}<span>
+                                        {{$t('signPage.claSignPlatform')}}</span>{{$t('signPage.checkBoxText3')}}</span>
                                     </el-checkbox>
                                 </div>
-                                <el-form-item label-width="0" class="margin-top-1rem signBtBox">
-                                    <button class="button" type="button" @click="submitForm('ruleForm')">
-                                        {{$t('signPage.sign')}}
-                                    </button>
+                                <el-form-item label-width="0" class="margin-top-1rem padding-top-bottom-1rem signBtBox">
+                                    <HttpButton :text="$t(`signPage.${signText}`)"
+                                                :buttonDisable="signButtonDisable"
+                                                :width="signButtonWidth"
+                                                :height="signButtonHeight"
+                                                :borderRaduis="signButtonBorderRadius"
+                                                @httpSubmit="submitForm('ruleForm')">
+                                    </HttpButton>
                                 </el-form-item>
                             </el-form>
                         </el-col>
@@ -110,185 +110,180 @@
                 </el-col>
             </el-row>
         </div>
-        <Footer></Footer>
         <ReLoginDialog :dialogVisible="reLoginDialogVisible" :message="reLoginMsg"></ReLoginDialog>
         <ReTryDialog :dialogVisible="reTryDialogVisible" :message="reLoginMsg"></ReTryDialog>
         <SignSuccessDialog :dialogVisible="signSuccessDialogVisible" :message="reLoginMsg"></SignSuccessDialog>
         <SignReLoginDialog :dialogVisible="signReLoginDialogVisible" :message="reLoginMsg"></SignReLoginDialog>
-        <TokenErrorDialog @checkAction="checkTokenType" :dialogVisible="tokenErrorDialogVisible"
-                          :message="reLoginMsg"></TokenErrorDialog>
     </el-row>
 </template>
 
 <script>
-    import Header from '@components/NewHeader'
-    import Footer from '@components/NewFooter'
-    import * as util from '../util/util'
-    import * as url from '../util/api'
-    import {mapActions} from 'vuex'
-    import http from '../util/sign_http'
-    import axios from '../util/_axios'
-    import cookie from 'js-cookie'
-    import ReLoginDialog from '../components/ReLoginDialog'
-    import ReTryDialog from '../components/ReTryDialog'
-    import SignSuccessDialog from '../components/SignSuccessDialog'
-    import SignReLoginDialog from '../components/SignReLoginDialog'
-    import TokenErrorDialog from '../components/TokenErrorDialog'
+    import * as util from '../util/util';
+    import * as url from '../util/api';
+    import {mapActions} from 'vuex';
+    import axios from '../util/_axios';
+    import ReLoginDialog from '../components/ReLoginDialog';
+    import ReTryDialog from '../components/ReTryDialog';
+    import SignSuccessDialog from '../components/SignSuccessDialog';
+    import SignReLoginDialog from '../components/SignReLoginDialog';
+    import HttpButton from '../components/HttpButton';
+    import claConfig from '../../public/static/config-store';
 
     export default {
-
-        name: "SignCla",
+        name: 'SignCla',
         computed: {
-            loginType() {
-                return this.$store.state.loginType
-            },
-            apply_to() {
-                if (this.$store.state.loginType === 'individual') {
-                    return this.$t('signPage.individual')
-                } else if (this.$store.state.loginType === 'corporation') {
-                    return this.$t('signPage.corp')
-                } else if (this.$store.state.loginType === 'employee') {
-                    return this.$t('signPage.emp')
+            pdfData() {
+                if (this.$store.state.pdfData) {
+                    return this.$store.state.pdfData;
                 }
+                return [];
+            },
+            loginType() {
+                return this.$store.state.loginType;
             },
             org() {
                 let org = this.$store.state.repoInfo.org_id;
                 if (org.length > 1) {
-                    return org.charAt(0).toUpperCase() + org.substring(1)
+                    return org.charAt(0).toUpperCase() + org.substring(1);
                 } else {
-                    return org.charAt(0).toUpperCase()
+                    return org.charAt(0).toUpperCase();
                 }
             },
             reLoginDialogVisible() {
-                return this.$store.state.dialogVisible
+                return this.$store.state.dialogVisible;
             },
             reLoginMsg() {
-                return this.$store.state.dialogMessage
+                return this.$store.state.dialogMessage;
             },
             reTryDialogVisible() {
-                return this.$store.state.reTryDialogVisible
+                return this.$store.state.reTryDialogVisible;
             },
             signSuccessDialogVisible() {
-                return this.$store.state.signSuccessDialogVisible
+                return this.$store.state.signSuccessDialogVisible;
             },
             signReLoginDialogVisible() {
-                return this.$store.state.signReLoginDialogVisible
-            },
-            tokenErrorDialogVisible() {
-                return this.$store.state.tokenErrorDialogVisible
+                return this.$store.state.signReLoginDialogVisible;
             },
             sendBtTextFromLang: {
                 get: function () {
                     return this.sendBtText;
                 },
                 set: function (value) {
-                    this.sendBtText = value
+                    this.sendBtText = value;
                 }
             },
+            claTextUrl() {
+                return `${this.$store.state.domain}/cla-pdf`;
+            }
         },
         watch: {
             '$i18n.locale'() {
-                this.cla_lang = '';
-                if (localStorage.getItem('lang') === '0') {
-                    this.lang = 'english'
-                } else if (localStorage.getItem('lang') === '1') {
-                    this.lang = 'chinese'
+                if (this.$route.path !== '/sign-cla') {
+                    return;
                 }
+                this.cla_lang = '';
+                this.lang = localStorage.getItem('lang').toLowerCase();
                 this.signPageData.forEach((item, index) => {
                     if (item.language === this.lang) {
                         this.cla_lang = item.language;
                         this.value = index;
                         this.cla_hash = item.cla_hash;
-                        this.cla_text = item.text;
-                        this.fields = item.fields;
+                        this.$refs.pdf_iframe.contentWindow.postMessage({
+                            link_id: this.link_id,
+                            lang: this.lang,
+                            hash: this.cla_hash,
+                            pdfData: this.pdfData
+                        }, this.claTextUrl);
+                        this.fields = this.signPageData[this.value].fields;
                         if (Object.keys(this.rules).length === 0) {
                             this.setFieldsData();
                         }
                     }
                 });
-                if (!this.cla_lang) {
-                    this.cla_text = '';
-                    this.fields = [];
-                    this.$message.closeAll();
-                    this.$message.error({
-                        message: this.$t('tips.no_lang', {language: this.lang}),
-                        duration: 8000
-                    })
-                }
-                if (this.sendBtTextFromLang === 'send code' || this.sendBtTextFromLang === '发送验证码') {
-                    this.sendBtTextFromLang = this.$t('signPage.sendCode')
-                } else {
-                    this.sendBtTextFromLang = this.$t('signPage.reSendCode', {second: this.second})
-                }
+                this.setSendBtText();
                 this.$refs['ruleForm'] && this.$refs['ruleForm'].fields.forEach(item => {
                     if (item.validateState === 'error') {
-                        this.$refs['ruleForm'].validateField(item.labelFor)
+                        this.$refs['ruleForm'].validateField(item.labelFor);
                     }
                 });
-
-            },
+            }
         },
+        inject: ['setClientHeight'],
         components: {
-            Header,
-            Footer,
             ReLoginDialog,
             ReTryDialog,
             SignSuccessDialog,
             SignReLoginDialog,
-            TokenErrorDialog,
+            HttpButton
         },
         data() {
             return {
-                action: '',
+                sendBtDisable: false,
+                signText: 'sign',
+                signButtonDisable: false,
+                signButtonWidth: '15rem',
+                signButtonHeight: '3rem',
+                signButtonBorderRadius: '1.5rem',
+                corporation: 'corporation',
+                individual: 'individual',
+                employee: 'employee',
+                claText: '',
+                numPages: null,
                 lang: '',
                 cla_hash: '',
                 second: '',
                 sendBtText: this.$t('signPage.sendCode'),
-                signRouter: this.$store.state.signRouter,
+                domain: this.$store.state.domain,
                 tipsTitle: '',
                 tipsMessage: this.$t('tips.individual_sign'),
                 tipsDialogVisible: false,
                 signPageData: '',
-                link_id: '',
+                link_id: this.$store.state.linkId,
                 claOrgIdArr: [],
                 fields: [],
                 claIdArr: [],
                 isVerify: false,
                 verifyCode: '',
-                platform: this.$store.state.repoInfo.platform,
                 dialogVisible: false,
                 repositoryOptions: [],
                 role: '0',
-                repo: this.$store.state.repoInfo.repo_id,
                 ruleForm: {},
                 myForm: {},
                 rules: {},
                 isRead: false,
                 value: '',
-                languageOptions: [{
-                    value: 0,
-                    label: 'English'
-                }, {
-                    value: 1,
-                    label: 'Chinese'
-                },],
-                metadataArr: [],
-                cla_lang: '',
-                cla_text: '',
-            }
+                cla_lang: ''
+            };
         },
         methods: {
-            ...mapActions(['setTokenAct', 'setRepoInfoAct', 'viewPrivacy']),
+            ...mapActions(['setTokenAct', 'setRepoInfoAct']),
+            setSendBtText() {
+                if (this.sendBtTextFromLang === 'send code' || this.sendBtTextFromLang === '发送验证码') {
+                    this.sendBtTextFromLang = this.$t('signPage.sendCode');
+                } else {
+                    this.sendBtTextFromLang = this.$t('signPage.reSendCode', {second: this.second});
+                }
+            },
+            setIframeEventListener() {
+                window.addEventListener('message', (event) => {
+                    if (event.data instanceof Array && event.origin === this.$store.state.domain) {
+                        this.$store.commit('setPdfData', event.data);
+                    }
+                }, false);
+            },
+            previewPrivacy() {
+                util.toPrivacy(this);
+            },
             async requireVerifyTel(rule, value, callback) {
                 if (value) {
                     let reg = /^1[3456789]\d{9}$/;
                     if (reg.test(value)) {
                         callback();
                     } else {
-                        callback(new Error(this.$t('tips.invalid_telephone_num')))
+                        callback(new Error(this.$t('tips.invalid_telephone_num')));
                     }
                 } else {
-                    callback(new Error(this.$t('tips.not_fill_telephone_num')))
+                    callback(new Error(this.$t('tips.not_fill_telephone_num')));
                 }
             },
             async verifyTel(rule, value, callback) {
@@ -297,91 +292,87 @@
                     if (reg.test(value)) {
                         callback();
                     } else {
-                        callback(new Error(this.$t('tips.invalid_telephone_num')))
+                        callback(new Error(this.$t('tips.invalid_telephone_num')));
                     }
                 }
             },
             async verifyAddr(rule, value, callback) {
                 if (!value) {
-                    callback(new Error(this.$t('tips.not_fill_address')))
+                    callback(new Error(this.$t('tips.not_fill_address')));
                 } else {
                     callback();
                 }
             },
             async verifyFax(rule, value, callback) {
                 if (!value) {
-                    callback(new Error(this.$t('tips.not_fill_fax')))
+                    callback(new Error(this.$t('tips.not_fill_fax')));
                 } else {
                     callback();
                 }
             },
             async verifyFormEmail(rule, value, callback) {
-                let email = value.trim();
-                let reg = /^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z]{2,6}$/;
-                if (reg.test(email)) {
+                let email = '';
+                if (value) {
+                    email = value.trim();
+                }
+                if (claConfig.EMAIL_REG.test(email)) {
                     callback();
                 } else {
-                    callback(new Error(this.$t('tips.invalid_email')))
+                    callback(new Error(this.$t('tips.invalid_email')));
                 }
             },
             async verifyName(rule, value, callback) {
                 if (value) {
                     callback();
                 } else {
-                    callback(new Error(this.$t('tips.fill_name')))
+                    callback(new Error(this.$t('tips.fill_name')));
                 }
             },
             async verifyCorpName(rule, value, callback) {
                 if (!value) {
-                    callback(new Error(this.$t('tips.fill_corp_name')))
+                    callback(new Error(this.$t('tips.fill_corp_name')));
                 } else {
                     callback();
                 }
             },
             async verifyTitle(rule, value, callback) {
                 if (!value) {
-                    callback(new Error(this.$t('tips.fill_representative_title')))
+                    callback(new Error(this.$t('tips.fill_representative_title')));
                 } else {
                     callback();
                 }
             },
             async verifyAuthorized(rule, value, callback) {
                 if (!value) {
-                    callback(new Error(this.$t('tips.fill_representative_name')))
+                    callback(new Error(this.$t('tips.fill_representative_name')));
                 } else {
                     callback();
                 }
             },
             async verifyDate(rule, value, callback) {
                 if (!value) {
-                    callback(new Error(this.$t('tips.fill_date')))
+                    callback(new Error(this.$t('tips.fill_date')));
                 } else {
                     callback();
                 }
             },
             async verifyCodeCheck(rule, value, callback) {
                 if (!value) {
-                    callback(new Error(this.$t('tips.fill_verification_code')))
+                    callback(new Error(this.$t('tips.fill_verification_code')));
                 } else {
                     callback();
                 }
             },
             setMyForm(type, value) {
-                this.myForm[type] = value
+                this.myForm[type] = value;
             },
             sendCode() {
-                let reg = new RegExp("^[a-z0-9]+([._\\-]*[a-z0-9])*@([a-z0-9]+[-a-z0-9]*[a-z0-9]+.){1,63}[a-z0-9]+$");
                 let email = this.myForm.email;
-                let myHttp = '';
-                if (this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee') {
-                    myHttp = http
-                } else {
-                    myHttp = axios
-                }
-                if (email && reg.test(email)) {
-                    myHttp({
+                if (email && claConfig.EMAIL_REG.test(email)) {
+                    this.sendBtDisable = true;
+                    axios({
                         url: `${url.sendVerifyCode}/${this.link_id}/${this.myForm.email}`,
-                        method: 'post',
+                        method: 'post'
                     }).then(res => {
                         this.$message.closeAll();
                         this.$message.success({message: this.$t('tips.sending_email'), duration: 8000});
@@ -389,77 +380,19 @@
                         let codeInterval = setInterval(() => {
                             if (this.second !== 0) {
                                 this.second--;
-                                this.sendBtTextFromLang = this.$t('signPage.reSendCode', {second: this.second})
+                                this.sendBtTextFromLang = this.$t('signPage.reSendCode', {second: this.second});
                             } else {
                                 this.sendBtTextFromLang = this.$t('signPage.sendCode');
-                                clearInterval(codeInterval)
+                                this.sendBtDisable = false;
+                                clearInterval(codeInterval);
                             }
-                        }, 1000)
+                        }, 1000);
                     }).catch(err => {
-                        if (err.data && err.data.hasOwnProperty('data')) {
-                            switch (err.data.data.error_code) {
-
-                                case 'cla.invalid_parameter':
-                                    this.$store.commit('setSignReLogin', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.invalid_parameter'),
-                                    });
-                                    break;
-                                case 'cla.invalid_token':
-                                    this.$store.commit('setSignReLogin', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.invalid_token'),
-                                    });
-                                    break;
-                                case 'cla.missing_token':
-                                    this.$store.commit('setSignReLogin', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.missing_token'),
-                                    });
-                                    break;
-                                case 'cla.unknown_token':
-                                    this.$store.commit('setSignReLogin', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.unknown_token'),
-                                    });
-                                    break;
-
-                                case 'cla.failed_to_send_email':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.failed_to_send_email'),
-                                    });
-                                    break;
-
-                                case 'cla.not_same_corp':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.not_same_corp'),
-                                    });
-                                    break;
-                                case 'cla.system_error':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.system_error'),
-                                    });
-                                    break;
-                                default :
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.unknown_error'),
-                                    });
-                                    break;
-                            }
-                        } else {
-                            this.$store.commit('errorCodeSet', {
-                                dialogVisible: true,
-                                dialogMessage: this.$t('tips.system_error'),
-                            })
-                        }
-                    })
+                        util.catchErr(err, 'setSignReLogin', this);
+                    });
                 } else {
                     this.$message.closeAll();
-                    this.$message.error(this.$t('tips.not_fill_email'))
+                    this.$message.error(this.$t('tips.not_fill_email'));
                 }
             },
             getNowDate() {
@@ -476,186 +409,83 @@
                     }
                 }
             },
-            getActionFromCookie() {
-            },
             setData(res, resolve) {
                 if (res && res.data.data) {
-                    if (res.data.data.clas && res.data.data.clas.length) {
-                        this.signPageData = res.data.data.clas;
-                        this.languageOptions = [];
-                        this.link_id = res.data.data.link_id;
-                        if (localStorage.getItem('lang') === '0') {
-                            this.lang = 'english'
-                        } else if (localStorage.getItem('lang') === '1') {
-                            this.lang = 'chinese'
+                    if (res.data.data && res.data.data.length) {
+                        this.signPageData = res.data.data;
+                        if (localStorage.getItem('lang') !== undefined) {
+                            this.lang = localStorage.getItem('lang').toLowerCase();
                         }
+                        let langOptions = [];
+                        let langLabel = '';
                         this.signPageData.forEach((item, index) => {
+                            langLabel = util.upperFirstCase(item.language);
+                            langOptions.push({value: index, label: langLabel});
                             if (item.language === this.lang) {
                                 this.cla_lang = item.language;
                                 this.value = index;
                                 this.cla_hash = item.cla_hash;
-                                this.cla_text = item.text;
-                                this.setFields(this.value);
-                                this.setFieldsData();
-                                resolve('complete')
                             }
-                            this.languageOptions.push({value: index, label: item.language})
                         });
+                        this.$emit('getLangOptions', langOptions);
                         if (!this.cla_lang) {
-                            this.$message.closeAll();
-                            this.$message.error({
-                                message: this.$t('tips.no_lang', {language: this.lang}),
-                                duration: 8000
-                            })
+                            this.lang = this.signPageData[0].language;
+                            this.cla_lang = this.signPageData[0].language;
+                            this.value = 0;
+                            this.cla_hash = this.signPageData[0].cla_hash;
+                            localStorage.setItem('lang', util.upperFirstCase(this.lang));
                         }
+                        this.setClaText({
+                            link_id: this.link_id,
+                            lang: this.lang,
+                            hash: this.cla_hash,
+                            pdfData: this.pdfData
+                        });
+                        this.setFields(this.value);
+                        this.setFieldsData();
+                        resolve('complete');
+                        this.$emit('initHeader', util.upperFirstCase(this.lang));
                     } else {
                         let message = '';
-                        if (this.$store.state.loginType === 'corporation') {
-                            message = this.$t('tips.no_cla_binding_corp')
-                        } else if (this.$store.state.loginType === 'employee') {
-                            message = this.$t('tips.no_cla_binding_emp')
+                        if (this.$store.state.loginType === this.corporation) {
+                            message = this.$t('tips.no_cla_binding_corp');
+                        } else if (this.$store.state.loginType === this.employee) {
+                            message = this.$t('tips.no_cla_binding_emp');
                         }
-                        if (this.$store.state.loginType === 'individual') {
-                            message = this.$t('tips.no_cla_binding_individual')
+                        if (this.$store.state.loginType === this.individual) {
+                            message = this.$t('tips.no_cla_binding_individual');
                         }
                         this.$store.commit('setSignReLogin', {
                             dialogVisible: true,
-                            dialogMessage: message,
+                            dialogMessage: message
                         });
                     }
                 }
             },
             getSignPage(resolve) {
                 let applyTo = '';
-                let _url = '';
-                let _http = '';
-                if
-                (this.$store.state.loginType === 'individual' || this.$store.state.loginType === 'employee') {
-                    applyTo = 'individual';
-                    _http = http;
-                } else if (this.$store.state.loginType === 'corporation') {
-                    applyTo = 'corporation';
-                    _http = axios;
+                this.loginType === this.corporation ? applyTo = this.loginType : applyTo = this.individual;
+                if (!this.$store.state.linkId) {
+                    this.$store.commit('errorCodeSet', {
+                        dialogVisible: true,
+                        dialogMessage: this.$t('tips.page_error')
+                    });
+                    return;
                 }
-                if (this.$store.state.repoInfo.repo_id) {
-                    _url = `${url.getSignPage}/${this.$store.state.repoInfo.platform}/${this.$store.state.repoInfo.org_id}:${this.$store.state.repoInfo.repo_id}/${applyTo}`
-                } else {
-                    _url = `${url.getSignPage}/${this.$store.state.repoInfo.platform}/${this.$store.state.repoInfo.org_id}/${applyTo}`
-                }
-                _http({
-                    url: _url,
+                axios({
+                    url: `${url.getSignPage}/${this.$store.state.linkId}/${applyTo}`
                 }).then(res => {
-                    this.setData(res, resolve)
+                    this.setData(res, resolve);
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.no_cla_binding':
-                                let message = '';
-                                if (this.$store.state.loginType === 'corporation') {
-                                    message = this.$t('tips.no_cla_binding_corp')
-                                } else if (this.$store.state.loginType === 'employee') {
-                                    message = this.$t('tips.no_cla_binding_emp')
-                                }
-                                if (this.$store.state.loginType === 'individual') {
-                                    message = this.$t('tips.no_cla_binding_individual')
-                                }
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: message,
-                                });
-                                break;
-                            case 'cla.invalid_parameter':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_parameter'),
-                                });
-                                break;
-                            case 'cla.no_corp_manager':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.no_corp_manager'),
-                                });
-                                break;
-                            case 'cla.has_not_signed':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.has_not_signed'),
-                                });
-                                break;
-                            case 'cla.invalid_token':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-                            case 'cla.uncompleted_signing':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.uncompleted_signing'),
-                                });
-                                break;
-                            case 'cla.unknown_email_platform':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_email_platform'),
-                                });
-                                break;
-                            case 'cla.pdf_has_not_uploaded':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.pdf_has_not_uploaded'),
-                                });
-                                break;
-                            case 'cla.not_same_corp':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.not_same_corp'),
-                                });
-                                break;
-                            case 'cla.not_ready_to_sign':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.not_ready_to_sign'),
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
-                })
+                    util.catchErr(err, 'setSignReLogin', this);
+                });
+            },
+            setClaText(obj) {
+                this.$nextTick(() => {
+                    this.$refs.pdf_iframe.contentWindow.onload = () => {
+                        this.$refs.pdf_iframe.contentWindow.postMessage(obj, this.claTextUrl);
+                    };
+                });
             },
             setFields(key) {
                 for (let i = 0; i < this.signPageData[key].fields.length; i++) {
@@ -663,7 +493,7 @@
                         if (Number(this.signPageData[key].fields[i].id) > Number(this.signPageData[key].fields[j].id)) {
                             let field = this.signPageData[key].fields[i];
                             this.signPageData[key].fields[i] = this.signPageData[key].fields[j];
-                            this.signPageData[key].fields[j] = field
+                            this.signPageData[key].fields[j] = field;
                         }
                     }
                 }
@@ -682,9 +512,9 @@
                                     required: item.required,
                                     validator: this.verifyName,
                                     trigger: ['blur', 'change']
-                                },
-                            ],
-                        })
+                                }
+                            ]
+                        });
                     } else if (item.type === 'corporationName') {
                         Object.assign(this.myForm, {corporationName: ''});
                         item.required && Object.assign(rules, {
@@ -693,9 +523,9 @@
                                     required: item.required,
                                     validator: this.verifyCorpName,
                                     trigger: ['blur', 'change']
-                                },
-                            ],
-                        })
+                                }
+                            ]
+                        });
                     } else if (item.type === 'title') {
                         Object.assign(this.myForm, {title: ''});
                         item.required && Object.assign(rules, {
@@ -704,9 +534,9 @@
                                     required: item.required,
                                     validator: this.verifyTitle,
                                     trigger: ['blur', 'change']
-                                },
-                            ],
-                        })
+                                }
+                            ]
+                        });
                     } else if (item.type === 'authorized') {
                         Object.assign(this.myForm, {authorized: ''});
                         item.required && Object.assign(rules, {
@@ -715,9 +545,9 @@
                                     required: item.required,
                                     validator: this.verifyAuthorized,
                                     trigger: ['blur', 'change']
-                                },
-                            ],
-                        })
+                                }
+                            ]
+                        });
                     } else if (item.type === 'date') {
                         Object.assign(this.myForm, {date: ''});
                         item.required && Object.assign(rules, {
@@ -726,8 +556,8 @@
                                     required: item.required,
                                     validator: this.verifyDate,
                                     trigger: ['blur', 'change']
-                                }],
-                        })
+                                }]
+                        });
                     } else if (item.type === 'email') {
                         Object.assign(this.myForm, {email: ''});
                         item.required && Object.assign(rules, {
@@ -735,8 +565,8 @@
                                 required: item.required,
                                 validator: this.verifyFormEmail,
                                 trigger: ['blur', 'change']
-                            }],
-                        })
+                            }]
+                        });
                     } else if (item.type === 'telephone') {
                         Object.assign(this.myForm, {telephone: ''});
                         if (item.required) {
@@ -745,15 +575,15 @@
                                     required: item.required,
                                     validator: this.requireVerifyTel,
                                     trigger: ['blur', 'change']
-                                }],
-                            })
+                                }]
+                            });
                         } else {
                             Object.assign(rules, {
                                 [item.id]: [{
                                     validator: this.verifyTel,
                                     trigger: ['blur', 'change']
-                                }],
-                            })
+                                }]
+                            });
                         }
                     } else if (item.type === 'address') {
                         Object.assign(this.myForm, {address: ''});
@@ -762,8 +592,8 @@
                                 required: item.required,
                                 validator: this.verifyAddr,
                                 trigger: ['blur', 'change']
-                            }],
-                        })
+                            }]
+                        });
                     } else if (item.type === 'fax') {
                         Object.assign(this.myForm, {fax: ''});
                         item.required && Object.assign(rules, {
@@ -771,8 +601,8 @@
                                 required: item.required,
                                 validator: this.verifyFax,
                                 trigger: ['blur', 'change']
-                            }],
-                        })
+                            }]
+                        });
                     }
                 });
                 Object.assign(form, {code: ''});
@@ -782,10 +612,10 @@
                         required: true,
                         validator: this.verifyCodeCheck,
                         trigger: ['blur', 'change']
-                    },]
+                    }]
                 });
                 this.ruleForm = form;
-                this.rules = rules
+                this.rules = rules;
             },
             signCla() {
                 let info = {};
@@ -793,10 +623,10 @@
                 let obj = {};
                 for (let key in this.ruleForm) {
                     if (this.ruleForm[key] !== '') {
-                        Object.assign(info, {[key]: this.ruleForm[key] + ''})
+                        Object.assign(info, {[key]: this.ruleForm[key] + ''});
                     }
                 }
-                if (this.$store.state.loginType === 'corporation') {
+                if (this.$store.state.loginType === this.corporation) {
                     myUrl = `${url.corporation_signing}/${this.link_id}/${this.cla_lang}/${this.cla_hash}`;
                     obj = {
                         corporation_name: this.myForm.corporationName,
@@ -805,172 +635,53 @@
                         enabled: true,
                         info: info,
                         verification_code: this.ruleForm.code
-                    }
+                    };
                 } else {
                     obj = {
                         name: this.myForm.name,
                         email: this.myForm.email,
                         verification_code: this.ruleForm.code,
-                        info: info,
-                    }
-                    if (this.$store.state.loginType === 'individual') {
+                        info: info
+                    };
+                    if (this.$store.state.loginType === this.individual) {
                         myUrl = `${url.individual_signing}/${this.link_id}/${this.cla_lang}/${this.cla_hash}`;
-                    } else if (this.$store.state.loginType === 'employee') {
+                    } else if (this.$store.state.loginType === this.employee) {
                         myUrl = `${url.employee_signing}/${this.link_id}/${this.cla_lang}/${this.cla_hash}`;
                     }
                 }
-                this.sign(myUrl, obj)
+
+                this.sign(myUrl, obj);
             },
             sign(myUrl, obj) {
                 if (!myUrl) {
-                    return
+                    return;
                 }
-                http({
+                this.signText = 'signing';
+                this.signButtonDisable = true;
+                axios({
                     url: myUrl,
                     method: 'post',
-                    data: obj,
+                    data: obj
                 }).then(res => {
-                    if (this.$store.state.loginType === 'corporation') {
-                        this.tipsMessage = this.$t('tips.corp_sign')
-                    } else if (this.$store.state.loginType === 'employee') {
-                        this.tipsMessage = this.$t('tips.emp_sign')
+                    this.signText = 'sign';
+                    this.signButtonDisable = false;
+                    if (this.$store.state.loginType === this.corporation) {
+                        this.tipsMessage = this.$t('tips.corp_sign');
+                    } else if (this.$store.state.loginType === this.employee) {
+                        this.tipsMessage = this.$t('tips.emp_sign');
+                    } else if (this.$store.state.loginType === this.individual) {
+                        this.tipsMessage = this.$t('tips.individual_sign');
                     }
                     this.$store.commit('setSignSuccess', {
                         dialogVisible: true,
-                        dialogMessage: this.tipsMessage,
+                        dialogMessage: this.tipsMessage
                     });
 
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.resigned':
-                                let message = '';
-                                if (this.$store.state.loginType === 'corporation') {
-                                    message = this.$t('tips.corp_has_signed');
-                                } else {
-                                    message = this.$t('tips.has_signed')
-                                }
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: message,
-                                });
-                                break;
-                            case 'cla.invalid_parameter':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_parameter'),
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-                            case 'cla.unauthorized_token':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unauthorized_token'),
-                                });
-                                break;
-                            case 'cla.go_to_sign_employee_cla':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.go_to_sign_employee_cla'),
-                                });
-                                break;
-                            case 'cla.no_employee_manager':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.no_corp_manager'),
-                                });
-                                break;
-                            case 'cla.failed_to_send_email':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.failed_to_send_email'),
-                                });
-                                break;
-                            case 'cla.wrong_verification_code':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.wrong_verification_code'),
-                                });
-                                break;
-                            case 'cla.expired_verification_code':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.expired_verification_code'),
-                                });
-                                break;
-                            case 'cla.not_same_corp':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.not_same_corp'),
-                                });
-                                break;
-                            case 'cla.error_parsing_api_body':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.error_parsing_api_body'),
-                                });
-                                break;
-                            case 'cla.unmatched_email':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unmatched_email'),
-                                });
-                                break;
-                            case 'cla.unmatched_user_id':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unmatched_user_id'),
-                                });
-                                break;
-                            case 'cla.no_link':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.no_link'),
-                                });
-                                break;
-                            case 'cla.unmatched_cla':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unmatched_cla'),
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
-                })
+                    this.signText = 'sign';
+                    this.signButtonDisable = false;
+                    util.catchErr(err, 'setSignReLogin', this);
+                });
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
@@ -979,52 +690,77 @@
                             this.signCla();
                         } else {
                             this.$message.closeAll();
-                            this.$message.error(this.$t('tips.review_privacy'))
+                            this.$message.error(this.$t('tips.review_privacy'));
                         }
                     } else {
                         return false;
                     }
                 });
-            },
-            setClientHeight() {
-                this.$nextTick(() => {
-                    document.getElementById("signCla").style.minHeight = '0px';
-                    if (util.getClientHeight() > document.getElementById('signCla').offsetHeight) {
-                        document.getElementById("signCla").style.minHeight = util.getClientHeight() + 'px'
-                    } else {
-                        document.getElementById("signCla").style.minHeight = document.getElementById('signCla').offsetHeight + 'px'
-                    }
-                })
-            },
-            checkTokenType() {
-                this.getActionFromCookie()
-                if (this.action === 'login') {
-                    this.$store.commit('setTokenErrorReLogin', {
-                        dialogVisible: true,
-                        dialogMessage: this.$t('tips.quitLoginTip', {platform: this.$store.state.platform}),
-                    });
+            }
+        },
+        activated() {
+            if (this.signPageData) {
+                this.setClientHeight();
+                if (localStorage.getItem('lang') !== undefined) {
+                    this.lang = localStorage.getItem('lang').toLowerCase();
                 }
-            },
+                let langOptions = [];
+                let langLabel = '';
+                this.cla_lang = '';
+                this.signPageData.forEach((item, index) => {
+                    langLabel = util.upperFirstCase(item.language);
+                    langOptions.push({value: index, label: langLabel});
+                    if (item.language === this.lang) {
+                        this.cla_lang = item.language;
+                        this.value = index;
+                        this.cla_hash = item.cla_hash;
+                        this.setClaText({
+                            link_id: this.link_id,
+                            lang: this.lang,
+                            hash: this.cla_hash,
+                            pdfData: this.pdfData
+                        });
+                        this.setFields(this.value);
+                    }
+                });
+                this.$emit('getLangOptions', langOptions);
+                if (!this.cla_lang) {
+                    this.lang = this.signPageData[0].language;
+                    this.value = 0;
+                    this.cla_hash = this.signPageData[0].cla_hash;
+                    this.setClaText({
+                        link_id: this.link_id,
+                        lang: this.lang,
+                        hash: this.cla_hash,
+                        pdfData: this.pdfData
+                    });
+                    this.setFields(this.value);
+                    localStorage.setItem('lang', util.upperFirstCase(this.lang));
+                }
+                this.$emit('initHeader', util.upperFirstCase(this.lang));
+                this.$refs.pdf_iframe.contentWindow.onload = () => {
+                    this.$refs.pdf_iframe.contentWindow.postMessage({
+                        link_id: this.link_id,
+                        lang: this.lang,
+                        hash: this.cla_hash,
+                        pdfData: this.pdfData
+                    }, this.claTextUrl);
+                };
+                this.setSendBtText();
+            }
         },
         created() {
+            this.setIframeEventListener();
             new Promise((resolve, reject) => {
                 this.getSignPage(resolve);
             }).then(res => {
-                this.getNowDate()
-            })
+                this.getNowDate();
+            });
         },
         mounted() {
             this.setClientHeight();
-            window.onresize = () => {
-                if (util.getClientHeight() > document.getElementById('signCla').offsetHeight) {
-                    document.getElementById("signCla").style.minHeight = util.getClientHeight() + 'px'
-                }
-            }
-        },
-        destroyed() {
-            window.onresize = null;
         }
-    }
+    };
 </script>
 
 <style lang="less">
@@ -1106,32 +842,34 @@
         margin-bottom: 2rem;
         font-size: 1.2rem;
 
-        & .el-input.el-input--small.el-input-group.el-input-group--append {
-            position: relative;
-        }
+        .sendCodeClass {
+            & .el-input.el-input--small.el-input-group.el-input-group--append {
+                position: relative;
+            }
 
-        & .el-button.el-button--default {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 11rem;
-            height: 2.5rem;
-            border-radius: 1.25rem;
-            font-size: 1.2rem;
-            color: white;
-            margin: 0;
-            font-family: Roboto-Light, sans-serif;
-        }
+            & .el-button.el-button--default {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 11rem;
+                height: 2.5rem;
+                border-radius: 1.25rem;
+                font-size: 1.2rem;
+                color: white;
+                margin: 0;
+                font-family: Roboto-Light, sans-serif;
+            }
 
-        & .el-input-group__append {
-            position: absolute;
-            right: 0;
-            top: 0;
-            background: linear-gradient(to right, #97DB30, #319E55);
-            width: 11rem;
-            height: 2.5rem;
-            border-radius: 1.25rem;
-            padding: 0;
+            & .el-input-group__append {
+                position: absolute;
+                right: 0;
+                top: 0;
+                background: linear-gradient(to right, #97DB30, #319E55);
+                width: 11rem;
+                height: 2.5rem;
+                border-radius: 1.25rem;
+                padding: 0;
+            }
         }
 
         & .fontSize12 {
@@ -1208,19 +946,27 @@
         margin-top: 3rem;
     }
 
+    .iframeClass {
+        width: 100%;
+        height: 900px;
+        box-shadow: 0 0 20px 10px #F3F3F3;
+        border-radius: 1rem;
+    }
+
     #claBox {
         margin-bottom: 2rem;
         border-radius: 1.25rem;
         white-space: pre-wrap;
         font-size: 1.2rem;
-        box-shadow: 0 0 20px 10px #F3F3F3;
-        padding: 2rem;
+        /*box-shadow: 0 0 20px 10px #F3F3F3;*/
+        /*padding: 2rem;*/
     }
 
     .contentTitle {
         font-size: 2rem;
         font-weight: bold;
         margin: 2rem 0;
+        text-align: center;
     }
 
     .size_s {

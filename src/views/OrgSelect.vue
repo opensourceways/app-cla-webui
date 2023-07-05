@@ -39,30 +39,30 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
+    import {mapActions} from 'vuex';
 
     export default {
-        name: "OrgSelect",
+        name: 'OrgSelect',
         computed: {
             orgData() {
                 let data = [];
                 if (this.$store.state.loginInfo.userInfo.length) {
                     this.$store.state.loginInfo.userInfo.forEach((item, index) => {
                         if (item.repo_id) {
-                            data.push({value: index, label: `${item.org_id}/${item.repo_id}`})
+                            data.push({value: index, label: `${item.org_id}/${item.repo_id}`});
                         } else {
-                            data.push({value: index, label: item.org_id})
+                            data.push({value: index, label: item.org_id});
                         }
                     });
                     this.orgValue = 0;
                 }
-                return data
-            },
+                return data;
+            }
         },
         data() {
             return {
-                orgValue: '',
-            }
+                orgValue: ''
+            };
         },
         methods: {
             ...mapActions(['setLoginInfoAct', 'setCorpTokenAct']),
@@ -75,13 +75,13 @@
                 this.setCorpTokenAct(data.userInfo[this.orgValue].token);
                 this.setLoginInfoAct(data);
                 if (data.userInfo[this.orgValue].role === 'admin') {
-                    this.$router.replace('/rootManager')
+                    this.$router.replace('/rootManager');
                 } else {
-                    this.$router.replace('/signedRepo')
+                    this.$router.replace('/signedRepo');
                 }
-            },
-        },
-    }
+            }
+        }
+    };
 </script>
 
 <style lang="less">

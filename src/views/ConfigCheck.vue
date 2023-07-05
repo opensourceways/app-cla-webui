@@ -95,12 +95,6 @@
                         </el-col>
                     </el-row>
                 </div>
-                <div class="margin-top-1rem">
-                    {{$t('org.config_cla_check_file')}}
-                </div>
-                <div class="margin-top-half-rem">
-                    <el-input disabled="" v-model="corp_pdf_name"></el-input>
-                </div>
             </div>
 
         </div>
@@ -202,27 +196,27 @@
 </template>
 
 <script>
-    import * as url from '../util/api'
-    import http from '../util/http'
-    import * as util from '../util/util'
-    import ReLoginDialog from '../components/ReLoginDialog'
-    import ReTryDialog from '../components/ReTryDialog'
+    import * as url from '../util/api';
+    import http from '../util/http';
+    import * as util from '../util/util';
+    import ReLoginDialog from '../components/ReLoginDialog';
+    import ReTryDialog from '../components/ReTryDialog';
 
     export default {
-        name: "ConfigCheck",
+        name: 'ConfigCheck',
         components: {
             ReLoginDialog,
             ReTryDialog
         },
         computed: {
             reTryVisible() {
-                return this.$store.state.reTryDialogVisible
+                return this.$store.state.reTryDialogVisible;
             },
             reLoginDialogVisible() {
-                return this.$store.state.orgReLoginDialogVisible
+                return this.$store.state.orgReLoginDialogVisible;
             },
             reLoginMsg() {
-                return this.$store.state.dialogMessage
+                return this.$store.state.dialogMessage;
             },
             orgChoose() {
                 return `${this.$store.state.orgChoose}` === 'true';
@@ -231,39 +225,39 @@
                 return `${this.$store.state.isEmail}` === 'true';
             },
             repositoryChoose() {
-                return `${this.$store.state.repositoryChoose}` === 'true'
+                return `${this.$store.state.repositoryChoose}` === 'true';
             },
             email() {
                 return this.$store.state.email;
             },
             org() {
-                return this.$store.state.chooseOrg
+                return this.$store.state.chooseOrg;
             },
             orgAlias() {
                 if (this.$store.state.orgAlias) {
-                    return this.$store.state.orgAlias
+                    return this.$store.state.orgAlias;
                 } else {
-                    return this.$store.state.chooseOrg
+                    return this.$store.state.chooseOrg;
                 }
             },
             repo() {
-                return this.$store.state.repo
+                return this.$store.state.repo;
             },
             cla_link_individual: {
                 get() {
                     return this.$store.state.claLinkIndividual;
                 },
                 set(value) {
-                    this.$store.commit('setClaLinkIndividual', value)
-                },
+                    this.$store.commit('setClaLinkIndividual', value);
+                }
             },
             cla_link_corporation: {
                 get() {
                     return this.$store.state.claLinkCorp;
                 },
                 set(value) {
-                    this.$store.commit('setClaLinkCorp', value)
-                },
+                    this.$store.commit('setClaLinkCorp', value);
+                }
             },
             individualMetadata() {
                 return this.$store.state.individualMetadata;
@@ -277,28 +271,20 @@
             corpClaLanguageValue() {
                 return this.$store.state.corpLanguage;
             },
-            corp_pdf_name() {
-                return this.$store.state.corpFDName
-            },
             platform() {
-                return this.$store.state.platform.toLowerCase()
-            },
+                return this.$store.state.platform.toLowerCase();
+            }
         },
         data() {
             return {
-                corpFileName: SIGNATURE_PAGE_NAME,
+                loading: false,
                 isVerify: false,
                 previewShow: false,
                 loginType: this.$store.state.loginType,
                 access_token: this.$store.state.access_token,
                 refresh_token: this.$store.state.refresh_token,
-                platform_token: this.$store.state.platform_token,
-                user: {
-                    userName: this.$store.state.user.userName,
-                    userId: this.$store.state.user.userId,
-                    isAuthorize: false,
-                },
-            }
+                platform_token: this.$store.state.platform_token
+            };
         },
         inject: ['setClientHeight'],
         methods: {
@@ -324,13 +310,13 @@
                                 title: item.title,
                                 type: item.type,
                                 description: item.description,
-                                required: item.required,
-                            })
+                                required: item.required
+                            });
                         }
                     });
                     return fields;
                 } else {
-                    return false
+                    return false;
                 }
             },
             dataURLtoFile(dataurl, filename) {
@@ -345,10 +331,11 @@
                 if (this.$store.state.bindType === 'add-bind') {
                     this.addBinding();
                 } else {
-                    this.newBinding()
+                    this.newBinding();
                 }
             },
             addBinding() {
+                this.loading = util.getLoading(this, 'tips.loading');
                 let formData = new FormData();
                 let obj = {};
                 let _url = '';
@@ -358,8 +345,6 @@
                         language: this.corpClaLanguageValue,
                         fields: this.editMetadata(this.corporationMetadata)
                     };
-                    let corp_pdf = this.dataURLtoFile(this.$store.state.corpFD, this.corpFileName);
-                    formData.append(ORG_SIGNATURE_FILE, corp_pdf);
                     _url = `${url.addCla}/${this.$store.state.corpItem.link_id}/corporation`;
                 } else {
                     obj = {
@@ -373,78 +358,20 @@
                 http({
                     url: _url,
                     method: 'post',
-                    data: formData,
+                    data: formData
                 }).then(res => {
-                    util.successMessage(this)
+                    this.loading.close();
+                    util.successMessage(this);
                     util.clearSession(this);
-                    this.$router.push('/corporationList')
+                    this.$router.push('/corporationList');
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.unauthorized_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unauthorized_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-                            case 'cla.cla_exists':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.cla_exists', {lang: this.$store.state.addLang}),
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
-                })
+                    this.loading.close();
+                    util.catchErr(err, 'setOrgReLogin', this);
+                });
             },
             newBinding() {
-                let corp_pdf = {};
+                this.loading = util.getLoading(this, 'tips.loading');
                 let formData = new FormData();
-                if (this.$store.state.corpFD) {
-                    corp_pdf = this.dataURLtoFile(this.$store.state.corpFD, this.corpFileName);
-                    formData.append(ORG_SIGNATURE_FILE, corp_pdf);
-                }
                 let obj = {};
                 let corpCla = {};
                 let individualCla = {
@@ -466,7 +393,7 @@
                             org_id: this.org,
                             org_alias: this.orgAlias,
                             individual_cla: individualCla,
-                            corp_cla: corpCla,
+                            corp_cla: corpCla
                         };
                     } else {
                         obj = {
@@ -475,7 +402,7 @@
                             org_id: this.org,
                             org_alias: this.orgAlias,
                             individual_cla: individualCla,
-                            corp_cla: corpCla,
+                            corp_cla: corpCla
                         };
                     }
                 } else {
@@ -486,7 +413,7 @@
                             platform: this.platform,
                             org_id: this.org,
                             org_alias: this.orgAlias,
-                            individual_cla: individualCla,
+                            individual_cla: individualCla
                         };
                     } else {
                         obj = {
@@ -494,7 +421,7 @@
                             platform: this.platform,
                             org_id: this.org,
                             org_alias: this.orgAlias,
-                            individual_cla: individualCla,
+                            individual_cla: individualCla
                         };
                     }
                 }
@@ -502,76 +429,21 @@
                 http({
                     url: url.linkRepository,
                     method: 'post',
-                    data: formData,
+                    data: formData
                 }).then(res => {
+                    this.loading.close();
                     util.successMessage(this);
-                    this.$router.push('/home')
+                    this.$router.push('/home');
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.unauthorized_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unauthorized_token'),
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            case 'cla.link_exists':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.link_exists'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
-                })
-
-            },
+                    this.loading.close();
+                    util.catchErr(err, 'setOrgReLogin', this);
+                });
+            }
         },
         updated() {
             this.setClientHeight();
-        },
-    }
+        }
+    };
 </script>
 
 <style lang="less">

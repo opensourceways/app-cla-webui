@@ -42,6 +42,10 @@
                                                         @click="submit('individual')">
                                                     {{ $t('signType.individualBt') }}
                                                 </button>
+                                                <button class="mobile_button"
+                                                        @click="submit('corporationManager')">
+                                                    {{$t('index.corp_login')}}
+                                                </button>
                                             </div>
                                         </el-col>
                                     </el-row>
@@ -79,9 +83,9 @@
                                                 </el-col>
                                                 <el-col :span="19" class="textCol">
                                                     <div class="rightText padding-left-1rem">
-                                                        {{ $t('signType.corpStep1_1') }}<span class="pointer"
-                                                                                              @click="submit('corporation')">{{ $t('signType.corpBt') }}</span>{{
-                                                        $t('signType.corpStep1_2') }}
+                                                        {{ $t('signType.corpStep1_1') }}
+                                                        <span class="pointer" @click="submit('corporation')">{{ $t('signType.corpBt') }}</span>
+                                                        {{ $t('signType.corpStep1_2') }}
                                                     </div>
                                                 </el-col>
                                             </el-row>
@@ -161,9 +165,9 @@
                                                 </el-col>
                                                 <el-col :span="19" class="textCol">
                                                     <div class="rightText padding-left-1rem">
-                                                        {{ $t('signType.corpStep6_1') }}<span class="func-link"
-                                                                                              @click="toCorpLogin()">{{ $t('signType.admin_platform') }}</span>{{
-                                                        $t('signType.corpStep6_2') }}
+                                                        <span>{{ $t('signType.corpStep6_1') }}</span>
+                                                        <span class="func-link" @click="toCorpLogin()">{{ $t('signType.admin_platform') }}</span>
+                                                        <span>{{ $t('signType.corpStep6_2') }}</span>
                                                     </div>
                                                 </el-col>
                                             </el-row>
@@ -210,22 +214,6 @@
                                             <el-row class="stepBox">
                                                 <el-col class="iconBox" :offset="1" :span="4">
                                                     <svg-icon class="stepIcon" icon-class="sign"></svg-icon>
-                                                </el-col>
-                                                <el-col :span="19" class="textCol">
-                                                    <div class="rightText padding-left-1rem">
-                                                        {{ $t('signType.empStep2') }}
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row>
-                                                <el-col class="lineBox" :offset="1" :span="4">
-                                                    <div class="greenLine">
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row class="stepBox">
-                                                <el-col class="iconBox" :offset="1" :span="4">
-                                                    <svg-icon class="stepIcon" icon-class="send"></svg-icon>
                                                 </el-col>
                                                 <el-col :span="19" class="textCol">
                                                     <div class="rightText padding-left-1rem">
@@ -313,22 +301,6 @@
                                                 </el-col>
                                                 <el-col :span="19" class="textCol">
                                                     <div class="rightText padding-left-1rem">
-                                                        {{ $t('signType.individualStep2') }}
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row>
-                                                <el-col class="lineBox" :offset="1" :span="4">
-                                                    <div class="greenLine">
-                                                    </div>
-                                                </el-col>
-                                            </el-row>
-                                            <el-row class="stepBox">
-                                                <el-col class="iconBox" :offset="1" :span="4">
-                                                    <svg-icon class="stepIcon" icon-class="send"></svg-icon>
-                                                </el-col>
-                                                <el-col :span="19" class="textCol">
-                                                    <div class="rightText padding-left-1rem">
                                                         {{ $t('signType.corpStep2') }}
                                                     </div>
                                                 </el-col>
@@ -382,13 +354,13 @@
                         <el-col :span="10" style="height: 100%;">
                             <el-row class="signType" style="height: 100%">
                                 <div id="sign">
-                                    <el-row style="height: 50%">
+                                    <el-row style="height: 75%">
                                         <el-col align="right" class="buttonBox">
                                             <div id="btBox">
                                                 <div>
-                                                    <el-tooltip :content="corpBtTooltip" placement="top" effect="light"
-                                                                popper-class="my_tooltip">
-                                                        <div class="display-inline-block">
+                                                    <el-tooltip :content="corpBtTooltip" placement="left" effect="light"
+                                                                popper-class="my_tooltip" :enterable="false">
+                                                        <div class="display-inline-block margin-1D2rem border-radius-2rem">
                                                             <button :disabled="!isBindCorpCLA" class="button"
                                                                     @click="submit('corporation')">
                                                                 {{ $t('signType.corpBt') }}
@@ -397,9 +369,9 @@
                                                     </el-tooltip>
                                                 </div>
                                                 <div>
-                                                    <el-tooltip :content="empBtTooltip" placement="top" effect="light"
-                                                                popper-class="my_tooltip">
-                                                        <div class="display-inline-block">
+                                                    <el-tooltip :content="empBtTooltip" placement="left" effect="light"
+                                                                popper-class="my_tooltip" :enterable="false">
+                                                        <div class="display-inline-block margin-1D2rem border-radius-2rem">
                                                             <button :disabled="!isBindCorpCLA"
                                                                     class="button"
                                                                     @click="submit('employee')">
@@ -408,16 +380,25 @@
                                                         </div>
                                                     </el-tooltip>
                                                 </div>
-                                                <el-tooltip :content="individualBtTooltip" placement="top"
-                                                            effect="light"
+                                                <el-tooltip :content="individualBtTooltip" placement="left"
+                                                            effect="light" :enterable="false"
                                                             popper-class="my_tooltip">
-                                                    <div class="display-inline-block">
+                                                    <div class="display-inline-block margin-1D2rem border-radius-2rem">
                                                         <button class="button"
                                                                 @click="submit('individual')">
                                                             {{ $t('signType.individualBt') }}
                                                         </button>
                                                     </div>
-
+                                                </el-tooltip>
+                                                <el-tooltip :content="$t('index.corp_bt_tip')" placement="left"
+                                                            effect="light" :enterable="false"
+                                                            popper-class="my_tooltip">
+                                                    <div class="display-inline-block margin-1D2rem border-radius-2rem">
+                                                        <button class="button"
+                                                                @click="submit('corporationManager')">
+                                                            {{$t('index.corp_login')}}
+                                                        </button>
+                                                    </div>
                                                 </el-tooltip>
                                             </div>
                                         </el-col>
@@ -477,15 +458,12 @@
                                         </el-col>
                                     </el-row>
                                     <el-row>
-
                                         <el-col class="lineBox" :offset="10" :span="4">
                                             <div class="greenLine">
 
                                             </div>
                                         </el-col>
-
                                     </el-row>
-
                                     <el-row class="stepBox">
                                         <el-col :span="10" class="textCol">
                                             <div class="leftText">
@@ -577,8 +555,9 @@
                                     <el-row class="stepBox">
                                         <el-col :span="10" class="textCol">
                                             <div class="leftText">
-                                                {{ $t('signType.corpStep6_1') }}<span @click="toCorpLogin()">{{ $t('signType.admin_platform') }}</span>{{
-                                                $t('signType.corpStep6_2') }}
+                                                <span>{{ $t('signType.corpStep6_1') }}</span>
+                                                <span @click="toCorpLogin()">{{ $t('signType.admin_platform') }}</span>
+                                                <span>{{ $t('signType.corpStep6_2') }}</span>
                                             </div>
                                         </el-col>
                                         <el-col class="iconBox" :span="4">
@@ -614,7 +593,7 @@
                                     <el-row class="stepBox">
                                         <el-col :span="10" class="textCol">
                                             <div class="leftText">
-                                                {{ $t('signType.empStep2') }}
+                                                {{ $t('signType.corpStep2') }}
                                             </div>
                                         </el-col>
                                         <el-col class="iconBox" :span="4">
@@ -633,11 +612,11 @@
                                     </el-row>
                                     <el-row class="stepBox">
                                         <el-col class="iconBox" :offset="10" :span="4">
-                                            <svg-icon class="stepIcon" icon-class="send"></svg-icon>
+                                            <svg-icon class="stepIcon" icon-class="auth"></svg-icon>
                                         </el-col>
                                         <el-col :span="10" class="textCol">
                                             <div class="rightText">
-                                                {{ $t('signType.corpStep2') }}
+                                                {{ $t('signType.empStep4') }}
                                             </div>
                                         </el-col>
                                     </el-row>
@@ -650,30 +629,14 @@
                                     <el-row class="stepBox">
                                         <el-col :span="10" class="textCol">
                                             <div class="leftText">
-                                                {{ $t('signType.empStep4') }}
+                                                {{ $t('signType.empStep5') }}
                                             </div>
                                         </el-col>
                                         <el-col class="iconBox" :span="4">
-                                            <svg-icon class="stepIcon" icon-class="auth"></svg-icon>
+                                            <svg-icon class="stepIcon" icon-class="success"></svg-icon>
                                         </el-col>
                                         <el-col :span="10">
                                             <div>
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row>
-                                        <el-col class="lineBox" :offset="10" :span="4">
-                                            <div class="greenLine">
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row class="stepBox">
-                                        <el-col class="iconBox" :offset="10" :span="4">
-                                            <svg-icon class="stepIcon" icon-class="success"></svg-icon>
-                                        </el-col>
-                                        <el-col :span="10" class="textCol">
-                                            <div class="rightText">
-                                                {{ $t('signType.empStep5') }}
                                             </div>
                                         </el-col>
                                     </el-row>
@@ -702,7 +665,7 @@
                                     <el-row class="stepBox">
                                         <el-col :span="10" class="textCol">
                                             <div class="leftText">
-                                                {{ $t('signType.individualStep2') }}
+                                                {{ $t('signType.corpStep2') }}
                                             </div>
                                         </el-col>
                                         <el-col class="iconBox" :span="4">
@@ -721,31 +684,11 @@
                                     </el-row>
                                     <el-row class="stepBox">
                                         <el-col class="iconBox" :offset="10" :span="4">
-                                            <svg-icon class="stepIcon" icon-class="send"></svg-icon>
+                                            <svg-icon class="stepIcon" icon-class="success"></svg-icon>
                                         </el-col>
                                         <el-col :span="10" class="textCol">
                                             <div class="rightText">
-                                                {{ $t('signType.corpStep2') }}
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row>
-                                        <el-col class="lineBox" :offset="10" :span="4">
-                                            <div class="greenLine">
-                                            </div>
-                                        </el-col>
-                                    </el-row>
-                                    <el-row class="stepBox">
-                                        <el-col :span="10" class="textCol">
-                                            <div class="leftText">
                                                 {{ $t('signType.individualStep4') }}
-                                            </div>
-                                        </el-col>
-                                        <el-col class="iconBox" :span="4">
-                                            <svg-icon class="stepIcon" icon-class="success"></svg-icon>
-                                        </el-col>
-                                        <el-col :span="10">
-                                            <div>
                                             </div>
                                         </el-col>
                                     </el-row>
@@ -758,62 +701,56 @@
         </div>
         <NewFooter></NewFooter>
         <ReTryDialog :dialogVisible="reTryDialogVisible" :message="reLoginMsg"></ReTryDialog>
-        <EmailReTryDialog :dialogVisible="emailReTryDialogVisible"></EmailReTryDialog>
     </el-row>
 </template>
 <script>
-    import NewHeader from '@components/NewHeader'
-    import NewFooter from '@components/NewFooter'
-    import * as util from '../util/util'
-    import * as url from '../util/api'
-    import http from '../util/http'
-    import sign_http from '../util/sign_http'
-    import _axios from '../util/_axios'
-    import _cookie from 'js-cookie'
-    import {mapActions} from 'vuex'
-    import ReTryDialog from '../components/ReTryDialog'
-    import EmailReTryDialog from '../components/EmailReTryDialog'
+    import NewHeader from '@components/NewHeader';
+    import NewFooter from '@components/NewFooter';
+    import * as util from '../util/util';
+    import * as url from '../util/api';
+    import _axios from '../util/_axios';
+    import {mapActions} from 'vuex';
+    import ReTryDialog from '../components/ReTryDialog';
+    import claConfig from '../../public/static/config-store';
 
     export default {
         name: 'SignType',
         components: {
             NewHeader,
             NewFooter,
-            ReTryDialog,
-            EmailReTryDialog,
+            ReTryDialog
         },
         computed: {
             corpBtTooltip() {
                 if (this.isBindCorpCLA) {
-                    return `${this.$t('signType.corpStep1_1')}${this.$t('signType.corpBt')}${this.$t('signType.corpStep1_2')}`
+                    return `${this.$t('signType.corpStep1_1')}${this.$t('signType.corpBt')}${this.$t('signType.corpStep1_2')}`;
                 } else {
-                    return this.$t('signType.not_support_corp')
+                    return this.$t('signType.not_support_corp');
                 }
             },
             empBtTooltip() {
                 if (this.isBindCorpCLA) {
-                    return `${this.$t('signType.empStep1_1')}${this.$t('signType.empBt')}${this.$t('signType.corpStep1_2')}`
+                    return `${this.$t('signType.empStep1_1')}${this.$t('signType.empBt')}${this.$t('signType.corpStep1_2')}`;
                 } else {
-                    return this.$t('signType.not_support_emp')
+                    return this.$t('signType.not_support_emp');
                 }
             },
             individualBtTooltip() {
-                return `${this.$t('signType.individualStep1_1')}${this.$t('signType.individualBt')}${this.$t('signType.corpStep1_2')}`
-            },
-            emailReTryDialogVisible() {
-                return this.$store.state.emailErrVisible
+                return `${this.$t('signType.individualStep1_1')}${this.$t('signType.individualBt')}${this.$t('signType.corpStep1_2')}`;
             },
             reTryDialogVisible() {
-                return this.$store.state.reTryDialogVisible
+                return this.$store.state.reTryDialogVisible;
             },
             reLoginMsg() {
-                return this.$store.state.dialogMessage
+                return this.$store.state.dialogMessage;
             },
+            domain() {
+                return this.$store.state.domain;
+            }
         },
         data() {
             return {
                 isBindCorpCLA: false,
-                isBindIndividualCLA: false,
                 corpGuideIsOpen: false,
                 individualGuideIsOpen: false,
                 employeeGuideIsOpen: false,
@@ -823,17 +760,17 @@
                 repo: '',
                 signType: 'corporation',
                 transparentDiv: {
-                    height: '',
-                },
-            }
+                    height: ''
+                }
+            };
         },
         provide() {
             return {
                 setClientHeight: this.setClientHeight
-            }
+            };
         },
         methods: {
-            ...mapActions(['setLoginTypeAct', 'setRepoInfoAct']),
+            ...mapActions(['setLoginTypeAct', 'setLinkIdAct']),
             clickIndividualGuide() {
                 this.individualGuideIsOpen = !this.individualGuideIsOpen;
             },
@@ -841,15 +778,15 @@
                 this.employeeGuideIsOpen = !this.employeeGuideIsOpen;
             },
             clickCorpGuide() {
-                this.corpGuideIsOpen = !this.corpGuideIsOpen
+                this.corpGuideIsOpen = !this.corpGuideIsOpen;
             },
             toCorpLogin() {
                 this.$store.commit('setLoginType', 'corporationManager');
-                this.$router.push('/corporationManagerLogin')
+                this.$router.push('/corporationManagerLogin');
             },
             setLangLocale() {
                 if (parseInt(localStorage.getItem('lang'))) {
-                    this.value = parseInt(localStorage.getItem('lang'))
+                    this.value = parseInt(localStorage.getItem('lang'));
                 }
                 switch (this.value) {
                     case 0:
@@ -861,133 +798,65 @@
                 }
             },
             getRepoInfo() {
+                let linkId;
+                let domain = window.location.origin;
+                if (domain === claConfig.OPENLOOKENG_SIGN_URL) {
+                    linkId = claConfig.OPENLOOKENG_LINKID;
+                } else {
+                    let urlParams = this.$route.params.params;
+                    if (claConfig.STOCK_SIGN_LINK[urlParams]) {
+                        linkId = claConfig.STOCK_SIGN_LINK[urlParams];
+                    } else {
+                        linkId = urlParams;
+                    }
+                }
                 this.setLangLocale();
-                let params = window.location.href.split('/sign/')[1];
-                if (params === 'auth_failed') {
-                    let cookie = document.cookie;
-                    let cookieArr = cookie.split(';');
-                    for (let i = 0; i < cookieArr.length; i++) {
-                        let cookieKeyValue = cookieArr[i].split('=');
-                        let name = cookieKeyValue[0].trim();
-                        let value = cookieKeyValue[1].trim();
-                        // _cookie.remove(name, {path: '/'});
-                        if (name === "error_code") {
-                            switch (value) {
-                                case 'auth_failed':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.refuse_authorize', {platform: this.$store.state.repoInfo.platform}),
-                                    });
-                                    break;
-                                case EMAIL_UNAUTHORIZE:
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.not_authorize_email'),
-                                    });
-                                    break;
-                                case NO_PUBLIC_EMAIL:
-                                    this.$store.commit('setEmailErr', true,);
-                                    break;
-                                case SYSTEM_ERROR:
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.system_error'),
-                                    });
-                                    break;
-                            }
-                        }
-                    }
-
-                    let params = '';
-                    let repoInfo = this.$store.state.repoInfo;
-                    this.platform = repoInfo.platform;
-                    this.org = repoInfo.org_id;
-
-                    if (repoInfo.repo_id) {
-                        this.repo = repoInfo.repo_id;
-                        params = `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}`
-                    } else {
-                        params = `${repoInfo.platform}/${repoInfo.org_id}`
-                        this.repo = ''
-                    }
-                    let base64Params = util.strToBase64(params);
-                    this.$router.replace(`${this.$store.state.signRouter}/${base64Params}`);
-                } else {
-                    let arg = util.base64ToStr(params);
-                    if (arg) {
-                        let args = arg.split('/');
-                        if (args.length < 2 || args.length > 3) {
-                            this.$router.push({name: 'ErrorPath'})
-                        } else {
-                            this.platform = args[0];
-                            this.org = args[1];
-                            if (args[2]) {
-                                this.repo = args[2]
-                            } else {
-                                this.repo = ''
-                            }
-                            this.setRepoInfoAct({platform: this.platform, org_id: this.org, repo_id: this.repo});
-                        }
-                    } else {
-                        this.$router.push({name: 'ErrorPath'})
-                    }
-                }
-                this.getSignPage(this.platform, this.org, this.repo, 'corporation')
+                this.getSignPage(linkId, 'corporation');
+                this.setLinkIdAct(linkId);
             },
-            getSignPage(platform, org_id, repo_id, applyTo) {
-                let _url = '';
-                let _http = '';
-                if
-                (applyTo === 'individual') {
-                    _http = sign_http;
-                } else if (applyTo === 'corporation') {
-                    _http = _axios;
-                }
-                if (repo_id) {
-                    _url = `${url.getSignPage}/${platform}/${org_id}:${repo_id}/${applyTo}`
-                } else {
-                    _url = `${url.getSignPage}/${platform}/${org_id}/${applyTo}`
-                }
-                _http({
-                    url: _url,
+            getSignPage(link_id, applyTo) {
+                _axios({
+                    url: `${url.getSignPage}/${link_id}/${applyTo}`
                 }).then(res => {
-                    if (res && res.data.data && res.data.data.clas) {
-                        if (res.data.data.clas.length && applyTo === 'individual') {
-                            this.isBindIndividualCLA = true
-                        } else if (res.data.data.clas.length && applyTo === 'corporation') {
-                            this.isBindCorpCLA = true
+                    if (res && res.data.data) {
+                        if (res.data.data.length && applyTo === 'corporation') {
+                            this.isBindCorpCLA = true;
                         }
                     }
                 }).catch(err => {
-                })
+                    util.catchErr(err, '', this);
+                });
             },
 
             submit(loginType) {
                 this.setLoginTypeAct(loginType);
-                this.$router.push('/sign-cla')
+                if (loginType === 'corporationManager') {
+                    this.$router.push('/corporationManagerLogin');
+                } else {
+                    this.$router.push('/sign-cla');
+                }
             },
             clickSignTypeGuide(type) {
                 this.signType = type;
+                this.setClientHeight();
             },
             setClientHeight() {
                 this.$nextTick(() => {
-                    document.getElementById("transparentDiv").style.minHeight = '0px';
+                    document.getElementById('transparentDiv').style.minHeight = '0px';
                     if (util.getClientHeight() > document.getElementById('transparentDiv').offsetHeight) {
-                        document.getElementById("transparentDiv").style.minHeight = util.getClientHeight() + 'px'
+                        document.getElementById('transparentDiv').style.minHeight = util.getClientHeight() + 'px';
                     } else {
-                        document.getElementById("transparentDiv").style.minHeight = document.getElementById('transparentDiv').offsetHeight + 'px'
+                        document.getElementById('transparentDiv').style.minHeight = document.getElementById('transparentDiv').offsetHeight + 'px';
                     }
-                })
+                });
             },
-            clearSignPageSession() {
-                this.$store.commit('setSignEmail', '');
-                this.$store.commit('setSignUser', '');
-                sessionStorage.removeItem('sign_email');
-                sessionStorage.removeItem('sign_user');
-            },
+            setDomain() {
+                this.$store.commit('setDomain', window.location.href.split('/sign')[0]);
+            }
         },
         created() {
-            this.clearSignPageSession();
+            this.$store.commit('setPdfData', '');
+            this.setDomain();
             this.getRepoInfo();
         },
         mounted() {
@@ -997,14 +866,14 @@
             this.setClientHeight();
             window.onresize = () => {
                 if (util.getClientHeight() > document.getElementById('transparentDiv').offsetHeight) {
-                    document.getElementById("transparentDiv").style.minHeight = util.getClientHeight() + 'px';
+                    document.getElementById('transparentDiv').style.minHeight = util.getClientHeight() + 'px';
                 }
-            }
+            };
         },
         destroyed() {
             window.onresize = null;
         }
-    }
+    };
 </script>
 <style lang="less">
     @import "../assets/font/css/Roboto-Bold.css";
@@ -1150,7 +1019,6 @@
             font-size: 1.5rem;
             cursor: pointer;
             background: linear-gradient(to right, #97DB30, #319E55);
-            margin: 1.2rem 0;
         }
 
         .guideBox {
@@ -1354,6 +1222,5 @@
         font-family: Roboto-Regular, sans-serif;
         font-size: 1.5rem;
     }
-
 
 </style>

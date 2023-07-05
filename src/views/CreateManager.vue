@@ -3,6 +3,21 @@
         <el-col>
             <p id="tabName">{{$t('header.createManager')}}</p>
             <el-row class="createUserBack">
+                <el-row type="flex" align="middle" class="emailRow" gutter="20">
+                    <el-col align="left" :span="6">
+                        <span class="requireText">{{$t('corp.managerName')}}</span>
+                    </el-col>
+                    <el-col align="left" :span="8">
+                        <span class="requireText">{{$t('corp.managerEmail')}}</span>
+                    </el-col>
+                    <el-col align="left" :span="6">
+                        <span class="requireText">{{$t('corp.managerId')}}</span>
+                        <el-tooltip effect="light" :content="$t('corp.managerIdDesc')"
+                                    placement="right">
+                            <svg-icon class="pointer" icon-class="bangzhu"/>
+                        </el-tooltip>
+                    </el-col>
+                </el-row>
                 <el-row type="flex" align="middle" class="emailRow" gutter="20" v-for="(item,index) in data">
                     <el-col :span="6">
                         <el-input
@@ -23,7 +38,7 @@
                     </el-col>
                     <el-col :span="4" align="right">
                         <button class="deleteBt" @click="myDeleteRow(index)">-</button>
-                        <button class="button" @click="addRow(index)">+</button>
+                        <button class="add-button" @click="addRow(index)">+</button>
                     </el-col>
                 </el-row>
 
@@ -41,48 +56,48 @@
 </template>
 
 <script>
-    import * as url from '../util/api'
-    import http from '../util/http'
-    import * as util from '../util/util'
-    import corpReLoginDialog from '../components/CorpReLoginDialog'
-    import reTryDialog from '../components/ReTryDialog'
+    import * as url from '../util/api';
+    import http from '../util/http';
+    import * as util from '../util/util';
+    import corpReLoginDialog from '../components/CorpReLoginDialog';
+    import reTryDialog from '../components/ReTryDialog';
 
     export default {
-        name: "CreateUser",
+        name: 'CreateUser',
         components: {
             corpReLoginDialog,
             reTryDialog
         },
         computed: {
             orgValue() {
-                return this.$store.state.loginInfo.orgValue
+                return this.$store.state.loginInfo.orgValue;
             },
             userInfo() {
-                return this.$store.state.loginInfo.userInfo
+                return this.$store.state.loginInfo.userInfo;
             },
             corpReLoginDialogVisible() {
-                return this.$store.state.dialogVisible
+                return this.$store.state.dialogVisible;
             }
             ,
             corpReLoginMsg() {
-                return this.$store.state.dialogMessage
+                return this.$store.state.dialogMessage;
             },
             corpReTryDialogVisible() {
-                return this.$store.state.reTryDialogVisible
-            },
+                return this.$store.state.reTryDialogVisible;
+            }
         },
         data() {
             return {
                 data: [{name: '', email: '', id: ''}],
-                limit: 5,
-            }
+                limit: 5
+            };
         },
         methods: {
             setAcount(name, index) {
                 let reg = /^[a-zA-Z0-9_.]+$/;
                 let myName = name.trim();
                 if (reg.test(myName) && this.data[index].id.trim() === '') {
-                    this.data[index].id = myName
+                    this.data[index].id = myName;
                 }
             },
             pressEnter() {
@@ -93,9 +108,9 @@
             addRow(index) {
                 if (Number(this.$store.state.userLimit) + this.data.length >= this.limit) {
                     this.$message.closeAll();
-                    this.$message.error(this.$t('corp.manager_limit', {limit: this.limit}))
+                    this.$message.error(this.$t('corp.manager_limit', {limit: this.limit}));
                 } else {
-                    this.data.splice(index + 1, 0, {name: '', email: '', id: ''})
+                    this.data.splice(index + 1, 0, {name: '', email: '', id: ''});
                 }
 
             },
@@ -103,8 +118,7 @@
                 if (this.data.length === 1) {
                     this.data[0].name = '';
                     this.data[0].email = '';
-                    this.data[0].id = ''
-
+                    this.data[0].id = '';
                 } else {
                     this.data.splice(index, 1);
                 }
@@ -122,7 +136,7 @@
                             isCreate = false;
                             this.$store.commit('errorCodeSet', {
                                 dialogVisible: true,
-                                dialogMessage: this.$t('corp.fill_complete'),
+                                dialogMessage: this.$t('corp.fill_complete')
                             });
                             break;
                         } else if (email !== '' && name !== '' && id !== '') {
@@ -131,12 +145,11 @@
                                 isCreate = false;
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_id'),
+                                    dialogMessage: this.$t('tips.invalid_id')
                                 });
                                 break;
                             }
                         }
-
                     }
                 }
                 if (isCreate) {
@@ -147,7 +160,7 @@
                                 isCreate = false;
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
-                                    dialogMessage: this.$t('tips.same_email'),
+                                    dialogMessage: this.$t('tips.same_email')
                                 });
                                 flag = 1;
                                 break;
@@ -156,7 +169,7 @@
                                 isCreate = false;
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
-                                    dialogMessage: this.$t('tips.same_id'),
+                                    dialogMessage: this.$t('tips.same_id')
                                 });
                                 flag = 1;
                                 break;
@@ -175,7 +188,7 @@
                                 isCreate = false;
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
-                                    dialogMessage: this.$t('tips.exits_email'),
+                                    dialogMessage: this.$t('tips.exits_email')
                                 });
                                 flag = 1;
                                 break;
@@ -184,7 +197,7 @@
                                 isCreate = false;
                                 this.$store.commit('errorCodeSet', {
                                     dialogVisible: true,
-                                    dialogMessage: this.$t('tips.exits_id'),
+                                    dialogMessage: this.$t('tips.exits_id')
                                 });
                                 flag = 1;
                                 break;
@@ -196,109 +209,38 @@
                     }
                 }
                 if (newManagers.length && isCreate) {
-                    let obj = {managers: newManagers}
+                    let obj = {managers: newManagers};
                     http({
                         url: url.addEmployeeManager,
                         method: 'post',
-                        data: obj,
+                        data: obj
                     }).then(res => {
                         util.successMessage(this);
                         setTimeout(() => {
-                            this.$router.push('/managerList')
-                        }, 500)
+                            this.$router.push('/managerList');
+                        }, 500);
                     }).catch(err => {
-                        if (err.data.hasOwnProperty('data')) {
-                            switch (err.data.data.error_code) {
-                                case 'cla.invalid_token':
-                                    this.$store.commit('errorSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.invalid_token'),
-                                    });
-                                    break;
-                                case 'cla.missing_token':
-                                    this.$store.commit('errorSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.missing_token'),
-                                    });
-                                    break;
-                                case 'cla.unknown_token':
-                                    this.$store.commit('errorSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.unknown_token'),
-                                    });
-                                    break;
-                                case 'cla.invalid_email':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.invalid_email'),
-                                    });
-                                    break;
-
-                                case 'cla.invalid_manager_id':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.invalid_id'),
-                                    });
-                                    break;
-
-                                case 'cla.num_of_corp_managers_exceeded':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.num_of_corp_managers_exceeded'),
-                                    });
-                                    break;
-                                case 'cla.corp_manager_exists':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.corp_manager_exists'),
-                                    });
-                                    break;
-                                case 'cla.not_same_corp':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.not_same_corp'),
-                                    });
-                                    break;
-                                case 'cla.admin_as_manager':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('corp.manager_email_same_with_admin'),
-                                    });
-                                    break;
-                                case 'cla.system_error':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.system_error'),
-                                    });
-                                    break;
-                                default :
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.unknown_error'),
-                                    });
-                                    break;
-                            }
-                        } else {
-                            this.$store.commit('errorCodeSet', {
-                                dialogVisible: true,
-                                dialogMessage: this.$t('tips.system_error'),
-                            })
-                        }
-                    })
-                } else {
-
+                        util.catchErr(err, 'errorSet', this);
+                    });
                 }
-
-            },
-        },
-    }
+            }
+        }
+    };
 </script>
 
 <style lang="less">
     @import "../assets/font/css/Roboto-Regular.css";
 
     #createUser {
-        padding: 2rem 0;
+        .requireText {
+            font-family: Roboto-Regular, sans-serif;
+        }
+
+        .requireText:before {
+            content: '*';
+            color: #f56c6c;
+            margin-right: 4px;
+        }
 
         & .el-dialog {
             border-radius: 1rem;
@@ -345,7 +287,7 @@
             outline: none;
         }
 
-        & .button {
+        & .add-button {
             width: 3rem;
             height: 3rem;
             border-radius: 1.5rem;
@@ -356,7 +298,7 @@
             background: linear-gradient(to right, #97DB30, #319E55);
         }
 
-        & .button:focus {
+        & .add-button:focus {
             outline: none;
         }
 

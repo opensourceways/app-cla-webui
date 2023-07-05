@@ -1,16 +1,17 @@
-import axios from 'axios'
+import axios from 'axios';
+
 let instance = axios.create({
     timeout: 10000,
-    baseURL: '/api',
+    baseURL: '/api'
 });
 instance.interceptors.request.use(req => {
     let token = sessionStorage.getItem('token');
-    token && token !=='undefined' && (req.headers['Token'] = `${token}`);
-    return req
+    token && (req.headers['Token'] = `${token}`);
+    return req;
 }, error => Promise.reject(error));
 instance.interceptors.response.use(response => {
     response.headers.token && sessionStorage.setItem('token', response.headers.token);
-    return response
+    return response;
 }, error => {
     let _response = error.response;
     switch (_response.status) {
@@ -18,6 +19,6 @@ instance.interceptors.response.use(response => {
         case 403:
             sessionStorage.clear();
     }
-    return Promise.reject(error.response)
+    return Promise.reject(error.response);
 });
-export default instance
+export default instance;

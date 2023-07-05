@@ -22,45 +22,52 @@
 </template>
 
 <script>
-    import * as util from '../util/util'
+    import * as util from '../util/util';
+    import cla from '../../public/static/config-store';
 
     export default {
-        name: "SignSuccessDialog",
+        name: 'SignSuccessDialog',
         props: ['dialogVisible', 'message'],
         computed: {
             dialogWidth() {
                 if (this.IS_MOBILE) {
-                    return '80%'
+                    return '80%';
                 } else {
-                    return '30%'
+                    return '30%';
                 }
             },
             dialogMessage() {
-                if (localStorage.getItem('lang') === '0') {
-                    return 'dialogMessageEn'
-                } else if (localStorage.getItem('lang') === '1') {
-                    return 'dialogMessage'
+                if (localStorage.getItem('lang') === this.english) {
+                    return 'dialogMessageEn';
+                } else if (localStorage.getItem('lang') === this.chinese) {
+                    return 'dialogMessage';
                 }
-            },
+            }
         },
         data() {
             return {
-                signRouter: this.$store.state.signRouter,
-            }
+                domain: this.$store.state.domain,
+                chinese: 'Chinese',
+                english: 'English'
+            };
         },
         methods: {
             clickGoHome() {
                 this.$store.commit('setSignSuccess', {
                     dialogVisible: false,
-                    dialogMessage: '',
+                    dialogMessage: ''
                 });
-                let repoInfo = this.$store.state.repoInfo
-                let params = repoInfo.repo_id ? `${repoInfo.platform}/${repoInfo.org_id}/${repoInfo.repo_id}` : `${repoInfo.platform}/${repoInfo.org_id}`
-                let path = `${this.signRouter}/${util.strToBase64(params)}`;
-                this.$router.replace(path)
-            },
-        },
-    }
+                
+                if(window.location.origin === cla.OPENLOOKENG_SIGN_URL){
+                    let path = cla.SIGN_ROUTER;
+                    this.$router.replace(path);
+                } else{
+                    let path = `${cla.SIGN_ROUTER}/${this.$store.state.linkId}`;
+                    this.$router.replace(path);
+                }
+            }
+        }
+    };
 </script>
 
 <style lang="less">
@@ -98,6 +105,5 @@
             }
         }
     }
-
 
 </style>

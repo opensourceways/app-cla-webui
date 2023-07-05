@@ -23,43 +23,45 @@
 
 <script>
     export default {
-        name: "ReLoginDialog",
+        name: 'ReLoginDialog',
         props: ['dialogVisible', 'message'],
         computed: {
             dialogWidth() {
                 if (this.IS_MOBILE) {
-                    return '80%'
+                    return '80%';
                 } else {
-                    return '30%'
+                    return '30%';
                 }
             },
             dialogMessage() {
-                if (localStorage.getItem('lang') === '0') {
-                    return 'dialogMessageEn'
-                } else if (localStorage.getItem('lang') === '1') {
-                    return 'dialogMessage'
+                if (localStorage.getItem('lang') === this.english) {
+                    return 'dialogMessageEn';
+                } else if (localStorage.getItem('lang') === this.chinese) {
+                    return 'dialogMessage';
                 }
-            },
+            }
         },
         data() {
             return {
-            }
+                domain: this.$store.state.domain,
+                chinese: 'Chinese',
+                english: 'English'
+            };
         },
         methods: {
             clickGoHome() {
                 this.$store.commit('errorSet', {
                     dialogVisible: false,
-                    dialogMessage: '',
+                    dialogMessage: ''
                 });
-                this.$router.replace('/platformSelect')
-
-            },
-        },
-    }
+                this.$router.replace('/platformSelect');
+            }
+        }
+    };
 </script>
 
-<style  lang="less">
-    #reLoginDialog{
+<style lang="less">
+    #reLoginDialog {
         .dialogBt {
             margin-top: 3rem;
             width: 8rem;
@@ -72,17 +74,20 @@
             outline: none;
         }
 
-        .el-dialog__header{
+        .el-dialog__header {
             padding: 0;
         }
-        .el-dialog__body{
+
+        .el-dialog__body {
             padding: 20px;
         }
+
         .titleBox {
             text-align: left;
             font-size: 1.5rem;
             color: #E22424;
             margin-bottom: 1rem;
+
             .dialogIcon {
                 width: 1.5rem;
                 height: 1.5rem;

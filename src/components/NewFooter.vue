@@ -8,8 +8,9 @@
                 <div class="box">
                     <div class="copyright">
                         <span>{{copyright}}</span>
-                        <span @click="checkIcp"> {{icp}}</span>
-                        <span @click="checkPoliceRecord"> {{policeRecord}}</span>
+                        <span class="pointer" @click="previewPrivacy">{{$t('signPage.privacy')}}</span> |
+                        <span class="pointer" @click="checkIcp">{{icp}}</span> |
+                        <span class="pointer" @click="checkPoliceRecord"> {{policeRecord}}</span>
                     </div>
                 </div>
             </el-col>
@@ -18,35 +19,37 @@
 </template>
 
 <script>
-    import {mapActions} from 'vuex'
+    import {mapActions} from 'vuex';
+    import * as util from '../util/util';
+    import claConfig from '../../public/static/config-store';
 
     export default {
-        name: "NewFooter",
+        name: 'NewFooter',
         data() {
             return {
-                copyright: COPYRIGHT,
-                icp: ICP,
-                icpLink: ICPLINK,
-                policeRecord: POLICERECORD,
-                policeRecordLink: POLICERECORDLINK,
-            }
+                copyright: claConfig.COPYRIGHT,
+                icp: claConfig.ICP,
+                icpLink: claConfig.ICP_LINK,
+                policeRecord: claConfig.POLICE_RECORD,
+                policeRecordLink: claConfig.POLICE_RECORD_LINK
+            };
         },
         methods: {
             ...mapActions(['viewPrivacy']),
-            checkIcp() {
-                open(this.icpLink)
+            previewPrivacy() {
+                util.toPrivacy(this);
             },
-            checkPoliceRecord(){
-                open(this.policeRecordLink)
+            checkIcp() {
+                open(this.icpLink);
+            },
+            checkPoliceRecord() {
+                open(this.policeRecordLink);
             },
             join() {
-                window.open('https://github.com/opensourceways/app-cla-server')
-            },
-            viewPrivacy() {
-                // window.open('/privacy')
-            },
-        },
-    }
+                window.open('https://github.com/opensourceways/app-cla-server');
+            }
+        }
+    };
 </script>
 
 <style scoped lang="less">
@@ -70,6 +73,7 @@
     }
 
     .parentBox {
+        box-sizing: border-box;
         width: 100%;
         border-top: 2px solid #F2F2F2;
     }
@@ -91,14 +95,13 @@
         }
 
         .box {
-            cursor: pointer;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
 
         .copyright {
-            font-size: .8rem;
+            font-size: .5rem;
             /*font-family: HuaweiSans-Light,sans-serif;*/
         }
 

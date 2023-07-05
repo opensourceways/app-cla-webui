@@ -6,7 +6,7 @@
                 <el-tooltip class="item" effect="light"
                             :content="$t('org.config_cla_paste_url_title_tooltips')"
                             placement="right">
-                    <svg-icon icon-class="bangzhu"></svg-icon>
+                    <svg-icon icon-class="tips"></svg-icon>
                 </el-tooltip>
             </div>
             <div>
@@ -54,7 +54,7 @@
                     <el-tooltip class="item" effect="dark"
                                 :content="$t('org.config_cla_fields_desc')"
                                 placement="right">
-                        <svg-icon icon-class="bangzhu"></svg-icon>
+                        <svg-icon icon-class="tips"></svg-icon>
                     </el-tooltip>
                 </p>
             </div>
@@ -101,16 +101,16 @@
                                 </el-col>
                             </el-row>
                         </div>
-                        <div>
+                        <div v-if="!add_bind_first">
                             <el-row style="padding: 0.5rem 0;" type="flex" align="middle" :gutter="20"
                                     v-for="(item,index) in individualCustomMetadataArr">
                                 <el-col :span="5">
-                                    <el-input v-model="item.title" size="medium"
+                                    <el-input disabled="" v-model="item.title" size="medium"
                                               :placeholder="$t('org.config_cla_fields_title_placeholder')">
                                     </el-input>
                                 </el-col>
                                 <el-col :span="5">
-                                    <el-select :disabled="!add_bind_first" style="width: 100%" v-model="item.type"
+                                    <el-select disabled="" style="width: 100%" v-model="item.type"
                                                :placeholder="$t('org.config_cla_fields_type_placeholder')"
                                                size="medium">
                                         <el-option
@@ -122,17 +122,13 @@
                                     </el-select>
                                 </el-col>
                                 <el-col :span="5" style="height: 100%">
-                                    <el-input v-model="item.description" size="medium"
+                                    <el-input disabled="" v-model="item.description" size="medium"
                                               :placeholder="$t('org.config_cla_fields_desc_placeholder')"></el-input>
                                 </el-col>
                                 <el-col :span="5" style="height: 100%">
-                                    <el-checkbox :disabled="!add_bind_first" v-model="item.required">
+                                    <el-checkbox disabled="" v-model="item.required">
                                         {{$t('org.config_cla_fields_required')}}
                                     </el-checkbox>
-                                </el-col>
-                                <el-col v-show="add_bind_first" :span="4">
-                                    <button class="add_button" @click="addRow(index)">+</button>
-                                    <button class="deleteBt" @click="myDeleteRow(index)">-</button>
                                 </el-col>
                             </el-row>
                         </div>
@@ -148,92 +144,65 @@
     </div>
 </template>
 <script>
-    import ReTryDialog from '../components/ReTryDialog'
-    import ReLoginDialog from '../components/ReLoginDialog'
+    import ReTryDialog from '../components/ReTryDialog';
+    import ReLoginDialog from '../components/ReLoginDialog';
+    import * as util from '../util/util';
+    import claConfig from '../../public/static/config-store';
 
     export default {
-        name: "AddIndividualCla",
+        name: 'AddIndividualCla',
         components: {
             ReTryDialog,
-            ReLoginDialog,
+            ReLoginDialog
         },
         computed: {
             add_bind_first() {
-                return this.$store.state.add_bind_first
+                return this.$store.state.add_bind_first;
             },
             reTryVisible() {
-                return this.$store.state.reTryDialogVisible
+                return this.$store.state.reTryDialogVisible;
             },
             reLoginDialogVisible() {
-                return this.$store.state.orgReLoginDialogVisible
+                return this.$store.state.orgReLoginDialogVisible;
             },
             reLoginMsg() {
-                return this.$store.state.dialogMessage
+                return this.$store.state.dialogMessage;
             },
             individualCustomMetadataArr() {
-                if (this.$store.state.add_bind_first) {
-                    if (this.$store.state.individualCustomMetadataArr && this.$store.state.individualCustomMetadataArr.length) {
-                        return this.$store.state.individualCustomMetadataArr
-                    } else {
-                        return this.initIndividualCustomMetadata;
-                    }
-                } else {
-                    return this.$store.state.individualCustomMetadataArr
-                }
+                return this.$store.state.individualCustomMetadataArr;
             },
             cla_link_individual: {
                 get() {
                     return this.$store.state.claLinkIndividual;
                 },
                 set(value) {
-                    this.$store.commit('setClaLinkIndividual', value)
-                },
+                    this.$store.commit('setClaLinkIndividual', value);
+                }
             },
             individualClaLanguageValue: {
                 get() {
                     return this.$store.state.individualLanguage;
                 },
                 set(value) {
-                    this.$store.commit('setIndividualLanguage', value)
+                    this.$store.commit('setIndividualLanguage', value);
                 }
-            },
+            }
         },
         data() {
             return {
                 individualMetadata: [],
-                dataTypeOptions: DATATYPEOPTIONS,
                 languageOptions: [{value: 'english', label: 'English'}, {value: 'chinese', label: '中文'}],
-                individualMetadataArr: INDIVIDUALMETADATAARR_EN,
-                initIndividualCustomMetadata: INITCUSTOMMETADATA,
-            }
+                individualMetadataArr: claConfig.INDIVIDUALMETADATAARR_EN,
+                initIndividualCustomMetadata: JSON.parse(JSON.stringify(claConfig.INITCUSTOMMETADATA)),
+                individualTitleOptions: claConfig.TITLE_OPTIONS_EN
+            };
         },
         methods: {
-            addRow(index) {
-                let metadata = this.individualCustomMetadataArr;
-                metadata.splice(index + 1, 0, {
-                    title: '',
-                    type: '',
-                    description: '',
-                    required: false,
-                });
-                this.$store.commit('setIndividualCustomMetadataArr', metadata)
-            },
-            myDeleteRow(index) {
-                let metadata = this.individualCustomMetadataArr;
-                if (metadata.length === 1) {
-                    metadata[0].type = '';
-                    metadata[0].title = '';
-                    metadata[0].description = ''
-                } else {
-                    metadata.splice(index, 1);
-                }
-                this.$store.commit('setIndividualCustomMetadataArr', metadata)
-            },
             initMetadata(lang) {
                 if (lang === 'chinese') {
-                    this.individualMetadataArr = INDIVIDUALMETADATAARR_ZH
+                    this.individualMetadataArr = claConfig.INDIVIDUALMETADATAARR_ZH;
                 } else if (lang === 'english') {
-                    this.individualMetadataArr = INDIVIDUALMETADATAARR_EN
+                    this.individualMetadataArr = claConfig.INDIVIDUALMETADATAARR_EN;
                 }
             },
             individualInit() {
@@ -254,17 +223,17 @@
                         this.$router.replace('/config-check');
                     } else {
                         this.$message.closeAll();
-                        this.$message.error(this.$t('tips.title_type_repeat'))
+                        this.$message.error(this.$t('tips.title_type_repeat'));
                     }
                 } else if (this.cla_link_individual) {
                     this.$store.commit('errorCodeSet', {
                         dialogVisible: true,
-                        dialogMessage: this.$t('tips.select_individual_language'),
+                        dialogMessage: this.$t('tips.select_individual_language')
                     });
                 } else {
                     this.$store.commit('errorCodeSet', {
                         dialogVisible: true,
-                        dialogMessage: this.$t('tips.paste_individual_link'),
+                        dialogMessage: this.$t('tips.paste_individual_link')
                     });
                 }
             },
@@ -272,7 +241,7 @@
                 let individualMetadata = [];
                 this.individualCustomMetadataArr && this.individualCustomMetadataArr.forEach((item) => {
                     if (item.title !== '' && item.type !== '') {
-                        individualMetadata.push(item)
+                        individualMetadata.push(item);
                     }
                 });
                 let individualArr = this.individualMetadataArr.concat(individualMetadata);
@@ -284,13 +253,20 @@
                     }
                 }
                 this.individualMetadata = individualMetadata;
-                return individualArr
+                return individualArr;
             },
             changeIndividualLanguage(value) {
+                if (value === 'chinese') {
+                    this.individualTitleOptions = claConfig.TITLE_OPTIONS_ZH;
+                    util.individualFiledExchangeToZh(this.individualCustomMetadataArr);
+                } else if (value === 'english') {
+                    this.individualTitleOptions = claConfig.TITLE_OPTIONS_EN;
+                    util.individualFiledExchangeToEn(this.individualCustomMetadataArr);
+                }
                 this.initMetadata(value);
                 this.$store.commit('setIndividualLanguage', value);
-                this.$store.commit('setAddLang', value)
-            },
+                this.$store.commit('setAddLang', value);
+            }
         },
         created() {
             this.initMetadata(this.$store.state.individualLanguage);
@@ -300,9 +276,9 @@
                 if (from.path === '/') {
                     vm.individualInit();
                 }
-            })
-        },
-    }
+            });
+        }
+    };
 </script>
 
 <style scoped>

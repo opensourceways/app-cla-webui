@@ -7,8 +7,8 @@
 
 <script>
     export default {
-        name: "AddCorpCla"
-    }
+        name: 'AddCorpCla'
+    };
 </script>
 
 <style scoped>

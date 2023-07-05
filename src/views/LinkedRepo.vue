@@ -11,7 +11,7 @@
             </el-tab-pane>
         </el-tabs>
         <el-row :gutter="20" class="table-back">
-            <el-col :span="3" class="orgTableStyle tableStyle">
+            <el-col :span="5" class="orgTableStyle tableStyle">
                 <el-table
                         empty-text="No data"
                         :data="orgTableData"
@@ -26,7 +26,7 @@
                     </el-table-column>
                 </el-table>
             </el-col>
-            <el-col :span="21" class="tableStyle">
+            <el-col :span="19" class="tableStyle">
                 <el-table
                         empty-text="No data"
                         :data="boundTableData"
@@ -60,7 +60,7 @@
                         </template>
                     </el-table-column>
                     <el-table-column
-                            min-width="20"
+                            min-width="10"
                             :label="$t('org.operation')">
                         <template slot-scope="scope">
                             <el-dropdown placement="bottom-start" trigger="hover" @command="menuCommand">
@@ -69,10 +69,16 @@
                                     </span>
                                 <el-dropdown-menu slot="dropdown">
                                     <el-dropdown-item :command="{command:'a',row:scope.row}">
-                                        {{$t('org.copy_address')}}
+                                        {{$t('org.toSign')}}
                                     </el-dropdown-item>
                                     <el-dropdown-item :command="{command:'b',row:scope.row}">
+                                        {{$t('org.copy_address')}}
+                                    </el-dropdown-item>
+                                    <el-dropdown-item :command="{command:'c',row:scope.row}">
                                         {{$t('org.toDetail')}}
+                                    </el-dropdown-item>
+                                    <el-dropdown-item :command="{command:'d',row:scope.row}">
+                                        {{$t('org.modify_email')}}
                                     </el-dropdown-item>
                                 </el-dropdown-menu>
                             </el-dropdown>
@@ -128,7 +134,6 @@
                                     class="upload-demo"
                                     :action="uploadUrl"
                                     :headers="uploadHeaders"
-                                    :on-preview="handlePreview"
                                     :on-remove="handleRemove"
                                     :on-success="handleSuccess"
                                     :before-remove="beforeRemove"
@@ -151,20 +156,24 @@
         </el-dialog>
         <ReLoginDialog :dialogVisible="reLoginDialogVisible" :message="reLoginMsg"></ReLoginDialog>
         <ReTryDialog :dialogVisible="reTryVisible" :message="reLoginMsg"></ReTryDialog>
+        <ConfigEmailSelect v-model="emailDialogVisible" :modifyEmailLinkId="modifyEmailLinkId" @callback="getLinkedRepoList"></ConfigEmailSelect>
     </div>
 </template>
 <script>
-    import {mapActions} from 'vuex'
-    import * as url from '../util/api'
-    import * as util from '../util/util'
-    import http from '../util/http'
-    import _cookie from 'js-cookie'
-    import ReLoginDialog from '../components/ReLoginDialog'
-    import ReTryDialog from '../components/ReTryDialog'
+    import {mapActions} from 'vuex';
+    import * as url from '../util/api';
+    import * as util from '../util/util';
+    import http from '../util/http';
+    import _cookie from 'js-cookie';
+    import ReLoginDialog from '../components/ReLoginDialog';
+    import ReTryDialog from '../components/ReTryDialog';
+    import ConfigEmailSelect from './ConfigEmailSelect';
+    import claConfig from '../../public/static/config-store';
 
     export default {
-        name: "linkedRepo",
+        name: 'linkedRepo',
         components: {
+            ConfigEmailSelect,
             ReLoginDialog,
             ReTryDialog
         },
@@ -174,17 +183,21 @@
                 return this.$store.state.platform.toLowerCase();
             },
             reLoginDialogVisible() {
-                return this.$store.state.orgReLoginDialogVisible
+                return this.$store.state.orgReLoginDialogVisible;
             },
             reTryVisible() {
-                return this.$store.state.reTryDialogVisible
+                return this.$store.state.reTryDialogVisible;
             },
             reLoginMsg() {
-                return this.$store.state.dialogMessage
+                return this.$store.state.dialogMessage;
             },
+            address() {
+                return this.$store.state.domain;
+            }
         },
         data() {
             return {
+                loading: false,
                 copyAddressValue: '',
                 organization: '',
                 signAddress: '',
@@ -194,12 +207,11 @@
                 orgTableData: [],
                 boundTableData: [],
                 url: '',
-                signRouter: this.$store.state.signRouter,
                 pdfSrc: '',
                 numPages: undefined,
                 docInfo: {},
                 uploadHeaders: {
-                    'Token': this.$store.state.access_token,
+                    'Token': this.$store.state.access_token
                 },
                 uploadUrl: '',
                 form: {file: ''},
@@ -210,26 +222,44 @@
                 unLinkDialogVisible: false,
                 tableTotal: 0,
                 currentPage: 1,
-            }
+                emailDialogVisible: false,
+                modifyEmailLinkId: '',
+            };
         },
         created() {
+            this.setDomain();
             this.clearConfigSession();
-            this.getLinkedRepoList();
+            new Promise((resolve, reject) => {
+                this.getCookieData(resolve);
+            }).then(res => {
+                this.getLinkedRepoList();
+            });
+
         },
         updated() {
             this.setClientHeight();
         },
         methods: {
-            ...mapActions(['setLoginUserAct', 'setTokenAct', 'setTableDataAct']),
+            ...mapActions(['setTokenAct']),
             menuCommand(command) {
                 switch (command.command) {
                     case 'a':
-                        this.copyAddress(command.row);
+                        this.toSignPage(command.row);
                         break;
                     case 'b':
+                        this.copyAddress(command.row);
+                        break;
+                    case 'c':
                         this.checkCorporationList(command.row);
                         break;
+                    case 'd':
+                        this.modifyEmail(command.row);
+                        break;
                 }
+            },
+            modifyEmail(row) {
+                this.emailDialogVisible = true;
+                this.modifyEmailLinkId = row.link_id;
             },
             clearConfigSession() {
                 util.clearSession(this);
@@ -237,10 +267,10 @@
                 sessionStorage.removeItem('corpItem');
             },
             configCla() {
-                this.$router.push('/bind-cla')
+                this.$router.push('/bind-cla');
             },
             tabsHandleClick(tab, event) {
-                tab.index === '0' ? this.$router.push('/linkedRepo') : this.$router.push('/signedRepoLogin')
+                tab.index === '0' ? this.$router.push('/linkedRepo') : this.$router.push('/signedRepoLogin');
             },
             tableRowClassName({row, rowIndex}) {
                 if (row.Organization === this.organization) {
@@ -258,12 +288,12 @@
                 this.boundTableData = newData;
             },
             clickOrg(row, column, cell, event) {
-                this.organization = row.Organization
-                this.getBoundTableData()
+                this.organization = row.Organization;
+                this.getBoundTableData();
             },
             getLinkedRepoList() {
                 http({
-                    url: url.getLinkedRepoList,
+                    url: url.getLinkedRepoList
                 }).then(res => {
                     if (res.data.data && res.data.data.length) {
                         let data = res.data.data;
@@ -271,207 +301,89 @@
                         data.forEach((item, index) => {
                             new Promise((resolve, reject) => {
                                 let claName = this.getClaName(item.id);
-                                resolve(claName)
+                                resolve(claName);
                             }).then(res => {
                                 Object.assign(data[index], {claName: res});
-                                count--
+                                count--;
                             }, err => {
-                            })
+                            });
                         });
                         let setDataInterval = setInterval(() => {
                             if (count === 0) {
                                 this.tableData = data;
                                 this.getOrgTableData(data);
-                                clearInterval(setDataInterval)
+                                clearInterval(setDataInterval);
                             }
-                        }, 20)
+                        }, 20);
                     } else {
                         this.tableData = [];
                         this.boundTableData = [];
                         this.orgTableData = [];
                     }
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.unauthorized_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unauthorized_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
-                })
+                    util.catchErr(err, 'setOrgReLogin', this);
+                });
             },
             async getClaName(org_cla_id) {
                 if (org_cla_id) {
                     let name = '';
                     await http({
-                        url: `${url.getClaInfo}/${org_cla_id}/cla`,
+                        url: `${url.getClaInfo}/${org_cla_id}/cla`
                     }).then(res => {
                         if (res.data && res.data.data && res.data.data.name) {
-                            name = res.data.data.name
+                            name = res.data.data.name;
                         }
                     }).catch(err => {
-                        if (err.data && err.data.hasOwnProperty('data')) {
-                            switch (err.data.data.error_code) {
-                                case 'cla.invalid_token':
-                                    this.$store.commit('setOrgReLogin', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.invalid_token'),
-                                    });
-                                    break;
-                                case 'cla.expired_token':
-                                    this.$store.commit('setOrgReLogin', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.invalid_token'),
-                                    });
-                                    break;
-                                case 'cla.unauthorized_token':
-                                    this.$store.commit('setOrgReLogin', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.unauthorized_token'),
-                                    });
-                                    break;
-                                case 'cla.missing_token':
-                                    this.$store.commit('setOrgReLogin', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.missing_token'),
-                                    });
-                                    break;
-                                case 'cla.unknown_token':
-                                    this.$store.commit('setOrgReLogin', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.unknown_token'),
-                                    });
-                                    break;
-                                case 'cla.system_error':
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.system_error'),
-                                    });
-                                    break;
-                                default :
-                                    this.$store.commit('errorCodeSet', {
-                                        dialogVisible: true,
-                                        dialogMessage: this.$t('tips.unknown_error'),
-                                    });
-                                    break;
-                            }
-                        } else {
-                            this.$store.commit('errorCodeSet', {
-                                dialogVisible: true,
-                                dialogMessage: this.$t('tips.system_error'),
-                            })
-                        }
+                        util.catchErr(err, 'setOrgReLogin', this);
                     });
-                    return name
+                    return name;
                 }
             },
             getOrgTableData(data) {
                 let orgData = [];
                 data.forEach((item, index) => {
-                    orgData.push({Organization: item.org_id})
+                    orgData.push({Organization: item.org_id});
                 });
 
                 for (let i = 0; i < orgData.length; i++) {
                     for (let j = i + 1; j < orgData.length; j++) {
                         if (orgData[i].Organization === orgData[j].Organization) {
                             orgData.splice(j, 1);
-                            j--
+                            j--;
                         }
                     }
                 }
                 this.orgTableData = orgData;
                 this.orgTableData.length > 0 ? this.organization = this.orgTableData[0].Organization : this.organization = [];
-                this.getBoundTableData()
+                this.getBoundTableData();
             },
             copyAddress(row) {
-                let params = '';
-                if (row.repo_id) {
-                    params = `${row.platform.toLowerCase()}/${row.org_id}/${row.repo_id}`
-                } else {
-                    params = `${row.platform.toLowerCase()}/${row.org_id}`
-                }
-                let base64Params = util.strToBase64(params);
                 let address = window.location.href.split('/linkedRepo')[0];
-                let url = '';
-                if (address.substring(0, 5) === 'http:') {
-                    url = `${LOCAL_ADDRESS}${this.signRouter}/${base64Params}`;
-                } else if (address.substring(8, 15) === 'clasign') {
-                    url = `${PRODUCTION_ADDRESS}${this.signRouter}/${base64Params}`;
-                } else if (address.substring(8, 12) === 'test') {
-                    url = `${TEST_ADDRESS}${this.signRouter}/${base64Params}`;
-                }else{
-                    this.$store.commit('errorCodeSet', {
-                        dialogVisible: true,
-                        dialogMessage: this.$t('tips.copyError'),
-                    });
-                    return
-                }
-                let copyInput = document.createElement("input");
+                let url = `${address}${claConfig.SIGN_ROUTER}/${row.link_id}`;
+                let copyInput = document.createElement('input');
                 copyInput.value = url;
                 document.body.appendChild(copyInput);
                 copyInput.select();
-                document.execCommand("Copy");
-                copyInput.className = "copyInput";
-                copyInput.style.display = "none";
-                document.body.removeChild(document.getElementsByClassName('copyInput')[0])
+                document.execCommand('Copy');
+                copyInput.className = 'copyInput';
+                copyInput.style.display = 'none';
+                document.body.removeChild(document.getElementsByClassName('copyInput')[0]);
+            },
+            toSignPage(row) {
+                let url = `${this.address}${claConfig.SIGN_ROUTER}/${row.link_id}`;
+                window.open(url);
             },
             submitUpload() {
                 this.$refs.uploadPdf.submit();
             },
             handleSuccess(file, fileList) {
-                this.fileList = []
+                this.fileList = [];
                 util.successMessage(this);
-                this.uploadOrgDialogVisible = false
+                this.uploadOrgDialogVisible = false;
             },
             handleRemove(file, fileList) {
-                this.$message.closeAll()
-                this.$message.success(file)
-            },
-            handlePreview(file) {
+                this.$message.closeAll();
+                this.$message.success(file);
             },
             handleExceed(files, fileList) {
                 this.$message.warning(`Currently, 1 file is limited to be selected. ${files.length} files are selected this time, and a total of ${files.length + fileList.length} files are selected`);
@@ -479,82 +391,68 @@
             beforeRemove(file, fileList) {
                 return this.$confirm(`Are you sure you want to remove ${file.name}？`);
             },
+            getCookieData(resolve) {
+                if (document.cookie) {
+                    let cookieArr = document.cookie.split(';');
+                    let access_token, refresh_token, platform_token = '';
+                    cookieArr.forEach((item, index) => {
+                        let arr = item.split('=');
+                        let name = arr[0].trim();
+                        let value = arr[1].trim();
+                        if (name === 'refresh_token') {
+                            refresh_token = value;
+                        } else if (name === 'platform_token') {
+                            platform_token = value;
+                        } else if (name === 'access_token') {
+                            access_token = value;
+                        }
+                        _cookie.remove(name, {path: '/'});
+                    });
+                    let data = {access_token, refresh_token, platform_token, resolve};
+                    this.setTokenAct(data);
+                } else {
+                    resolve('complete');
+                }
+            },
             unlinkHandleClick(scope) {
                 this.unlinkId = scope.row.link_id;
-                this.unLinkDialogVisible = true
+                this.unLinkDialogVisible = true;
             },
             checkCorporationList(item) {
                 this.$store.commit('setCorpItem', {});
                 sessionStorage.removeItem('corpItem');
                 this.$store.commit('setCorpItem', item);
-                this.$router.push('/corporationList')
+                this.$router.push('/corporationList');
+            },
+            newWindow(repo) {
+                window.open(`https://gitee.com/${repo}`);
             },
             unLinkRepositoryFun() {
+                this.loading = util.getLoading(this, 'tips.loading');
                 http({
                     url: `${url.unLinkRepository}/${this.unlinkId}`,
-                    method: 'delete',
+                    method: 'delete'
                 }).then(res => {
+                    this.loading.close();
                     util.successMessage(this);
                     this.unLinkDialogVisible = false;
-                    this.getLinkedRepoList()
+                    this.getLinkedRepoList();
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.unauthorized_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unauthorized_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('setOrgReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
-                })
+                    this.loading.close();
+                    util.catchErr(err, 'setOrgReLogin', this);
+                });
             },
             changePage(page) {
             },
-        },
-    }
+            setDomain() {
+                let domain = window.location.href.split('/linkedRepo')[0];
+                if (domain === window.location.href) {
+                    domain = window.location.href.split('/home')[0];
+                }
+                this.$store.commit('setDomain', domain);
+            }
+        }
+    };
 </script>
 
 <style lang="less">
@@ -768,6 +666,5 @@
 
         }
     }
-
 
 </style>

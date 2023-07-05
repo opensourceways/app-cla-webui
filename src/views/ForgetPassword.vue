@@ -11,20 +11,20 @@
 </template>
 
 <script>
-    import Header from '../components/NewHeader'
-    import Footer from '../components/NewFooter'
-    import * as util from '../util/util'
+    import Header from '../components/NewHeader';
+    import Footer from '../components/NewFooter';
+    import * as util from '../util/util';
 
     window.onresize = () => {
         if (util.getClientHeight() > document.getElementById('forgetPwd').offsetHeight) {
-            document.getElementById("forgetPwd").style.height = util.getClientHeight() + 'px'
+            document.getElementById('forgetPwd').style.height = util.getClientHeight() + 'px';
         }
     };
     export default {
-        name: "ForgetPassword",
-        components:{
+        name: 'ForgetPassword',
+        components: {
             Header,
-            Footer,
+            Footer
         },
         mounted() {
             this.setClientHeight();
@@ -32,17 +32,17 @@
         methods: {
             setClientHeight() {
                 this.$nextTick(() => {
-                    document.getElementById("forgetPwd").style.minHeight = '0px';
+                    document.getElementById('forgetPwd').style.minHeight = '0px';
                     if (util.getClientHeight() > document.getElementById('forgetPwd').offsetHeight) {
-                        document.getElementById('forgetPwd').style.minHeight = util.getClientHeight() + 'px'
+                        document.getElementById('forgetPwd').style.minHeight = util.getClientHeight() + 'px';
                     } else {
-                        document.getElementById('forgetPwd').style.minHeight = document.getElementById('forgetPwd').offsetHeight + 'px'
+                        document.getElementById('forgetPwd').style.minHeight = document.getElementById('forgetPwd').offsetHeight + 'px';
                     }
-                })
-            },
-        },
+                });
+            }
+        }
 
-    }
+    };
 </script>
 
 <style scoped lang="less">
@@ -58,11 +58,11 @@
         box-sizing: border-box;
         flex-direction: column;
 
-    & > div:nth-of-type(2) {
-          flex-grow: 1;
-          background-color: #F0F2F5;
-          padding: 0 1rem;
-      }
+        & > div:nth-of-type(2) {
+            flex-grow: 1;
+            background-color: #F0F2F5;
+            padding: 0 1rem;
+        }
 
     }
 </style>

@@ -277,6 +277,10 @@
     margin-bottom: 3rem;
 }
 
+.padding-top-bottom-1rem {
+    padding: 1rem 0;
+}
+
 .align_left {
     text-align: left;
 }
@@ -288,7 +292,7 @@
 
 .reset_pwd_button {
     font-family: Roboto-Light, sans-serif;
-    width: 15rem;
+    width: 100%;
     height: 3rem;
     border-radius: 1.5rem;
     border: none;
@@ -335,14 +339,39 @@
     border-top-right-radius: 1rem;
 }
 
-.downloadText {
-    text-decoration: underline;
-    cursor: pointer;
-    color: #319E55;
-}
-.font-size-1rem {
-    font-size: 1rem;
-}
-.display-inline-block{
+.display-inline-block {
     display: inline-block;
+}
+
+.margin-1D2rem {
+    margin: 1.2rem 0;
+}
+
+.border-radius-2rem {
+    border-radius: 2rem;
+}
+
+.grayColor {
+    color: gray;
+}
+
+.padding-top-bottom-2rem {
+    padding: 2rem 0;
+}
+
+.create_button {
+    width: 10rem;
+    height: 2rem;
+    border-radius: 1rem;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    background: linear-gradient(to right, #97DB30, #319E55);
+    margin-bottom: 1rem;
+    user-select: none;
+}
+
+.create_button:focus {
+    outline: none;
 }

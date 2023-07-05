@@ -1,12 +1,12 @@
 <template>
     <el-row id="userList">
         <el-col>
-            <p id="tabName">{{$t('header.manager')}}</p>
+            <p class="tabName">{{$t('header.manager')}}</p>
             <el-row class="tableBox">
                 <el-col>
                     <el-row>
                         <el-col align="left">
-                            <button class="button" @click="createManager">{{$t('header.createManager')}}</button>
+                            <button class="create_button" @click="createManager">{{$t('header.createManager')}}</button>
                         </el-col>
                     </el-row>
                     <el-row>
@@ -63,7 +63,8 @@
             </el-row>
             <corpReLoginDialog :message="corpReLoginMsg" :dialogVisible="corpReLoginDialogVisible"></corpReLoginDialog>
             <reTryDialog :message="corpReLoginMsg" :dialogVisible="corpReTryDialogVisible"></reTryDialog>
-            <DeleteDialog :deleteMessage="deleteMessage" :deleteVisible="deleteUserVisible" @delete="submitDeleteManager"
+            <DeleteDialog :deleteMessage="deleteMessage" :deleteVisible="deleteUserVisible"
+                          @delete="submitDeleteManager"
                           @cancel="cancelDeleteManager"></DeleteDialog>
         </el-col>
     </el-row>
@@ -71,41 +72,41 @@
 </template>
 
 <script>
-    import * as url from '../util/api'
-    import {mapActions} from 'vuex'
-    import http from '../util/http'
-    import * as util from '../util/util'
-    import corpReLoginDialog from '../components/CorpReLoginDialog'
-    import reTryDialog from '../components/ReTryDialog'
-    import DeleteDialog from '../components/DeleteDialog'
+    import * as url from '../util/api';
+    import {mapActions} from 'vuex';
+    import http from '../util/http';
+    import * as util from '../util/util';
+    import corpReLoginDialog from '../components/CorpReLoginDialog';
+    import reTryDialog from '../components/ReTryDialog';
+    import DeleteDialog from '../components/DeleteDialog';
 
     export default {
-        name: "UserList",
+        name: 'UserList',
         computed: {
-            deleteMessage(){
-                return this.$t('corp.deleteTips')
+            deleteMessage() {
+                return this.$t('corp.deleteTips');
             },
             orgValue() {
-                return this.$store.state.loginInfo.orgValue
+                return this.$store.state.loginInfo.orgValue;
             },
             userInfo() {
-                return this.$store.state.loginInfo.userInfo
+                return this.$store.state.loginInfo.userInfo;
             },
             corpReLoginDialogVisible() {
-                return this.$store.state.dialogVisible
+                return this.$store.state.dialogVisible;
             }
             ,
             corpReLoginMsg() {
-                return this.$store.state.dialogMessage
+                return this.$store.state.dialogMessage;
             },
             corpReTryDialogVisible() {
-                return this.$store.state.reTryDialogVisible
-            },
+                return this.$store.state.reTryDialogVisible;
+            }
         },
         components: {
             corpReLoginDialog,
             reTryDialog,
-            DeleteDialog,
+            DeleteDialog
         },
         data() {
             return {
@@ -114,8 +115,8 @@
                 multipleSelection: [],
                 row: '',
                 deleteUserVisible: false,
-                tableData: [],
-            }
+                tableData: []
+            };
         },
         created() {
             this.getEmployeeManager();
@@ -134,7 +135,7 @@
             },
             cancel() {
                 this.$refs.multipleTable.clearSelection();
-                this.multipleChoice = false
+                this.multipleChoice = false;
 
             },
             handleSelectionChange(val) {
@@ -144,62 +145,23 @@
                 this.emails = [];
                 if (this.multipleChoice) {
                     this.multipleSelection.forEach(item => {
-                        this.emails.push({email: item.email})
-                    })
+                        this.emails.push({email: item.email});
+                    });
                 } else {
-                    this.emails.push({email: row.email})
+                    this.emails.push({email: row.email});
                 }
-                this.deleteUserVisible = true
+                this.deleteUserVisible = true;
             },
             getEmployeeManager() {
                 http({
-                    url: `${url.queryEmployeeManager}`,
+                    url: `${url.queryEmployeeManager}`
                 }).then(res => {
                     this.tableData = res.data.data;
                     this.$store.commit('setManagerList', res.data.data);
-                    this.setUserLimitAct(res.data.data.length)
+                    this.setUserLimitAct(res.data.data.length);
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
-                })
+                    util.catchErr(err, 'errorSet', this);
+                });
             },
             deleteManager() {
                 let obj = {
@@ -208,113 +170,22 @@
                 http({
                     url: url.deleteEmployeeManager,
                     method: 'delete',
-                    data: obj,
+                    data: obj
                 }).then(res => {
                     util.successMessage(this);
                     this.getEmployeeManager();
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.expired_token':
-                                this.$store.commit('setSignReLogin', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
-                })
-            },
-        },
-    }
+                    util.catchErr(err, 'errorSet', this);
+                });
+            }
+        }
+    };
 </script>
 
 <style lang="less">
     @import "../assets/font/css/Roboto-Regular.css";
 
     #userList {
-        padding: 2rem 0;
-
-        .actionRow {
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .tableBox {
-            border-radius: 1.5rem;
-            margin-bottom: 2rem;
-            padding: 3rem;
-            background-color: white;
-        }
-
-        & .tableClass {
-            border: 1px solid black;
-            border-radius: 1.5rem;
-        }
-
-        & .el-dialog {
-            border-radius: 1rem;
-        }
-
-        & .button {
-            width: 10rem;
-            height: 2rem;
-            border-radius: 1rem;
-            border: none;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            background: linear-gradient(to right, #97DB30, #319E55);
-            margin-bottom: 1rem;
-            user-select: none;
-        }
-
-        & .button:focus {
-            outline: none;
-        }
-
-        & #tabName {
-            user-select: none;
-            font-family: Roboto-Regular, sans-serif;
-            font-size: 2rem;
-            text-align: left;
-        }
-
         & .el-checkbox__inner {
             border: 1px solid #319E55;
         }

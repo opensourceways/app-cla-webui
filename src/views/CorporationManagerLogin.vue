@@ -5,20 +5,23 @@
                 <div class="formBack">
                     <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="0">
                         <el-form-item :required="true" prop="userName">
-                            <el-input v-model="ruleForm.userName" autocomplete="off" :placeholder="$t('corp.id')"
+                            <el-input clearable="" v-model="ruleForm.userName" autocomplete="off"
+                                      :placeholder="$t('corp.id')"
                                       @keydown.native="pressEnter"></el-input>
                         </el-form-item>
                         <el-form-item :required="true" label="" prop="pwd">
-                            <el-input type="password" v-model="ruleForm.pwd" autocomplete="off"
+                            <el-input clearable="" type="password" v-model="ruleForm.pwd" autocomplete="off"
                                       :placeholder="$t('corp.pwd')" @keydown.native="pressEnter"></el-input>
                         </el-form-item>
                         <el-form-item style="text-align: right">
-                            <span class="pointer" @click="findPwd" id="forgetPwd">{{$t('corp.forget_pwd')}}</span>
+                            <span @click="findPwd" class="pointer" id="forgetPwd">{{$t('corp.forget_pwd')}}</span>
                         </el-form-item>
                         <el-form-item style="text-align: center">
-                            <button class="button" type="button" @click="submitForm('ruleForm')">
-                                {{$t('corp.login_in')}}
-                            </button>
+                            <HttpButton :text="$t(`corp.${loginText}`)"
+                                        :width="loginBtWidth"
+                                        :buttonDisable="loginButtonDisable"
+                                        @httpSubmit="submitForm('ruleForm')">
+                            </HttpButton>
                         </el-form-item>
                     </el-form>
                 </div>
@@ -29,46 +32,48 @@
 </template>
 
 <script>
-    import * as url from '../util/api'
-    import http from '../util/http'
-    import {mapActions} from 'vuex'
-    import * as util from '../util/util'
-    import reTryDialog from '../components/ReTryDialog'
+    import * as url from '../util/api';
+    import http from '../util/http';
+    import {mapActions} from 'vuex';
+    import * as util from '../util/util';
+    import reTryDialog from '../components/ReTryDialog';
+    import HttpButton from '../components/HttpButton';
 
     export default {
-        name: "RepoSelect",
+        name: 'RepoSelect',
         components: {
             reTryDialog,
+            HttpButton
         },
         computed: {
             corpReLoginMsg() {
-                return this.$store.state.dialogMessage
+                return this.$store.state.dialogMessage;
             },
             corpReTryDialogVisible() {
-                return this.$store.state.reTryDialogVisible
-            },
+                return this.$store.state.reTryDialogVisible;
+            }
         },
         data() {
             var validateAccount = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error(this.$t('tips.not_fill_email')));
                 } else {
-                    callback()
+                    callback();
                 }
-
             };
             var validatePass = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error(this.$t('tips.fill_pwd')));
                 } else {
-                    callback()
+                    callback();
                 }
-
             };
             return {
-
+                loginBtWidth: '15rem',
+                loginText: 'login_in',
+                loginButtonDisable: false,
                 myStyle: {
-                    height: '',
+                    height: ''
                 },
                 rules: {
                     userName: [
@@ -76,12 +81,12 @@
                     ],
                     pwd: [
                         {required: true, validator: validatePass, trigger: ['blur', 'change']}
-                    ],
+                    ]
                 },
                 ruleForm: {
                     userName: '',
-                    pwd: '',
-                },
+                    pwd: ''
+                }
             };
         },
         inject: ['setClientHeight'],
@@ -89,33 +94,48 @@
             ...mapActions(['setLoginInfoAct', 'setCorpTokenAct']),
             pressEnter() {
                 if (event.keyCode === 13) {
-                    this.submitForm('ruleForm')
+                    this.submitForm('ruleForm');
                 }
             },
             findPwd() {
-                // this.$router.push('/password')
+                this.$router.push(`/password/${this.$store.state.linkId}`);
             },
             login(userName, pwd) {
+                let linkId = '';
+                if (this.$store.state.linkId) {
+                    linkId = this.$store.state.linkId;
+                } else {
+                    this.$store.commit('errorCodeSet', {
+                        dialogVisible: true,
+                        dialogMessage: this.$t('tips.page_error')
+                    });
+                    return;
+                }
                 let obj = {
                     user: userName.trim(),
-                    password: pwd.trim()
+                    password: pwd.trim(),
+                    link_id: linkId
                 };
+                this.loginButtonDisable = true;
+                this.loginText = 'logining';
                 http({
                     url: url.corporationManagerAuth,
                     method: 'post',
-                    data: obj,
+                    data: obj
                 }).then(res => {
                     let data = [];
                     if (res.data) {
-                        data = res.data.data
+                        data = res.data.data;
                     }
+                    this.loginButtonDisable = false;
+                    this.loginText = 'login_in';
                     if (data.length) {
                         new Promise((resolve, reject) => {
                             let userInfo = {userInfo: data};
                             Object.assign(userInfo, {userName: userName});
                             this.setLoginInfoAct(userInfo);
                             if (data.length > 1) {
-                                this.$router.push('/orgSelect')
+                                this.$router.push('/orgSelect');
                             } else {
                                 this.setCorpTokenAct(data[0].token);
                                 Object.assign(userInfo, {orgValue: 0});
@@ -123,98 +143,47 @@
                                 this.setLoginInfoAct(userInfo);
                                 if (data[0].initial_pw_changed) {
                                     if (data[0].role === 'admin') {
-                                        this.$router.push('/rootManager')
+                                        this.$router.push('/rootManager');
                                     } else {
-                                        this.$router.push('/signedRepo')
+                                        this.$router.push('/signedRepo');
                                     }
-
                                 } else {
-                                    this.$router.push('/resetPassword')
+                                    this.$router.push('/resetPassword');
                                 }
                             }
                             resolve('completed');
                         }).then(res => {
                         }, err => {
-                        })
+                        });
                     } else {
                         this.$store.commit('errorCodeSet', {
                             dialogVisible: true,
-                            dialogMessage: this.$t('tips.id_pwd_err'),
-                        })
+                            dialogMessage: this.$t('tips.id_pwd_err')
+                        });
                     }
                 }).catch(err => {
-                    console.log(err);
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-                            case 'cla.no_db_record':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.id_pwd_err'),
-                                });
-                                break;
-                            case 'cla.wrong_id_or_pw':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.id_pwd_err'),
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        console.log('else');
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
-                })
+                    this.loginButtonDisable = false;
+                    this.loginText = 'login_in';
+                    util.catchErr(err, 'errorSet', this);
+                });
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
                     if (valid) {
-                        this.login(this.ruleForm.userName, this.ruleForm.pwd)
+                        this.login(this.ruleForm.userName, this.ruleForm.pwd);
                     } else {
                         return false;
                     }
                 });
-            },
+            }
         },
         created() {
             util.clearManagerSession(this);
         },
         mounted() {
-            this.setClientHeight()
+            this.setClientHeight();
         }
-    }
+    };
 </script>
 
 <style lang="less">

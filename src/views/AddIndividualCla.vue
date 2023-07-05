@@ -7,8 +7,8 @@
 
 <script>
     export default {
-        name: "AddIndividualCla"
-    }
+        name: 'AddIndividualCla'
+    };
 </script>
 
 <style scoped>

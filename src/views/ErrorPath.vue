@@ -8,8 +8,8 @@
 
 <script>
     export default {
-        name: "ErrorPath"
-    }
+        name: 'ErrorPath'
+    };
 </script>
 
 <style scoped>

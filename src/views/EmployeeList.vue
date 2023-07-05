@@ -4,6 +4,23 @@
         <el-tabs v-model="active">
             <el-tab-pane :label="$t('corp.inactive')" name="first" style="margin-top: 1rem">
                 <div style="margin-bottom: 1rem" class="tableStyle">
+                    <el-row :gutter="10">
+                        <el-col :offset="15" :span="6">
+                            <el-input
+                                    clearable
+                                    :placeholder="$t('corp.email_input_holder')"
+                                    @input="searchEmail(inactiveSearchValue,inactiveOriginData)"
+                                    v-model="inactiveSearchValue">
+                                <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                            </el-input>
+                        </el-col>
+                        <el-col :span="3">
+                            <el-button @click="searchEmail(inactiveSearchValue,inactiveOriginData)"
+                                       class="searchButton">
+                                {{$t('corp.search')}}
+                            </el-button>
+                        </el-col>
+                    </el-row>
                     <el-table
                             :empty-text="$t('corp.no_data')"
                             class="tableClass"
@@ -62,6 +79,22 @@
             </el-tab-pane>
             <el-tab-pane :label="$t('corp.active')" name="second" style="margin-top: 1rem">
                 <div style="margin-bottom: 1rem" class="tableStyle">
+                    <el-row :gutter="10">
+                        <el-col :offset="15" :span="6">
+                            <el-input
+                                    clearable
+                                    :placeholder="$t('corp.email_input_holder')"
+                                    @input="searchEmail(activeSearchValue,activeOriginData)"
+                                    v-model="activeSearchValue">
+                                <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                            </el-input>
+                        </el-col>
+                        <el-col :span="3">
+                            <el-button @click="searchEmail(activeSearchValue,activeOriginData)" class="searchButton">
+                                {{$t('corp.search')}}
+                            </el-button>
+                        </el-col>
+                    </el-row>
                     <el-table
                             :empty-text="$t('corp.no_data')"
                             class="tableClass"
@@ -115,67 +148,94 @@
     </div>
 </template>
 <script>
-    import * as url from '../util/api'
-    import http from '../util/http'
-    import * as util from '../util/util'
-    import corpReLoginDialog from '../components/CorpReLoginDialog'
-    import reTryDialog from '../components/ReTryDialog'
-    import DeleteDialog from '../components/DeleteDialog'
+    import * as url from '../util/api';
+    import http from '../util/http';
+    import * as util from '../util/util';
+    import corpReLoginDialog from '../components/CorpReLoginDialog';
+    import reTryDialog from '../components/ReTryDialog';
+    import DeleteDialog from '../components/DeleteDialog';
 
 
     export default {
-        name: "EmployeeList",
+        name: 'EmployeeList',
         components: {
             corpReLoginDialog,
             reTryDialog,
-            DeleteDialog,
+            DeleteDialog
         },
         data() {
             return {
+                inactiveSearchValue: '',
+                activeSearchValue: '',
                 inactivePageData: [],
                 activePageData: [],
                 pageSize: 5,
                 pagerPage: 5,
                 inactiveCurrentPage: 1,
                 activeCurrentPage: 1,
-                inactiveTotal: 0,
-                activeTotal: 0,
                 deleteUserVisible: false,
                 active: 'first',
                 inactiveData: [],
+                inactiveOriginData: [],
+                activeOriginData: [],
                 activeData: [],
-                deleteData: '',
-            }
+                deleteData: ''
+            };
         },
         computed: {
-            deleteMessage(){
-                return this.$t('corp.deleteTips')
+            deleteMessage() {
+                return this.$t('corp.deleteTips');
             },
             orgValue() {
-                return this.$store.state.loginInfo.orgValue
+                return this.$store.state.loginInfo.orgValue;
             },
             userInfo() {
-                return this.$store.state.loginInfo.userInfo
+                return this.$store.state.loginInfo.userInfo;
             },
             corpReLoginDialogVisible() {
-                return this.$store.state.dialogVisible
+                return this.$store.state.dialogVisible;
             },
             corpReLoginMsg() {
-                return this.$store.state.dialogMessage
+                return this.$store.state.dialogMessage;
             },
             corpReTryDialogVisible() {
-                return this.$store.state.reTryDialogVisible
+                return this.$store.state.reTryDialogVisible;
             },
+            activeTotal() {
+                return this.activeData.length;
+            },
+            inactiveTotal() {
+                return this.inactiveData.length;
+            }
         },
         methods: {
+            searchEmail(searchValue, pageData) {
+                if (searchValue.trim() === '') {
+                    this.getEmployee();
+                } else {
+                    let searchData = [];
+                    for (let i = 0; i < pageData.length; i++) {
+                        if (pageData[i].email.indexOf(searchValue.trim()) !== -1) {
+                            searchData.push(pageData[i]);
+                        }
+                    }
+                    if (this.active === 'first') {
+                        this.inactiveData = searchData;
+                        this.inactivePageData = this.getInactivePageData();
+                    } else if (this.active === 'second') {
+                        this.activeData = searchData;
+                        this.activePageData = this.getActivePageData();
+                    }
+                }
+            },
             getInactivePageData() {
                 let data = [];
                 data = this.inactiveData.slice((this.inactiveCurrentPage - 1) * this.pageSize, this.inactiveCurrentPage * this.pageSize);
                 if (data.length === 0 && this.inactiveCurrentPage > 1) {
                     this.inactiveCurrentPage--;
-                    this.getInactivePageData()
+                    return this.getInactivePageData();
                 } else {
-                    return data
+                    return data;
                 }
             },
             getActivePageData() {
@@ -183,20 +243,20 @@
                 data = this.activeData.slice((this.activeCurrentPage - 1) * this.pageSize, this.activeCurrentPage * this.pageSize);
                 if (data.length === 0 && this.activeCurrentPage > 1) {
                     this.activeCurrentPage--;
-                    return this.getActivePageData()
+                    return this.getActivePageData();
                 } else {
-                    return data
+                    return data;
                 }
             },
             changeActivePage(page) {
                 this.activeCurrentPage = page;
-                this.activePageData = this.getActivePageData()
+                this.activePageData = this.getActivePageData();
             },
             changeInActivePage(page) {
                 this.inactiveCurrentPage = page;
-                this.inactivePageData = this.getInactivePageData()
+                this.inactivePageData = this.getInactivePageData();
             },
-            cancelDeleteEmployee(){
+            cancelDeleteEmployee() {
                 this.deleteUserVisible = false;
             },
             submitDeleteEmployee() {
@@ -205,51 +265,13 @@
                 http({
                     url: `${url.enableEmployee}/${this.deleteData.email}`,
                     method: 'delete',
-                    data: obj,
+                    data: obj
                 }).then(res => {
                     this.getEmployee();
                     util.successMessage(this);
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
-                })
+                    util.catchErr(err, 'errorSet', this);
+                });
             },
             deleteEmployee(cla_org_id, email, enabled) {
                 this.deleteData = {
@@ -257,7 +279,7 @@
                     email: email,
                     enabled: enabled
                 };
-                this.deleteUserVisible = true
+                this.deleteUserVisible = true;
             },
             changeActive(cla_org_id, email, enabled) {
                 let data = {
@@ -266,121 +288,43 @@
                 http({
                     url: `${url.enableEmployee}/${email}`,
                     method: 'put',
-                    data: data,
+                    data: data
                 }).then(res => {
-                    this.getEmployee()
+                    this.getEmployee();
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        })
-                    }
-                })
+                    util.catchErr(err, 'errorSet', this);
+                });
             },
             getEmployee() {
                 http({
-                    url: url.queryEmployee,
+                    url: url.queryEmployee
                 }).then(res => {
-                    this.inactiveData = [];
-                    this.activeData = [];
+                    let inactiveArr = [], activeArr = [];
                     let data = res.data.data;
                     data.forEach((item, index) => {
-                        item.enabled === false ? this.inactiveData.push(item) : this.activeData.push(item)
+                        item.enabled === false ? inactiveArr.push(item) : activeArr.push(item);
                     });
+                    this.inactiveData = inactiveArr;
+                    this.inactiveOriginData = inactiveArr;
+                    this.activeData = activeArr;
+                    this.activeOriginData = activeArr;
                     this.inactivePageData = this.getInactivePageData();
                     this.activePageData = this.getActivePageData();
-                    this.inactiveTotal = this.inactiveData.length;
-                    this.activeTotal = this.activeData.length
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token')
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token')
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token')
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error')
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error')
-                        })
-                    }
-                })
-            },
+                    util.catchErr(err, 'errorSet', this);
+                });
+            }
         },
         created() {
             this.getEmployee();
         }
-    }
+    };
 </script>
 
 <style lang="less">
     @import "../assets/font/css/Roboto-Regular.css";
 
     #employeeList {
-        padding: 2rem 0;
-
         & .el-dialog {
             border-radius: 1rem;
         }
@@ -444,23 +388,6 @@
         }
 
         & .deleteBt:focus {
-            outline: none;
-        }
-
-        & .button {
-            width: 10rem;
-            height: 2rem;
-            border-radius: 1rem;
-            border: none;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            background: linear-gradient(to right, #97DB30, #319E55);
-            margin-bottom: 1rem;
-            user-select: none;
-        }
-
-        & .button:focus {
             outline: none;
         }
 
@@ -584,6 +511,18 @@
 
         .el-pagination button:disabled {
             cursor: auto;
+        }
+
+        .searchButton {
+            width: 100%;
+            border-radius: 1.25rem;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            background: linear-gradient(to right, #97DB30, #319E55);
+            margin-bottom: 1rem;
+            user-select: none;
         }
     }
 

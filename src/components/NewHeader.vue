@@ -6,6 +6,12 @@
                     <svg-icon icon-class="logo" class="icon"></svg-icon>
                 </div>
                 <div>
+                    <div v-if="showHeaderMenu==='corp'">
+                        <div v-if="this.$store.state.loginInfo" class="grayColor">
+                            <span>{{communityInfo}}</span>
+                            <span class="margin-left-1rem">{{this.$store.state.loginInfo.userName}}</span>
+                        </div>
+                    </div>
                     <div>
                         <div v-if="showHeaderMenu" class="menuBox">
                             <div class="userImgBox" id="imgBox">
@@ -26,15 +32,18 @@
                                     {{$t('header.emp')}}
                                 </div>
                                 <div v-if="loginRole==='corp'&&role==='admin'" @click="handleCommand('d')">
+                                    {{$t('header.SubEmail')}}
+                                </div>
+                                <div v-if="loginRole==='corp'&&role==='admin'" @click="handleCommand('e')">
                                     {{$t('header.createManager')}}
                                 </div>
-                                <div v-if="loginRole==='corp'" @click="handleCommand('e')">
+                                <div v-if="loginRole==='corp'" @click="handleCommand('f')">
                                     {{$t('header.resetPwd')}}
                                 </div>
-                                <div v-if="loginRole==='corp'&&role==='admin'" @click="handleCommand('f')">
+                                <div v-if="loginRole==='corp'&&role==='admin'" @click="handleCommand('g')">
                                     {{$t('header.corpCla')}}
                                 </div>
-                                <div @click="handleCommand('g')">
+                                <div @click="handleCommand('h')">
                                     {{$t('header.loginOut')}}
                                 </div>
                             </div>
@@ -61,11 +70,9 @@
                                             <div :class="{'isShow':value!==item.value,'mark':item.label}">
                                             </div>
                                         </div>
-
                                         <div>
                                             {{item.label}}
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -78,12 +85,21 @@
 </template>
 
 <script>
-    import http from '../util/http'
-    import * as url from '../util/api'
-    import cookie from 'js-cookie'
+    import http from '../util/http';
+    import * as url from '../util/api';
+    import * as util from '../util/util';
+    import claConfig from '../../public/static/config-store';
 
     export default {
-        name: "NewHeader",
+        name: 'NewHeader',
+        computed: {
+            communityInfo() {
+                if (this.$store.state.loginInfo && this.$store.state.loginInfo.userInfo[0].repo_id) {
+                    return `${this.$store.state.loginInfo.userInfo[0].org_id}/${this.$store.state.loginInfo.userInfo[0].repo_id}`;
+                }
+                return this.$store.state.loginInfo && this.$store.state.loginInfo.userInfo[0].org_id;
+            }
+        },
         data() {
             return {
                 role: '',
@@ -93,33 +109,48 @@
                 isActive: true,
                 language: 'English',
                 value: 0,
-                options: [{value: 0, label: 'English'}, {value: 1, label: '中文'}],
                 visible: {
-                    visibility: 'hidden',
+                    visibility: 'hidden'
                 },
-            }
+                options: [{value: 0, label: 'English'}, {value: 1, label: 'Chinese'}]
+            };
         },
-
         methods: {
+            updateLangOptions(data) {
+                this.options = data;
+            },
             toIndex() {
-                if (this.$route.path === '/corporationManagerLogin' || this.$route.path === '/platformSelect') {
-                    this.$router.push('/')
+                if (this.$route.path === '/platformSelect') {
+                    this.$router.push('/');
                 } else if (this.$route.path === '/corporationList' || this.$route.path === '/addCorpUrl' || this.$route.path === '/config-check'
                     || this.$route.path === '/addIndividualUrl' || this.$route.path === '/config-org' || this.$route.path === '/config-email'
                     || this.$route.path === '/config-cla-link' || this.$route.path === '/config-fields') {
-                    this.$router.push('/linkedRepo')
+                    this.$router.push('/linkedRepo');
                 } else if (this.$route.path === '/createManager') {
-                    this.$router.push('/managerList')
+                    this.$router.push('/managerList');
                 } else if (this.$route.path === '/resetPassword') {
                     if (this.$store.state.loginInfo.userInfo[0].role === 'manager') {
-                        this.$router.push('/employeeList')
+                        this.$router.push('/employeeList');
                     } else {
-                        this.$router.push('/managerList')
+                        this.$router.push('/managerList');
+                    }
+                } else if (this.$route.path === '/add-subemail') {
+                    this.$router.push('/subemail');
+                } else if (this.$route.path === '/privacy') {
+                    this.$router.push('/sign-cla');
+                } else if (this.$route.path === '/corporationManagerLogin') {
+                    if (this.$store.state.linkId) {
+                        this.$router.replace(`${claConfig.SIGN_ROUTER}/${this.$store.state.linkId}`);
+                    } else {
+                        this.$store.commit('errorCodeSet', {
+                            dialogVisible: true,
+                            dialogMessage: this.$t('tips.page_error')
+                        });
                     }
                 }
             },
             openOrCloseMenu() {
-                this.menuVisible = !this.menuVisible
+                this.menuVisible = !this.menuVisible;
             },
             handleCommand(command) {
                 switch (command) {
@@ -133,151 +164,138 @@
                         this.toEmployee();
                         break;
                     case 'd':
-                        this.toCreateManager();
+                        this.toAddSubEmail();
                         break;
                     case 'e':
-                        this.toResetPwd();
+                        this.toCreateManager();
                         break;
                     case 'f':
-                        this.toCLA();
+                        this.toResetPwd();
                         break;
                     case 'g':
+                        this.toCLA();
+                        break;
+                    case 'h':
                         this.loginOut();
                         break;
                 }
             },
             toHome() {
                 if (this.$route.path !== '/linkedRepo') {
-                    this.$router.push('/home')
+                    this.$router.push('/home');
                 }
             },
             toManager() {
                 if (this.$route.path !== '/managerList') {
-                    this.$router.push('/managerList')
+                    this.$router.push('/managerList');
                 }
             },
             toEmployee() {
                 if (this.$route.path !== '/employeeList') {
-                    this.$router.push('/employeeList')
+                    this.$router.push('/employeeList');
+                }
+            },
+            toAddSubEmail() {
+                if (this.$route.path !== '/subemail') {
+                    this.$router.push('/subemail');
                 }
             },
             toCreateManager() {
                 if (this.$route.path !== '/createManager') {
-                    this.$router.push('/createManager')
+                    this.$router.push('/createManager');
                 }
             },
             toResetPwd() {
                 if (this.$route.path !== '/resetPassword') {
-                    this.$router.push('/resetPassword')
+                    this.$router.push('/resetPassword');
                 }
             },
             toCLA() {
                 http({
                     url: url.corporationPdf,
-                    responseType: 'blob',
+                    responseType: 'blob'
                 }).then(res => {
                     if (res && res.data) {
                         let blob = new Blob([(res.data)], {type: 'application/pdf'});
                         let url = window.URL.createObjectURL(blob);
-                        window.open(`../../static/pdf_source/web/viewer.html?file=${encodeURIComponent(url)}`)
+                        window.open(`../../static/pdf_source/web/viewer.html?file=${encodeURIComponent(url)}`);
                     }
                 }).catch(err => {
-                    if (err.data && err.data.hasOwnProperty('data')) {
-                        switch (err.data.data.error_code) {
-                            case 'cla.invalid_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.invalid_token'),
-                                });
-                                break;
-                            case 'cla.missing_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.missing_token'),
-                                });
-                                break;
-                            case 'cla.unknown_token':
-                                this.$store.commit('errorSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_token'),
-                                });
-                                break;
-
-                            case 'cla.system_error':
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.system_error'),
-                                });
-                                break;
-                            default :
-                                this.$store.commit('errorCodeSet', {
-                                    dialogVisible: true,
-                                    dialogMessage: this.$t('tips.unknown_error'),
-                                });
-                                break;
-                        }
-                    } else {
-                        this.$store.commit('errorCodeSet', {
-                            dialogVisible: true,
-                            dialogMessage: this.$t('tips.system_error'),
-                        })
-                    }
-                })
+                    util.catchErr(err, 'errorSet', this);
+                });
             },
             loginOut() {
-                sessionStorage.clear();
+                util.clearManagerSession(this);
                 if (this.loginRole === 'corp') {
-                    this.$router.push('/corporationManagerLogin')
+                    this.$router.push('/corporationManagerLogin');
                 } else {
-                    this.$router.push('/')
+                    this.$router.push('/');
                 }
             },
             chooseLng(value) {
                 if (this.value !== value) {
-                    this.value = value
-                    localStorage.setItem('lang', value)
+                    this.value = value;
                     this.language = this.options[value].label;
-                    switch (value) {
-                        case 0:
-                            this.$i18n.locale = 'en-us';
-                            break;
-                        case 1:
-                            this.$i18n.locale = 'zh-cn';
-                            break;
-                    }
+                    localStorage.setItem('lang', this.language);
+                    this.changeI18N(this.language);
                 }
                 this.isActive = true;
             },
             clickSelect() {
                 this.isActive = !this.isActive;
             },
-            init() {
-                if (parseInt(localStorage.getItem('lang'))) {
-                    this.value = parseInt(localStorage.getItem('lang'))
-                }
-                switch (this.value) {
-                    case 0:
-                        this.language = 'English';
+            changeI18N(language) {
+                switch (language) {
+                    case 'English':
                         this.$i18n.locale = 'en-us';
                         break;
-                    case 1:
-                        this.language = '中文';
+                    case 'Chinese':
                         this.$i18n.locale = 'zh-cn';
                         break;
+                    default:
+                        this.$i18n.locale = 'en-us';
+                        break;
                 }
+            },
+            setLangValue(language) {
+                for (let i = 0; i < this.options.length; i++) {
+                    if (this.options[i].label === language) {
+                        this.value = i;
+                    }
+                }
+            },
+            init(value) {
+                if (value !== '' && value !== undefined) {
+                    this.language = value;
+                } else {
+                    let lang = localStorage.getItem('lang');
+                    switch (lang) {
+                        case '0':
+                        case 'English':
+                            this.language = 'English';
+                            localStorage.setItem('lang', 'English');
+                            break;
+                        case '1':
+                        case 'Chinese':
+                            this.language = 'Chinese';
+                            localStorage.setItem('lang', 'Chinese');
+                            break;
+                        default:
+                            this.language = 'English';
+                            localStorage.setItem('lang', 'English');
+                            break;
+                    }
+                }
+                this.changeI18N(this.language);
+                this.setLangValue(this.language);
                 if (this.$store.state.loginInfo) {
                     this.role = this.$store.state.loginInfo.userInfo[0].role;
                 }
-                if (sessionStorage.getItem('showHeaderMenu') === 'false') {
-                    this.showHeaderMenu = false
-                } else if (sessionStorage.getItem('showHeaderMenu') === 'corp') {
-                    this.showHeaderMenu = true;
-                    this.loginRole = 'corp';
-                } else {
-                    this.showHeaderMenu = true;
-                    this.loginRole = 'org';
+                this.showHeaderMenu = util.getMenuState(this);
+                if (this.showHeaderMenu === 'corp' || this.showHeaderMenu === 'org') {
+                    this.loginRole = this.showHeaderMenu;
                 }
-            },
+            }
         },
         created() {
             this.init();
@@ -288,11 +306,11 @@
                     this.isActive = true;
                 }
                 if (e.target.id !== 'svgCover') {
-                    this.menuVisible = false
+                    this.menuVisible = false;
                 }
-            })
+            });
         }
-    }
+    };
 </script>
 
 <style scoped lang="less">
@@ -310,12 +328,17 @@
     }
 
     .parentBox {
+        box-sizing: border-box;
         width: 100%;
         border-bottom: 2px solid #F2F2F2;
 
         .headerBox {
             padding: 0 1rem;
             height: 5.5rem;
+
+            .margin-left-1rem {
+                margin-left: 1rem;
+            }
 
             .box {
                 cursor: pointer;
@@ -327,6 +350,10 @@
 
             .pointer {
                 cursor: pointer;
+            }
+
+            .infoBox {
+
             }
 
             .menuBox {
@@ -540,6 +567,5 @@
 
         }
     }
-
 
 </style>
