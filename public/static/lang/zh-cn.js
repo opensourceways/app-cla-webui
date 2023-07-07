@@ -153,6 +153,7 @@ module.exports = {
         illegal_link: '非法链接',
         send_reset_password_email: '已向您的邮箱发送了重置密码的邮件',
         loading: '加载中',
+        change_to_Gmail: '确定修改为G-Mail:',
         select_file: '请先选择需要上传的文件'
     },
     header: {

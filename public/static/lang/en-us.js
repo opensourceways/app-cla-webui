@@ -153,6 +153,7 @@ module.exports = {
         illegal_link: 'Illegal link',
         send_reset_password_email: 'An email to reset your password has been sent to your mailbox',
         loading: 'Loading',
+        change_to_Gmail: 'Are you sure to change it to G-Mail:',
         select_file: 'Please select file first'
     },
     header: {

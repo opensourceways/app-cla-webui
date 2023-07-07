@@ -128,12 +128,7 @@ import * as url from '../util/api';
                 return this.lang === 'Chinese' ? '100px' : '188px'
             },
             emailTypeArr() {
-                // 修改时暂不支持gmail
-                return this.modifyEmailLinkId
-                    ? [
-                        {value: TENCENT_EMAIL, label: this.$t('org.config_cla_tencent_email')},
-                    ]
-                    : [
+                return [
                         {value: 'G-Mail', label: 'G-Mail'},
                         {value: TENCENT_EMAIL, label: this.$t('org.config_cla_tencent_email')},
                     ]
@@ -247,7 +242,9 @@ import * as url from '../util/api';
                                         util.catchErr(err, 'setOrgReLogin', this);
                                     });
                                 } else {
-                                    window.location.reload();
+                                    this.loading.close();
+                                    this.closeDialog();
+                                    this.$store.commit('setEmail', this.emailForm.email);
                                 }
                             }).catch(err => {
                                 this.loading.close();
