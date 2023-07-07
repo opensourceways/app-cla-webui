@@ -33,7 +33,7 @@
                 <el-input v-model="org_alias" size="medium"
                           :placeholder="$t('org.config_cla_select_org_alias_placeholder')"></el-input>
             </div>
-            <div class="margin-top-1rem">
+            <!-- <div class="margin-top-1rem">
                 {{$t('org.config_cla_select_repo')}}
             </div>
             <el-row class="margin-top-1rem">
@@ -41,7 +41,7 @@
                     <el-input v-model="repo" size="medium"
                               :placeholder="$t('org.config_cla_select_repo_placeholder')"></el-input>
                 </el-col>
-            </el-row>
+            </el-row> -->
         </div>
         <div class="orgStepBtBox">
             <button class="step_button" @click="toConfigClaLink">{{$t('org.next_step')}}</button>
@@ -101,13 +101,13 @@
                 }
 
             },
-            orgValue() {
-                if (this.$store.state.orgValue === undefined || this.$store.state.orgValue === '' || this.$store.state.orgValue === 'undefined') {
-                    return undefined;
-                } else {
-                    return Number(this.$store.state.orgValue);
-                }
-            },
+            // orgValue() {
+            //     if (this.$store.state.orgValue === undefined || this.$store.state.orgValue === '' || this.$store.state.orgValue === 'undefined') {
+            //         return undefined;
+            //     } else {
+            //         return Number(this.$store.state.orgValue);
+            //     }
+            // },
             repositoryValue() {
                 if (this.$store.state.repositoryValue === undefined || this.$store.state.repositoryValue === '' || this.$store.state.repositoryValue === 'undefined') {
                     return undefined;
@@ -135,7 +135,8 @@
         data() {
             return {
                 org_id: '',
-                org: this.$store.state.chooseOrg
+                org: this.$store.state.chooseOrg,
+                orgValue:''
             };
         },
         inject: ['setClientHeight'],
@@ -193,18 +194,20 @@
                 });
             },
             toConfigClaLink() {
-                if (this.org) {
-                    if (this.repo) {
-                        this.checkRepo(this.org, this.repo);
-                    } else {
-                        this.$router.replace('/config-email');
-                    }
-                } else {
-                    this.$store.commit('errorCodeSet', {
-                        dialogVisible: true,
-                        dialogMessage: this.$t('corp.fill_complete')
-                    });
-                }
+                // if (this.org) {
+                    // if (this.repo) {
+                    //     this.checkRepo(this.org, this.repo);
+                    // } else {
+                    //     this.$router.replace('/config-email');
+                    // }
+                    
+                // } else {
+                //     this.$store.commit('errorCodeSet', {
+                //         dialogVisible: true,
+                //         dialogMessage: this.$t('corp.fill_complete')
+                //     });
+                // }
+                this.$router.replace('/config-email');
             },
             orgVisibleChange(visible) {
                 if (visible) {
@@ -222,7 +225,8 @@
                     this.org_id = '';
                     this.$store.commit('setOrgChoose', false);
                 } else {
-                    this.$store.commit('setChooseOrg', this.orgOptions[value].label);
+                    // this.$store.commit('setChooseOrg', this.orgOptions[value].label);
+                    this.$store.commit('setChooseOrg', this.$store.state.orgValue);
                     this.org = this.orgOptions[value].label;
                     this.org_id = this.orgOptions[value].id;
                     this.$store.commit('setOrgChoose', true);
@@ -260,26 +264,27 @@
                 });
             },
             getOrgsInfo() {
-                let _url = '';
-                let _http = '';
+                let _url = url.getOrganizationInfo;
+                let _http = _axios;
                 let obj = {};
-                if (this.$store.state.platform === 'Gitee') {
-                    _url = url.getGiteeOrgsInfo;
-                    _http = _axios;
-                    obj = {access_token: this.$store.state.platform_token, admin: true, page: 1, per_page: 100};
-                } else if (this.$store.state.platform === 'Github') {
-                    _url = url.getGithubOrgsInfo;
-                    _http = platform_http;
-                    obj = {accept: 'application/vnd.github.v3+json', page: 1, per_page: 100};
-                }
+                // if (this.$store.state.platform === 'Gitee') {
+                //     _url = url.getGiteeOrgsInfo;
+                //     _http = _axios;
+                //     obj = {access_token: this.$store.state.platform_token, admin: true, page: 1, per_page: 100};
+                // } else if (this.$store.state.platform === 'Github') {
+                //     _url = url.getGithubOrgsInfo;
+                //     _http = platform_http;
+                //     obj = {accept: 'application/vnd.github.v3+json', page: 1, per_page: 100};
+                // }
                 _http({
                     url: _url,
-                    params: obj
+                    // params: obj
                 }).then(res => {
                     if (res.status === 200) {
                         let orgOptions = [];
-                        res.data.forEach((item, index) => {
-                            orgOptions.push({value: index, label: item.login, id: item.id});
+                        res.data.data.forEach((item, index) => {
+                            // orgOptions.push({value: index, label: item.login, id: item.id});
+                            orgOptions.push({value: item, label: item, id: item});
                         });
                         this.$store.commit('setOrgOption', orgOptions);
                     }
