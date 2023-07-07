@@ -5,6 +5,7 @@ export const getClaInfo = '/v1/link';                                           
 export const delCla = '/v1/cla';                                                    //删除cla delete
 export const getGiteeOrgsInfo = 'https://gitee.com/api/v5/user/orgs';               //获取gitee授权用户的组织信息
 export const getGithubOrgsInfo = 'https://api.github.com/user/orgs';                //获取github授权用户的组织信息
+export const getOrganizationInfo = '/v1/organization';                              //获取Organization用户的组织信息
 export const linkRepository = '/v1/link';                                           //绑定开源项目  post
 export const getLinkedRepoList = '/v1/link';                                        //获取已绑定的开源项目list  method:get
 export const unLinkRepository = '/v1/link';                                         //解除绑定开源项目 delete
