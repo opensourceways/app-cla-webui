@@ -260,26 +260,27 @@
                 });
             },
             getOrgsInfo() {
-                let _url = '';
-                let _http = '';
+                let _url = url.getOrganizationInfo;
+                let _http = _axios;
                 let obj = {};
-                if (this.$store.state.platform === 'Gitee') {
-                    _url = url.getGiteeOrgsInfo;
-                    _http = _axios;
-                    obj = {access_token: this.$store.state.platform_token, admin: true, page: 1, per_page: 100};
-                } else if (this.$store.state.platform === 'Github') {
-                    _url = url.getGithubOrgsInfo;
-                    _http = platform_http;
-                    obj = {accept: 'application/vnd.github.v3+json', page: 1, per_page: 100};
-                }
+                // if (this.$store.state.platform === 'Gitee') {
+                //     _url = url.getGiteeOrgsInfo;
+                //     _http = _axios;
+                //     obj = {access_token: this.$store.state.platform_token, admin: true, page: 1, per_page: 100};
+                // } else if (this.$store.state.platform === 'Github') {
+                //     _url = url.getGithubOrgsInfo;
+                //     _http = platform_http;
+                //     obj = {accept: 'application/vnd.github.v3+json', page: 1, per_page: 100};
+                // }
                 _http({
                     url: _url,
-                    params: obj
+                    // params: obj
                 }).then(res => {
                     if (res.status === 200) {
                         let orgOptions = [];
-                        res.data.forEach((item, index) => {
-                            orgOptions.push({value: index, label: item.login, id: item.id});
+                        res.data.data.forEach((item, index) => {
+                            // orgOptions.push({value: index, label: item.login, id: item.id});
+                            orgOptions.push({value: item, label: item, id: item});
                         });
                         this.$store.commit('setOrgOption', orgOptions);
                     }
