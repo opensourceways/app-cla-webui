@@ -13,15 +13,6 @@ const routes = [
             pageType:'notLogin'
         }
     },
-    // {
-    //     path: '/jump-page',
-    //     name: 'JumpPage',
-    //     component: () => import('../views/JumpPage.vue'),
-    //     meta: {
-    //         title: 'jump page',
-    //         pageType:'notLogin'
-    //     }
-    // },
     {
         path: '/index',
         component: () => import('../views/Index.vue'),
@@ -30,16 +21,6 @@ const routes = [
             pageType:'notLogin'
         },
         children: [
-            // {
-            //     path: '/',
-            //     name: 'LoginTypeSelect',
-            //     meta: {
-            //         title: 'index',
-            //         pageType:'notLogin'
-            //     },
-            //     component: () => import('../views/LoginTypeSelect.vue')
-            // },
-
             {
                 path: '/',
                 name: 'PlatformSelect',
