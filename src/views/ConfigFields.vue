@@ -141,6 +141,7 @@
 
 <script>
     import * as util from '../util/util';
+    import claConfig from "../lang/global";
 
     export default {
         name: 'ConfigFields',
@@ -164,12 +165,12 @@
             return {
                 individualMetadata: [],
                 corpMetadata: [],
-                individualMetadataArr: INDIVIDUALMETADATAARR_EN,
-                corporationMetadataArr: CORPORATIONMETADATAARR_EN,
-                initIndividualCustomMetadata: JSON.parse(JSON.stringify(INITCUSTOMMETADATA)),
-                initCorpCustomMetadata: JSON.parse(JSON.stringify(INITCUSTOMMETADATA)),
-                individualTitleOptions: TITLE_OPTIONS_EN,
-                corpTitleOptions: TITLE_OPTIONS_EN
+                individualMetadataArr: claConfig.INDIVIDUALMETADATAARR_EN,
+                corporationMetadataArr: claConfig.CORPORATIONMETADATAARR_EN,
+                initIndividualCustomMetadata: JSON.parse(JSON.stringify(claConfig.INITCUSTOMMETADATA)),
+                initCorpCustomMetadata: JSON.parse(JSON.stringify(claConfig.INITCUSTOMMETADATA)),
+                individualTitleOptions: claConfig.TITLE_OPTIONS_EN,
+                corpTitleOptions: claConfig.TITLE_OPTIONS_EN
             };
         },
         beforeRouteEnter(to, from, next) {
@@ -186,11 +187,11 @@
             },
             init() {
                 if (this.$store.state.individualLanguage === 'chinese') {
-                    this.individualMetadataArr = INDIVIDUALMETADATAARR_ZH;
+                    this.individualMetadataArr = claConfig.INDIVIDUALMETADATAARR_ZH;
                 }
                 if (this.$store.state.corpLanguage === 'chinese') {
-                    this.corporationMetadataArr = CORPORATIONMETADATAARR_ZH;
-                    this.corpTitleOptions = TITLE_OPTIONS_ZH;
+                    this.corporationMetadataArr = claConfig.CORPORATIONMETADATAARR_ZH;
+                    this.corpTitleOptions = claConfig.TITLE_OPTIONS_ZH;
                     util.corpFiledExchangeToZh(this.corporationCustomMetadataArr);
                 } else if (this.$store.state.corpLanguage === 'english') {
                     util.corpFiledExchangeToEn(this.corporationCustomMetadataArr);

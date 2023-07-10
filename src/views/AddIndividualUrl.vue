@@ -147,6 +147,7 @@
     import ReTryDialog from '../components/ReTryDialog';
     import ReLoginDialog from '../components/ReLoginDialog';
     import * as util from '../util/util';
+    import claConfig from "../lang/global";
 
     export default {
         name: 'AddIndividualCla',
@@ -191,17 +192,17 @@
             return {
                 individualMetadata: [],
                 languageOptions: [{value: 'english', label: 'English'}, {value: 'chinese', label: '中文'}],
-                individualMetadataArr: INDIVIDUALMETADATAARR_EN,
-                initIndividualCustomMetadata: JSON.parse(JSON.stringify(INITCUSTOMMETADATA)),
-                individualTitleOptions: TITLE_OPTIONS_EN
+                individualMetadataArr: claConfig.INDIVIDUALMETADATAARR_EN,
+                initIndividualCustomMetadata: JSON.parse(JSON.stringify(claConfig.INITCUSTOMMETADATA)),
+                individualTitleOptions: claConfig.TITLE_OPTIONS_EN
             };
         },
         methods: {
             initMetadata(lang) {
                 if (lang === 'chinese') {
-                    this.individualMetadataArr = INDIVIDUALMETADATAARR_ZH;
+                    this.individualMetadataArr = claConfig.INDIVIDUALMETADATAARR_ZH;
                 } else if (lang === 'english') {
-                    this.individualMetadataArr = INDIVIDUALMETADATAARR_EN;
+                    this.individualMetadataArr = claConfig.INDIVIDUALMETADATAARR_EN;
                 }
             },
             individualInit() {
@@ -256,10 +257,10 @@
             },
             changeIndividualLanguage(value) {
                 if (value === 'chinese') {
-                    this.individualTitleOptions = TITLE_OPTIONS_ZH;
+                    this.individualTitleOptions = claConfig.TITLE_OPTIONS_ZH;
                     util.individualFiledExchangeToZh(this.individualCustomMetadataArr);
                 } else if (value === 'english') {
-                    this.individualTitleOptions = TITLE_OPTIONS_EN;
+                    this.individualTitleOptions = claConfig.TITLE_OPTIONS_EN;
                     util.individualFiledExchangeToEn(this.individualCustomMetadataArr);
                 }
                 this.initMetadata(value);

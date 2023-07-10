@@ -1,97 +1,118 @@
 <template>
-    <el-row id="cla_pdf">
-        <pdf class="pdfPage margin-bottom-1rem" ref="pdf" v-for="i in numPages" :key="i" :src="claText"
-             :page="i"></pdf>
-    </el-row>
+  <el-row id="cla_pdf">
+    <pdf
+      class="pdfPage margin-bottom-1rem"
+      ref="pdf"
+      v-for="i in numPages"
+      :key="i"
+      :src="claText"
+      :page="i"
+    ></pdf>
+  </el-row>
 </template>
 
 <script>
-    import pdf from 'vue-pdf';
-    import http from '../util/_axios';
-    import * as url from '../util/api';
-    import * as util from '../util/util';
+import pdf from "vue-pdf";
+import http from "../util/_axios";
+import * as url from "../util/api";
+import * as util from "../util/util";
 
-    export default {
-        name: 'ClaPdf',
-        components: {
-            pdf
-        },
-        data() {
-            return {
-                claText: '',
-                numPages: null
-            };
-        },
-        computed: {
-            apply_to() {
-                if (this.$store.state.loginType === 'corporation') {
-                    return this.$store.state.loginType;
-                }
-                return 'individual';
-            },
-            claTextUrl() {
-                return this.$store.state.domain;
-            }
-        },
-        created() {
-            this.getData();
-        },
-        methods: {
-            getData() {
-                window.addEventListener('message', (event) => {
-                    if (event.data) {
-                        this.setClaText(event.data);
-                    }
-                }, false);
-            },
-            getNumPages(url) {
-                let loadingTask = pdf.createLoadingTask(url);
-                loadingTask.promise.then(pdf => {
-                    this.numPages = pdf.numPages;
-                }).catch(err => {
-                    console.error('pdf 加载失败', err);
-                });
-            },
-            setClaText(obj) {
-                let dataFromParent = obj;
-                if (dataFromParent.pdfData && dataFromParent.pdfData.length) {
-                    for (let i = 0; i < dataFromParent.pdfData.length; i++) {
-                        if (dataFromParent.pdfData[i].hasOwnProperty(dataFromParent.lang)) {
-                            this.claText && window.URL.revokeObjectURL(this.claText);
-                            this.claText = window.URL.createObjectURL(dataFromParent.pdfData[i][dataFromParent.lang]);
-                            this.getNumPages(this.claText);
-                            return;
-                        }
-                    }
-                }
-                if (!dataFromParent.hasOwnProperty('pdfData')) {
-                    return;
-                }
-                http({
-                    url: `${url.getCLAPdf}/${dataFromParent.link_id}/${this.apply_to}/${dataFromParent.lang}/${dataFromParent.hash}`,
-                    responseType: 'blob'
-                }).then(res => {
-                    if (res && res.data) {
-                        let blob = new Blob([(res.data)], {type: 'application/pdf'});
-                        let data = dataFromParent.pdfData;
-                        data.push({[dataFromParent.lang]: blob});
-                        window.parent.postMessage(data, this.claTextUrl);
-                        window.URL.revokeObjectURL(this.claText);
-                        this.claText = window.URL.createObjectURL(blob);
-                        this.getNumPages(this.claText);
-                    }
-                }).catch(err => {
-                    util.catchErr(err, 'errorSet', this);
-                });
-            }
-        }
+export default {
+  name: "ClaPdf",
+  components: {
+    pdf,
+  },
+  data() {
+    return {
+      claText: "",
+      numPages: null,
     };
+  },
+  computed: {
+    apply_to() {
+      if (this.$store.state.loginType === "corporation") {
+        return this.$store.state.loginType;
+      }
+      return "individual";
+    },
+    claTextUrl() {
+      return this.$store.state.domain;
+    },
+  },
+  created() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      window.addEventListener(
+        "message",
+        (event) => {
+          if (event.data) {
+            this.setClaText(event.data);
+          }
+        },
+        false
+      );
+    },
+    getNumPages(url) {
+      let loadingTask = pdf.createLoadingTask(url);
+      loadingTask.promise
+        .then((pdf) => {
+          this.numPages = pdf.numPages;
+        })
+        .catch((err) => {
+          return "pdf 加载失败";
+        });
+    },
+    setClaText(obj) {
+      let dataFromParent = obj;
+      if (dataFromParent.pdfData && dataFromParent.pdfData.length) {
+        for (let i = 0; i < dataFromParent.pdfData.length; i++) {
+          if (
+            Object.prototype.hasOwnProperty.call(
+              dataFromParent.pdfData[i],
+              dataFromParent.lang
+            )
+          ) {
+            this.claText && window.URL.revokeObjectURL(this.claText);
+            this.claText = window.URL.createObjectURL(
+              dataFromParent.pdfData[i][dataFromParent.lang]
+            );
+            this.getNumPages(this.claText);
+            return;
+          }
+        }
+      }
+      if (!Object.prototype.hasOwnProperty.call(dataFromParent, "pdfData")) {
+        return;
+      }
+      http({
+        url: `${url.getCLAPdf}/${dataFromParent.link_id}/${this.apply_to}/${dataFromParent.lang}/${dataFromParent.hash}`,
+        responseType: "blob",
+      })
+        .then((res) => {
+          if (res && res.data) {
+            let blob = new Blob([res.data], { type: "application/pdf" });
+            let data = dataFromParent.pdfData;
+            data.push({ [dataFromParent.lang]: blob });
+            window.parent.postMessage(data, this.claTextUrl);
+            window.URL.revokeObjectURL(this.claText);
+            this.claText = window.URL.createObjectURL(blob);
+            this.getNumPages(this.claText);
+          }
+        })
+        .catch((err) => {
+          util.catchErr(err, "errorSet", this);
+        });
+    },
+  },
+};
 </script>
 
 <style scoped lang="less">
-    #cla_pdf > span:not(:last-of-type) {
-        box-shadow: 0 0 20px 10px #f3f3f3;
-        border-radius: 1rem;
-        overflow: hidden;
-    }
+#cla_pdf > span:not(:last-of-type) {
+  box-shadow: 0 0 20px 10px #f3f3f3;
+  border-radius: 1rem;
+  overflow: hidden;
+}
 </style>
