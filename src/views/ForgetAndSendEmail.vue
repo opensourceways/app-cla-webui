@@ -24,6 +24,7 @@
     import * as url from '../util/api';
     import * as util from '../util/util';
     import ReTryDialog from '../components/ReTryDialog';
+    import claConfig from "../lang/global";
 
     export default {
         name: 'ForgetAndSendEmail',
@@ -61,7 +62,7 @@
             },
             async verifyFormEmail(rule, value, callback) {
                 let email = value.trim();
-                if (EMAIL_REG.test(email)) {
+                if (claConfig.EMAIL_REG.test(email)) {
                     callback();
                 } else {
                     callback(new Error(this.$t('tips.invalid_email')));

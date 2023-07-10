@@ -44,6 +44,7 @@
     import * as util from '../util/util';
     import corpReLoginDialog from '../components/CorpReLoginDialog';
     import reTryDialog from '../components/ReTryDialog';
+    import claConfig from "../lang/global";
 
     export default {
         name: 'AddSubemail',
@@ -98,7 +99,7 @@
         methods: {
             async verifyFormEmail(rule, value, callback) {
                 let email = value.trim();
-                if (EMAIL_REG.test(email)) {
+                if (claConfig.EMAIL_REG.test(email)) {
                     callback();
                 } else {
                     callback(new Error(this.$t('tips.invalid_email')));
@@ -194,7 +195,7 @@
             },
             sendCode() {
                 let email = this.ruleForm.email.trim();
-                if (email && EMAIL_REG.test(email)) {
+                if (email && claConfig.EMAIL_REG.test(email)) {
                     if (!this.compareEmailSuffix(this.$store.state.loginInfo.userName, email)) {
                         this.$store.commit('errorCodeSet', {
                             dialogVisible: true,

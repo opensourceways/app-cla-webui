@@ -83,9 +83,9 @@
                                                 </el-col>
                                                 <el-col :span="19" class="textCol">
                                                     <div class="rightText padding-left-1rem">
-                                                        {{ $t('signType.corpStep1_1') }}<span class="pointer"
-                                                                                              @click="submit('corporation')">{{ $t('signType.corpBt') }}</span>{{
-                                                        $t('signType.corpStep1_2') }}
+                                                        <span>{{ $t('signType.corpStep1_1') }}</span>
+                                                        <span class="pointer" @click="submit('corporation')">{{ $t('signType.corpBt') }}</span>
+                                                        <span>{{$t('signType.corpStep1_2') }}</span>
                                                     </div>
                                                 </el-col>
                                             </el-row>
@@ -165,9 +165,9 @@
                                                 </el-col>
                                                 <el-col :span="19" class="textCol">
                                                     <div class="rightText padding-left-1rem">
-                                                        {{ $t('signType.corpStep6_1') }}<span class="func-link"
-                                                                                              @click="toCorpLogin()">{{ $t('signType.admin_platform') }}</span>{{
-                                                        $t('signType.corpStep6_2') }}
+                                                        <span>{{ $t('signType.corpStep6_1') }}</span>
+                                                        <span class="func-link" @click="toCorpLogin()">{{ $t('signType.admin_platform') }}</span>
+                                                        <span>{{$t('signType.corpStep6_2') }}</span>
                                                     </div>
                                                 </el-col>
                                             </el-row>
@@ -710,6 +710,7 @@
     import _axios from '../util/_axios';
     import {mapActions} from 'vuex';
     import ReTryDialog from '../components/ReTryDialog';
+    import claConfig from "../lang/global";
 
     export default {
         name: 'SignType',
@@ -798,12 +799,12 @@
             getRepoInfo() {
                 let linkId;
                 let domain = window.location.origin;
-                if (domain === OPENLOOKENG_SIGN_URL) {
-                    linkId = OPENLOOKENG_LINKID;
+                if (domain === claConfig.OPENLOOKENG_SIGN_URL) {
+                    linkId = claConfig.OPENLOOKENG_LINKID;
                 } else {
                     let urlParams = this.$route.params.params;
-                    if (STOCK_SIGN_LINK[urlParams]) {
-                        linkId = STOCK_SIGN_LINK[urlParams];
+                    if (claConfig.STOCK_SIGN_LINK[urlParams]) {
+                        linkId = claConfig.STOCK_SIGN_LINK[urlParams];
                     } else {
                         linkId = urlParams;
                     }

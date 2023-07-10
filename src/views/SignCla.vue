@@ -256,6 +256,7 @@ import ReTryDialog from '../components/ReTryDialog';
 import SignSuccessDialog from '../components/SignSuccessDialog';
 import SignReLoginDialog from '../components/SignReLoginDialog';
 import HttpButton from '../components/HttpButton';
+import claConfig from "../lang/global";
 
 export default {
   name: 'SignCla',
@@ -461,7 +462,7 @@ export default {
       if (value) {
         email = value.trim();
       }
-      if (EMAIL_REG.test(email)) {
+      if (claConfig.EMAIL_REG.test(email)) {
         callback();
       } else {
         callback(new Error(this.$t('tips.invalid_email')));
@@ -514,7 +515,7 @@ export default {
     },
     sendCode() {
       let email = this.myForm.email;
-      if (email && EMAIL_REG.test(email)) {
+      if (email && claConfig.EMAIL_REG.test(email)) {
         this.sendBtDisable = true;
         axios({
           url: `${url.sendVerifyCode}/${this.link_id}/${this.myForm.email}`,

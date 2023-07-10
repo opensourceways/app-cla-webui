@@ -168,6 +168,7 @@
     import ReLoginDialog from '../components/ReLoginDialog';
     import ReTryDialog from '../components/ReTryDialog';
     import ConfigEmailSelect from './ConfigEmailSelect';
+    import claConfig from "../lang/global";
 
     export default {
         name: 'linkedRepo',
@@ -358,7 +359,7 @@
             },
             copyAddress(row) {
                 let address = window.location.href.split('/linkedRepo')[0];
-                let url = `${address}${SIGN_ROUTER}/${row.link_id}`;
+                let url = `${address}${claConfig.SIGN_ROUTER}/${row.link_id}`;
                 let copyInput = document.createElement('input');
                 copyInput.value = url;
                 document.body.appendChild(copyInput);
@@ -369,7 +370,7 @@
                 document.body.removeChild(document.getElementsByClassName('copyInput')[0]);
             },
             toSignPage(row) {
-                let url = `${this.address}${SIGN_ROUTER}/${row.link_id}`;
+                let url = `${this.address}${claConfig.SIGN_ROUTER}/${row.link_id}`;
                 window.open(url);
             },
             submitUpload() {

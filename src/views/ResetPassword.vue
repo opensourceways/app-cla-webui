@@ -34,6 +34,7 @@
     import * as util from '../util/util';
     import corpReLoginDialog from '../components/CorpReLoginDialog';
     import reTryDialog from '../components/ReTryDialog';
+    import cla from "../lang/global";
 
     export default {
 
@@ -81,10 +82,10 @@
             var validatePass2 = (rule, value, callback) => {
                 if (value === '') {
                     callback(new Error(this.$t('corp.input_new_pwd')));
-                } else if (value.length < PWD_MIN_LENGTH || value.length > PWD_MAX_LENGTH || util.checkIllegalChar(value)) {
+                } else if (value.length < cla.PWD_MIN_LENGTH || value.length > cla.PWD_MAX_LENGTH || util.checkIllegalChar(value)) {
                     callback(new Error(this.$t('corp.newPwd_contains_Illegal_character', {
-                        minLength: PWD_MIN_LENGTH,
-                        maxLength: PWD_MAX_LENGTH
+                        minLength: cla.PWD_MIN_LENGTH,
+                        maxLength: cla.WD_MAX_LENGTH
                     })));
                 } else if (value === this.ruleForm.oldPassword) {
                     callback(new Error(this.$t('corp.newPwd_diff_with_oldPwd')));
