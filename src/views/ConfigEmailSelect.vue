@@ -192,7 +192,7 @@ import * as url from '../util/api';
                     }
                     formData.append('data', JSON.stringify(obj));
                     http({
-                        url: `${url.postEmailCode}/${TENCENT_EMAIL}`,
+                        url: `${url.postEmailCode}`,
                         method: 'post',
                         data: formData
                     }).then(res => {
@@ -227,7 +227,7 @@ import * as url from '../util/api';
                             }
                             formData.append('data', JSON.stringify(obj));
                             http({
-                                url: `${url.authorizeEmail}/${TENCENT_EMAIL}`,
+                                url: `${url.authorizeEmail}`,
                                 method: 'post',
                                 data: formData
                             }).then(res => {
@@ -247,7 +247,11 @@ import * as url from '../util/api';
                                         util.catchErr(err, 'setOrgReLogin', this);
                                     });
                                 } else {
-                                    window.location.reload();
+                                    // window.location.reload();
+                                    this.$store.state.email =this.emailForm.email
+                                    this.loading.close();
+                                    this.closeDialog();
+                                    this.$emit('callback');
                                 }
                             }).catch(err => {
                                 this.loading.close();
