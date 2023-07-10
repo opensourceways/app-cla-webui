@@ -26,7 +26,7 @@
             type="button"
             @click="submitForm('ruleForm')"
           >
-            {{ $t("corp.submit") }}
+            {{ $t('corp.submit') }}
           </button>
         </el-form-item>
       </el-form>
@@ -39,22 +39,22 @@
 </template>
 
 <script>
-import Step from "../components/FindPwdSteps";
-import http from "../util/_axios";
-import * as url from "../util/api";
-import * as util from "../util/util";
-import ReTryDialog from "../components/ReTryDialog";
-import cla from "../lang/global";
+import Step from '../components/FindPwdSteps';
+import http from '../util/_axios';
+import * as url from '../util/api';
+import * as util from '../util/util';
+import ReTryDialog from '../components/ReTryDialog';
+import cla from '../lang/global';
 
 export default {
-  name: "ResetPwdDone",
+  name: 'ResetPwdDone',
   components: {
     Step,
     ReTryDialog,
   },
   watch: {
-    "$i18n.locale"() {
-      util.verifyMsgChangeLang("ruleForm", this);
+    '$i18n.locale'() {
+      util.verifyMsgChangeLang('ruleForm', this);
     },
   },
   computed: {
@@ -67,8 +67,8 @@ export default {
   },
   data() {
     var validateNewPwd = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error(this.$t("corp.input_new_pwd")));
+      if (value === '') {
+        callback(new Error(this.$t('corp.input_new_pwd')));
       } else if (
         value.length < cla.PWD_MIN_LENGTH ||
         value.length > cla.PWD_MAX_LENGTH ||
@@ -76,7 +76,7 @@ export default {
       ) {
         callback(
           new Error(
-            this.$t("corp.newPwd_contains_Illegal_character", {
+            this.$t('corp.newPwd_contains_Illegal_character', {
               minLength: cla.PWD_MIN_LENGTH,
               maxLength: cla.PWD_MAX_LENGTH,
             })
@@ -88,35 +88,35 @@ export default {
       }
     };
     var validateNewPwdAgain = (rule, value, callback) => {
-      if (value === "") {
-        callback(new Error(this.$t("corp.input_new_pwd_again")));
+      if (value === '') {
+        callback(new Error(this.$t('corp.input_new_pwd_again')));
       } else if (value !== this.ruleForm.newPassword) {
-        callback(new Error(this.$t("corp.newPwd_diff")));
+        callback(new Error(this.$t('corp.newPwd_diff')));
       } else {
         callback();
       }
     };
     return {
       haveNewPwd: false,
-      ruleForm: { newPassword: "", newPasswordAgain: "" },
+      ruleForm: { newPassword: '', newPasswordAgain: '' },
       rules: {
         newPassword: [
           {
             required: true,
             validator: validateNewPwd,
-            trigger: ["blur", "change"],
+            trigger: ['blur', 'change'],
           },
         ],
         newPasswordAgain: [
           {
             required: true,
             validator: validateNewPwdAgain,
-            trigger: ["blur", "change"],
+            trigger: ['blur', 'change'],
           },
         ],
       },
-      link_id: "",
-      key: "",
+      link_id: '',
+      key: '',
     };
   },
   created() {
@@ -126,7 +126,7 @@ export default {
     getParams() {
       this.link_id = this.$route.query.link_id;
       this.key = this.$route.query.key;
-      this.$store.commit("setLinkId", this.link_id);
+      this.$store.commit('setLinkId', this.link_id);
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
@@ -140,21 +140,21 @@ export default {
     submitReset() {
       http({
         url: url.findPwdResetPwd + this.link_id,
-        method: "patch",
+        method: 'patch',
         data: { password: this.ruleForm.newPassword },
         headers: {
-          "Password-Retrieval-Key": this.key,
+          'Password-Retrieval-Key': this.key,
         },
       })
         .then((res) => {
           this.$message.success({
-            message: this.$t("tips.reset_password_success"),
+            message: this.$t('tips.reset_password_success'),
             duration: 6000,
           });
-          this.$router.push("/corporationManagerLogin");
+          this.$router.push('/corporationManagerLogin');
         })
         .catch((err) => {
-          util.catchErr(err, "", this);
+          util.catchErr(err, '', this);
         });
     },
   },

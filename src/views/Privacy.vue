@@ -13,23 +13,23 @@
 </template>
 
 <script>
-import Footer from "../components/NewFooter";
-import Header from "../components/NewHeader";
-import _axios from "../util/_axios";
-import * as util from "../util/util";
-import VueMarkdown from "vue-markdown";
-import ReTryDialog from "../components/ReTryDialog";
-import claConfig from "../lang/global";
+import Footer from '../components/NewFooter';
+import Header from '../components/NewHeader';
+import _axios from '../util/_axios';
+import * as util from '../util/util';
+import VueMarkdown from 'vue-markdown';
+import ReTryDialog from '../components/ReTryDialog';
+import claConfig from '../lang/global';
 
 export default {
-  name: "Privacy",
+  name: 'Privacy',
   components: {
     Header,
     Footer,
     VueMarkdown,
     ReTryDialog,
   },
-  inject: ["setClientHeight"],
+  inject: ['setClientHeight'],
   computed: {
     privacyTextObj() {
       return this.$store.state.privacyTextObj;
@@ -42,7 +42,7 @@ export default {
     },
   },
   watch: {
-    "$i18n.locale"() {
+    '$i18n.locale'() {
       this.getLanguage();
       this.getPrivacy(this.privacyData[this.value]);
     },
@@ -52,8 +52,8 @@ export default {
       privacyData: claConfig.PRIVACY_POLICY_DATA,
       value: 0,
       langOptions: [],
-      privacyText: "",
-      lang: "English",
+      privacyText: '',
+      lang: 'English',
     };
   },
   methods: {
@@ -61,8 +61,8 @@ export default {
       if (this.checkPrivacyConf()) {
         return;
       }
-      if (localStorage.getItem("lang") !== undefined) {
-        this.lang = localStorage.getItem("lang");
+      if (localStorage.getItem('lang') !== undefined) {
+        this.lang = localStorage.getItem('lang');
       }
       let notExistPrivacy = true;
       for (let key in this.privacyTextObj) {
@@ -74,15 +74,15 @@ export default {
       }
       if (notExistPrivacy) {
         let platform = obj.platform.toLowerCase();
-        let _url = "";
-        if (platform === "gitee") {
+        let _url = '';
+        if (platform === 'gitee') {
           _url = `https://gitee.com/api/v5/repos/${obj.owner}/${obj.repo}/contents/${obj.path}`;
-        } else if (platform === "github") {
+        } else if (platform === 'github') {
           _url = `https://api.github.com/repos/${obj.owner}/${obj.repo}/contents/${obj.path}`;
         } else {
-          this.$store.commit("errorCodeSet", {
+          this.$store.commit('errorCodeSet', {
             dialogVisible: true,
-            dialogMessage: this.$t("tips.not_support_platform"),
+            dialogMessage: this.$t('tips.not_support_platform'),
           });
           return;
         }
@@ -91,27 +91,27 @@ export default {
         })
           .then((res) => {
             if (res.data.length === 0) {
-              this.$store.commit("errorCodeSet", {
+              this.$store.commit('errorCodeSet', {
                 dialogVisible: true,
-                dialogMessage: this.$t("tips.privacy_conf_err"),
+                dialogMessage: this.$t('tips.privacy_conf_err'),
               });
               return;
             }
             let privacyObj = this.privacyTextObj;
-            let Base64 = require("js-base64").Base64;
+            let Base64 = require('js-base64').Base64;
             this.privacyText = Base64.decode(res.data.content);
             Object.assign(privacyObj, { [this.lang]: this.privacyText });
-            this.$store.commit("setPrivacyData", privacyObj);
+            this.$store.commit('setPrivacyData', privacyObj);
           })
           .catch((err) => {
             if (err.status === 403 || err.status === 404) {
-              this.$store.commit("errorCodeSet", {
+              this.$store.commit('errorCodeSet', {
                 dialogVisible: true,
-                dialogMessage: this.$t("tips.privacy_conf_err"),
+                dialogMessage: this.$t('tips.privacy_conf_err'),
               });
               return;
             }
-            util.catchErr(err, "", this);
+            util.catchErr(err, '', this);
           });
       }
     },
@@ -121,9 +121,9 @@ export default {
         for (let j = i + 1, len = this.privacyData.length; j < len; j++) {
           if (this.privacyData[i].language === this.privacyData[j].language) {
             hasSameLang = true;
-            this.$store.commit("errorCodeSet", {
+            this.$store.commit('errorCodeSet', {
               dialogVisible: true,
-              dialogMessage: this.$t("tips.has_same_lang_privacy"),
+              dialogMessage: this.$t('tips.has_same_lang_privacy'),
             });
             break;
           }
@@ -137,21 +137,21 @@ export default {
         return;
       }
       let langOptions = [];
-      let langLabel = "";
+      let langLabel = '';
       this.privacyData.forEach((item, index) => {
         langLabel = util.upperFirstCase(item.language);
         langOptions.push({ value: index, label: langLabel });
       });
       this.langOptions = langOptions;
-      this.$emit("getLangOptions", this.langOptions);
-      localStorage.setItem("lang", this.langOptions[this.value].label);
-      this.$emit("initHeader", this.langOptions[this.value].label);
+      this.$emit('getLangOptions', this.langOptions);
+      localStorage.setItem('lang', this.langOptions[this.value].label);
+      this.$emit('initHeader', this.langOptions[this.value].label);
     },
     getLanguage() {
-      if (localStorage.getItem("lang") !== undefined) {
-        this.lang = localStorage.getItem("lang");
+      if (localStorage.getItem('lang') !== undefined) {
+        this.lang = localStorage.getItem('lang');
       }
-      let langLabel = "";
+      let langLabel = '';
       this.privacyData.forEach((item, index) => {
         langLabel = util.upperFirstCase(item.language);
         if (langLabel === this.lang) {

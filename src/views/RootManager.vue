@@ -1,98 +1,105 @@
 <template>
-    <div id="rootManager">
-        <Header></Header>
-        <div>
-            <div id="rootManager_section" class="padding-top-bottom-2rem">
-                <router-view></router-view>
-            </div>
-        </div>
-        <Footer></Footer>
+  <div id="rootManager">
+    <Header></Header>
+    <div>
+      <div id="rootManager_section" class="padding-top-bottom-2rem">
+        <router-view></router-view>
+      </div>
     </div>
+    <Footer></Footer>
+  </div>
 </template>
 <script>
-    import Header from '@components/NewHeader';
-    import Footer from '@components/NewFooter';
-    import * as util from '../util/util';
+import Header from '@components/NewHeader';
+import Footer from '@components/NewFooter';
+import * as util from '../util/util';
 
-    window.onresize = () => {
-        if (util.getClientHeight() > document.getElementById('rootManager').offsetHeight) {
-            document.getElementById('rootManager').style.height = util.getClientHeight() + 'px';
-        }
+window.onresize = () => {
+  if (
+    util.getClientHeight() > document.getElementById('rootManager').offsetHeight
+  ) {
+    document.getElementById('rootManager').style.height =
+      util.getClientHeight() + 'px';
+  }
+};
+export default {
+  name: 'rootManager',
+  components: {
+    Header,
+    Footer,
+  },
+  computed: {
+    user() {
+      return this.$store.state.loginInfo;
+    },
+  },
+  data() {
+    return {
+      active: 'first',
     };
-    export default {
-        name: 'rootManager',
-        components: {
-            Header,
-            Footer
-        },
-        computed: {
-            user() {
-                return this.$store.state.loginInfo;
-            }
-        },
-        data() {
-            return {
-                active: 'first'
-            };
-        },
-        mounted() {
-            this.setClientHeight();
-        },
-        methods: {
-            setClientHeight() {
-                this.$nextTick(() => {
-                    document.getElementById('rootManager').style.minHeight = '0px';
-                    if (util.getClientHeight() > document.getElementById('rootManager').offsetHeight) {
-                        document.getElementById('rootManager').style.minHeight = util.getClientHeight() + 'px';
-                    } else {
-                        document.getElementById('rootManager').style.minHeight = document.getElementById('rootManager').offsetHeight + 'px';
-                    }
-                });
-            }
+  },
+  mounted() {
+    this.setClientHeight();
+  },
+  methods: {
+    setClientHeight() {
+      this.$nextTick(() => {
+        document.getElementById('rootManager').style.minHeight = '0px';
+        if (
+          util.getClientHeight() >
+          document.getElementById('rootManager').offsetHeight
+        ) {
+          document.getElementById('rootManager').style.minHeight =
+            util.getClientHeight() + 'px';
+        } else {
+          document.getElementById('rootManager').style.minHeight =
+            document.getElementById('rootManager').offsetHeight + 'px';
         }
-    };
+      });
+    },
+  },
+};
 </script>
 <style lang="less">
-    @media screen and (min-width: 1200px) {
-        #rootManager_section {
-            width: 1200px;
-            margin: auto;
-        }
-    }
+@media screen and (min-width: 1200px) {
+  #rootManager_section {
+    width: 1200px;
+    margin: auto;
+  }
+}
 
-    #rootManager {
-        display: flex;
-        box-sizing: border-box;
-        flex-direction: column;
+#rootManager {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
 
-        & > div:nth-of-type(2) {
-            flex-grow: 1;
-            background-color: #F0F2F5;
-            padding: 0 1rem;
-        }
+  & > div:nth-of-type(2) {
+    flex-grow: 1;
+    background-color: #f0f2f5;
+    padding: 0 1rem;
+  }
+}
 
-    }
+.tableBox {
+  border-radius: 1.5rem;
+  margin-bottom: 2rem;
+  padding: 3rem;
+  background-color: white;
+}
 
-    .tableBox {
-        border-radius: 1.5rem;
-        margin-bottom: 2rem;
-        padding: 3rem;
-        background-color: white;
-    }
+.tableClass {
+  border: 1px solid black;
+  border-radius: 1.5rem;
+}
 
-    .tableClass {
-        border: 1px solid black;
-        border-radius: 1.5rem;
-    }
+.el-dialog {
+  border-radius: 1rem;
+}
 
-    .el-dialog {
-        border-radius: 1rem;
-    }
-
-    .tabName {
-        user-select: none;
-        font-family: Roboto-Regular, sans-serif;
-        font-size: 2rem;
-        text-align: left;
-    }
+.tabName {
+  user-select: none;
+  font-family: Roboto-Regular, sans-serif;
+  font-size: 2rem;
+  text-align: left;
+}
 </style>
