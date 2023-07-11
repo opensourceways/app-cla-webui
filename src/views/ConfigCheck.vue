@@ -12,9 +12,9 @@
                     <el-col :span="8">
                         {{$t('org.config_cla_check_org_alias_title')}}
                     </el-col>
-                    <el-col :span="8">
+                    <!-- <el-col :span="8">
                         {{$t('org.config_cla_check_repo_title')}}
-                    </el-col>
+                    </el-col> -->
                 </el-row>
             </div>
             <div class="margin-top-half-rem">
@@ -25,9 +25,9 @@
                     <el-col :span="8">
                         <el-input disabled="" size="medium" v-model="orgAlias"></el-input>
                     </el-col>
-                    <el-col :span="8">
+                    <!-- <el-col :span="8">
                         <el-input disabled="" size="medium" v-model="repo"></el-input>
-                    </el-col>
+                    </el-col> -->
                 </el-row>
             </div>
         </div>
@@ -272,7 +272,7 @@
                 return this.$store.state.corpLanguage;
             },
             platform() {
-                return this.$store.state.platform.toLowerCase();
+                return this.$store.state.platform?.toLowerCase();
             }
         },
         data() {
@@ -343,9 +343,10 @@
                     obj = {
                         url: this.cla_link_corporation.trim(),
                         language: this.corpClaLanguageValue,
-                        fields: this.editMetadata(this.corporationMetadata)
+                        fields: this.editMetadata(this.corporationMetadata),
+                        type: "corporation",
                     };
-                    _url = `${url.addCla}/${this.$store.state.corpItem.link_id}/corporation`;
+                    _url = `${url.addCla}/${this.$store.state.corpItem.link_id}`;
                 } else {
                     obj = {
                         url: this.cla_link_individual.trim(),
@@ -371,6 +372,7 @@
             },
             newBinding() {
                 this.loading = util.getLoading(this, 'tips.loading');
+                
                 let formData = new FormData();
                 let obj = {};
                 let corpCla = {};

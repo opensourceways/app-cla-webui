@@ -50,7 +50,11 @@
                     @blur="setMyForm(item.type, ruleForm[item.id])"
                   ></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('signPage.corp') ">
+                <el-form-item
+                  :label="$t('signPage.corp')"
+                  v-if="showInput === 'employee'"
+                  required
+                >
                   <el-select
                     v-model="orgValue"
                     :placeholder="$t('org.config_cla_select_org_placeholder')"
@@ -147,7 +151,11 @@
                     @blur="setMyForm(item.type, ruleForm[item.id])"
                   ></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('signPage.corp') ">
+                <el-form-item
+                  :label="$t('signPage.corp')"
+                  v-if="showInput === 'employee'"
+                  required
+                >
                   <el-select
                     v-model="orgValue"
                     :placeholder="$t('org.config_cla_select_org_placeholder')"
@@ -156,6 +164,7 @@
                     clearable
                     filterable
                     @visible-change="orgVisibleChange"
+                    v-if="myForm.email"
                   >
                     <el-option
                       v-for="item in signingData"
@@ -165,6 +174,11 @@
                     >
                     </el-option>
                   </el-select>
+                  <el-input
+                    v-else
+                    disabled
+                    :placeholder="$t('org.config_cla_select_org_placeholder')"
+                  ></el-input>
                 </el-form-item>
                 <el-form-item
                   class="sendCodeClass"
@@ -316,7 +330,8 @@ export default {
         if (item.language === this.lang) {
           this.cla_lang = item.language;
           this.value = index;
-          this.cla_hash = item.cla_hash;
+          this.cla_hash = item.cla_id;
+          this.cla_id = item.cla_id;
           this.$refs.pdf_iframe.contentWindow.postMessage(
             {
               link_id: this.link_id,
@@ -387,7 +402,9 @@ export default {
       value: '',
       cla_lang: '',
       signingData: [],
-      orgValue:''
+      orgValue: '',
+      cla_id: '',
+      showInput: sessionStorage.getItem('loginType'),
     };
   },
   methods: {
@@ -515,11 +532,20 @@ export default {
     },
     sendCode() {
       let email = this.myForm.email;
-      if (email && claConfig.EMAIL_REG.test(email)) {
+      let _url = '';
+      if (sessionStorage.getItem('loginType') === 'corporation') {
+        _url = `${url.sendCorporationCode}/${this.link_id}/code`;
+      } else if (sessionStorage.getItem('loginType') === 'individual') {
+        _url = `${url.sendVerifyCode}/${this.link_id}/code`;
+      } else if (sessionStorage.getItem('loginType') === 'employee') {
+        _url = `${url.sendEmployeeCode}/${this.link_id}/${this.orgValue}/code`;
+      }
+      if (email && EMAIL_REG.test(email)) {
         this.sendBtDisable = true;
         axios({
-          url: `${url.sendVerifyCode}/${this.link_id}/${this.myForm.email}`,
+          url: _url,
           method: 'post',
+          data: { email: this.myForm.email },
         })
           .then(res => {
             this.$message.closeAll();
@@ -573,6 +599,7 @@ export default {
       if (res && res.data.data) {
         if (res.data.data && res.data.data.length) {
           this.signPageData = res.data.data;
+          localStorage.setItem('cla_id', this.signPageData[0].cla_id);
           if (localStorage.getItem('lang') !== undefined) {
             this.lang = localStorage.getItem('lang').toLowerCase();
           }
@@ -816,7 +843,7 @@ export default {
         }
       }
       if (this.$store.state.loginType === this.corporation) {
-        myUrl = `${url.corporation_signing}/${this.link_id}/${this.cla_lang}/${this.cla_hash}`;
+        myUrl = `${url.corporation_signing}/${this.link_id}`;
         obj = {
           corporation_name: this.myForm.corporationName,
           admin_name: this.myForm.authorized,
@@ -824,22 +851,38 @@ export default {
           enabled: true,
           info: info,
           verification_code: this.ruleForm.code,
-          corp_signing_id:this.orgValue
+          corp_signing_id: this.orgValue,
+          cla_id: localStorage.getItem('cla_id'),
+          cla_language: this.cla_lang,
         };
       } else {
-        obj = {
-          name: this.myForm.name,
-          email: this.myForm.email,
-          verification_code: this.ruleForm.code,
-          info: info,
-        };
+        if (this.$store.state.loginType === this.employee) {
+          obj = {
+            name: this.myForm.name,
+            email: this.myForm.email,
+            verification_code: this.ruleForm.code,
+            info: info,
+            cla_id: localStorage.getItem('cla_id'),
+            cla_language: this.cla_lang,
+            corp_signing_id: this.orgValue,
+          };
+        } else {
+          obj = {
+            name: this.myForm.name,
+            email: this.myForm.email,
+            verification_code: this.ruleForm.code,
+            info: info,
+            cla_id: localStorage.getItem('cla_id'),
+            cla_language: this.cla_lang,
+          };
+        }
+
         if (this.$store.state.loginType === this.individual) {
-          myUrl = `${url.individual_signing}/${this.link_id}/${this.cla_lang}/${this.cla_hash}`;
+          myUrl = `${url.individual_signing}/${this.link_id}`;
         } else if (this.$store.state.loginType === this.employee) {
-          myUrl = `${url.employee_signing}/${this.link_id}/${this.cla_lang}/${this.cla_hash}`;
+          myUrl = `${url.employee_signing}/${this.link_id}`;
         }
       }
-
       this.sign(myUrl, obj);
     },
     sign(myUrl, obj) {
@@ -900,7 +943,7 @@ export default {
         method: 'get',
       })
         .then(res => {
-          this.signingData = res.data;
+          this.signingData = res.data.data;
         })
         .catch(err => {
           switch (err.status) {
