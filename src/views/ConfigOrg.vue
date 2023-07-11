@@ -194,20 +194,22 @@
                 });
             },
             toConfigClaLink() {
-                // if (this.org) {
-                    // if (this.repo) {
-                    //     this.checkRepo(this.org, this.repo);
-                    // } else {
-                    //     this.$router.replace('/config-email');
-                    // }
+                if (this.orgValue) {
+                    if (this.repo) {
+                        this.checkRepo(this.org, this.repo);
+                    } else {
+                        this.$router.replace('/config-email');
+                    }
                     
-                // } else {
-                //     this.$store.commit('errorCodeSet', {
-                //         dialogVisible: true,
-                //         dialogMessage: this.$t('corp.fill_complete')
-                //     });
-                // }
-                this.$router.replace('/config-email');
+                } else {
+                    this.$store.commit('errorCodeSet', {
+                        dialogVisible: true,
+                        dialogMessage: this.$t('corp.fill_complete')
+                    });
+                }
+                // this.$store.state.repo = this.repo;
+                // console.log(this.$store.state.repo);
+                // this.$router.replace('/config-email');
             },
             orgVisibleChange(visible) {
                 if (visible) {

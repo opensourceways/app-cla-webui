@@ -50,7 +50,7 @@
                     @blur="setMyForm(item.type, ruleForm[item.id])"
                   ></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('signPage.corp') ">
+                <!-- <el-form-item :label="$t('signPage.corp') ">
                   <el-select
                     v-model="orgValue"
                     :placeholder="$t('org.config_cla_select_org_placeholder')"
@@ -68,7 +68,7 @@
                     >
                     </el-option>
                   </el-select>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item v-if="rules.code" label-width="0" prop="code">
                   <div>
                     <span class="requiredIcon">*</span
@@ -147,7 +147,7 @@
                     @blur="setMyForm(item.type, ruleForm[item.id])"
                   ></el-input>
                 </el-form-item>
-                <el-form-item :label="$t('signPage.corp') ">
+                <!-- <el-form-item :label="$t('signPage.corp') ">
                   <el-select
                     v-model="orgValue"
                     :placeholder="$t('org.config_cla_select_org_placeholder')"
@@ -165,7 +165,7 @@
                     >
                     </el-option>
                   </el-select>
-                </el-form-item>
+                </el-form-item> -->
                 <el-form-item
                   class="sendCodeClass"
                   v-if="rules.code"
@@ -517,8 +517,9 @@ export default {
       if (email && EMAIL_REG.test(email)) {
         this.sendBtDisable = true;
         axios({
-          url: `${url.sendVerifyCode}/${this.link_id}/${this.myForm.email}`,
+          url: `${url.sendVerifyCode}/${this.link_id}`,
           method: 'post',
+          data: {email:this.myForm.email}
         })
           .then(res => {
             this.$message.closeAll();

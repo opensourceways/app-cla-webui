@@ -12,9 +12,9 @@
                     <el-col :span="8">
                         {{$t('org.config_cla_check_org_alias_title')}}
                     </el-col>
-                    <el-col :span="8">
+                    <!-- <el-col :span="8">
                         {{$t('org.config_cla_check_repo_title')}}
-                    </el-col>
+                    </el-col> -->
                 </el-row>
             </div>
             <div class="margin-top-half-rem">
@@ -25,9 +25,9 @@
                     <el-col :span="8">
                         <el-input disabled="" size="medium" v-model="orgAlias"></el-input>
                     </el-col>
-                    <el-col :span="8">
+                    <!-- <el-col :span="8">
                         <el-input disabled="" size="medium" v-model="repo"></el-input>
-                    </el-col>
+                    </el-col> -->
                 </el-row>
             </div>
         </div>
@@ -272,7 +272,7 @@
                 return this.$store.state.corpLanguage;
             },
             platform() {
-                return this.$store.state.platform.toLowerCase();
+                return this.$store.state.platform?.toLowerCase();
             }
         },
         data() {
@@ -371,12 +371,14 @@
             },
             newBinding() {
                 this.loading = util.getLoading(this, 'tips.loading');
+                
                 let formData = new FormData();
                 let obj = {};
                 let corpCla = {};
                 let individualCla = {
                     url: this.cla_link_individual.trim(),
-                    language: this.individualClaLanguageValue,
+                    // language: this.individualClaLanguageValue?.toUpperCase(),
+                    language:this.individualClaLanguageValue.replace(this.individualClaLanguageValue[0], this.individualClaLanguageValue[0].toUpperCase()),
                     fields: this.editMetadata(this.individualMetadata)
                 };
                 if (this.cla_link_corporation) {
