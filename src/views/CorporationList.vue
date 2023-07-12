@@ -468,7 +468,8 @@
                 uploadDialogVisible: false,
                 item: '',
                 currentPage: 1,
-                tableTotal: 0
+                tableTotal: 0,
+                id:''
             };
         },
         inject: ['setClientHeight'],
@@ -652,6 +653,7 @@
                 }).then(resp => {
                     if (resp.data.data && resp.data.data.length) {
                         let tableData = resp.data.data;
+                        this.id = tableData[0].id
                         this.signedCompleted = [];
                         this.signedNotCompleted = [];
                         tableData.forEach(item => {
@@ -680,7 +682,7 @@
             },
             previewClaFile(row) {
                 http({
-                    url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${row.admin_email}`,
+                    url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${this.id}`,
                     responseType: 'blob'
                 }).then(res => {
                     if (res && res.data) {
@@ -694,7 +696,7 @@
             },
             downloadClaFile(row) {
                 http({
-                    url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${row.admin_email}`,
+                    url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${this.id}`,
                     responseType: 'blob'
                 }).then(res => {
                     if (res.data) {
@@ -711,7 +713,7 @@
                 });
             },
             uploadClaFile(row) {
-                this.uploadUrl = `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${row.admin_email}`;
+                this.uploadUrl = `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${this.id}`;
                 this.uploadDialogVisible = true;
             },
             upload(fileObj) {
@@ -721,7 +723,7 @@
                 formData.append('type', file.type);
                 http({
                     url: this.uploadUrl,
-                    method: 'patch',
+                    method: 'post',
                     data: formData
                 }).then(res => {
                     this.$refs.uploadPdf.clearFiles();
@@ -800,7 +802,7 @@
             resendPDF() {
                 let email = this.resendEmail;
                 let resend_url = '';
-                resend_url = `${url.resend_pdf}/${this.$store.state.corpItem.link_id}/${email}`;
+                resend_url = `${url.resend_pdf}/${this.$store.state.corpItem.link_id}/${this.id}`;
                 http({
                     url: resend_url,
                     method: 'post'
@@ -835,7 +837,7 @@
             },
             reductionCorp(email) {
                 http({
-                    url: `${url.corporationManager}/${this.$store.state.corpItem.link_id}/${email}`,
+                    url: `${url.corporationManager}/${this.$store.state.corpItem.link_id}/${this.id}`,
                     method: 'patch'
                 }).then(res => {
                     util.successMessage(this);
@@ -847,7 +849,7 @@
             deleteCorp(email) {
                 this.deleteCorpVisible = false;
                 http({
-                    url: `${url.corporation_signing}/${this.$store.state.corpItem.link_id}/${email}`,
+                    url: `${url.corporation_signing}/${this.$store.state.corpItem.link_id}/${this.id}`,
                     method: 'delete'
                 }).then(res => {
                     util.successMessage(this);
@@ -858,8 +860,8 @@
             },
             createRoot(email) {
                 http({
-                    url: `${url.corporationManager}/${this.$store.state.corpItem.link_id}/${email}`,
-                    method: 'put'
+                    url: `${url.corporationManager}/${this.$store.state.corpItem.link_id}/${this.id}`,
+                    method: 'post'
                 }).then(res => {
                     util.successMessage(this);
                     this.getCorporationInfo();
