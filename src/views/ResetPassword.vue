@@ -136,7 +136,7 @@
                 };
                 http({
                     url: url.resetPassword,
-                    method: 'patch',
+                    method: 'put',
                     data: obj
                 }).then(res => {
                     this.$store.commit('setPwdIsChanged', true);
