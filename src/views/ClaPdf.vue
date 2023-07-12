@@ -68,7 +68,7 @@
                     return;
                 }
                 http({
-                    url: `${url.getCLAPdf}/${dataFromParent.link_id}/${this.apply_to}/${dataFromParent.lang}/${dataFromParent.hash}`,
+                    url: `${url.getCLAPdf}/${dataFromParent.link_id}/${localStorage.getItem('cla_id')}`,
                     responseType: 'blob'
                 }).then(res => {
                     if (res && res.data) {
