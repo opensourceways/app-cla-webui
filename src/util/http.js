@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
 let instance = axios.create({
-    timeout: 100000,
+    timeout: 20000,
     baseURL: '/api'
 });
 instance.interceptors.request.use(
