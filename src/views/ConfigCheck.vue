@@ -343,9 +343,10 @@
                     obj = {
                         url: this.cla_link_corporation.trim(),
                         language: this.corpClaLanguageValue,
-                        fields: this.editMetadata(this.corporationMetadata)
+                        fields: this.editMetadata(this.corporationMetadata),
+                        type: "corporation",
                     };
-                    _url = `${url.addCla}/${this.$store.state.corpItem.link_id}/corporation`;
+                    _url = `${url.addCla}/${this.$store.state.corpItem.link_id}`;
                 } else {
                     obj = {
                         url: this.cla_link_individual.trim(),
@@ -377,8 +378,7 @@
                 let corpCla = {};
                 let individualCla = {
                     url: this.cla_link_individual.trim(),
-                    // language: this.individualClaLanguageValue?.toUpperCase(),
-                    language:this.individualClaLanguageValue.replace(this.individualClaLanguageValue[0], this.individualClaLanguageValue[0].toUpperCase()),
+                    language: this.individualClaLanguageValue,
                     fields: this.editMetadata(this.individualMetadata)
                 };
                 if (this.cla_link_corporation) {
