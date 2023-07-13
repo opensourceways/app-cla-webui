@@ -245,7 +245,7 @@ export default {
         };
         formData.append("data", JSON.stringify(obj));
         http({
-          url: `${url.postEmailCode}/${TENCENT_EMAIL}`,
+          url: `${url.postEmailCode}`,
           method: "post",
           data: formData,
         })
@@ -284,7 +284,7 @@ export default {
             };
             formData.append("data", JSON.stringify(obj));
             http({
-              url: `${url.authorizeEmail}/${TENCENT_EMAIL}`,
+              url: `${url.authorizeEmail}`,
               method: "post",
               data: formData,
             })
@@ -307,7 +307,11 @@ export default {
                       util.catchErr(err, "setOrgReLogin", this);
                     });
                 } else {
-                  window.location.reload();
+                  // window.location.reload();
+                  this.$store.state.email =this.emailForm.email
+                  this.loading.close();
+                  this.closeDialog();
+                  this.$emit('callback');
                 }
               })
               .catch((err) => {
