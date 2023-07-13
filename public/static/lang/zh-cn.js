@@ -107,7 +107,7 @@ module.exports = {
         fill_verification_code: '请输入验证码',
         fill_authorize_code: '请输入授权码',
         review_privacy: '请查看隐私声明',
-        not_fill_id: '请输入 ID',
+        not_fill_id: '请输入用户名',
         invalid_account_or_pw: '旧密码无效，请重试',
         fill_pwd: '请输入密码',
         id_pwd_err: '账号或者密码错误，请重试',

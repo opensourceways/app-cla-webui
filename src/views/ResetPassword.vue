@@ -142,11 +142,12 @@
                 }).then(res => {
                     this.$store.commit('setPwdIsChanged', true);
                     util.successMessage(this);
-                    if (this.$store.state.loginInfo.userInfo[0].role === 'manager') {
-                        this.$router.push('/employeeList');
-                    } else {
-                        this.$router.push('/managerList');
-                    }
+                    // if (this.$store.state.loginInfo.userInfo[0].role === 'manager') {
+                    //     this.$router.push('/employeeList');
+                    // } else {
+                    //     this.$router.push('/managerList');
+                    // }
+                    this.$router.push('/corporationManagerLogin');
                 }).catch(err => {
                     util.catchErr(err, 'errorSet', this);
                 });
