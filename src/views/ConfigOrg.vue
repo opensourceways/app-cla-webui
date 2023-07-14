@@ -1,9 +1,9 @@
 <template>
   <el-row id="configOne">
     <div class="itemBox">
-      <div class="stepTitle">① {{ $t("org.config_cla_select_org_tile") }}</div>
+      <div class="stepTitle">① {{ $t('org.config_cla_select_org_tile') }}</div>
       <div class="margin-top-1rem">
-        {{ $t("org.config_cla_select_org") }}
+        {{ $t('org.config_cla_select_org') }}
       </div>
       <el-row class="margin-top-1rem">
         <el-col>
@@ -28,7 +28,7 @@
         </el-col>
       </el-row>
       <div class="margin-top-1rem">
-        {{ $t("org.config_cla_select_org_alias") }}
+        {{ $t('org.config_cla_select_org_alias') }}
       </div>
       <div class="margin-top-1rem">
         <el-input
@@ -49,7 +49,7 @@
     </div>
     <div class="orgStepBtBox">
       <button class="step_button" @click="toConfigClaLink">
-        {{ $t("org.next_step") }}
+        {{ $t('org.next_step') }}
       </button>
     </div>
     <ReTryDialog
@@ -68,16 +68,16 @@
 </template>
 
 <script>
-import ReTryDialog from "../components/ReTryDialog";
-import ReLoginDialog from "../components/ReLoginDialog";
-import CustomDialog from "../components/CustomDialog";
-import * as url from "../util/api";
-import _axios from "../util/_axios";
-import platform_http from "../util/platform_http";
-import claConfig from "../lang/global";
+import ReTryDialog from '../components/ReTryDialog';
+import ReLoginDialog from '../components/ReLoginDialog';
+import CustomDialog from '../components/CustomDialog';
+import * as url from '../util/api';
+import _axios from '../util/_axios';
+import platform_http from '../util/platform_http';
+import claConfig from '../lang/global';
 
 export default {
-  name: "ConfigOne",
+  name: 'ConfigOne',
   components: {
     ReTryDialog,
     ReLoginDialog,
@@ -104,10 +104,10 @@ export default {
       }
     },
     orgChoose() {
-      return `${this.$store.state.orgChoose}` === "true";
+      return `${this.$store.state.orgChoose}` === 'true';
     },
     repositoryChoose() {
-      return `${this.$store.state.repositoryChoose}` === "true";
+      return `${this.$store.state.repositoryChoose}` === 'true';
     },
     repositoryOptions() {
       try {
@@ -119,8 +119,8 @@ export default {
     repositoryValue() {
       if (
         this.$store.state.repositoryValue === undefined ||
-        this.$store.state.repositoryValue === "" ||
-        this.$store.state.repositoryValue === "undefined"
+        this.$store.state.repositoryValue === '' ||
+        this.$store.state.repositoryValue === 'undefined'
       ) {
         return undefined;
       } else {
@@ -132,7 +132,7 @@ export default {
         return this.$store.state.orgAlias;
       },
       set(value) {
-        this.$store.commit("setOrgAlias", value);
+        this.$store.commit('setOrgAlias', value);
       },
     },
     repo: {
@@ -140,28 +140,28 @@ export default {
         return this.$store.state.repo;
       },
       set(value) {
-        this.$store.commit("setRepo", value);
+        this.$store.commit('setRepo', value);
       },
     },
   },
   data() {
     return {
-      org_id: "",
+      org_id: '',
       org: this.$store.state.chooseOrg,
-      orgValue: "",
+      orgValue: '',
     };
   },
-  inject: ["setClientHeight"],
+  inject: ['setClientHeight'],
   methods: {
     checkRepo(org, repo) {
-      let _url = "";
+      let _url = '';
       let obj = {};
-      let _http = "";
-      if (this.$store.state.platform === "Gitee") {
+      let _http = '';
+      if (this.$store.state.platform === 'Gitee') {
         _url = `https://gitee.com/api/v5/repos/${org}/${repo}`;
         obj = { access_token: this.$store.state.platform_token };
         _http = _axios;
-      } else if (this.$store.state.platform === "Github") {
+      } else if (this.$store.state.platform === 'Github') {
         _url = `https://api.github.com/repos/${org}/${repo}`;
         _http = platform_http;
       }
@@ -170,47 +170,63 @@ export default {
         url: _url,
         params: obj,
       })
-        .then((res) => {
-          this.$router.replace("/config-email");
+        .then(res => {
+          this.$router.replace('/config-email');
         })
-        .catch((err) => {
+        .catch(err => {
           switch (err.status) {
             case 401:
-              if (err.data.message === claConfig.GITEE_CHECK_REPO_401_ERROR_PRIVATE) {
-                this.$store.commit("setCustomVisible", {
+              if (
+                err.data.message ===
+                claConfig.GITEE_CHECK_REPO_401_ERROR_PRIVATE
+              ) {
+                this.$store.commit('setCustomVisible', {
                   dialogVisible: true,
-                  dialogMessage: this.$t("tips.checkRepoMessage"),
+                  dialogMessage: this.$t('tips.checkRepoMessage'),
                 });
               } else if (
-                err.data.message === claConfig.GITEE_CHECK_REPO_401_ERROR_TOKEN_EXIST
+                err.data.message ===
+                claConfig.GITEE_CHECK_REPO_401_ERROR_TOKEN_EXIST
               )
-                this.$store.commit("setOrgReLogin", {
+                this.$store.commit('setOrgReLogin', {
                   dialogVisible: true,
-                  dialogMessage: this.$t("tips.missing_token"),
+                  dialogMessage: this.$t('tips.missing_token'),
                 });
               break;
             case 403:
-              this.$store.commit("setOrgReLogin", {
+              this.$store.commit('setOrgReLogin', {
                 dialogVisible: true,
-                dialogMessage: this.$t("tips.missing_token"),
+                dialogMessage: this.$t('tips.missing_token'),
               });
               break;
             case 404:
-              this.$store.commit("setCustomVisible", {
+              this.$store.commit('setCustomVisible', {
                 dialogVisible: true,
-                dialogMessage: this.$t("tips.checkRepoMessage"),
+                dialogMessage: this.$t('tips.checkRepoMessage'),
               });
               break;
             default:
-              this.$store.commit("errorCodeSet", {
+              this.$store.commit('errorCodeSet', {
                 dialogVisible: true,
-                dialogMessage: this.$t("tips.system_error"),
+                dialogMessage: this.$t('tips.system_error'),
               });
           }
         });
     },
     toConfigClaLink() {
-      this.$router.replace("/config-email");
+      if (this.orgValue) {
+        if (this.repo) {
+          this.checkRepo(this.org, this.repo);
+        } else {
+          this.$router.replace('/config-email');
+        }
+      } else {
+        this.$store.commit('errorCodeSet', {
+          dialogVisible: true,
+          dialogMessage: this.$t('corp.fill_complete'),
+        });
+      }
+      // this.$router.replace("/config-email");
     },
     orgVisibleChange(visible) {
       if (visible) {
@@ -218,27 +234,27 @@ export default {
       }
     },
     changeOrg(value) {
-      this.$store.commit("setOrgValue", value);
-      this.$store.commit("setRepositoryValue", undefined);
-      this.$store.commit("setRepositoryChoose", false);
-      this.$store.commit("setRepositoryOptions", undefined);
-      if (value === "") {
-        this.$store.commit("setChooseOrg", "");
-        this.org = "";
-        this.org_id = "";
-        this.$store.commit("setOrgChoose", false);
+      this.$store.commit('setOrgValue', value);
+      this.$store.commit('setRepositoryValue', undefined);
+      this.$store.commit('setRepositoryChoose', false);
+      this.$store.commit('setRepositoryOptions', undefined);
+      if (value === '') {
+        this.$store.commit('setChooseOrg', '');
+        this.org = '';
+        this.org_id = '';
+        this.$store.commit('setOrgChoose', false);
       } else {
-        this.$store.commit("setChooseOrg", this.$store.state.orgValue);
+        this.$store.commit('setChooseOrg', this.$store.state.orgValue);
         this.org = this.orgOptions[value].label;
         this.org_id = this.orgOptions[value].id;
-        this.$store.commit("setOrgChoose", true);
+        this.$store.commit('setOrgChoose', true);
       }
     },
     getRepositoriesOfOrg(org, org_id) {
-      let _url = "";
-      if (this.$store.state.platform === "Gitee") {
+      let _url = '';
+      if (this.$store.state.platform === 'Gitee') {
         _url = `https://gitee.com/api/v5/orgs/${org}/repos`;
-      } else if (this.$store.state.platform === "Github") {
+      } else if (this.$store.state.platform === 'Github') {
         _url = `https://api.github.com/orgs/${org}/repos`;
       }
       let obj = {
@@ -251,7 +267,7 @@ export default {
         url: _url,
         params: obj,
       })
-        .then((res) => {
+        .then(res => {
           let repositoryOptions = [];
           res.data.forEach((item, index) => {
             repositoryOptions.push({
@@ -263,12 +279,12 @@ export default {
               id: item.id,
             });
           });
-          this.$store.commit("setRepositoryOptions", repositoryOptions);
+          this.$store.commit('setRepositoryOptions', repositoryOptions);
         })
-        .catch((err) => {
-          this.$store.commit("errorCodeSet", {
+        .catch(err => {
+          this.$store.commit('errorCodeSet', {
             dialogVisible: true,
-            dialogMessage: this.$t("tips.system_error"),
+            dialogMessage: this.$t('tips.system_error'),
           });
         });
     },
@@ -279,63 +295,63 @@ export default {
       _http({
         url: _url,
       })
-        .then((res) => {
+        .then(res => {
           if (res.status === 200) {
             let orgOptions = [];
             res.data.data.forEach((item, index) => {
               orgOptions.push({ value: item, label: item, id: item });
             });
-            this.$store.commit("setOrgOption", orgOptions);
+            this.$store.commit('setOrgOption', orgOptions);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           switch (err.status) {
             case 401:
-              this.$store.commit("setOrgReLogin", {
+              this.$store.commit('setOrgReLogin', {
                 dialogVisible: true,
-                dialogMessage: this.$t("tips.not_authorize_group"),
+                dialogMessage: this.$t('tips.not_authorize_group'),
               });
               break;
             case 403:
-              this.$store.commit("setOrgReLogin", {
+              this.$store.commit('setOrgReLogin', {
                 dialogVisible: true,
-                dialogMessage: this.$t("tips.invalid_token"),
+                dialogMessage: this.$t('tips.invalid_token'),
               });
               break;
             default:
-              this.$store.commit("errorCodeSet", {
+              this.$store.commit('errorCodeSet', {
                 dialogVisible: true,
-                dialogMessage: this.$t("tips.system_error"),
+                dialogMessage: this.$t('tips.system_error'),
               });
           }
         });
     },
     init() {
-      this.$store.commit("setOrgOption", []);
-      this.$store.commit("setOrgValue", "");
-      this.$store.commit("setOrgChoose", "");
-      this.$store.commit("setRepositoryOptions", []);
-      this.$store.commit("setRepositoryChoose", "");
-      this.$store.commit("setRepositoryValue", "");
-      this.$store.commit("setOrgAlias", "");
-      this.$store.commit("setRepo", "");
-      this.$store.commit("setChooseOrg", "");
-      this.$store.commit("setChooseRepo", "");
-      sessionStorage.removeItem("orgOptions");
-      sessionStorage.removeItem("orgValue");
-      sessionStorage.removeItem("orgChoose");
-      sessionStorage.removeItem("orgAlias");
-      sessionStorage.removeItem("repo");
-      sessionStorage.removeItem("repositoryOptions");
-      sessionStorage.removeItem("repositoryChoose");
-      sessionStorage.removeItem("repositoryValue");
-      sessionStorage.removeItem("chooseOrg");
-      sessionStorage.removeItem("chooseRepo");
+      this.$store.commit('setOrgOption', []);
+      this.$store.commit('setOrgValue', '');
+      this.$store.commit('setOrgChoose', '');
+      this.$store.commit('setRepositoryOptions', []);
+      this.$store.commit('setRepositoryChoose', '');
+      this.$store.commit('setRepositoryValue', '');
+      this.$store.commit('setOrgAlias', '');
+      this.$store.commit('setRepo', '');
+      this.$store.commit('setChooseOrg', '');
+      this.$store.commit('setChooseRepo', '');
+      sessionStorage.removeItem('orgOptions');
+      sessionStorage.removeItem('orgValue');
+      sessionStorage.removeItem('orgChoose');
+      sessionStorage.removeItem('orgAlias');
+      sessionStorage.removeItem('repo');
+      sessionStorage.removeItem('repositoryOptions');
+      sessionStorage.removeItem('repositoryChoose');
+      sessionStorage.removeItem('repositoryValue');
+      sessionStorage.removeItem('chooseOrg');
+      sessionStorage.removeItem('chooseRepo');
     },
   },
   beforeRouteEnter(to, from, next) {
-    next((vm) => {
-      if (from.path === "/") {
+    next(vm => {
+      if (from.path === '/') {
         vm.init();
       }
     });

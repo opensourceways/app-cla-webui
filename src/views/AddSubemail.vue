@@ -204,8 +204,9 @@
                         return;
                     }
                     http({
-                        url: `${url.sendVerifyCode}/${email}`,
-                        method: 'post'
+                        url: `${url.sendDomainCode}/code`,
+                        method: 'post',
+                        data:{email:email}
                     }).then(res => {
                         this.$message.closeAll();
                         this.$message.success({message: this.$t('tips.sending_email'), duration: 5000});

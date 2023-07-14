@@ -42,7 +42,7 @@
                                 <el-row class="mySwitch">
                                     <el-col :offset="4" :span="8">
                                         <el-switch
-                                                @change="changeActive(scope.row.cla_org_id,scope.row.email,scope.row.enabled)"
+                                                @change="changeActive(scope.row.id,scope.row.email,scope.row.enabled)"
                                                 v-model="scope.row.enabled"
                                                 class="mySwitch"
                                                 :disabled="scope.row.enabled"
@@ -56,7 +56,7 @@
                                     </el-col>
                                     <el-col :span="8">
                                         <button class="deleteBt"
-                                                @click="deleteEmployee(scope.row.cla_org_id,scope.row.email,scope.row.enabled)">
+                                                @click="deleteEmployee(scope.row.id,scope.row.email,scope.row.enabled)">
                                             {{$t('corp.delete')}}
                                         </button>
                                     </el-col>
@@ -115,7 +115,7 @@
                             <template slot-scope="scope">
                                 <el-row class="mySwitch">
                                     <el-switch
-                                            @change="changeActive(scope.row.cla_org_id,scope.row.email,scope.row.enabled)"
+                                            @change="changeActive(scope.row.id,scope.row.email,scope.row.enabled)"
                                             v-model="scope.row.enabled"
                                             class="mySwitch"
                                             width="3rem"
@@ -263,9 +263,9 @@
                 this.deleteUserVisible = false;
                 let obj = {enabled: this.deleteData.enabled};
                 http({
-                    url: `${url.enableEmployee}/${this.deleteData.email}`,
+                    url: `${url.enableEmployee}/${this.deleteData.cla_org_id}`,
                     method: 'delete',
-                    data: obj
+                    // data: obj
                 }).then(res => {
                     this.getEmployee();
                     util.successMessage(this);
@@ -286,7 +286,7 @@
                     enabled: enabled
                 };
                 http({
-                    url: `${url.enableEmployee}/${email}`,
+                    url: `${url.enableEmployee}/${cla_org_id}`,
                     method: 'put',
                     data: data
                 }).then(res => {

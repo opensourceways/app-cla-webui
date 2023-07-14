@@ -27,7 +27,7 @@ export const queryEmployee = '/v1/employee-signing';                            
 export const enableEmployee = '/v1/employee-signing';                               //激活企业个人签署者   方式put   参数/email,
 export const deleteEmployee = '/v1/employee-signing';                               //激活企业个人签署者   方式delete   参数/email,
 export const getAuthCodeUrl = '/v1/auth/authcodeurl';                               //Gmail获取授权登陆的链接   方式get   参数/platform,/purpose
-export const getAuthEmail = '/v1/email/authcodeurl/gmail';                          //Gmail邮箱授权             方式get
+export const getAuthEmail = '/v1/gmail/auth';                          //Gmail邮箱授权             方式get
 export const sendVerifyCode = '/v1/individual-signing';                              //给邮箱发送验证码  
 export const sendCorporationCode = '/v1/corporation-signing';                         //给企业邮箱发送验证码     
 export const sendEmployeeCode = '/v1/employee-signing';                        //给员工邮箱发送验证码
@@ -42,4 +42,5 @@ export const getCLAPdf = 'v1/cla';                                              
 export const postEmailCode = '/v1/smtp/verify';                                      //txmail发送邮箱验证码    方式 post  参数 /:mail_name
 export const authorizeEmail = '/v1/smtp/authorize';                                  //txmail验证邮箱    方式 post  参数 /:mail_name
 export const modifyAuthorizeEmail = '/v1/link/update';                                  //修改邮箱    方式 post  参数 /:link_id
-
+export const logout = '/v1/auth';                                                   //logout
+export const sendDomainCode = '/v1/corporation-email-domain';                              //给管理员邮箱发送验证码 

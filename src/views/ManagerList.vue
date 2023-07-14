@@ -110,7 +110,7 @@
         },
         data() {
             return {
-                emails: [],
+                ids: [],
                 multipleChoice: false,
                 multipleSelection: [],
                 row: '',
@@ -142,13 +142,13 @@
                 this.multipleSelection = val;
             },
             deleteUser(row) {
-                this.emails = [];
+                this.ids = [];
                 if (this.multipleChoice) {
                     this.multipleSelection.forEach(item => {
-                        this.emails.push({email: item.email});
+                        this.ids.push({id: item.id});
                     });
                 } else {
-                    this.emails.push({email: row.email});
+                    this.ids.push({id: row.id});
                 }
                 this.deleteUserVisible = true;
             },
@@ -165,7 +165,7 @@
             },
             deleteManager() {
                 let obj = {
-                    managers: this.emails
+                    managers: this.ids
                 };
                 http({
                     url: url.deleteEmployeeManager,
