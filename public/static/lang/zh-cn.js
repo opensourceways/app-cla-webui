@@ -90,6 +90,7 @@ module.exports = {
         invalid_email: '无效的电子邮件',
         sending_email: '已向您的邮箱发送了验证码',
         not_fill_email: '请输入正确的电子邮箱',
+        not_fill_org:'请选择企业',
         send_find_pwd_email: '已向您的邮箱发送了重置密码的邮件，请根据提示完成密码重置',
         no_public_email_1: '抱歉，无法从您的 {platform} 帐户获取提交代码的电子邮件，请',
         click_here: '点击此处',

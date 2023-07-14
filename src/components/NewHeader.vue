@@ -227,6 +227,9 @@ export default {
         case 'h':
           this.loginOut();
           break;
+        default:
+          this.toHome();
+          break;
       }
     },
     toHome() {
@@ -279,7 +282,7 @@ export default {
           util.catchErr(err, 'errorSet', this);
         });
     },
-    loginOut() {   
+    loginOut() {
       http({
         url: url.logout,
         method: 'put',
