@@ -42,5 +42,5 @@ export const getCLAPdf = 'v1/cla';                                              
 export const postEmailCode = '/v1/smtp/verify';                                      //txmail发送邮箱验证码    方式 post  参数 /:mail_name
 export const authorizeEmail = '/v1/smtp/authorize';                                  //txmail验证邮箱    方式 post  参数 /:mail_name
 export const modifyAuthorizeEmail = '/v1/link/update';                                  //修改邮箱    方式 post  参数 /:link_id
-export const logout = '/v1/auth';                                                   //logout退出登录
+export const logout = '/v1/auth';                                                   //logout退出登录 
 export const sendDomainCode = '/v1/corporation-email-domain';                              //给管理员邮箱发送验证码 
