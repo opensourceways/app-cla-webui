@@ -10,13 +10,13 @@
     >
       <div class="titleBox">
         <svg-icon icon-class="chenggong" class="dialogIcon"></svg-icon>
-        <span>{{ $t("tips.successTitle") }}</span>
+        <span>{{ $t('tips.successTitle') }}</span>
       </div>
       <el-row>
         <el-col align="center">
           <p :class="dialogMessage">{{ message }}</p>
           <button class="dialogBt" @click="clickGoHome()">
-            {{ $t("tips.dialogBt") }}
+            {{ $t('tips.dialogBt') }}
           </button>
         </el-col>
       </el-row>
@@ -25,40 +25,40 @@
 </template>
 
 <script>
-import * as util from "../util/util";
-import cla from "../lang/global";
+import * as util from '../util/util';
+import cla from '../lang/global';
 
 export default {
-  name: "SignSuccessDialog",
-  props: ["dialogVisible", "message"],
+  name: 'SignSuccessDialog',
+  props: ['dialogVisible', 'message'],
   computed: {
     dialogWidth() {
       if (this.IS_MOBILE) {
-        return "80%";
+        return '80%';
       } else {
-        return "30%";
+        return '30%';
       }
     },
     dialogMessage() {
-      if (localStorage.getItem("lang") === this.english) {
-        return "dialogMessageEn";
-      } else if (localStorage.getItem("lang") === this.chinese) {
-        return "dialogMessage";
+      if (localStorage.getItem('lang') === this.english) {
+        return 'dialogMessageEn';
+      } else if (localStorage.getItem('lang') === this.chinese) {
+        return 'dialogMessage';
       }
     },
   },
   data() {
     return {
       domain: this.$store.state.domain,
-      chinese: "Chinese",
-      english: "English",
+      chinese: 'Chinese',
+      english: 'English',
     };
   },
   methods: {
     clickGoHome() {
-      this.$store.commit("setSignSuccess", {
+      this.$store.commit('setSignSuccess', {
         dialogVisible: false,
-        dialogMessage: "",
+        dialogMessage: '',
       });
 
       if (window.location.origin === cla.OPENLOOKENG_SIGN_URL) {
