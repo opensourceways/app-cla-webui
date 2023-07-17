@@ -91,6 +91,7 @@ module.exports = {
         sending_email: 'A verification code is sent to your Email.',
         send_find_pwd_email: 'An email to reset your password has been sent to your mailbox. Please complete the password reset according to the prompt.',
         not_fill_email: 'Please enter the correct email',
+        not_fill_org:'Please enter organization',
         no_public_email_1: 'Sorry, it is failed to fetch the email for committing code from your {platform} account. Please',
         click_here: ' click here ',
         gitee_no_public_email_2: 'go to the mailbox setting page, and cancel the check of "don\'t open my email address". If you haven\'t bound any email for your account, please click add, bind email and try again',

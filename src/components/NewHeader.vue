@@ -227,6 +227,9 @@ export default {
         case 'h':
           this.loginOut();
           break;
+        default:
+          this.toHome();
+          break;
       }
     },
     toHome() {
@@ -264,7 +267,7 @@ export default {
         url: url.corporationPdf,
         responseType: 'blob',
       })
-        .then((res) => {
+        .then(res => {
           if (res && res.data) {
             let blob = new Blob([res.data], { type: 'application/pdf' });
             let url = window.URL.createObjectURL(blob);

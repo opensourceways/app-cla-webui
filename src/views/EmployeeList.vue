@@ -1,188 +1,151 @@
 <template>
-  <div id="employeeList">
-    <p id="tabName">{{ $t('signType.emp') }}</p>
-    <el-tabs v-model="active">
-      <el-tab-pane
-        :label="$t('corp.inactive')"
-        name="first"
-        style="margin-top: 1rem"
-      >
-        <div style="margin-bottom: 1rem" class="tableStyle">
-          <el-row :gutter="10">
-            <el-col :offset="15" :span="6">
-              <el-input
-                clearable
-                :placeholder="$t('corp.email_input_holder')"
-                @input="searchEmail(inactiveSearchValue, inactiveOriginData)"
-                v-model="inactiveSearchValue"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-search"></i>
-              </el-input>
-            </el-col>
-            <el-col :span="3">
-              <el-button
-                @click="searchEmail(inactiveSearchValue, inactiveOriginData)"
-                class="searchButton"
-              >
-                {{ $t('corp.search') }}
-              </el-button>
-            </el-col>
-          </el-row>
-          <el-table
-            :empty-text="$t('corp.no_data')"
-            class="tableClass"
-            :data="inactivePageData"
-            align="center"
-            style="width: 100%"
-          >
-            <el-table-column prop="name" :label="$t('corp.name')">
-            </el-table-column>
-            <el-table-column prop="email" :label="$t('corp.email')">
-            </el-table-column>
-            <el-table-column :label="$t('corp.operation')" align="center">
-              <template slot-scope="scope">
-                <el-row class="mySwitch">
-                  <el-col :offset="4" :span="8">
-                    <el-switch
-                      @change="
-                        changeActive(
-                          scope.row.cla_org_id,
-                          scope.row.email,
-                          scope.row.enabled
-                        )
-                      "
-                      v-model="scope.row.enabled"
-                      class="mySwitch"
-                      :disabled="scope.row.enabled"
-                      width="3rem"
-                      active-color="#409EFF"
-                      :active-text="$t('corp.active')"
-                      :inactive-text="$t('corp.inactive')"
-                      inactive-color="#EBEEF5"
-                    >
-                    </el-switch>
-                  </el-col>
-                  <el-col :span="8">
-                    <button
-                      class="deleteBt"
-                      @click="
-                        deleteEmployee(
-                          scope.row.cla_org_id,
-                          scope.row.email,
-                          scope.row.enabled
-                        )
-                      "
-                    >
-                      {{ $t('corp.delete') }}
-                    </button>
-                  </el-col>
-                </el-row>
-              </template>
-            </el-table-column>
-          </el-table>
-          <el-pagination
-            class="pagination-class"
-            layout="prev, pager, next"
-            :page-size="pageSize"
-            :current-page="inactiveCurrentPage"
-            :pager-count="pagerPage"
-            @current-change="changeInActivePage"
-            :hide-on-single-page="true"
-            :total="inactiveTotal"
-          >
-          </el-pagination>
-        </div>
-      </el-tab-pane>
-      <el-tab-pane
-        :label="$t('corp.active')"
-        name="second"
-        style="margin-top: 1rem"
-      >
-        <div style="margin-bottom: 1rem" class="tableStyle">
-          <el-row :gutter="10">
-            <el-col :offset="15" :span="6">
-              <el-input
-                clearable
-                :placeholder="$t('corp.email_input_holder')"
-                @input="searchEmail(activeSearchValue, activeOriginData)"
-                v-model="activeSearchValue"
-              >
-                <i slot="prefix" class="el-input__icon el-icon-search"></i>
-              </el-input>
-            </el-col>
-            <el-col :span="3">
-              <el-button
-                @click="searchEmail(activeSearchValue, activeOriginData)"
-                class="searchButton"
-              >
-                {{ $t('corp.search') }}
-              </el-button>
-            </el-col>
-          </el-row>
-          <el-table
-            :empty-text="$t('corp.no_data')"
-            class="tableClass"
-            :data="activePageData"
-            align="center"
-            style="width: 100%"
-          >
-            <el-table-column prop="name" :label="$t('corp.name')">
-            </el-table-column>
-            <el-table-column prop="email" :label="$t('corp.email')">
-            </el-table-column>
-            <el-table-column :label="$t('corp.operation')" align="center">
-              <template slot-scope="scope">
-                <el-row class="mySwitch">
-                  <el-switch
-                    @change="
-                      changeActive(
-                        scope.row.cla_org_id,
-                        scope.row.email,
-                        scope.row.enabled
-                      )
-                    "
-                    v-model="scope.row.enabled"
-                    class="mySwitch"
-                    width="3rem"
-                    active-color="#409EFF"
-                    :active-text="$t('corp.active')"
-                    :inactive-text="$t('corp.inactive')"
-                    inactive-color="#EBEEF5"
-                  >
-                  </el-switch>
-                </el-row>
-              </template>
-            </el-table-column>
-          </el-table>
-          <el-pagination
-            class="pagination-class"
-            layout="prev, pager, next"
-            :page-size="pageSize"
-            :current-page="activeCurrentPage"
-            :pager-count="pagerPage"
-            :total="activeTotal"
-            :hide-on-single-page="true"
-            @current-change="changeActivePage"
-          >
-          </el-pagination>
-        </div>
-      </el-tab-pane>
-    </el-tabs>
-    <corpReLoginDialog
-      :message="corpReLoginMsg"
-      :dialogVisible="corpReLoginDialogVisible"
-    ></corpReLoginDialog>
-    <reTryDialog
-      :message="corpReLoginMsg"
-      :dialogVisible="corpReTryDialogVisible"
-    ></reTryDialog>
-    <DeleteDialog
-      :deleteMessage="deleteMessage"
-      :deleteVisible="deleteUserVisible"
-      @delete="submitDeleteEmployee"
-      @cancel="cancelDeleteEmployee"
-    ></DeleteDialog>
-  </div>
+    <div id="employeeList">
+        <p id="tabName">{{$t('signType.emp')}}</p>
+        <el-tabs v-model="active">
+            <el-tab-pane :label="$t('corp.inactive')" name="first" style="margin-top: 1rem">
+                <div style="margin-bottom: 1rem" class="tableStyle">
+                    <el-row :gutter="10">
+                        <el-col :offset="15" :span="6">
+                            <el-input
+                                    clearable
+                                    :placeholder="$t('corp.email_input_holder')"
+                                    @input="searchEmail(inactiveSearchValue,inactiveOriginData)"
+                                    v-model="inactiveSearchValue">
+                                <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                            </el-input>
+                        </el-col>
+                        <el-col :span="3">
+                            <el-button @click="searchEmail(inactiveSearchValue,inactiveOriginData)"
+                                       class="searchButton">
+                                {{$t('corp.search')}}
+                            </el-button>
+                        </el-col>
+                    </el-row>
+                    <el-table
+                            :empty-text="$t('corp.no_data')"
+                            class="tableClass"
+                            :data="inactivePageData"
+                            align="center"
+                            style="width: 100%;">
+                        <el-table-column
+                                prop="name"
+                                :label="$t('corp.name')">
+                        </el-table-column>
+                        <el-table-column
+                                prop="email"
+                                :label="$t('corp.email')">
+                        </el-table-column>
+                        <el-table-column
+                                :label="$t('corp.operation')"
+                                align="center">
+                            <template slot-scope="scope">
+                                <el-row class="mySwitch">
+                                    <el-col :offset="4" :span="8">
+                                        <el-switch
+                                                @change="changeActive(scope.row.id,scope.row.email,scope.row.enabled)"
+                                                v-model="scope.row.enabled"
+                                                class="mySwitch"
+                                                :disabled="scope.row.enabled"
+                                                width="3rem"
+                                                active-color="#409EFF"
+                                                :active-text="$t('corp.active')"
+                                                :inactive-text="$t('corp.inactive')"
+                                                inactive-color="#EBEEF5">
+                                        </el-switch>
+
+                                    </el-col>
+                                    <el-col :span="8">
+                                        <button class="deleteBt"
+                                                @click="deleteEmployee(scope.row.id,scope.row.email,scope.row.enabled)">
+                                            {{$t('corp.delete')}}
+                                        </button>
+                                    </el-col>
+                                </el-row>
+
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <el-pagination
+                            class="pagination-class"
+                            layout="prev, pager, next"
+                            :page-size="pageSize"
+                            :current-page="inactiveCurrentPage"
+                            :pager-count="pagerPage"
+                            @current-change="changeInActivePage"
+                            :hide-on-single-page="true"
+                            :total="inactiveTotal">
+                    </el-pagination>
+                </div>
+            </el-tab-pane>
+            <el-tab-pane :label="$t('corp.active')" name="second" style="margin-top: 1rem">
+                <div style="margin-bottom: 1rem" class="tableStyle">
+                    <el-row :gutter="10">
+                        <el-col :offset="15" :span="6">
+                            <el-input
+                                    clearable
+                                    :placeholder="$t('corp.email_input_holder')"
+                                    @input="searchEmail(activeSearchValue,activeOriginData)"
+                                    v-model="activeSearchValue">
+                                <i slot="prefix" class="el-input__icon el-icon-search"></i>
+                            </el-input>
+                        </el-col>
+                        <el-col :span="3">
+                            <el-button @click="searchEmail(activeSearchValue,activeOriginData)" class="searchButton">
+                                {{$t('corp.search')}}
+                            </el-button>
+                        </el-col>
+                    </el-row>
+                    <el-table
+                            :empty-text="$t('corp.no_data')"
+                            class="tableClass"
+                            :data="activePageData"
+                            align="center"
+                            style="width: 100%;">
+                        <el-table-column
+                                prop="name"
+                                :label="$t('corp.name')">
+                        </el-table-column>
+                        <el-table-column
+                                prop="email"
+                                :label="$t('corp.email')">
+                        </el-table-column>
+                        <el-table-column
+                                :label="$t('corp.operation')"
+                                align="center">
+                            <template slot-scope="scope">
+                                <el-row class="mySwitch">
+                                    <el-switch
+                                            @change="changeActive(scope.row.id,scope.row.email,scope.row.enabled)"
+                                            v-model="scope.row.enabled"
+                                            class="mySwitch"
+                                            width="3rem"
+                                            active-color="#409EFF"
+                                            :active-text="$t('corp.active')"
+                                            :inactive-text="$t('corp.inactive')"
+                                            inactive-color="#EBEEF5">
+                                    </el-switch>
+                                </el-row>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <el-pagination
+                            class="pagination-class"
+                            layout="prev, pager, next"
+                            :page-size="pageSize"
+                            :current-page="activeCurrentPage"
+                            :pager-count="pagerPage"
+                            :total="activeTotal"
+                            :hide-on-single-page="true"
+                            @current-change="changeActivePage">
+                    </el-pagination>
+                </div>
+            </el-tab-pane>
+        </el-tabs>
+        <corpReLoginDialog :message="corpReLoginMsg" :dialogVisible="corpReLoginDialogVisible"></corpReLoginDialog>
+        <reTryDialog :message="corpReLoginMsg" :dialogVisible="corpReTryDialogVisible"></reTryDialog>
+        <DeleteDialog :deleteMessage="deleteMessage" :deleteVisible="deleteUserVisible" @delete="submitDeleteEmployee"
+                      @cancel="cancelDeleteEmployee"></DeleteDialog>
+    </div>
 </template>
 <script>
 import * as url from '../util/api';
@@ -192,184 +155,170 @@ import corpReLoginDialog from '../components/CorpReLoginDialog';
 import reTryDialog from '../components/ReTryDialog';
 import DeleteDialog from '../components/DeleteDialog';
 
-export default {
-  name: 'EmployeeList',
-  components: {
-    corpReLoginDialog,
-    reTryDialog,
-    DeleteDialog,
-  },
-  data() {
-    return {
-      inactiveSearchValue: '',
-      activeSearchValue: '',
-      inactivePageData: [],
-      activePageData: [],
-      pageSize: 5,
-      pagerPage: 5,
-      inactiveCurrentPage: 1,
-      activeCurrentPage: 1,
-      deleteUserVisible: false,
-      active: 'first',
-      inactiveData: [],
-      inactiveOriginData: [],
-      activeOriginData: [],
-      activeData: [],
-      deleteData: '',
+
+    export default {
+        name: 'EmployeeList',
+        components: {
+            corpReLoginDialog,
+            reTryDialog,
+            DeleteDialog
+        },
+        data() {
+            return {
+                inactiveSearchValue: '',
+                activeSearchValue: '',
+                inactivePageData: [],
+                activePageData: [],
+                pageSize: 5,
+                pagerPage: 5,
+                inactiveCurrentPage: 1,
+                activeCurrentPage: 1,
+                deleteUserVisible: false,
+                active: 'first',
+                inactiveData: [],
+                inactiveOriginData: [],
+                activeOriginData: [],
+                activeData: [],
+                deleteData: ''
+            };
+        },
+        computed: {
+            deleteMessage() {
+                return this.$t('corp.deleteTips');
+            },
+            orgValue() {
+                return this.$store.state.loginInfo.orgValue;
+            },
+            userInfo() {
+                return this.$store.state.loginInfo.userInfo;
+            },
+            corpReLoginDialogVisible() {
+                return this.$store.state.dialogVisible;
+            },
+            corpReLoginMsg() {
+                return this.$store.state.dialogMessage;
+            },
+            corpReTryDialogVisible() {
+                return this.$store.state.reTryDialogVisible;
+            },
+            activeTotal() {
+                return this.activeData.length;
+            },
+            inactiveTotal() {
+                return this.inactiveData.length;
+            }
+        },
+        methods: {
+            searchEmail(searchValue, pageData) {
+                if (searchValue.trim() === '') {
+                    this.getEmployee();
+                } else {
+                    let searchData = [];
+                    for (let i = 0; i < pageData.length; i++) {
+                        if (pageData[i].email.indexOf(searchValue.trim()) !== -1) {
+                            searchData.push(pageData[i]);
+                        }
+                    }
+                    if (this.active === 'first') {
+                        this.inactiveData = searchData;
+                        this.inactivePageData = this.getInactivePageData();
+                    } else if (this.active === 'second') {
+                        this.activeData = searchData;
+                        this.activePageData = this.getActivePageData();
+                    }
+                }
+            },
+            getInactivePageData() {
+                let data = [];
+                data = this.inactiveData.slice((this.inactiveCurrentPage - 1) * this.pageSize, this.inactiveCurrentPage * this.pageSize);
+                if (data.length === 0 && this.inactiveCurrentPage > 1) {
+                    this.inactiveCurrentPage--;
+                    return this.getInactivePageData();
+                } else {
+                    return data;
+                }
+            },
+            getActivePageData() {
+                let data = [];
+                data = this.activeData.slice((this.activeCurrentPage - 1) * this.pageSize, this.activeCurrentPage * this.pageSize);
+                if (data.length === 0 && this.activeCurrentPage > 1) {
+                    this.activeCurrentPage--;
+                    return this.getActivePageData();
+                } else {
+                    return data;
+                }
+            },
+            changeActivePage(page) {
+                this.activeCurrentPage = page;
+                this.activePageData = this.getActivePageData();
+            },
+            changeInActivePage(page) {
+                this.inactiveCurrentPage = page;
+                this.inactivePageData = this.getInactivePageData();
+            },
+            cancelDeleteEmployee() {
+                this.deleteUserVisible = false;
+            },
+            submitDeleteEmployee() {
+                this.deleteUserVisible = false;
+                let obj = {enabled: this.deleteData.enabled};
+                http({
+                    url: `${url.enableEmployee}/${this.deleteData.cla_org_id}`,
+                    method: 'delete',
+                    // data: obj
+                }).then(res => {
+                    this.getEmployee();
+                    util.successMessage(this);
+                }).catch(err => {
+                    util.catchErr(err, 'errorSet', this);
+                });
+            },
+            deleteEmployee(cla_org_id, email, enabled) {
+                this.deleteData = {
+                    cla_org_id: cla_org_id,
+                    email: email,
+                    enabled: enabled
+                };
+                this.deleteUserVisible = true;
+            },
+            changeActive(cla_org_id, email, enabled) {
+                let data = {
+                    enabled: enabled
+                };
+                http({
+                    url: `${url.enableEmployee}/${cla_org_id}`,
+                    method: 'put',
+                    data: data
+                }).then(res => {
+                    this.getEmployee();
+                }).catch(err => {
+                    util.catchErr(err, 'errorSet', this);
+                });
+            },
+            getEmployee() {
+                http({
+                    url: url.queryEmployee
+                }).then(res => {
+                    let inactiveArr = [], activeArr = [];
+                    let data = res.data.data;
+                    data.forEach((item, index) => {
+                        item.enabled === false ? inactiveArr.push(item) : activeArr.push(item);
+                    });
+                    this.inactiveData = inactiveArr;
+                    this.inactiveOriginData = inactiveArr;
+                    this.activeData = activeArr;
+                    this.activeOriginData = activeArr;
+                    this.inactivePageData = this.getInactivePageData();
+                    this.activePageData = this.getActivePageData();
+                }).catch(err => {
+                    util.catchErr(err, 'errorSet', this);
+                });
+            }
+        },
+        created() {
+            this.getEmployee();
+        }
     };
-  },
-  computed: {
-    deleteMessage() {
-      return this.$t('corp.deleteTips');
-    },
-    orgValue() {
-      return this.$store.state.loginInfo.orgValue;
-    },
-    userInfo() {
-      return this.$store.state.loginInfo.userInfo;
-    },
-    corpReLoginDialogVisible() {
-      return this.$store.state.dialogVisible;
-    },
-    corpReLoginMsg() {
-      return this.$store.state.dialogMessage;
-    },
-    corpReTryDialogVisible() {
-      return this.$store.state.reTryDialogVisible;
-    },
-    activeTotal() {
-      return this.activeData.length;
-    },
-    inactiveTotal() {
-      return this.inactiveData.length;
-    },
-  },
-  methods: {
-    searchEmail(searchValue, pageData) {
-      if (searchValue.trim() === '') {
-        this.getEmployee();
-      } else {
-        let searchData = [];
-        for (let i = 0; i < pageData.length; i++) {
-          if (pageData[i].email.indexOf(searchValue.trim()) !== -1) {
-            searchData.push(pageData[i]);
-          }
-        }
-        if (this.active === 'first') {
-          this.inactiveData = searchData;
-          this.inactivePageData = this.getInactivePageData();
-        } else if (this.active === 'second') {
-          this.activeData = searchData;
-          this.activePageData = this.getActivePageData();
-        }
-      }
-    },
-    getInactivePageData() {
-      let data = [];
-      data = this.inactiveData.slice(
-        (this.inactiveCurrentPage - 1) * this.pageSize,
-        this.inactiveCurrentPage * this.pageSize
-      );
-      if (data.length === 0 && this.inactiveCurrentPage > 1) {
-        this.inactiveCurrentPage--;
-        return this.getInactivePageData();
-      } else {
-        return data;
-      }
-    },
-    getActivePageData() {
-      let data = [];
-      data = this.activeData.slice(
-        (this.activeCurrentPage - 1) * this.pageSize,
-        this.activeCurrentPage * this.pageSize
-      );
-      if (data.length === 0 && this.activeCurrentPage > 1) {
-        this.activeCurrentPage--;
-        return this.getActivePageData();
-      } else {
-        return data;
-      }
-    },
-    changeActivePage(page) {
-      this.activeCurrentPage = page;
-      this.activePageData = this.getActivePageData();
-    },
-    changeInActivePage(page) {
-      this.inactiveCurrentPage = page;
-      this.inactivePageData = this.getInactivePageData();
-    },
-    cancelDeleteEmployee() {
-      this.deleteUserVisible = false;
-    },
-    submitDeleteEmployee() {
-      this.deleteUserVisible = false;
-      let obj = { enabled: this.deleteData.enabled };
-      http({
-        url: `${url.enableEmployee}/${this.deleteData.email}`,
-        method: 'delete',
-        data: obj,
-      })
-        .then((res) => {
-          this.getEmployee();
-          util.successMessage(this);
-        })
-        .catch((err) => {
-          util.catchErr(err, 'errorSet', this);
-        });
-    },
-    deleteEmployee(cla_org_id, email, enabled) {
-      this.deleteData = {
-        cla_org_id: cla_org_id,
-        email: email,
-        enabled: enabled,
-      };
-      this.deleteUserVisible = true;
-    },
-    changeActive(cla_org_id, email, enabled) {
-      let data = {
-        enabled: enabled,
-      };
-      http({
-        url: `${url.enableEmployee}/${email}`,
-        method: 'put',
-        data: data,
-      })
-        .then((res) => {
-          this.getEmployee();
-        })
-        .catch((err) => {
-          util.catchErr(err, 'errorSet', this);
-        });
-    },
-    getEmployee() {
-      http({
-        url: url.queryEmployee,
-      })
-        .then((res) => {
-          let inactiveArr = [],
-            activeArr = [];
-          let data = res.data.data;
-          data.forEach((item, index) => {
-            item.enabled === false
-              ? inactiveArr.push(item)
-              : activeArr.push(item);
-          });
-          this.inactiveData = inactiveArr;
-          this.inactiveOriginData = inactiveArr;
-          this.activeData = activeArr;
-          this.activeOriginData = activeArr;
-          this.inactivePageData = this.getInactivePageData();
-          this.activePageData = this.getActivePageData();
-        })
-        .catch((err) => {
-          util.catchErr(err, 'errorSet', this);
-        });
-    },
-  },
-  created() {
-    this.getEmployee();
-  },
-};
 </script>
 
 <style lang="less">

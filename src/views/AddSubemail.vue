@@ -114,7 +114,7 @@ export default {
         });
       }
       this.$refs['ruleForm'] &&
-        this.$refs['ruleForm'].fields.forEach((item) => {
+        this.$refs['ruleForm'].fields.forEach(item => {
           if (item.validateState === 'error') {
             this.$refs['ruleForm'].validateField(item.labelFor);
           }
@@ -197,16 +197,16 @@ export default {
           sub_email: this.ruleForm.email.trim(),
         },
       })
-        .then((res) => {
+        .then(res => {
           util.successMessage(this);
           this.$router.push('/subemail');
         })
-        .catch((err) => {
+        .catch(err => {
           util.catchErr(err, 'errorSet', this);
         });
     },
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           if (
             !this.compareEmailSuffix(
@@ -271,10 +271,11 @@ export default {
           return;
         }
         http({
-          url: `${url.sendVerifyCode}/${email}`,
+          url: `${url.sendDomainCode}/code`,
           method: 'post',
+          data: { email: email },
         })
-          .then((res) => {
+          .then(res => {
             this.$message.closeAll();
             this.$message.success({
               message: this.$t('tips.sending_email'),
@@ -293,7 +294,7 @@ export default {
               }
             }, 1000);
           })
-          .catch((err) => {
+          .catch(err => {
             util.catchErr(err, 'errorSet', this);
           });
       } else {

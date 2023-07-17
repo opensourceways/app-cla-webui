@@ -63,6 +63,7 @@
                     clearable
                     filterable
                     @visible-change="orgVisibleChange"
+                    :disabled="getOrg"
                   >
                     <el-option
                       v-for="item in signingData"
@@ -164,7 +165,7 @@
                     clearable
                     filterable
                     @visible-change="orgVisibleChange"
-                    v-if="myForm.email"
+                    :disabled="getOrg"
                   >
                     <el-option
                       v-for="item in signingData"
@@ -174,11 +175,6 @@
                     >
                     </el-option>
                   </el-select>
-                  <el-input
-                    v-else
-                    disabled
-                    :placeholder="$t('org.config_cla_select_org_placeholder')"
-                  ></el-input>
                 </el-form-item>
                 <el-form-item
                   class="sendCodeClass"
@@ -405,6 +401,7 @@ export default {
       orgValue: '',
       cla_id: '',
       showInput: sessionStorage.getItem('loginType'),
+      getOrg:true
     };
   },
   methods: {
@@ -481,8 +478,10 @@ export default {
       }
       if (cla.EMAIL_REG.test(email)) {
         callback();
+        this.getOrg = false
       } else {
         callback(new Error(this.$t('tips.invalid_email')));
+        this.getOrg = true
       }
     },
     async verifyName(rule, value, callback) {
@@ -529,6 +528,9 @@ export default {
     },
     setMyForm(type, value) {
       this.myForm[type] = value;
+      if(!this.myForm.email){
+        this.getOrg = true
+      }
     },
     sendCode() {
       let email = this.myForm.email;
@@ -540,7 +542,7 @@ export default {
       } else if (sessionStorage.getItem('loginType') === 'employee') {
         _url = `${url.sendEmployeeCode}/${this.link_id}/${this.orgValue}/code`;
       }
-      if (email && EMAIL_REG.test(email)) {
+      if (email && EMAIL_REG.test(email) && this.orgValue) {
         this.sendBtDisable = true;
         axios({
           url: _url,
@@ -572,7 +574,11 @@ export default {
           });
       } else {
         this.$message.closeAll();
-        this.$message.error(this.$t('tips.not_fill_email'));
+        if(EMAIL_REG.test(email)&&!this.orgValue){
+          this.$message.error(this.$t('tips.not_fill_org'));
+        }else{
+          this.$message.error(this.$t('tips.not_fill_email'));
+        }
       }
     },
     getNowDate() {
@@ -852,7 +858,7 @@ export default {
           info: info,
           verification_code: this.ruleForm.code,
           corp_signing_id: this.orgValue,
-          cla_id: localStorage.getItem('cla_id'),
+          cla_id: sessionStorage.getItem('cla_id'),
           cla_language: this.cla_lang,
         };
       } else {
@@ -862,7 +868,7 @@ export default {
             email: this.myForm.email,
             verification_code: this.ruleForm.code,
             info: info,
-            cla_id: localStorage.getItem('cla_id'),
+            cla_id: sessionStorage.getItem('cla_id'),
             cla_language: this.cla_lang,
             corp_signing_id: this.orgValue,
           };
@@ -872,7 +878,7 @@ export default {
             email: this.myForm.email,
             verification_code: this.ruleForm.code,
             info: info,
-            cla_id: localStorage.getItem('cla_id'),
+            cla_id: sessionStorage.getItem('cla_id'),
             cla_language: this.cla_lang,
           };
         }

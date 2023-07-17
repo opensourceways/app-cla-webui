@@ -87,10 +87,8 @@ export default {
         return;
       }
       http({
-        url: `${url.getCLAPdf}/${dataFromParent.link_id}/${localStorage.getItem(
-          'cla_id'
-        )}`,
-        responseType: 'blob',
+        url: `${url.getCLAPdf}/${dataFromParent.link_id}/${sessionStorage.getItem('cla_id')}`,
+        responseType: "blob",
       })
         .then((res) => {
           if (res && res.data) {

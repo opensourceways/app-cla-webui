@@ -89,108 +89,106 @@ import corpReLoginDialog from '../components/CorpReLoginDialog';
 import reTryDialog from '../components/ReTryDialog';
 import DeleteDialog from '../components/DeleteDialog';
 
-export default {
-  name: 'UserList',
-  computed: {
-    deleteMessage() {
-      return this.$t('corp.deleteTips');
-    },
-    orgValue() {
-      return this.$store.state.loginInfo.orgValue;
-    },
-    userInfo() {
-      return this.$store.state.loginInfo.userInfo;
-    },
-    corpReLoginDialogVisible() {
-      return this.$store.state.dialogVisible;
-    },
-    corpReLoginMsg() {
-      return this.$store.state.dialogMessage;
-    },
-    corpReTryDialogVisible() {
-      return this.$store.state.reTryDialogVisible;
-    },
-  },
-  components: {
-    corpReLoginDialog,
-    reTryDialog,
-    DeleteDialog,
-  },
-  data() {
-    return {
-      emails: [],
-      multipleChoice: false,
-      multipleSelection: [],
-      row: '',
-      deleteUserVisible: false,
-      tableData: [],
+    export default {
+        name: 'UserList',
+        computed: {
+            deleteMessage() {
+                return this.$t('corp.deleteTips');
+            },
+            orgValue() {
+                return this.$store.state.loginInfo.orgValue;
+            },
+            userInfo() {
+                return this.$store.state.loginInfo.userInfo;
+            },
+            corpReLoginDialogVisible() {
+                return this.$store.state.dialogVisible;
+            }
+            ,
+            corpReLoginMsg() {
+                return this.$store.state.dialogMessage;
+            },
+            corpReTryDialogVisible() {
+                return this.$store.state.reTryDialogVisible;
+            }
+        },
+        components: {
+            corpReLoginDialog,
+            reTryDialog,
+            DeleteDialog
+        },
+        data() {
+            return {
+                ids: [],
+                multipleChoice: false,
+                multipleSelection: [],
+                row: '',
+                deleteUserVisible: false,
+                tableData: []
+            };
+        },
+        created() {
+            this.getEmployeeManager();
+        },
+        methods: {
+            ...mapActions(['setUserLimitAct']),
+            submitDeleteManager() {
+                this.deleteUserVisible = false;
+                this.deleteManager();
+            },
+            cancelDeleteManager() {
+                this.deleteUserVisible = false;
+            },
+            createManager() {
+                this.$router.push('/createManager');
+            },
+            cancel() {
+                this.$refs.multipleTable.clearSelection();
+                this.multipleChoice = false;
+
+            },
+            handleSelectionChange(val) {
+                this.multipleSelection = val;
+            },
+            deleteUser(row) {
+                this.ids = [];
+                if (this.multipleChoice) {
+                    this.multipleSelection.forEach(item => {
+                        this.ids.push({id: item.id});
+                    });
+                } else {
+                    this.ids.push({id: row.id});
+                }
+                this.deleteUserVisible = true;
+            },
+            getEmployeeManager() {
+                http({
+                    url: `${url.queryEmployeeManager}`
+                }).then(res => {
+                    this.tableData = res.data.data;
+                    this.$store.commit('setManagerList', res.data.data);
+                    this.setUserLimitAct(res.data.data.length);
+                }).catch(err => {
+                    util.catchErr(err, 'errorSet', this);
+                });
+            },
+            deleteManager() {
+                let obj = {
+                    managers: this.ids
+                };
+                http({
+                    url: url.deleteEmployeeManager,
+                    method: 'delete',
+                    data: obj
+                }).then(res => {
+                    util.successMessage(this);
+                    this.getEmployeeManager();
+                }).catch(err => {
+                    util.catchErr(err, 'errorSet', this);
+                });
+            }
+        }
     };
-  },
-  created() {
-    this.getEmployeeManager();
-  },
-  methods: {
-    ...mapActions(['setUserLimitAct']),
-    submitDeleteManager() {
-      this.deleteUserVisible = false;
-      this.deleteManager();
-    },
-    cancelDeleteManager() {
-      this.deleteUserVisible = false;
-    },
-    createManager() {
-      this.$router.push('/createManager');
-    },
-    cancel() {
-      this.$refs.multipleTable.clearSelection();
-      this.multipleChoice = false;
-    },
-    handleSelectionChange(val) {
-      this.multipleSelection = val;
-    },
-    deleteUser(row) {
-      this.emails = [];
-      if (this.multipleChoice) {
-        this.multipleSelection.forEach((item) => {
-          this.emails.push({ email: item.email });
-        });
-      } else {
-        this.emails.push({ email: row.email });
-      }
-      this.deleteUserVisible = true;
-    },
-    getEmployeeManager() {
-      http({
-        url: `${url.queryEmployeeManager}`,
-      })
-        .then((res) => {
-          this.tableData = res.data.data;
-          this.$store.commit('setManagerList', res.data.data);
-          this.setUserLimitAct(res.data.data.length);
-        })
-        .catch((err) => {
-          util.catchErr(err, 'errorSet', this);
-        });
-    },
-    deleteManager() {
-      let obj = {
-        managers: this.emails,
-      };
-      http({
-        url: url.deleteEmployeeManager,
-        method: 'delete',
-        data: obj,
-      })
-        .then((res) => {
-          util.successMessage(this);
-          this.getEmployeeManager();
-        })
-        .catch((err) => {
-          util.catchErr(err, 'errorSet', this);
-        });
-    },
-  },
-};
 </script>
 
 <style lang="less">
