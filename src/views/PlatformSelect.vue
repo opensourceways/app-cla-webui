@@ -50,15 +50,15 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import * as url from "../util/api";
-import http from "../util/http";
-import * as util from "../util/util";
-import ReTryDialog from "../components/ReTryDialog";
-import HttpButton from "../components/HttpButton";
+import { mapActions } from 'vuex';
+import * as url from '../util/api';
+import http from '../util/http';
+import * as util from '../util/util';
+import ReTryDialog from '../components/ReTryDialog';
+import HttpButton from '../components/HttpButton';
 
 export default {
-  name: "PlatformSelect",
+  name: 'PlatformSelect',
   components: {
     ReTryDialog,
     HttpButton,
@@ -74,25 +74,25 @@ export default {
   },
   data() {
     return {
-      giteeLoginText: "login_in",
-      githubLoginText: "login_in",
+      giteeLoginText: 'login_in',
+      githubLoginText: 'login_in',
       giteeLoginButtonDisable: false,
       githubLoginButtonDisable: false,
-      platform: "",
+      platform: '',
     };
   },
-  inject: ["setClientHeight"],
+  inject: ['setClientHeight'],
   methods: {
-    ...mapActions(["setPlatformAct"]),
+    ...mapActions(['setPlatformAct']),
     getLoginUrl(platform) {
       if (platform) {
         this.setPlatformAct(platform);
-        if (platform === "gitee") {
+        if (platform === 'gitee') {
           this.giteeLoginButtonDisable = true;
-          this.giteeLoginText = "logining";
-        } else if (platform === "github") {
+          this.giteeLoginText = 'logining';
+        } else if (platform === 'github') {
           this.githubLoginButtonDisable = true;
-          this.githubLoginText = "logining";
+          this.githubLoginText = 'logining';
         }
         http({
           url: `${url.getAuthCodeUrl}/${platform}/login`,
@@ -101,14 +101,14 @@ export default {
             window.location.href = res.data.data.url;
           })
           .catch((err) => {
-            if (platform === "gitee") {
+            if (platform === 'gitee') {
               this.giteeLoginButtonDisable = false;
-              this.giteeLoginText = "login_in";
-            } else if (platform === "github") {
+              this.giteeLoginText = 'login_in';
+            } else if (platform === 'github') {
               this.githubLoginButtonDisable = false;
-              this.githubLoginText = "login_in";
+              this.githubLoginText = 'login_in';
             }
-            util.catchErr(err, "errorSet", this);
+            util.catchErr(err, 'errorSet', this);
           });
       }
     },

@@ -72,20 +72,20 @@
                           @click="uploadClaFile(scope.row)"
                           size="mini"
                         >
-                          {{ $t("org.upload") }}
+                          {{ $t('org.upload') }}
                         </el-button>
                         <el-button
                           v-if="scope.row.pdf_uploaded"
                           @click="downloadClaFile(scope.row)"
                           size="mini"
-                          >{{ $t("org.download") }}
+                          >{{ $t('org.download') }}
                         </el-button>
                         <el-button
                           v-if="scope.row.pdf_uploaded"
                           @click="previewClaFile(scope.row)"
                           type=""
                           size="mini"
-                          >{{ $t("org.preview") }}
+                          >{{ $t('org.preview') }}
                         </el-button>
                       </div>
                       <svg-icon
@@ -112,19 +112,19 @@
                           :disabled="scope.row.admin_added"
                           :command="{ command: 'a', row: scope.row }"
                         >
-                          {{ $t("org.create_administrator") }}
+                          {{ $t('org.create_administrator') }}
                         </el-dropdown-item>
                         <el-dropdown-item
                           :disabled="scope.row.pdf_uploaded"
                           :command="{ command: 'b', row: scope.row }"
                         >
-                          {{ $t("org.resend_email") }}
+                          {{ $t('org.resend_email') }}
                         </el-dropdown-item>
                         <el-dropdown-item
                           :disabled="scope.row.admin_added"
                           :command="{ command: 'c', row: scope.row }"
                         >
-                          {{ $t("corp.delete") }}
+                          {{ $t('corp.delete') }}
                         </el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
@@ -194,20 +194,20 @@
                           @click="uploadClaFile(scope.row)"
                           size="mini"
                         >
-                          {{ $t("org.upload") }}
+                          {{ $t('org.upload') }}
                         </el-button>
                         <el-button
                           v-if="scope.row.pdf_uploaded"
                           @click="downloadClaFile(scope.row)"
                           size="mini"
-                          >{{ $t("org.download") }}
+                          >{{ $t('org.download') }}
                         </el-button>
                         <el-button
                           v-if="scope.row.pdf_uploaded"
                           @click="previewClaFile(scope.row)"
                           type=""
                           size="mini"
-                          >{{ $t("org.preview") }}
+                          >{{ $t('org.preview') }}
                         </el-button>
                       </div>
                       <svg-icon
@@ -234,19 +234,19 @@
                           :disabled="scope.row.admin_added"
                           :command="{ command: 'a', row: scope.row }"
                         >
-                          {{ $t("org.create_administrator") }}
+                          {{ $t('org.create_administrator') }}
                         </el-dropdown-item>
                         <el-dropdown-item
                           :disabled="scope.row.pdf_uploaded"
                           :command="{ command: 'b', row: scope.row }"
                         >
-                          {{ $t("org.resend_email") }}
+                          {{ $t('org.resend_email') }}
                         </el-dropdown-item>
                         <el-dropdown-item
                           :disabled="scope.row.admin_added"
                           :command="{ command: 'c', row: scope.row }"
                         >
-                          {{ $t("corp.delete") }}
+                          {{ $t('corp.delete') }}
                         </el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
@@ -313,13 +313,13 @@
                           disabled=""
                           :command="{ command: 'd', row: scope.row }"
                         >
-                          {{ $t("org.reduction") }}
+                          {{ $t('org.reduction') }}
                         </el-dropdown-item>
                         <el-dropdown-item
                           disabled=""
                           :command="{ command: 'e', row: scope.row }"
                         >
-                          {{ $t("org.deleteCompletely") }}
+                          {{ $t('org.deleteCompletely') }}
                         </el-dropdown-item>
                       </el-dropdown-menu>
                     </el-dropdown>
@@ -372,12 +372,12 @@
                     <el-dropdown-item
                       @click.native="clickDeleteCla(scope.row, 'individual')"
                     >
-                      {{ $t("org.delete_cla") }}
+                      {{ $t('org.delete_cla') }}
                     </el-dropdown-item>
                     <el-dropdown-item
                       @click.native="addIndividualCla(scope.row)"
                     >
-                      {{ $t("org.add_cla_for_other_language") }}
+                      {{ $t('org.add_cla_for_other_language') }}
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
@@ -385,7 +385,7 @@
             </el-table-column>
           </el-table>
           <el-button v-else @click="createIndividualCla">{{
-            $t("org.addIndividualCla")
+            $t('org.addIndividualCla')
           }}</el-button>
         </div>
       </el-tab-pane>
@@ -426,10 +426,10 @@
                     <el-dropdown-item
                       @click.native="clickDeleteCla(scope.row, 'corporation')"
                     >
-                      {{ $t("org.delete_cla") }}
+                      {{ $t('org.delete_cla') }}
                     </el-dropdown-item>
                     <el-dropdown-item @click.native="addCorpCla(scope.row)">
-                      {{ $t("org.add_cla_for_other_language") }}
+                      {{ $t('org.add_cla_for_other_language') }}
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
@@ -437,7 +437,7 @@
             </el-table-column>
           </el-table>
           <el-button v-else @click="createCorpCla">{{
-            $t("org.addCorpCla")
+            $t('org.addCorpCla')
           }}</el-button>
         </div>
       </el-tab-pane>
@@ -469,7 +469,7 @@
                 :file-list="fileList"
               >
                 <el-button slot="trigger" size="small" type="primary">{{
-                  $t("org.select")
+                  $t('org.select')
                 }}</el-button>
                 <el-button
                   style="margin-left: 10px"
@@ -477,11 +477,11 @@
                   type="success"
                   @click="submitUpload"
                 >
-                  {{ $t("org.upload") }}
+                  {{ $t('org.upload') }}
                 </el-button>
                 <div slot="tip" class="el-upload__tip">
                   {{
-                    $t("org.signature_file_size", {
+                    $t('org.signature_file_size', {
                       max_size_m: this.file_size,
                     })
                   }}
@@ -494,13 +494,13 @@
     </el-dialog>
     <el-dialog top="5vh" :visible.sync="resendEmailDialogVisible" width="20%">
       <div class="dialogContent">
-        {{ $t("org.resend_email_message") }}
+        {{ $t('org.resend_email_message') }}
         <div class="dialogBtBox">
           <button class="button_submit" @click="resendPDF">
-            {{ $t("corp.yes") }}
+            {{ $t('corp.yes') }}
           </button>
           <button class="cancelBt" @click="resendEmailDialogVisible = false">
-            {{ $t("corp.no") }}
+            {{ $t('corp.no') }}
           </button>
         </div>
       </div>
@@ -534,17 +534,17 @@
   </div>
 </template>
 <script>
-import * as url from "../util/api";
-import * as util from "../util/util";
-import http from "../util/http";
-import ReLoginDialog from "../components/ReLoginDialog";
-import ReTryDialog from "../components/ReTryDialog";
-import DeleteDialog from "../components/DeleteDialog";
-import download from "downloadjs";
-import claConfig from "../lang/global";
+import * as url from '../util/api';
+import * as util from '../util/util';
+import http from '../util/http';
+import ReLoginDialog from '../components/ReLoginDialog';
+import ReTryDialog from '../components/ReTryDialog';
+import DeleteDialog from '../components/DeleteDialog';
+import claConfig from '../lang/global';
+import { saveAs } from 'file-saver';
 
 export default {
-  name: "CorporationList",
+  name: 'CorporationList',
   components: {
     ReTryDialog,
     ReLoginDialog,
@@ -552,10 +552,10 @@ export default {
   },
   computed: {
     completeDeleteMessage() {
-      return this.$t("corp.completeDeleteTips");
+      return this.$t('corp.completeDeleteTips');
     },
     deleteMessage() {
-      return this.$t("corp.deleteTips");
+      return this.$t('corp.deleteTips');
     },
     platform() {
       return this.$store.state.platform.toLowerCase();
@@ -575,13 +575,13 @@ export default {
       signedCompleted: [],
       signedNotCompleted: [],
       deletedCorpInfo: [],
-      corpActiveName: "first",
+      corpActiveName: 'first',
       deleteCompleteVisible: false,
       invalidSignatureData: [],
       deleteCorpVisible: false,
-      deleteCorpEmail: "",
-      delete_apply: "",
-      deleteRow: "",
+      deleteCorpEmail: '',
+      delete_apply: '',
+      deleteRow: '',
       deleteVisible: false,
       file_size: claConfig.SIGNATURE_FILE_MAX_SIZE,
       uploadLoading: false,
@@ -589,34 +589,34 @@ export default {
       corpClaData: [],
       previewOriginalDialogVisible: false,
       resendEmailDialogVisible: false,
-      resendEmail: "",
-      claData: "",
-      activeName: "first",
+      resendEmail: '',
+      claData: '',
+      activeName: 'first',
       uploadHeaders: {
         Token: this.$store.state.access_token,
       },
-      uploadUrl: "",
+      uploadUrl: '',
       access_token: this.$store.state.access_token,
       refresh_token: this.$store.state.refresh_token,
       docInfo: {},
       previewDialogVisible: false,
-      form: { file: "" },
+      form: { file: '' },
       fileList: [],
       uploadDialogVisible: false,
-      item: "",
+      item: '',
       currentPage: 1,
       tableTotal: 0,
-      id:''
+      id: '',
     };
   },
-  inject: ["setClientHeight"],
+  inject: ['setClientHeight'],
   methods: {
     sortDate(dataArr) {
       if (!(dataArr && dataArr.length)) {
         return;
       }
       dataArr.forEach((item) => {
-        let dateNum = parseInt(item.date.replace(/-/g, ""));
+        let dateNum = parseInt(item.date.replace(/-/g, ''));
         Object.assign(item, { dateNum: dateNum });
       });
       for (let i = 0; i < dataArr.length; i++) {
@@ -657,39 +657,39 @@ export default {
     deleteCla(row) {
       http({
         url: `${url.delCla}/${this.$store.state.corpItem.link_id}/${this.delete_apply}/${row.language}`,
-        method: "delete",
+        method: 'delete',
       })
         .then((res) => {
           util.successMessage(this);
-          if (this.delete_apply === "individual") {
+          if (this.delete_apply === 'individual') {
             this.getIndividualClaInfo();
-          } else if (this.delete_apply === "corporation") {
+          } else if (this.delete_apply === 'corporation') {
             this.getCorpClaInfo();
           }
         })
         .catch((err) => {
-          util.catchErr(err, "errorSet", this);
+          util.catchErr(err, 'errorSet', this);
         });
     },
     createdAdmin(param) {
       if (param.row.admin_added) {
-        return "mark-row-green";
+        return 'mark-row-green';
       } else if (param.row.pdf_uploaded) {
-        return "mark-row-orange";
+        return 'mark-row-orange';
       }
     },
     createCorpCla() {
-      this.$store.commit("setAddBindFirst", true);
+      this.$store.commit('setAddBindFirst', true);
       this.setCheckInfo();
-      this.$router.push("/addCorpCla");
+      this.$router.push('/addCorpCla');
     },
     createIndividualCla() {
-      this.$store.commit("setAddBindFirst", true);
+      this.$store.commit('setAddBindFirst', true);
       this.setCheckInfo();
-      this.$router.push("/addIndividualCla");
+      this.$router.push('/addIndividualCla');
     },
     addIndividualCla(row) {
-      this.$router.push("/addIndividualCla");
+      this.$router.push('/addIndividualCla');
       this.setIndividualPD(row);
     },
     setIndividualPD(row) {
@@ -700,26 +700,26 @@ export default {
           if (index > 1) {
             let field = {};
             for (let key in item) {
-              if (key !== "id") {
+              if (key !== 'id') {
                 Object.assign(field, { [key]: item[key] });
               }
             }
             data.push(field);
           }
         });
-        this.$store.commit("setIndividualCustomMetadataArr", data);
+        this.$store.commit('setIndividualCustomMetadataArr', data);
       }
     },
     addCorpCla(row) {
       this.setCorpPD(row);
-      this.$router.push("/addCorpCla");
+      this.$router.push('/addCorpCla');
     },
     setCheckInfo() {
-      this.$store.commit("setBindType", "add-bind");
-      this.$store.commit("setChooseOrg", this.$store.state.corpItem.org_id);
-      this.$store.commit("setRepo", this.$store.state.corpItem.repo_id);
-      this.$store.commit("setOrgAlias", this.$store.state.corpItem.org_alias);
-      this.$store.commit("setEmail", this.$store.state.corpItem.org_email);
+      this.$store.commit('setBindType', 'add-bind');
+      this.$store.commit('setChooseOrg', this.$store.state.corpItem.org_id);
+      this.$store.commit('setRepo', this.$store.state.corpItem.repo_id);
+      this.$store.commit('setOrgAlias', this.$store.state.corpItem.org_alias);
+      this.$store.commit('setEmail', this.$store.state.corpItem.org_email);
     },
     setCorpPD(row) {
       this.setCheckInfo();
@@ -729,32 +729,32 @@ export default {
           if (index > 3) {
             let field = {};
             for (let key in item) {
-              if (key !== "id") {
+              if (key !== 'id') {
                 Object.assign(field, { [key]: item[key] });
               }
             }
             data.push(field);
           }
         });
-        this.$store.commit("setCorporationCustomMetadataArr", data);
+        this.$store.commit('setCorporationCustomMetadataArr', data);
       }
     },
     checkUrl(url) {
       window.open(url);
     },
     corpTabsHandleClick(tab, event) {
-      if (tab.index === "2") {
+      if (tab.index === '2') {
         this.getDeletedCorpInfo();
       }
     },
     tabsHandleClick(tab, event) {
-      if (tab.index === "0") {
+      if (tab.index === '0') {
         this.getCorporationInfo();
-      } else if (tab.index === "1") {
+      } else if (tab.index === '1') {
         this.getIndividualClaInfo();
-      } else if (tab.index === "2") {
+      } else if (tab.index === '2') {
         this.getCorpClaInfo();
-      } else if (tab.index === "3") {
+      } else if (tab.index === '3') {
         this.getDeletedCorpInfo();
       }
     },
@@ -769,7 +769,7 @@ export default {
           }
         })
         .catch((err) => {
-          util.catchErr(err, "errorSet", this);
+          util.catchErr(err, 'errorSet', this);
         });
     },
     getIndividualClaInfo() {
@@ -783,7 +783,7 @@ export default {
           }
         })
         .catch((err) => {
-          util.catchErr(err, "errorSet", this);
+          util.catchErr(err, 'errorSet', this);
         });
     },
     getCorporationInfo() {
@@ -793,7 +793,7 @@ export default {
         .then((resp) => {
           if (resp.data.data && resp.data.data.length) {
             let tableData = resp.data.data;
-            this.id = tableData[0].id
+            this.id = tableData[0].id;
             this.signedCompleted = [];
             this.signedNotCompleted = [];
             tableData.forEach((item) => {
@@ -808,7 +808,7 @@ export default {
           }
         })
         .catch((err) => {
-          util.catchErr(err, "errorSet", this);
+          util.catchErr(err, 'errorSet', this);
         });
     },
     getDeletedCorpInfo() {
@@ -820,17 +820,17 @@ export default {
           this.sortDate(this.deletedCorpInfo);
         })
         .catch((err) => {
-          util.catchErr(err, "errorSet", this);
+          util.catchErr(err, 'errorSet', this);
         });
     },
     previewClaFile(row) {
       http({
         url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${this.id}`,
-        responseType: "blob",
+        responseType: 'blob',
       })
         .then((res) => {
           if (res && res.data) {
-            let blob = new Blob([res.data], { type: "application/pdf" });
+            let blob = new Blob([res.data], { type: 'application/pdf' });
             let url = window.URL.createObjectURL(blob);
             window.open(
               `../../static/pdf_source/web/viewer.html?file=${encodeURIComponent(
@@ -840,31 +840,28 @@ export default {
           }
         })
         .catch((err) => {
-          util.catchErr(err, "errorSet", this);
+          util.catchErr(err, 'errorSet', this);
         });
     },
     downloadClaFile(row) {
       http({
         url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${this.id}`,
-        responseType: "blob",
+        responseType: 'blob',
       })
         .then((res) => {
           if (res.data) {
             let time = util.getNowDateToTime();
-            download(
-              new Blob([res.data]),
-              `${row.corporation_name}_signature${time}.pdf`,
-              "application/pdf"
-            );
+            const blob = new Blob([res.data], { type: 'application/pdf' });
+            saveAs(blob, `${row.corporation_name}_signature${time}.pdf`);
           } else {
-            this.$store.commit("errorCodeSet", {
+            this.$store.commit('errorCodeSet', {
               dialogVisible: true,
-              dialogMessage: this.$t("tips.not_upload_file"),
+              dialogMessage: this.$t('tips.not_upload_file'),
             });
           }
         })
         .catch((err) => {
-          util.catchErr(err, "errorSet", this);
+          util.catchErr(err, 'errorSet', this);
         });
     },
     uploadClaFile(row) {
@@ -874,11 +871,11 @@ export default {
     upload(fileObj) {
       const formData = new FormData();
       let file = fileObj.file;
-      formData.append("pdf", file);
-      formData.append("type", file.type);
+      formData.append('pdf', file);
+      formData.append('type', file.type);
       http({
         url: this.uploadUrl,
-        method: "post",
+        method: 'post',
         data: formData,
       })
         .then((res) => {
@@ -891,17 +888,17 @@ export default {
         })
         .catch((err) => {
           this.uploadLoading.close();
-          util.catchErr(err, "errorSet", this);
+          util.catchErr(err, 'errorSet', this);
           this.uploadLoading.close();
         });
     },
     submitUpload() {
       if (this.fileList.length) {
-        this.uploadLoading = util.getLoading(this, "org.upload_loading_text");
+        this.uploadLoading = util.getLoading(this, 'org.upload_loading_text');
         this.$refs.uploadPdf.submit();
       } else {
         this.$message.closeAll();
-        this.$message.error(this.$t("tips.select_file"));
+        this.$message.error(this.$t('tips.select_file'));
       }
     },
     handleChange(file, fileList) {
@@ -914,9 +911,9 @@ export default {
             fileList.splice(i, 1);
             i--;
           }
-          this.$store.commit("errorCodeSet", {
+          this.$store.commit('errorCodeSet', {
             dialogVisible: true,
-            dialogMessage: this.$t("tips.file_too_large"),
+            dialogMessage: this.$t('tips.file_too_large'),
           });
         }
       } else {
@@ -924,9 +921,9 @@ export default {
           fileList.splice(i, 1);
           i--;
         }
-        this.$store.commit("errorCodeSet", {
+        this.$store.commit('errorCodeSet', {
           dialogVisible: true,
-          dialogMessage: this.$t("tips.not_pdf"),
+          dialogMessage: this.$t('tips.not_pdf'),
         });
       }
     },
@@ -940,14 +937,14 @@ export default {
       }
     },
     handleExceed(files, fileList) {
-      this.$message.warning(this.$t("org.file_limit_tips"));
+      this.$message.warning(this.$t('org.file_limit_tips'));
     },
     beforeRemove(file, fileList) {
       return this.$confirm(
-        this.$t("org.remove_file_tips", { fileName: file.name }),
+        this.$t('org.remove_file_tips', { fileName: file.name }),
         {
-          cancelButtonText: this.$t("org.cancel_remove"),
-          confirmButtonText: this.$t("org.confirm_remove"),
+          cancelButtonText: this.$t('org.cancel_remove'),
+          confirmButtonText: this.$t('org.confirm_remove'),
         }
       );
     },
@@ -961,35 +958,35 @@ export default {
     },
     resendPDF() {
       let email = this.resendEmail;
-      let resend_url = "";
+      let resend_url = '';
       resend_url = `${url.resend_pdf}/${this.$store.state.corpItem.link_id}/${this.id}`;
       http({
         url: resend_url,
-        method: "post",
+        method: 'post',
       })
         .then((res) => {
           this.resendEmailDialogVisible = false;
           util.successMessage(this);
         })
         .catch((err) => {
-          util.catchErr(err, "errorSet", this);
+          util.catchErr(err, 'errorSet', this);
         });
     },
     menuCommand(command) {
       switch (command.command) {
-        case "a":
+        case 'a':
           this.createRoot(command.row.admin_email);
           break;
-        case "b":
+        case 'b':
           this.openResendPdf(command.row.admin_email);
           break;
-        case "c":
+        case 'c':
           this.openDeleteCorp(command.row.admin_email);
           break;
-        case "d":
+        case 'd':
           this.reductionCorp(command.row.admin_email);
           break;
-        case "e":
+        case 'e':
           this.deleteCompletely(command.row.admin_email);
           break;
       }
@@ -1000,41 +997,41 @@ export default {
     reductionCorp(email) {
       http({
         url: `${url.corporationManager}/${this.$store.state.corpItem.link_id}/${this.id}`,
-        method: "patch",
+        method: 'patch',
       })
         .then((res) => {
           util.successMessage(this);
           this.getCorporationInfo();
         })
         .catch((err) => {
-          util.catchErr(err, "errorSet", this);
+          util.catchErr(err, 'errorSet', this);
         });
     },
     deleteCorp(email) {
       this.deleteCorpVisible = false;
       http({
         url: `${url.corporation_signing}/${this.$store.state.corpItem.link_id}/${this.id}`,
-        method: "delete",
+        method: 'delete',
       })
         .then((res) => {
           util.successMessage(this);
           this.getCorporationInfo();
         })
         .catch((err) => {
-          util.catchErr(err, "errorSet", this);
+          util.catchErr(err, 'errorSet', this);
         });
     },
     createRoot(email) {
       http({
         url: `${url.corporationManager}/${this.$store.state.corpItem.link_id}/${this.id}`,
-        method: "put",
+        method: 'put',
       })
         .then((res) => {
           util.successMessage(this);
           this.getCorporationInfo();
         })
         .catch((err) => {
-          util.catchErr(err, "errorSet", this);
+          util.catchErr(err, 'errorSet', this);
         });
     },
   },

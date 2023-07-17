@@ -170,10 +170,10 @@ export default {
         url: _url,
         params: obj,
       })
-        .then(res => {
+        .then((res) => {
           this.$router.replace('/config-email');
         })
-        .catch(err => {
+        .catch((err) => {
           switch (err.status) {
             case 401:
               if (
@@ -267,7 +267,7 @@ export default {
         url: _url,
         params: obj,
       })
-        .then(res => {
+        .then((res) => {
           let repositoryOptions = [];
           res.data.forEach((item, index) => {
             repositoryOptions.push({
@@ -281,7 +281,7 @@ export default {
           });
           this.$store.commit('setRepositoryOptions', repositoryOptions);
         })
-        .catch(err => {
+        .catch((err) => {
           this.$store.commit('errorCodeSet', {
             dialogVisible: true,
             dialogMessage: this.$t('tips.system_error'),
@@ -295,7 +295,7 @@ export default {
       _http({
         url: _url,
       })
-        .then(res => {
+        .then((res) => {
           if (res.status === 200) {
             let orgOptions = [];
             res.data.data.forEach((item, index) => {
@@ -304,7 +304,7 @@ export default {
             this.$store.commit('setOrgOption', orgOptions);
           }
         })
-        .catch(err => {
+        .catch((err) => {
           switch (err.status) {
             case 401:
               this.$store.commit('setOrgReLogin', {
@@ -350,7 +350,7 @@ export default {
     },
   },
   beforeRouteEnter(to, from, next) {
-    next(vm => {
+    next((vm) => {
       if (from.path === '/') {
         vm.init();
       }

@@ -129,7 +129,7 @@
 
 <script>
 export default {
-  name: "ConfigFields",
+  name: 'ConfigFields',
   computed: {
     individualCustomMetadataArr() {
       if (this.$store.state.individualCustomMetadataArr) {
@@ -149,81 +149,81 @@ export default {
   data() {
     return {
       tipContent:
-        "The information you want contributors to fill in when they sign the cla.Title and type are required, otherwise the field will fail to be added",
+        'The information you want contributors to fill in when they sign the cla.Title and type are required, otherwise the field will fail to be added',
       individualMetadata: [],
       corpMetadata: [],
       dataTypeOptions: [
-        { label: "name", value: "name" },
+        { label: 'name', value: 'name' },
         {
-          label: "corporationName",
-          value: "corporationName",
+          label: 'corporationName',
+          value: 'corporationName',
         },
-        { label: "date", value: "date" },
+        { label: 'date', value: 'date' },
         {
-          label: "telephone",
-          value: "telephone",
+          label: 'telephone',
+          value: 'telephone',
         },
-        { label: "address", value: "address" },
-        { label: "email", value: "email" },
+        { label: 'address', value: 'address' },
+        { label: 'email', value: 'email' },
         {
-          label: "fax",
-          value: "fax",
+          label: 'fax',
+          value: 'fax',
         },
       ],
       individualMetadataArr: [
         {
-          title: "Name",
-          type: "name",
-          description: "your name",
+          title: 'Name',
+          type: 'name',
+          description: 'your name',
           required: true,
         },
         {
-          title: "E-Mail",
-          type: "email",
-          description: "your email",
+          title: 'E-Mail',
+          type: 'email',
+          description: 'your email',
           required: true,
         },
       ],
       corporationMetadataArr: [
         {
-          title: "Authorized Representative",
-          type: "authorized",
-          description: "name of Authorized Representative",
+          title: 'Authorized Representative',
+          type: 'authorized',
+          description: 'name of Authorized Representative',
           required: true,
         },
         {
-          title: "Title",
-          type: "title",
-          description: "title of Authorized Representative",
+          title: 'Title',
+          type: 'title',
+          description: 'title of Authorized Representative',
           required: true,
         },
         {
-          title: "Corporation Name",
-          type: "corporationName",
-          description: "corporation name",
+          title: 'Corporation Name',
+          type: 'corporationName',
+          description: 'corporation name',
           required: true,
         },
 
         {
-          title: "E-Mail",
-          type: "email",
-          description: "corporation email",
+          title: 'E-Mail',
+          type: 'email',
+          description: 'corporation email',
           required: true,
         },
       ],
       initIndividualCustomMetadata: [
         {
-          title: "",
-          type: "",
-          description: "",
+          title: '',
+          type: '',
+          description: '',
           required: false,
         },
       ],
       initCorpCustomMetadata: [
         {
-          title: "",
-          type: "",
-          description: "",
+          title: '',
+          type: '',
+          description: '',
           required: false,
         },
       ],
@@ -231,7 +231,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      if (from.path === "/") {
+      if (from.path === '/') {
         vm.init();
       }
     });
@@ -239,53 +239,53 @@ export default {
   methods: {
     submitModify() {},
     init() {
-      this.$store.commit("setIndividualMetadata", this.individualMetadataArr);
-      this.$store.commit("setCorpMetadata", this.corporationMetadataArr);
+      this.$store.commit('setIndividualMetadata', this.individualMetadataArr);
+      this.$store.commit('setCorpMetadata', this.corporationMetadataArr);
       this.$store.commit(
-        "setIndividualCustomMetadataArr",
+        'setIndividualCustomMetadataArr',
         this.initIndividualCustomMetadata
       );
       this.$store.commit(
-        "setCorporationCustomMetadataArr",
+        'setCorporationCustomMetadataArr',
         this.initCorpCustomMetadata
       );
-      sessionStorage.removeItem("individualMetadata");
-      sessionStorage.removeItem("corporationMetadata");
-      sessionStorage.removeItem("individualCustomMetadataArr");
-      sessionStorage.removeItem("corporationCustomMetadataArr");
+      sessionStorage.removeItem('individualMetadata');
+      sessionStorage.removeItem('corporationMetadata');
+      sessionStorage.removeItem('individualCustomMetadataArr');
+      sessionStorage.removeItem('corporationCustomMetadataArr');
     },
     toConfigClaLink() {
-      this.$router.replace("/config-cla-link");
+      this.$router.replace('/config-cla-link');
     },
     toNextPage() {
       let metadataObj = this.checkMetadata();
       if (metadataObj) {
-        this.$store.commit("setIndividualMetadata", metadataObj.individualArr);
-        this.$store.commit("setCorpMetadata", metadataObj.corpArr);
+        this.$store.commit('setIndividualMetadata', metadataObj.individualArr);
+        this.$store.commit('setCorpMetadata', metadataObj.corpArr);
         this.$store.commit(
-          "setIndividualCustomMetadataArr",
+          'setIndividualCustomMetadataArr',
           this.individualMetadata
         );
         this.$store.commit(
-          "setCorporationCustomMetadataArr",
+          'setCorporationCustomMetadataArr',
           this.corpMetadata
         );
-        this.$router.replace("/config-check");
+        this.$router.replace('/config-check');
       } else {
         this.$message.closeAll();
-        this.$message.error(this.$t("tips.title_type_repeat"));
+        this.$message.error(this.$t('tips.title_type_repeat'));
       }
     },
     checkMetadata() {
       let individualMetadata = [];
       let corpMetadata = [];
       this.individualCustomMetadataArr.forEach((item) => {
-        if (item.title !== "" && item.type !== "") {
+        if (item.title !== '' && item.type !== '') {
           individualMetadata.push(item);
         }
       });
       this.corporationCustomMetadataArr.forEach((item) => {
-        if (item.title !== "" && item.type !== "") {
+        if (item.title !== '' && item.type !== '') {
           corpMetadata.push(item);
         }
       });
@@ -312,15 +312,15 @@ export default {
         }
       }
       individualMetadata.push({
-        title: "",
-        type: "",
-        description: "",
+        title: '',
+        type: '',
+        description: '',
         required: false,
       });
       corpMetadata.push({
-        title: "",
-        type: "",
-        description: "",
+        title: '',
+        type: '',
+        description: '',
         required: false,
       });
       this.individualMetadata = individualMetadata;
@@ -335,9 +335,9 @@ export default {
         let individualFields = [];
         let corpFields = [];
         individualArr.forEach((item, index) => {
-          if (item.title !== "" && item.type !== "") {
+          if (item.title !== '' && item.type !== '') {
             individualFields.push({
-              id: index + "",
+              id: index + '',
               title: item.title,
               type: item.type,
               description: item.description,
@@ -346,9 +346,9 @@ export default {
           }
         });
         corpArr.forEach((item, index) => {
-          if (item.title !== "" && item.type !== "") {
+          if (item.title !== '' && item.type !== '') {
             corpFields.push({
-              id: index + "",
+              id: index + '',
               title: item.title,
               type: item.type,
               description: item.description,
@@ -364,44 +364,44 @@ export default {
     addRow(index) {
       let metadata = this.individualCustomMetadataArr;
       metadata.splice(index + 1, 0, {
-        title: "",
-        type: "",
-        description: "",
+        title: '',
+        type: '',
+        description: '',
         required: false,
       });
-      this.$store.commit("setIndividualCustomMetadataArr", metadata);
+      this.$store.commit('setIndividualCustomMetadataArr', metadata);
     },
     myDeleteRow(index) {
       let metadata = this.individualCustomMetadataArr;
       if (metadata.length === 1) {
-        metadata[0].type = "";
-        metadata[0].title = "";
-        metadata[0].description = "";
+        metadata[0].type = '';
+        metadata[0].title = '';
+        metadata[0].description = '';
       } else {
         metadata.splice(index, 1);
       }
-      this.$store.commit("setIndividualCustomMetadataArr", metadata);
+      this.$store.commit('setIndividualCustomMetadataArr', metadata);
     },
     addCorpRow(index) {
       let metadata = this.corporationCustomMetadataArr;
       metadata.splice(index + 1, 0, {
-        title: "",
-        type: "",
-        description: "",
+        title: '',
+        type: '',
+        description: '',
         required: false,
       });
-      this.$store.commit("setCorporationCustomMetadataArr", metadata);
+      this.$store.commit('setCorporationCustomMetadataArr', metadata);
     },
     myCorpDeleteRow(index) {
       let metadata = this.corporationCustomMetadataArr;
       if (metadata.length === 1) {
-        metadata[0].type = "";
-        metadata[0].title = "";
-        metadata[0].description = "";
+        metadata[0].type = '';
+        metadata[0].title = '';
+        metadata[0].description = '';
       } else {
         metadata.splice(index, 1);
       }
-      this.$store.commit("setCorporationCustomMetadataArr", metadata);
+      this.$store.commit('setCorporationCustomMetadataArr', metadata);
     },
   },
 };

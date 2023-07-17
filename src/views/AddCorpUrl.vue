@@ -2,7 +2,7 @@
   <div>
     <div class="itemBox">
       <div class="stepTitle">
-        {{ $t("org.config_cla_paste_url_title") }}
+        {{ $t('org.config_cla_paste_url_title') }}
         <el-tooltip
           class="item"
           effect="light"
@@ -14,11 +14,11 @@
       </div>
       <div>
         <div class="margin-top-1rem">
-          {{ $t("org.config_cla_paste_corp_url") }}
+          {{ $t('org.config_cla_paste_corp_url') }}
         </div>
         <div class="margin-top-1rem">
           {{
-            $t("org.config_cla_corp_url_desc", {
+            $t('org.config_cla_corp_url_desc', {
               platform: this.$store.state.platform,
             })
           }}
@@ -36,7 +36,7 @@
             </el-col>
           </el-row>
           <el-row class="margin-top-1rem">
-            {{ $t("org.config_cla_corp_lang") }}
+            {{ $t('org.config_cla_corp_lang') }}
           </el-row>
           <el-row class="margin-top-1rem">
             <el-col>
@@ -65,7 +65,7 @@
     <div class="itemBox">
       <div style="padding: 0.5rem">
         <p style="font-size: 1.2rem">
-          {{ $t("org.config_cla_fields") }}
+          {{ $t('org.config_cla_fields') }}
           <el-tooltip
             class="item"
             effect="dark"
@@ -79,11 +79,11 @@
       <div class="margin-top-1rem">
         <div>
           <div class="margin-top-1rem">
-            {{ $t("org.config_cla_corp_metadata") }}
+            {{ $t('org.config_cla_corp_metadata') }}
           </div>
           <div class="margin-top-1rem">
             <div class="margin-top-1rem">
-              {{ $t("org.config_cla_corp_metadata_desc") }}
+              {{ $t('org.config_cla_corp_metadata_desc') }}
             </div>
             <div>
               <el-row
@@ -93,16 +93,16 @@
                 :gutter="20"
               >
                 <el-col :span="5">
-                  {{ $t("org.config_cla_check_fields_title_title") }}
+                  {{ $t('org.config_cla_check_fields_title_title') }}
                 </el-col>
                 <el-col :span="5">
-                  {{ $t("org.config_cla_check_fields_type_title") }}
+                  {{ $t('org.config_cla_check_fields_type_title') }}
                 </el-col>
                 <el-col :span="5">
-                  {{ $t("org.config_cla_check_fields_describe_title") }}
+                  {{ $t('org.config_cla_check_fields_describe_title') }}
                 </el-col>
                 <el-col :span="5" style="height: 100%">
-                  {{ $t("org.config_cla_check_fields_require_title") }}
+                  {{ $t('org.config_cla_check_fields_require_title') }}
                 </el-col>
               </el-row>
               <el-row
@@ -139,7 +139,7 @@
                 </el-col>
                 <el-col :span="5" style="height: 100%">
                   <el-checkbox v-model="item.required" disabled="">
-                    {{ $t("org.config_cla_fields_required") }}
+                    {{ $t('org.config_cla_fields_required') }}
                   </el-checkbox>
                 </el-col>
               </el-row>
@@ -191,7 +191,7 @@
                     :disabled="!add_bind_first"
                     v-model="item.required"
                   >
-                    {{ $t("org.config_cla_fields_required") }}
+                    {{ $t('org.config_cla_fields_required') }}
                   </el-checkbox>
                 </el-col>
                 <el-col v-show="add_bind_first" :span="4">
@@ -210,7 +210,7 @@
     </div>
     <div class="nextStepBtBox">
       <button class="step_button" @click="toNextPage">
-        {{ $t("org.next_step") }}
+        {{ $t('org.next_step') }}
       </button>
     </div>
     <ReTryDialog
@@ -225,13 +225,13 @@
 </template>
 
 <script>
-import ReTryDialog from "../components/ReTryDialog";
-import ReLoginDialog from "../components/ReLoginDialog";
-import * as util from "../util/util";
-import claConfig from "../lang/global";
+import ReTryDialog from '../components/ReTryDialog';
+import ReLoginDialog from '../components/ReLoginDialog';
+import * as util from '../util/util';
+import claConfig from '../lang/global';
 
 export default {
-  name: "AddCorpUrl",
+  name: 'AddCorpUrl',
   components: {
     ReTryDialog,
     ReLoginDialog,
@@ -268,7 +268,7 @@ export default {
         return this.$store.state.claLinkCorp;
       },
       set(value) {
-        this.$store.commit("setClaLinkCorp", value);
+        this.$store.commit('setClaLinkCorp', value);
       },
     },
     corpClaLanguageValue: {
@@ -276,7 +276,7 @@ export default {
         return this.$store.state.corpLanguage;
       },
       set(value) {
-        this.$store.commit("setCorpLanguage", value);
+        this.$store.commit('setCorpLanguage', value);
       },
     },
   },
@@ -284,11 +284,13 @@ export default {
     return {
       corpMetadata: [],
       languageOptions: [
-        { value: "english", label: "English" },
-        { value: "chinese", label: "中文" },
+        { value: 'english', label: 'English' },
+        { value: 'chinese', label: '中文' },
       ],
       corporationMetadataArr: claConfig.CORPORATIONMETADATAARR_EN,
-      initCorpCustomMetadata: JSON.parse(JSON.stringify(claConfig.INITCUSTOMMETADATA)),
+      initCorpCustomMetadata: JSON.parse(
+        JSON.stringify(claConfig.INITCUSTOMMETADATA)
+      ),
       corpTitleOptions: claConfig.TITLE_OPTIONS_EN,
     };
   },
@@ -299,63 +301,63 @@ export default {
     addCorpRow(index) {
       let metadata = this.corporationCustomMetadataArr;
       metadata.splice(index + 1, 0, {
-        title: "",
-        type: "",
-        description: "",
+        title: '',
+        type: '',
+        description: '',
         required: false,
       });
-      this.$store.commit("setCorporationCustomMetadataArr", metadata);
+      this.$store.commit('setCorporationCustomMetadataArr', metadata);
     },
     myCorpDeleteRow(index) {
       let metadata = this.corporationCustomMetadataArr;
       if (metadata.length === 1) {
-        metadata[0].type = "";
-        metadata[0].title = "";
-        metadata[0].description = "";
+        metadata[0].type = '';
+        metadata[0].title = '';
+        metadata[0].description = '';
       } else {
         metadata.splice(index, 1);
       }
-      this.$store.commit("setCorporationCustomMetadataArr", metadata);
+      this.$store.commit('setCorporationCustomMetadataArr', metadata);
     },
     initMetadata(lang) {
-      if (lang === "chinese") {
+      if (lang === 'chinese') {
         this.corporationMetadataArr = claConfig.CORPORATIONMETADATAARR_ZH;
-      } else if (lang === "english") {
+      } else if (lang === 'english') {
         this.corporationMetadataArr = claConfig.CORPORATIONMETADATAARR_EN;
       }
     },
     corpInit() {
-      this.$store.commit("setCorpLanguage", "");
-      this.$store.commit("setClaLinkCorp", "");
-      sessionStorage.removeItem("corpLanguage");
-      sessionStorage.removeItem("claLinkCorp");
-      this.$store.commit("setCorpMetadata", this.corporationMetadataArr);
-      sessionStorage.removeItem("corporationMetadata");
-      sessionStorage.removeItem("corporationCustomMetadataArr");
+      this.$store.commit('setCorpLanguage', '');
+      this.$store.commit('setClaLinkCorp', '');
+      sessionStorage.removeItem('corpLanguage');
+      sessionStorage.removeItem('claLinkCorp');
+      this.$store.commit('setCorpMetadata', this.corporationMetadataArr);
+      sessionStorage.removeItem('corporationMetadata');
+      sessionStorage.removeItem('corporationCustomMetadataArr');
     },
     toNextPage() {
       if (this.cla_link_corporation && this.corpClaLanguageValue) {
         let corpArr = this.checkMetadata();
         if (corpArr) {
-          this.$store.commit("setCorpMetadata", corpArr);
+          this.$store.commit('setCorpMetadata', corpArr);
           this.$store.commit(
-            "setCorporationCustomMetadataArr",
+            'setCorporationCustomMetadataArr',
             this.corpMetadata
           );
-          this.$router.replace("/config-check");
+          this.$router.replace('/config-check');
         } else {
           this.$message.closeAll();
-          this.$message.error(this.$t("tips.title_type_repeat"));
+          this.$message.error(this.$t('tips.title_type_repeat'));
         }
       } else if (this.cla_link_corporation) {
-        this.$store.commit("errorCodeSet", {
+        this.$store.commit('errorCodeSet', {
           dialogVisible: true,
-          dialogMessage: this.$t("tips.select_corp_language"),
+          dialogMessage: this.$t('tips.select_corp_language'),
         });
       } else {
-        this.$store.commit("errorCodeSet", {
+        this.$store.commit('errorCodeSet', {
           dialogVisible: true,
-          dialogMessage: this.$t("tips.paste_corp_link"),
+          dialogMessage: this.$t('tips.paste_corp_link'),
         });
       }
     },
@@ -363,7 +365,7 @@ export default {
       let corpMetadata = [];
       this.corporationCustomMetadataArr &&
         this.corporationCustomMetadataArr.forEach((item) => {
-          if (item.title !== "" && item.type !== "") {
+          if (item.title !== '' && item.type !== '') {
             corpMetadata.push(item);
           }
         });
@@ -382,7 +384,7 @@ export default {
       return corpArr;
     },
     changeCorpLanguage(value) {
-      if (value === "english") {
+      if (value === 'english') {
         this.corpTitleOptions = claConfig.TITLE_OPTIONS_EN;
         util.corpFiledExchangeToEn(this.corporationCustomMetadataArr);
       } else {
@@ -390,8 +392,8 @@ export default {
         util.corpFiledExchangeToZh(this.corporationCustomMetadataArr);
       }
       this.initMetadata(value);
-      this.$store.commit("setCorpLanguage", value);
-      this.$store.commit("setAddLang", value);
+      this.$store.commit('setCorpLanguage', value);
+      this.$store.commit('setAddLang', value);
     },
   },
   created() {
@@ -399,7 +401,7 @@ export default {
   },
   beforeRouteEnter(to, from, next) {
     next((vm) => {
-      if (from.path === "/") {
+      if (from.path === '/') {
         vm.corpInit();
       }
     });

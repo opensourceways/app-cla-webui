@@ -9,7 +9,7 @@
           <div class="copyright">
             <span>{{ copyright }}</span>
             <span class="pointer" @click="previewPrivacy">{{
-              $t("signPage.privacy")
+              $t('signPage.privacy')
             }}</span>
             | <span class="pointer" @click="checkIcp">{{ icp }}</span> |
             <span class="pointer" @click="checkPoliceRecord">
@@ -23,12 +23,12 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import * as util from "../util/util";
-import cla from "../lang/global";
+import { mapActions } from 'vuex';
+import * as util from '../util/util';
+import cla from '../lang/global';
 
 export default {
-  name: "NewFooter",
+  name: 'NewFooter',
   data() {
     return {
       copyright: cla.COPYRIGHT,
@@ -39,7 +39,7 @@ export default {
     };
   },
   methods: {
-    ...mapActions(["viewPrivacy"]),
+    ...mapActions(['viewPrivacy']),
     previewPrivacy() {
       util.toPrivacy(this);
     },
@@ -50,17 +50,17 @@ export default {
       open(this.policeRecordLink);
     },
     join() {
-      window.open("https://github.com/opensourceways/app-cla-server");
+      window.open('https://github.com/opensourceways/app-cla-server');
     },
   },
 };
 </script>
 
 <style scoped lang="less">
-@import "../assets/font/css/huaweisans-bold.css";
-@import "../assets/font/css/HuaweiSans-Thin.css";
-@import "../assets/font/css/HuaweiSans-Light.css";
-@import "../assets/font/css/HuaweiSans-Regular.css";
+@import '../assets/font/css/huaweisans-bold.css';
+@import '../assets/font/css/HuaweiSans-Thin.css';
+@import '../assets/font/css/HuaweiSans-Light.css';
+@import '../assets/font/css/HuaweiSans-Regular.css';
 
 @media screen and (min-width: 1200px) {
   .newFooter {

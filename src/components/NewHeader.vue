@@ -30,43 +30,43 @@
               </div>
               <div v-if="menuVisible" id="menuOption">
                 <div v-if="loginRole === 'org'" @click="handleCommand('a')">
-                  {{ $t("header.home") }}
+                  {{ $t('header.home') }}
                 </div>
                 <div
                   v-if="loginRole === 'corp' && role === 'admin'"
                   @click="handleCommand('b')"
                 >
-                  {{ $t("header.manager") }}
+                  {{ $t('header.manager') }}
                 </div>
                 <div
                   v-if="loginRole === 'corp' && role === 'manager'"
                   @click="handleCommand('c')"
                 >
-                  {{ $t("header.emp") }}
+                  {{ $t('header.emp') }}
                 </div>
                 <div
                   v-if="loginRole === 'corp' && role === 'admin'"
                   @click="handleCommand('d')"
                 >
-                  {{ $t("header.SubEmail") }}
+                  {{ $t('header.SubEmail') }}
                 </div>
                 <div
                   v-if="loginRole === 'corp' && role === 'admin'"
                   @click="handleCommand('e')"
                 >
-                  {{ $t("header.createManager") }}
+                  {{ $t('header.createManager') }}
                 </div>
                 <div v-if="loginRole === 'corp'" @click="handleCommand('f')">
-                  {{ $t("header.resetPwd") }}
+                  {{ $t('header.resetPwd') }}
                 </div>
                 <div
                   v-if="loginRole === 'corp' && role === 'admin'"
                   @click="handleCommand('g')"
                 >
-                  {{ $t("header.corpCla") }}
+                  {{ $t('header.corpCla') }}
                 </div>
                 <div @click="handleCommand('h')">
-                  {{ $t("header.loginOut") }}
+                  {{ $t('header.loginOut') }}
                 </div>
               </div>
             </div>
@@ -116,13 +116,13 @@
 </template>
 
 <script>
-import http from "../util/http";
-import * as url from "../util/api";
-import * as util from "../util/util";
-import cla from "../lang/global";
+import http from '../util/http';
+import * as url from '../util/api';
+import * as util from '../util/util';
+import cla from '../lang/global';
 
 export default {
-  name: "NewHeader",
+  name: 'NewHeader',
   computed: {
     communityInfo() {
       if (
@@ -139,19 +139,19 @@ export default {
   },
   data() {
     return {
-      role: "",
-      loginRole: "",
+      role: '',
+      loginRole: '',
       showHeaderMenu: true,
       menuVisible: false,
       isActive: true,
-      language: "English",
+      language: 'English',
       value: 0,
       visible: {
-        visibility: "hidden",
+        visibility: 'hidden',
       },
       options: [
-        { value: 0, label: "English" },
-        { value: 1, label: "Chinese" },
+        { value: 0, label: 'English' },
+        { value: 1, label: 'Chinese' },
       ],
     };
   },
@@ -160,40 +160,40 @@ export default {
       this.options = data;
     },
     toIndex() {
-      if (this.$route.path === "/platformSelect") {
-        this.$router.push("/");
+      if (this.$route.path === '/platformSelect') {
+        this.$router.push('/');
       } else if (
-        this.$route.path === "/corporationList" ||
-        this.$route.path === "/addCorpUrl" ||
-        this.$route.path === "/config-check" ||
-        this.$route.path === "/addIndividualUrl" ||
-        this.$route.path === "/config-org" ||
-        this.$route.path === "/config-email" ||
-        this.$route.path === "/config-cla-link" ||
-        this.$route.path === "/config-fields"
+        this.$route.path === '/corporationList' ||
+        this.$route.path === '/addCorpUrl' ||
+        this.$route.path === '/config-check' ||
+        this.$route.path === '/addIndividualUrl' ||
+        this.$route.path === '/config-org' ||
+        this.$route.path === '/config-email' ||
+        this.$route.path === '/config-cla-link' ||
+        this.$route.path === '/config-fields'
       ) {
-        this.$router.push("/linkedRepo");
-      } else if (this.$route.path === "/createManager") {
-        this.$router.push("/managerList");
-      } else if (this.$route.path === "/resetPassword") {
-        if (this.$store.state.loginInfo.userInfo[0].role === "manager") {
-          this.$router.push("/employeeList");
+        this.$router.push('/linkedRepo');
+      } else if (this.$route.path === '/createManager') {
+        this.$router.push('/managerList');
+      } else if (this.$route.path === '/resetPassword') {
+        if (this.$store.state.loginInfo.userInfo[0].role === 'manager') {
+          this.$router.push('/employeeList');
         } else {
-          this.$router.push("/managerList");
+          this.$router.push('/managerList');
         }
-      } else if (this.$route.path === "/add-subemail") {
-        this.$router.push("/subemail");
-      } else if (this.$route.path === "/privacy") {
-        this.$router.push("/sign-cla");
-      } else if (this.$route.path === "/corporationManagerLogin") {
+      } else if (this.$route.path === '/add-subemail') {
+        this.$router.push('/subemail');
+      } else if (this.$route.path === '/privacy') {
+        this.$router.push('/sign-cla');
+      } else if (this.$route.path === '/corporationManagerLogin') {
         if (this.$store.state.linkId) {
           this.$router.replace(
             `${cla.SIGN_ROUTER}/${this.$store.state.linkId}`
           );
         } else {
-          this.$store.commit("errorCodeSet", {
+          this.$store.commit('errorCodeSet', {
             dialogVisible: true,
-            dialogMessage: this.$t("tips.page_error"),
+            dialogMessage: this.$t('tips.page_error'),
           });
         }
       }
@@ -203,70 +203,73 @@ export default {
     },
     handleCommand(command) {
       switch (command) {
-        case "a":
+        case 'a':
           this.toHome();
           break;
-        case "b":
+        case 'b':
           this.toManager();
           break;
-        case "c":
+        case 'c':
           this.toEmployee();
           break;
-        case "d":
+        case 'd':
           this.toAddSubEmail();
           break;
-        case "e":
+        case 'e':
           this.toCreateManager();
           break;
-        case "f":
+        case 'f':
           this.toResetPwd();
           break;
-        case "g":
+        case 'g':
           this.toCLA();
           break;
-        case "h":
+        case 'h':
           this.loginOut();
+          break;
+        default:
+          this.toHome();
           break;
       }
     },
     toHome() {
-      if (this.$route.path !== "/linkedRepo") {
-        this.$router.push("/home");
+      if (this.$route.path !== '/linkedRepo') {
+        this.$router.push('/home');
       }
     },
     toManager() {
-      if (this.$route.path !== "/managerList") {
-        this.$router.push("/managerList");
+      if (this.$route.path !== '/managerList') {
+        this.$router.push('/managerList');
       }
     },
     toEmployee() {
-      if (this.$route.path !== "/employeeList") {
-        this.$router.push("/employeeList");
+      if (this.$route.path !== '/employeeList') {
+        this.$router.push('/employeeList');
       }
     },
     toAddSubEmail() {
-      if (this.$route.path !== "/subemail") {
-        this.$router.push("/subemail");
+      if (this.$route.path !== '/subemail') {
+        this.$router.push('/subemail');
       }
     },
     toCreateManager() {
-      if (this.$route.path !== "/createManager") {
-        this.$router.push("/createManager");
+      if (this.$route.path !== '/createManager') {
+        this.$router.push('/createManager');
       }
     },
     toResetPwd() {
-      if (this.$route.path !== "/resetPassword") {
-        this.$router.push("/resetPassword");
+      if (this.$route.path !== '/resetPassword') {
+        this.$router.push('/resetPassword');
       }
     },
     toCLA() {
       http({
         url: url.corporationPdf,
-        responseType: "blob",
+        responseType: 'blob',
       })
-        .then((res) => {
+        .then(res => {
           if (res && res.data) {
-            let blob = new Blob([res.data], { type: "application/pdf" });
+            let blob = new Blob([res.data], { type: 'application/pdf' });
             let url = window.URL.createObjectURL(blob);
             window.open(
               `../../static/pdf_source/web/viewer.html?file=${encodeURIComponent(
@@ -276,22 +279,22 @@ export default {
           }
         })
         .catch((err) => {
-          util.catchErr(err, "errorSet", this);
+          util.catchErr(err, 'errorSet', this);
         });
     },
     loginOut() {
       util.clearManagerSession(this);
-      if (this.loginRole === "corp") {
-        this.$router.push("/corporationManagerLogin");
+      if (this.loginRole === 'corp') {
+        this.$router.push('/corporationManagerLogin');
       } else {
-        this.$router.push("/");
+        this.$router.push('/');
       }
     },
     chooseLng(value) {
       if (this.value !== value) {
         this.value = value;
         this.language = this.options[value].label;
-        localStorage.setItem("lang", this.language);
+        localStorage.setItem('lang', this.language);
         this.changeI18N(this.language);
       }
       this.isActive = true;
@@ -301,14 +304,14 @@ export default {
     },
     changeI18N(language) {
       switch (language) {
-        case "English":
-          this.$i18n.locale = "en-us";
+        case 'English':
+          this.$i18n.locale = 'en-us';
           break;
-        case "Chinese":
-          this.$i18n.locale = "zh-cn";
+        case 'Chinese':
+          this.$i18n.locale = 'zh-cn';
           break;
         default:
-          this.$i18n.locale = "en-us";
+          this.$i18n.locale = 'en-us';
           break;
       }
     },
@@ -320,24 +323,24 @@ export default {
       }
     },
     init(value) {
-      if (value !== "" && value !== undefined) {
+      if (value !== '' && value !== undefined) {
         this.language = value;
       } else {
-        let lang = localStorage.getItem("lang");
+        let lang = localStorage.getItem('lang');
         switch (lang) {
-          case "0":
-          case "English":
-            this.language = "English";
-            localStorage.setItem("lang", "English");
+          case '0':
+          case 'English':
+            this.language = 'English';
+            localStorage.setItem('lang', 'English');
             break;
-          case "1":
-          case "Chinese":
-            this.language = "Chinese";
-            localStorage.setItem("lang", "Chinese");
+          case '1':
+          case 'Chinese':
+            this.language = 'Chinese';
+            localStorage.setItem('lang', 'Chinese');
             break;
           default:
-            this.language = "English";
-            localStorage.setItem("lang", "English");
+            this.language = 'English';
+            localStorage.setItem('lang', 'English');
             break;
         }
       }
@@ -347,7 +350,7 @@ export default {
         this.role = this.$store.state.loginInfo.userInfo[0].role;
       }
       this.showHeaderMenu = util.getMenuState(this);
-      if (this.showHeaderMenu === "corp" || this.showHeaderMenu === "org") {
+      if (this.showHeaderMenu === 'corp' || this.showHeaderMenu === 'org') {
         this.loginRole = this.showHeaderMenu;
       }
     },
@@ -356,16 +359,16 @@ export default {
     this.init();
   },
   mounted() {
-    document.addEventListener("click", (e) => {
+    document.addEventListener('click', (e) => {
       if (
-        e.target.id !== "my_select" &&
-        e.target.id !== "select_content" &&
-        e.target.id !== "select_icon_box" &&
-        e.target.id !== "select_icon"
+        e.target.id !== 'my_select' &&
+        e.target.id !== 'select_content' &&
+        e.target.id !== 'select_icon_box' &&
+        e.target.id !== 'select_icon'
       ) {
         this.isActive = true;
       }
-      if (e.target.id !== "svgCover") {
+      if (e.target.id !== 'svgCover') {
         this.menuVisible = false;
       }
     });

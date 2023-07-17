@@ -10,7 +10,7 @@
     >
       <div>
         <p :class="{ word_break: this.lang === '1' }" class="dialogDesc">
-          {{ $t("org.config_cla_email_platform_select") }}
+          {{ $t('org.config_cla_email_platform_select') }}
         </p>
         <div>
           <el-row>
@@ -23,7 +23,7 @@
                 <el-form-item>
                   <template slot="label">
                     <div class="mailboxType">
-                      {{ $t("org.config_cla_mailbox_type") }}
+                      {{ $t('org.config_cla_mailbox_type') }}
                     </div>
                   </template>
                   <el-select
@@ -59,7 +59,7 @@
               <el-form-item prop="email">
                 <template slot="label">
                   <div class="mailboxType">
-                    {{ $t("org.config_cla_email_address") }}
+                    {{ $t('org.config_cla_email_address') }}
                   </div>
                 </template>
                 <el-input v-model="emailForm.email"></el-input>
@@ -67,7 +67,7 @@
               <el-form-item prop="authorizeCode">
                 <template slot="label">
                   <div class="mailboxType">
-                    {{ $t("org.config_cla_authorize_code") }}
+                    {{ $t('org.config_cla_authorize_code') }}
                     <svg-icon
                       icon-class="tips"
                       class="tips-icon"
@@ -77,14 +77,14 @@
                 </template>
                 <el-input v-model="emailForm.authorizeCode">
                   <el-button slot="append" @click="sendVerifyCode">
-                    {{ $t("org.config_cla_validation_title") }}
+                    {{ $t('org.config_cla_validation_title') }}
                   </el-button>
                 </el-input>
               </el-form-item>
               <el-form-item prop="verifyCode">
                 <template slot="label">
                   <div class="mailboxType">
-                    {{ $t("signPage.verifyCode") }}
+                    {{ $t('signPage.verifyCode') }}
                   </div>
                 </template>
                 <el-input v-model="emailForm.verifyCode"></el-input>
@@ -95,24 +95,24 @@
         <el-row class="authorize_desc">
           <el-col :offset="2" :span="20">
             <p class="align_center">
-              {{ $t("org.config_cla_email_authorize_desc") }}
+              {{ $t('org.config_cla_email_authorize_desc') }}
             </p>
             <ul
               class="align_left break_word"
               :class="{ word_break: this.lang === '1' }"
             >
-              <li>{{ $t("org.config_cla_email_authorize_desc1") }}</li>
-              <li>{{ $t("org.config_cla_email_authorize_desc2") }}</li>
-              <li>{{ $t("org.config_cla_email_authorize_desc3") }}</li>
+              <li>{{ $t('org.config_cla_email_authorize_desc1') }}</li>
+              <li>{{ $t('org.config_cla_email_authorize_desc2') }}</li>
+              <li>{{ $t('org.config_cla_email_authorize_desc3') }}</li>
             </ul>
           </el-col>
         </el-row>
         <div slot="footer" class="dialog-footer">
           <button class="email_button" @click="authorizeEmail()">
-            {{ $t("org.confirm_remove") }}
+            {{ $t('org.confirm_remove') }}
           </button>
           <button class="email_cancel" @click="closeDialog()">
-            {{ $t("org.cancel_remove") }}
+            {{ $t('org.cancel_remove') }}
           </button>
         </div>
       </div>
@@ -121,40 +121,40 @@
 </template>
 
 <script>
-import { els } from "markdown-it/lib/common/entities";
-import * as url from "../util/api";
-import http from "../util/http";
-import * as util from "../util/util";
-import claConfig from "../lang/global";
-const TENCENT_EMAIL = "txmail";
+import { els } from 'markdown-it/lib/common/entities';
+import * as url from '../util/api';
+import http from '../util/http';
+import * as util from '../util/util';
+import claConfig from '../lang/global';
+const TENCENT_EMAIL = 'txmail';
 export default {
-  name: "ConfigEmailSelect",
+  name: 'ConfigEmailSelect',
   props: [
-    "emailDialogVisible",
+    'emailDialogVisible',
     // 调用为修改时传入
-    "modifyEmailLinkId",
+    'modifyEmailLinkId',
   ],
   model: {
-    prop: "emailDialogVisible",
-    event: "closeEmailDialog",
+    prop: 'emailDialogVisible',
+    event: 'closeEmailDialog',
   },
   data() {
     return {
       loading: false,
-      lang: "",
+      lang: '',
       TENCENT_EMAIL: TENCENT_EMAIL,
-      emailType: "",
+      emailType: '',
       emailForm: {
         type: TENCENT_EMAIL,
-        email: "",
-        authorizeCode: "",
-        verifyCode: "",
+        email: '',
+        authorizeCode: '',
+        verifyCode: '',
       },
     };
   },
   computed: {
     labelWidth() {
-      return this.lang === "Chinese" ? "100px" : "188px";
+      return this.lang === 'Chinese' ? '100px' : '188px';
     },
     emailTypeArr() {
       // 修改时暂不支持gmail
@@ -162,14 +162,14 @@ export default {
         ? [
             {
               value: TENCENT_EMAIL,
-              label: this.$t("org.config_cla_tencent_email"),
+              label: this.$t('org.config_cla_tencent_email'),
             },
           ]
         : [
-            { value: "G-Mail", label: "G-Mail" },
+            { value: 'G-Mail', label: 'G-Mail' },
             {
               value: TENCENT_EMAIL,
-              label: this.$t("org.config_cla_tencent_email"),
+              label: this.$t('org.config_cla_tencent_email'),
             },
           ];
     },
@@ -178,27 +178,27 @@ export default {
         email: [
           {
             required: true,
-            message: this.$t("org.config_not_fill_address"),
-            trigger: "blur",
+            message: this.$t('org.config_not_fill_address'),
+            trigger: 'blur',
           },
           {
             pattern: claConfig.EMAIL_REG,
-            message: this.$t("tips.not_fill_email"),
-            trigger: "blur",
+            message: this.$t('tips.not_fill_email'),
+            trigger: 'blur',
           },
         ],
         authorizeCode: [
           {
             required: true,
-            message: this.$t("tips.fill_authorize_code"),
-            trigger: "blur",
+            message: this.$t('tips.fill_authorize_code'),
+            trigger: 'blur',
           },
         ],
         verifyCode: [
           {
             required: true,
-            message: this.$t("org.config_fill_verification_code"),
-            trigger: "blur",
+            message: this.$t('org.config_fill_verification_code'),
+            trigger: 'blur',
           },
         ],
       };
@@ -206,31 +206,31 @@ export default {
   },
   methods: {
     open() {
-      this.lang = localStorage.getItem("lang");
+      this.lang = localStorage.getItem('lang');
     },
     clear() {
-      this.emailType = "";
+      this.emailType = '';
       this.emailForm = {
         type: TENCENT_EMAIL,
-        email: "",
-        authorizeCode: "",
-        verifyCode: "",
+        email: '',
+        authorizeCode: '',
+        verifyCode: '',
       };
-      this.$emit("closeEmailDialog", false);
+      this.$emit('closeEmailDialog', false);
     },
     closeDialog() {
-      this.$emit("closeEmailDialog", false);
+      this.$emit('closeEmailDialog', false);
     },
     goToHelp() {
       window.open(
-        "https://service.mail.qq.com/cgi-bin/help?subtype=1&id=28&no=1001256"
+        'https://service.mail.qq.com/cgi-bin/help?subtype=1&id=28&no=1001256'
       );
     },
     sendVerifyCode() {
-      const validArr = ["email", "authorizeCode"];
+      const validArr = ['email', 'authorizeCode'];
       let count = 0;
       validArr.forEach((item) => {
-        this.$refs["emailForm"].validateField(item, (valid) => {
+        this.$refs['emailForm'].validateField(item, (valid) => {
           if (!valid) {
             count++;
           }
@@ -243,23 +243,23 @@ export default {
           email: this.emailForm.email,
           authorize: this.emailForm.authorizeCode,
         };
-        formData.append("data", JSON.stringify(obj));
+        formData.append('data', JSON.stringify(obj));
         http({
           url: `${url.postEmailCode}`,
-          method: "post",
+          method: 'post',
           data: formData,
         })
           .then((res) => {
             util.successMessage(this);
           })
           .catch((err) => {
-            util.catchErr(err, "setOrgReLogin", this);
+            util.catchErr(err, 'setOrgReLogin', this);
           });
       }
     },
     authorizeEmail() {
-      if (this.emailType === "G-Mail") {
-        this.loading = util.getLoading(this, "tips.loading");
+      if (this.emailType === 'G-Mail') {
+        this.loading = util.getLoading(this, 'tips.loading');
         http({
           url: url.getAuthEmail,
         })
@@ -268,47 +268,47 @@ export default {
           })
           .catch((err) => {
             this.loading.close();
-            util.catchErr(err, "setOrgReLogin", this);
+            util.catchErr(err, 'setOrgReLogin', this);
           });
       } else if (this.emailType === TENCENT_EMAIL) {
-        this.$refs["emailForm"].validate((valid) => {
+        this.$refs['emailForm'].validate((valid) => {
           if (!valid) {
             this.loading.close();
           } else {
-            this.loading = util.getLoading(this, "tips.loading");
+            this.loading = util.getLoading(this, 'tips.loading');
             let formData = new FormData();
             const obj = {
               email: this.emailForm.email,
               authorize: this.emailForm.authorizeCode,
               code: this.emailForm.verifyCode,
             };
-            formData.append("data", JSON.stringify(obj));
+            formData.append('data', JSON.stringify(obj));
             http({
               url: `${url.authorizeEmail}`,
-              method: "post",
+              method: 'post',
               data: formData,
             })
               .then((res) => {
                 if (this.modifyEmailLinkId) {
                   let formData1 = new FormData();
-                  formData1.append("email", this.emailForm.email);
+                  formData1.append('email', this.emailForm.email);
                   http({
                     url: `${url.modifyAuthorizeEmail}/${this.modifyEmailLinkId}`,
-                    method: "post",
+                    method: 'post',
                     data: formData1,
                   })
                     .then((res) => {
                       this.loading.close();
                       this.closeDialog();
-                      this.$emit("callback");
+                      this.$emit('callback');
                     })
                     .catch((err) => {
                       this.loading.close();
-                      util.catchErr(err, "setOrgReLogin", this);
+                      util.catchErr(err, 'setOrgReLogin', this);
                     });
                 } else {
                   // window.location.reload();
-                  this.$store.state.email =this.emailForm.email
+                  this.$store.state.email = this.emailForm.email;
                   this.loading.close();
                   this.closeDialog();
                   this.$emit('callback');
@@ -316,7 +316,7 @@ export default {
               })
               .catch((err) => {
                 this.loading.close();
-                util.catchErr(err, "setOrgReLogin", this);
+                util.catchErr(err, 'setOrgReLogin', this);
               });
           }
         });
@@ -380,7 +380,7 @@ export default {
       border-bottom-right-radius: 1.25rem;
     }
     .el-form-item__label::before {
-      content: "";
+      content: '';
       display: none;
     }
   }
