@@ -12,28 +12,28 @@
 </template>
 
 <script>
-import pdf from "vue-pdf";
-import http from "../util/_axios";
-import * as url from "../util/api";
-import * as util from "../util/util";
+import pdf from 'vue-pdf';
+import http from '../util/_axios';
+import * as url from '../util/api';
+import * as util from '../util/util';
 
 export default {
-  name: "ClaPdf",
+  name: 'ClaPdf',
   components: {
     pdf,
   },
   data() {
     return {
-      claText: "",
+      claText: '',
       numPages: null,
     };
   },
   computed: {
     apply_to() {
-      if (this.$store.state.loginType === "corporation") {
+      if (this.$store.state.loginType === 'corporation') {
         return this.$store.state.loginType;
       }
-      return "individual";
+      return 'individual';
     },
     claTextUrl() {
       return this.$store.state.domain;
@@ -45,7 +45,7 @@ export default {
   methods: {
     getData() {
       window.addEventListener(
-        "message",
+        'message',
         (event) => {
           if (event.data) {
             this.setClaText(event.data);
@@ -61,7 +61,7 @@ export default {
           this.numPages = pdf.numPages;
         })
         .catch((err) => {
-          return "pdf 加载失败";
+          return 'pdf 加载失败';
         });
     },
     setClaText(obj) {
@@ -83,16 +83,16 @@ export default {
           }
         }
       }
-      if (!Object.prototype.hasOwnProperty.call(dataFromParent, "pdfData")) {
+      if (!Object.prototype.hasOwnProperty.call(dataFromParent, 'pdfData')) {
         return;
       }
       http({
-        url: `${url.getCLAPdf}/${dataFromParent.link_id}/${localStorage.getItem('cla_id')}`,
+        url: `${url.getCLAPdf}/${dataFromParent.link_id}/${sessionStorage.getItem('cla_id')}`,
         responseType: "blob",
       })
         .then((res) => {
           if (res && res.data) {
-            let blob = new Blob([res.data], { type: "application/pdf" });
+            let blob = new Blob([res.data], { type: 'application/pdf' });
             let data = dataFromParent.pdfData;
             data.push({ [dataFromParent.lang]: blob });
             window.parent.postMessage(data, this.claTextUrl);
@@ -102,7 +102,7 @@ export default {
           }
         })
         .catch((err) => {
-          util.catchErr(err, "errorSet", this);
+          util.catchErr(err, 'errorSet', this);
         });
     },
   },

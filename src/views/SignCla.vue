@@ -63,6 +63,7 @@
                     clearable
                     filterable
                     @visible-change="orgVisibleChange"
+                    :disabled="getOrg"
                   >
                     <el-option
                       v-for="item in signingData"
@@ -164,7 +165,7 @@
                     clearable
                     filterable
                     @visible-change="orgVisibleChange"
-                    v-if="myForm.email"
+                    :disabled="getOrg"
                   >
                     <el-option
                       v-for="item in signingData"
@@ -174,11 +175,6 @@
                     >
                     </el-option>
                   </el-select>
-                  <el-input
-                    v-else
-                    disabled
-                    :placeholder="$t('org.config_cla_select_org_placeholder')"
-                  ></el-input>
                 </el-form-item>
                 <el-form-item
                   class="sendCodeClass"
@@ -270,7 +266,7 @@ import ReTryDialog from '../components/ReTryDialog';
 import SignSuccessDialog from '../components/SignSuccessDialog';
 import SignReLoginDialog from '../components/SignReLoginDialog';
 import HttpButton from '../components/HttpButton';
-import claConfig from "../lang/global";
+import cla from '../lang/global';
 
 export default {
   name: 'SignCla',
@@ -349,7 +345,7 @@ export default {
       });
       this.setSendBtText();
       this.$refs['ruleForm'] &&
-        this.$refs['ruleForm'].fields.forEach(item => {
+        this.$refs['ruleForm'].fields.forEach((item) => {
           if (item.validateState === 'error') {
             this.$refs['ruleForm'].validateField(item.labelFor);
           }
@@ -405,6 +401,7 @@ export default {
       orgValue: '',
       cla_id: '',
       showInput: sessionStorage.getItem('loginType'),
+      getOrg:true
     };
   },
   methods: {
@@ -424,7 +421,7 @@ export default {
     setIframeEventListener() {
       window.addEventListener(
         'message',
-        event => {
+        (event) => {
           if (
             event.data instanceof Array &&
             event.origin === this.$store.state.domain
@@ -479,10 +476,12 @@ export default {
       if (value) {
         email = value.trim();
       }
-      if (claConfig.EMAIL_REG.test(email)) {
+      if (cla.EMAIL_REG.test(email)) {
         callback();
+        this.getOrg = false
       } else {
         callback(new Error(this.$t('tips.invalid_email')));
+        this.getOrg = true
       }
     },
     async verifyName(rule, value, callback) {
@@ -529,6 +528,9 @@ export default {
     },
     setMyForm(type, value) {
       this.myForm[type] = value;
+      if(!this.myForm.email){
+        this.getOrg = true
+      }
     },
     sendCode() {
       let email = this.myForm.email;
@@ -540,14 +542,14 @@ export default {
       } else if (sessionStorage.getItem('loginType') === 'employee') {
         _url = `${url.sendEmployeeCode}/${this.link_id}/${this.orgValue}/code`;
       }
-      if (email && EMAIL_REG.test(email)) {
+      if (email && EMAIL_REG.test(email) && this.orgValue) {
         this.sendBtDisable = true;
         axios({
           url: _url,
           method: 'post',
           data: { email: this.myForm.email },
         })
-          .then(res => {
+          .then((res) => {
             this.$message.closeAll();
             this.$message.success({
               message: this.$t('tips.sending_email'),
@@ -567,12 +569,16 @@ export default {
               }
             }, 1000);
           })
-          .catch(err => {
+          .catch((err) => {
             util.catchErr(err, 'setSignReLogin', this);
           });
       } else {
         this.$message.closeAll();
-        this.$message.error(this.$t('tips.not_fill_email'));
+        if(EMAIL_REG.test(email)&&!this.orgValue){
+          this.$message.error(this.$t('tips.not_fill_org'));
+        }else{
+          this.$message.error(this.$t('tips.not_fill_email'));
+        }
       }
     },
     getNowDate() {
@@ -664,10 +670,10 @@ export default {
       axios({
         url: `${url.getSignPage}/${this.$store.state.linkId}/${applyTo}`,
       })
-        .then(res => {
+        .then((res) => {
           this.setData(res, resolve);
         })
-        .catch(err => {
+        .catch((err) => {
           util.catchErr(err, 'setSignReLogin', this);
         });
     },
@@ -696,7 +702,7 @@ export default {
     setFieldsData() {
       let form = {};
       let rules = {};
-      this.fields.forEach(item => {
+      this.fields.forEach((item) => {
         Object.assign(form, { [item.id]: '' });
         if (item.type === 'name') {
           Object.assign(this.myForm, { name: '' });
@@ -852,7 +858,7 @@ export default {
           info: info,
           verification_code: this.ruleForm.code,
           corp_signing_id: this.orgValue,
-          cla_id: localStorage.getItem('cla_id'),
+          cla_id: sessionStorage.getItem('cla_id'),
           cla_language: this.cla_lang,
         };
       } else {
@@ -862,7 +868,7 @@ export default {
             email: this.myForm.email,
             verification_code: this.ruleForm.code,
             info: info,
-            cla_id: localStorage.getItem('cla_id'),
+            cla_id: sessionStorage.getItem('cla_id'),
             cla_language: this.cla_lang,
             corp_signing_id: this.orgValue,
           };
@@ -872,7 +878,7 @@ export default {
             email: this.myForm.email,
             verification_code: this.ruleForm.code,
             info: info,
-            cla_id: localStorage.getItem('cla_id'),
+            cla_id: sessionStorage.getItem('cla_id'),
             cla_language: this.cla_lang,
           };
         }
@@ -896,7 +902,7 @@ export default {
         method: 'post',
         data: obj,
       })
-        .then(res => {
+        .then((res) => {
           this.signText = 'sign';
           this.signButtonDisable = false;
           if (this.$store.state.loginType === this.corporation) {
@@ -911,14 +917,14 @@ export default {
             dialogMessage: this.tipsMessage,
           });
         })
-        .catch(err => {
+        .catch((err) => {
           this.signText = 'sign';
           this.signButtonDisable = false;
           util.catchErr(err, 'setSignReLogin', this);
         });
     },
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.isRead) {
             this.signCla();
@@ -942,10 +948,10 @@ export default {
         url: `${url.getCorporationSigning}/${this.link_id}/corps/${this.myForm.email}`,
         method: 'get',
       })
-        .then(res => {
+        .then((res) => {
           this.signingData = res.data.data;
         })
-        .catch(err => {
+        .catch((err) => {
           switch (err.status) {
             case 401:
               this.$store.commit('setOrgReLogin', {
@@ -1026,7 +1032,7 @@ export default {
     this.setIframeEventListener();
     new Promise((resolve, reject) => {
       this.getSignPage(resolve);
-    }).then(res => {
+    }).then((res) => {
       this.getNowDate();
     });
   },
