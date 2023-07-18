@@ -1,6 +1,4 @@
-FROM node:16.10.0-alpine as Builder
-
-MAINTAINER TommyLike<tommylikehu@gmail.com>
+FROM node:18.12.1 as Builder
 
 RUN mkdir -p /home/cla-webui
 WORKDIR /home/cla-webui
