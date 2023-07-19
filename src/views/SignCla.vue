@@ -542,7 +542,7 @@ export default {
       } else if (sessionStorage.getItem('loginType') === 'employee') {
         _url = `${url.sendEmployeeCode}/${this.link_id}/${this.orgValue}/code`;
       }
-      if (email && EMAIL_REG.test(email) && this.orgValue) {
+      if (email && EMAIL_REG.test(email)) {
         this.sendBtDisable = true;
         axios({
           url: _url,
@@ -605,7 +605,7 @@ export default {
       if (res && res.data.data) {
         if (res.data.data && res.data.data.length) {
           this.signPageData = res.data.data;
-          localStorage.setItem('cla_id', this.signPageData[0].cla_id);
+          sessionStorage.setItem('cla_id', this.signPageData[0].cla_id);
           if (localStorage.getItem('lang') !== undefined) {
             this.lang = localStorage.getItem('lang').toLowerCase();
           }
