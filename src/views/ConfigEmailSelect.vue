@@ -166,7 +166,7 @@ export default {
             },
           ]
         : [
-            { value: 'G-Mail', label: 'G-Mail' },
+            // { value: 'G-Mail', label: 'G-Mail' },
             {
               value: TENCENT_EMAIL,
               label: this.$t('org.config_cla_tencent_email'),
