@@ -255,7 +255,7 @@
               </el-table>
             </div>
           </el-tab-pane>
-          <el-tab-pane
+          <!-- <el-tab-pane
             :label="$t('org.invalidSignature')"
             name="third"
             class="margin-top-1rem"
@@ -327,7 +327,7 @@
                 </el-table-column>
               </el-table>
             </div>
-          </el-tab-pane>
+          </el-tab-pane> -->
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane
@@ -1024,7 +1024,7 @@ export default {
     createRoot(email) {
       http({
         url: `${url.corporationManager}/${this.$store.state.corpItem.link_id}/${this.id}`,
-        method: 'put',
+        method: 'post',
       })
         .then((res) => {
           util.successMessage(this);

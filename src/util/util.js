@@ -579,6 +579,13 @@ export const checkIllegalChar = (str) => {
   }
   return numType + upperCaseTpe + lowerCaseType + charType < 3;
 };
+export const getAsciiArray = (str,val) => {
+  str=[];
+  for (let i = 0; i < val.length; i++) {
+    str.push(val.charCodeAt(i));
+  }
+  return str
+};
 export const verifyMsgChangeLang = (ruleForm, _this) => {
   _this.$refs[ruleForm] &&
     _this.$refs[ruleForm].fields.forEach((item) => {

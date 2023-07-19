@@ -77,9 +77,9 @@
                                     <el-dropdown-item :command="{command:'c',row:scope.row}">
                                         {{$t('org.toDetail')}}
                                     </el-dropdown-item>
-                                    <el-dropdown-item :command="{command:'d',row:scope.row}">
+                                    <!-- <el-dropdown-item :command="{command:'d',row:scope.row}">
                                         {{$t('org.modify_email')}}
-                                    </el-dropdown-item>
+                                    </el-dropdown-item> -->
                                 </el-dropdown-menu>
                             </el-dropdown>
                         </template>

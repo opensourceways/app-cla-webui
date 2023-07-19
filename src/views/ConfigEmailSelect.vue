@@ -150,6 +150,7 @@ export default {
         authorizeCode: '',
         verifyCode: '',
       },
+    asciiArray:[]
     };
   },
   computed: {
@@ -229,8 +230,8 @@ export default {
     sendVerifyCode() {
       const validArr = ['email', 'authorizeCode'];
       let count = 0;
-      validArr.forEach((item) => {
-        this.$refs['emailForm'].validateField(item, (valid) => {
+      validArr.forEach(item => {
+        this.$refs['emailForm'].validateField(item, valid => {
           if (!valid) {
             count++;
           }
@@ -241,7 +242,7 @@ export default {
         let formData = new FormData();
         const obj = {
           email: this.emailForm.email,
-          authorize: this.emailForm.authorizeCode,
+          authorize: util.getAsciiArray(this.asciiArray,this.emailForm.authorizeCode),
         };
         formData.append('data', JSON.stringify(obj));
         http({
@@ -249,10 +250,12 @@ export default {
           method: 'post',
           data: formData,
         })
-          .then((res) => {
+          .then(res => {
+            this.asciiArray=[]
             util.successMessage(this);
+            
           })
-          .catch((err) => {
+          .catch(err => {
             util.catchErr(err, 'setOrgReLogin', this);
           });
       }
@@ -263,15 +266,15 @@ export default {
         http({
           url: url.getAuthEmail,
         })
-          .then((res) => {
+          .then(res => {
             window.location.href = res.data.data.url;
           })
-          .catch((err) => {
+          .catch(err => {
             this.loading.close();
             util.catchErr(err, 'setOrgReLogin', this);
           });
       } else if (this.emailType === TENCENT_EMAIL) {
-        this.$refs['emailForm'].validate((valid) => {
+        this.$refs['emailForm'].validate(valid => {
           if (!valid) {
             this.loading.close();
           } else {
@@ -279,7 +282,7 @@ export default {
             let formData = new FormData();
             const obj = {
               email: this.emailForm.email,
-              authorize: this.emailForm.authorizeCode,
+              authorize: util.getAsciiArray(this.asciiArray,this.emailForm.authorizeCode),
               code: this.emailForm.verifyCode,
             };
             formData.append('data', JSON.stringify(obj));
@@ -288,7 +291,8 @@ export default {
               method: 'post',
               data: formData,
             })
-              .then((res) => {
+              .then(res => {
+                this.asciiArray=[];
                 if (this.modifyEmailLinkId) {
                   let formData1 = new FormData();
                   formData1.append('email', this.emailForm.email);
@@ -297,12 +301,12 @@ export default {
                     method: 'post',
                     data: formData1,
                   })
-                    .then((res) => {
+                    .then(res => {
                       this.loading.close();
                       this.closeDialog();
                       this.$emit('callback');
                     })
-                    .catch((err) => {
+                    .catch(err => {
                       this.loading.close();
                       util.catchErr(err, 'setOrgReLogin', this);
                     });
@@ -314,7 +318,7 @@ export default {
                   this.$emit('callback');
                 }
               })
-              .catch((err) => {
+              .catch(err => {
                 this.loading.close();
                 util.catchErr(err, 'setOrgReLogin', this);
               });
