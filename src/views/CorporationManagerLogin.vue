@@ -118,6 +118,7 @@ export default {
         userName: '',
         pwd: '',
       },
+      asciiArray:[]
     };
   },
   inject: ['setClientHeight'],
@@ -144,7 +145,7 @@ export default {
       }
       let obj = {
         user: userName.trim(),
-        password: pwd.trim(),
+        password: util.getAsciiArray(this.asciiArray,pwd),
         link_id: linkId,
       };
       this.loginButtonDisable = true;
@@ -156,6 +157,7 @@ export default {
       })
         .then((res) => {
           let data = [];
+          this.asciiArray=[];
           if (res.data) {
             data = res.data.data;
           }
@@ -199,6 +201,7 @@ export default {
           }
         })
         .catch((err) => {
+          this.asciiArray=[];
           this.loginButtonDisable = false;
           this.loginText = 'login_in';
           util.catchErr(err, 'errorSet', this);

@@ -234,7 +234,12 @@ export default {
     },
     toHome() {
       if (this.$route.path !== '/linkedRepo') {
-        this.$router.push('/home');
+        http({
+          url: url.logout,
+          method: 'put',
+        }).then(() => {
+          this.$router.push('/home');
+        });
       }
     },
     toManager() {
@@ -278,17 +283,22 @@ export default {
             );
           }
         })
-        .catch((err) => {
+        .catch(err => {
           util.catchErr(err, 'errorSet', this);
         });
     },
     loginOut() {
-      util.clearManagerSession(this);
-      if (this.loginRole === 'corp') {
-        this.$router.push('/corporationManagerLogin');
-      } else {
-        this.$router.push('/');
-      }
+      http({
+        url: url.corporationManagerAuth,
+        method: 'put',
+      }).then(() => {
+        util.clearManagerSession(this);
+        if (this.loginRole === 'corp') {
+          this.$router.push('/corporationManagerLogin');
+        } else {
+          this.$router.push('/');
+        }
+      });
     },
     chooseLng(value) {
       if (this.value !== value) {
@@ -359,7 +369,7 @@ export default {
     this.init();
   },
   mounted() {
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', e => {
       if (
         e.target.id !== 'my_select' &&
         e.target.id !== 'select_content' &&

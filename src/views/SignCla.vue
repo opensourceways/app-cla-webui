@@ -860,6 +860,7 @@ export default {
           corp_signing_id: this.orgValue,
           cla_id: sessionStorage.getItem('cla_id'),
           cla_language: this.cla_lang,
+          privacy_checked:this.isRead
         };
       } else {
         if (this.$store.state.loginType === this.employee) {
@@ -871,6 +872,7 @@ export default {
             cla_id: sessionStorage.getItem('cla_id'),
             cla_language: this.cla_lang,
             corp_signing_id: this.orgValue,
+            privacy_checked:this.isRead
           };
         } else {
           obj = {
@@ -880,6 +882,7 @@ export default {
             info: info,
             cla_id: sessionStorage.getItem('cla_id'),
             cla_language: this.cla_lang,
+            privacy_checked:this.isRead
           };
         }
 

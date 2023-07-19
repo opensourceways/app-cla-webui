@@ -67,137 +67,149 @@ import corpReLoginDialog from '../components/CorpReLoginDialog';
 import reTryDialog from '../components/ReTryDialog';
 import cla from '../lang/global';
 
-    export default {
-
-        name: 'ResetPassword',
-        components: {
-            corpReLoginDialog,
-            reTryDialog
-        },
-        watch: {
-            '$i18n.locale'() {
-                this.$refs['ruleForm'] && this.$refs['ruleForm'].fields.forEach(item => {
-                    if (item.validateState === 'error') {
-                        this.$refs['ruleForm'].validateField(item.labelFor);
-                    }
-                });
-            }
-        },
-        computed: {
-            orgValue() {
-                return this.$store.state.loginInfo.orgValue;
-            },
-            userInfo() {
-                return this.$store.state.loginInfo.userInfo;
-            },
-            corpReLoginDialogVisible() {
-                return this.$store.state.dialogVisible;
-            }
-            ,
-            corpReLoginMsg() {
-                return this.$store.state.dialogMessage;
-            },
-            corpReTryDialogVisible() {
-                return this.$store.state.reTryDialogVisible;
-            }
-        },
-        data() {
-            var validatePass = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error(this.$t('corp.input_old_pwd')));
-                } else {
-                    this.haveOldPwd = true;
-                    callback();
-                }
-            };
-            var validatePass2 = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error(this.$t('corp.input_new_pwd')));
-                } else if (value.length < cla.PWD_MIN_LENGTH || value.length > cla.PWD_MAX_LENGTH || util.checkIllegalChar(value)) {
-                    callback(new Error(this.$t('corp.newPwd_contains_Illegal_character', {
-                        minLength: cla.PWD_MIN_LENGTH,
-                        maxLength: cla.WD_MAX_LENGTH
-                    })));
-                } else if (value === this.ruleForm.oldPassword) {
-                    callback(new Error(this.$t('corp.newPwd_diff_with_oldPwd')));
-                } else {
-                    this.haveNewPwd = true;
-                    callback();
-                }
-            };
-            var validatePass3 = (rule, value, callback) => {
-                if (value === '') {
-                    callback(new Error(this.$t('corp.input_new_pwd_again')));
-                } else if (value !== this.ruleForm.newPassword) {
-                    callback(new Error(this.$t('corp.newPwd_diff')));
-                } else {
-                    callback();
-                }
-            };
-            return {
-                haveOldPwd: false,
-                haveNewPwd: false,
-                ruleForm: {
-                    oldPassword: '',
-                    newPassword: '',
-                    checkPwd: ''
-                },
-                rules: {
-                    oldPassword: [
-                        {require: true, validator: validatePass, trigger: 'blur'}
-                    ],
-                    newPassword: [
-                        {require: true, validator: validatePass2, trigger: 'blur'}
-                    ],
-                    checkPwd: [
-                        {require: true, validator: validatePass3, trigger: 'blur'}
-                    ]
-                }
-            };
-        },
-        methods: {
-            pressEnter() {
-                if (event.keyCode === 13) {
-                    this.submit('ruleForm');
-                }
-            },
-            resetPassword() {
-                let obj = {
-                    old_password: this.ruleForm.oldPassword,
-                    new_password: this.ruleForm.newPassword
-                };
-                http({
-                    url: url.resetPassword,
-                    method: 'put',
-                    data: obj
-                }).then(res => {
-                    this.$store.commit('setPwdIsChanged', true);
-                    util.successMessage(this);
-                    // if (this.$store.state.loginInfo.userInfo[0].role === 'manager') {
-                    //     this.$router.push('/employeeList');
-                    // } else {
-                    //     this.$router.push('/managerList');
-                    // }
-                    this.$router.push('/corporationManagerLogin');
-                }).catch(err => {
-                    util.catchErr(err, 'errorSet', this);
-                });
-            },
-            submit(formName) {
-                this.$refs[formName].validate((valid => {
-                    if (valid) {
-                        this.resetPassword();
-                    } else {
-                        return false;
-                    }
-                }));
-            },
-            reset(formName) {
-                this.$refs[formName].resetFields();
-            }
-        }
+export default {
+  name: 'ResetPassword',
+  components: {
+    corpReLoginDialog,
+    reTryDialog,
+  },
+  watch: {
+    '$i18n.locale'() {
+      this.$refs['ruleForm'] &&
+        this.$refs['ruleForm'].fields.forEach(item => {
+          if (item.validateState === 'error') {
+            this.$refs['ruleForm'].validateField(item.labelFor);
+          }
+        });
+    },
+  },
+  computed: {
+    orgValue() {
+      return this.$store.state.loginInfo.orgValue;
+    },
+    userInfo() {
+      return this.$store.state.loginInfo.userInfo;
+    },
+    corpReLoginDialogVisible() {
+      return this.$store.state.dialogVisible;
+    },
+    corpReLoginMsg() {
+      return this.$store.state.dialogMessage;
+    },
+    corpReTryDialogVisible() {
+      return this.$store.state.reTryDialogVisible;
+    },
+  },
+  data() {
+    var validatePass = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error(this.$t('corp.input_old_pwd')));
+      } else {
+        this.haveOldPwd = true;
+        callback();
+      }
     };
-
+    var validatePass2 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error(this.$t('corp.input_new_pwd')));
+      } else if (
+        value.length < cla.PWD_MIN_LENGTH ||
+        value.length > cla.PWD_MAX_LENGTH ||
+        util.checkIllegalChar(value)
+      ) {
+        callback(
+          new Error(
+            this.$t('corp.newPwd_contains_Illegal_character', {
+              minLength: cla.PWD_MIN_LENGTH,
+              maxLength: cla.WD_MAX_LENGTH,
+            })
+          )
+        );
+      } else if (value === this.ruleForm.oldPassword) {
+        callback(new Error(this.$t('corp.newPwd_diff_with_oldPwd')));
+      } else {
+        this.haveNewPwd = true;
+        callback();
+      }
+    };
+    var validatePass3 = (rule, value, callback) => {
+      if (value === '') {
+        callback(new Error(this.$t('corp.input_new_pwd_again')));
+      } else if (value !== this.ruleForm.newPassword) {
+        callback(new Error(this.$t('corp.newPwd_diff')));
+      } else {
+        callback();
+      }
+    };
+    return {
+      haveOldPwd: false,
+      haveNewPwd: false,
+      asciiArray: [],
+      asciiOldArray: [],
+      ruleForm: {
+        oldPassword: '',
+        newPassword: '',
+        checkPwd: '',
+      },
+      rules: {
+        oldPassword: [
+          { require: true, validator: validatePass, trigger: 'blur' },
+        ],
+        newPassword: [
+          { require: true, validator: validatePass2, trigger: 'blur' },
+        ],
+        checkPwd: [
+          { require: true, validator: validatePass3, trigger: 'blur' },
+        ],
+      },
+    };
+  },
+  methods: {
+    pressEnter() {
+      if (event.keyCode === 13) {
+        this.submit('ruleForm');
+      }
+    },
+    resetPassword() {
+      let obj = {
+        old_password: util.getAsciiArray(this.asciiOldArray,this.ruleForm.oldPassword),
+        new_password: util.getAsciiArray(this.asciiArray,this.ruleForm.newPassword),
+      };
+      http({
+        url: url.resetPassword,
+        method: 'put',
+        data: obj,
+      })
+        .then(res => {
+          this.$store.commit('setPwdIsChanged', true);
+          util.successMessage(this);
+          // if (this.$store.state.loginInfo.userInfo[0].role === 'manager') {
+          //     this.$router.push('/employeeList');
+          // } else {
+          //     this.$router.push('/managerList');
+          // }
+          this.$router.push('/corporationManagerLogin');
+          this.asciiOldArray=[];
+          this.asciiArray=[]
+        })
+        .catch(err => {
+          util.catchErr(err, 'errorSet', this);
+        });
+    },
+    submit(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          this.resetPassword();
+        } else {
+          return false;
+        }
+      });
+    },
+    reset(formName) {
+      this.$refs[formName].resetFields();
+    },
+  },
+};
 </script>
 
 <style lang="less">
