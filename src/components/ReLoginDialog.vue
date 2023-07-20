@@ -57,7 +57,7 @@ export default {
         dialogVisible: false,
         dialogMessage: '',
       });
-      this.$router.replace('/platformSelect');
+      this.$router.replace('/');
     },
   },
 };
