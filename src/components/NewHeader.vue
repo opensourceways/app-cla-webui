@@ -234,12 +234,7 @@ export default {
     },
     toHome() {
       if (this.$route.path !== '/linkedRepo') {
-        http({
-          url: url.logout,
-          method: 'put',
-        }).then(() => {
-          this.$router.push('/home');
-        });
+        this.$router.push('/home');
       }
     },
     toManager() {
@@ -288,17 +283,22 @@ export default {
         });
     },
     loginOut() {
-      http({
-        url: url.corporationManagerAuth,
-        method: 'put',
-      }).then(() => {
-        util.clearManagerSession(this);
-        if (this.loginRole === 'corp') {
+      util.clearManagerSession(this);
+      if (this.loginRole === 'corp') {
+        http({
+          url: url.corporationManagerAuth,
+          method: 'put',
+        }).then(() => {
           this.$router.push('/corporationManagerLogin');
-        } else {
+        });
+      } else {
+        http({
+          url: url.logout,
+          method: 'put',
+        }).then(() => {
           this.$router.push('/');
-        }
-      });
+        });
+      }
     },
     chooseLng(value) {
       if (this.value !== value) {

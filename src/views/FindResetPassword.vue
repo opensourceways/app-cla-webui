@@ -139,13 +139,10 @@ export default {
       });
     },
     submitReset() {
-      for (let i = 0; i < this.ruleForm.newPassword.length; i++) {
-          this.asciiArray.push(this.ruleForm.newPassword.charCodeAt(i));
-        }
       http({
         url: url.findPwdResetPwd + this.link_id,
         method: 'put',
-        data: { password: this.asciiArray },
+        data: { password: util.getAsciiArray(this.asciiArray,this.ruleForm.newPassword) },
         headers: {
           'Password-Retrieval-Key': this.key,
         },

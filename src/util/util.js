@@ -115,9 +115,9 @@ export const getMenuState = (_this) => {
   }
 };
 export const catchErr = (err, commit, _this) => {
-  if (err.data && Object.prototype.hasOwnProperty.call(err.data, 'data')) {
+  if (err.response?.data && Object.prototype.hasOwnProperty.call(err.response?.data, 'data')) {
     let message = '';
-    switch (err.data.data.error_code) {
+    switch (err.response.data?.data.error_code) {
       case 'cla.invalid_token':
         _this.$store.commit(commit, {
           dialogVisible: true,
@@ -406,6 +406,18 @@ export const catchErr = (err, commit, _this) => {
           dialogMessage: _this.$t('tips.id_pwd_err'),
         });
         break;
+      case 'wrong_id_or_pw':
+        _this.$store.commit('errorCodeSet', {
+          dialogVisible: true,
+          dialogMessage: _this.$t('tips.id_pwd_err_new') + err.response.data.data.retry_num + _this.$t('tips.id_pwd_err_corp')
+        });
+        break;
+      case 'cla.user_login_frozen':
+        _this.$store.commit('errorCodeSet', {
+          dialogVisible: true,
+          dialogMessage: _this.$t('tips.user_login_frozen'),
+        });
+        break;
       case 'cla.system_error':
         _this.$store.commit('errorCodeSet', {
           dialogVisible: true,
@@ -579,8 +591,8 @@ export const checkIllegalChar = (str) => {
   }
   return numType + upperCaseTpe + lowerCaseType + charType < 3;
 };
-export const getAsciiArray = (str,val) => {
-  str=[];
+export const getAsciiArray = (str, val) => {
+  str = [];
   for (let i = 0; i < val.length; i++) {
     str.push(val.charCodeAt(i));
   }
