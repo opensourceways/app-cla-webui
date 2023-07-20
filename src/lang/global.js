@@ -1,5 +1,5 @@
 module.exports = {
-  SIGNATURE_FILE_MAX_SIZE: 5, //M
+  SIGNATURE_FILE_MAX_SIZE: 5,
   INDIVIDUALMETADATAARR_EN: [
     {
       title: 'Name',
