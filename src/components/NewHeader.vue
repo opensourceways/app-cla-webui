@@ -234,12 +234,7 @@ export default {
     },
     toHome() {
       if (this.$route.path !== '/linkedRepo') {
-        http({
-          url: url.logout,
-          method: 'put',
-        }).then(() => {
           this.$router.push('/home');
-        });
       }
     },
     toManager() {
