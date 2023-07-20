@@ -72,7 +72,7 @@ export default {
       } else if (
         value.length < cla.PWD_MIN_LENGTH ||
         value.length > cla.PWD_MAX_LENGTH ||
-        util.checkIllegalChar(value)
+        util.checkIllegalCharar(value)
       ) {
         callback(
           new Error(
@@ -118,6 +118,7 @@ export default {
       link_id: '',
       key: '',
       asciiArray:[]
+      asciiArray:[]
     };
   },
   created() {
@@ -145,12 +146,13 @@ export default {
       http({
         url: url.findPwdResetPwd + this.link_id,
         method: 'put',
-        data: { password: this.asciiArray },
+        data: { password: util.getAsciiArray(this.asciiArray,this.ruleForm.newPassword) },
         headers: {
           'Password-Retrieval-Key': this.key,
         },
       })
         .then((res) => {
+          this.asciiArray=[];
           this.asciiArray=[];
           this.$message.success({
             message: this.$t('tips.reset_password_success'),
