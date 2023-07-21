@@ -72,7 +72,7 @@ export default {
       } else if (
         value.length < cla.PWD_MIN_LENGTH ||
         value.length > cla.PWD_MAX_LENGTH ||
-        util.checkIllegalCharar(value)
+        util.checkIllegalChar(value)
       ) {
         callback(
           new Error(

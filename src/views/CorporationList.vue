@@ -656,7 +656,7 @@ export default {
     },
     deleteCla(row) {
       http({
-        url: `${url.delCla}/${this.$store.state.corpItem.link_id}/${this.delete_apply}/${row.language}`,
+        url: `${url.delCla}/${this.$store.state.corpItem.link_id}/${row.id}`,
         method: 'delete',
       })
         .then((res) => {
