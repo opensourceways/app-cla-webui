@@ -13,9 +13,9 @@
                 <el-col class="title" style="height: 100%">
                   <div class="name">
                     <div>
-                      <p><span>C</span>ontributor</p>
-                      <p><span>L</span>icense</p>
-                      <p><span>A</span>greement</p>
+                      <p><span>D</span>eveloper</p>
+                      <p><span>C</span>ertificate of</p>
+                      <p><span>O</span>rigin</p>
                     </div>
                   </div>
                 </el-col>
