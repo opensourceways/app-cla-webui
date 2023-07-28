@@ -723,7 +723,7 @@ export default {
     },
     setCorpPD(row) {
       this.setCheckInfo();
-      if (row.fields.length > 4) {
+      if (row.fields?.length > 4) {
         let data = [];
         row.fields.forEach((item, index) => {
           if (index > 3) {
