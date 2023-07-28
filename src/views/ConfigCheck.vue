@@ -421,8 +421,9 @@ export default {
           url: this.cla_link_individual.trim(),
           language: this.individualClaLanguageValue,
           fields: this.editMetadata(this.individualMetadata),
+          type: 'individual',
         };
-        _url = `${url.addCla}/${this.$store.state.corpItem.link_id}/individual`;
+        _url = `${url.addCla}/${this.$store.state.corpItem.link_id}`;
       }
       formData.append('data', JSON.stringify(obj));
       http({
