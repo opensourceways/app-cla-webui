@@ -328,6 +328,7 @@ export default {
           this.value = index;
           this.cla_hash = item.cla_id;
           this.cla_id = item.cla_id;
+          sessionStorage.setItem('cla_id',item.cla_id)
           this.$refs.pdf_iframe.contentWindow.postMessage(
             {
               link_id: this.link_id,
@@ -605,7 +606,6 @@ export default {
       if (res && res.data.data) {
         if (res.data.data && res.data.data.length) {
           this.signPageData = res.data.data;
-          sessionStorage.setItem('cla_id', this.signPageData[0].cla_id);
           if (localStorage.getItem('lang') !== undefined) {
             this.lang = localStorage.getItem('lang');
           }
@@ -616,6 +616,7 @@ export default {
             langOptions.push({ value: index, label: langLabel });
             if (item.language === this.lang) {
               this.cla_lang = item.language;
+              sessionStorage.setItem('cla_id', item.cla_id);
               this.value = index;
               this.cla_hash = item.cla_hash;
             }
