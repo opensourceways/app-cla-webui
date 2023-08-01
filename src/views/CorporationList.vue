@@ -711,6 +711,7 @@ export default {
       }
     },
     addCorpCla(row) {
+      this.$store.commit('setAddBindFirst', true)
       this.setCorpPD(row);
       this.$router.push('/addCorpCla');
     },

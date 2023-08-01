@@ -321,7 +321,7 @@ export default {
         return;
       }
       this.cla_lang = '';
-      this.lang = localStorage.getItem('lang').toLowerCase();
+      this.lang = localStorage.getItem('lang');
       this.signPageData.forEach((item, index) => {
         if (item.language === this.lang) {
           this.cla_lang = item.language;
@@ -607,7 +607,7 @@ export default {
           this.signPageData = res.data.data;
           sessionStorage.setItem('cla_id', this.signPageData[0].cla_id);
           if (localStorage.getItem('lang') !== undefined) {
-            this.lang = localStorage.getItem('lang').toLowerCase();
+            this.lang = localStorage.getItem('lang');
           }
           let langOptions = [];
           let langLabel = '';
@@ -981,7 +981,7 @@ export default {
     if (this.signPageData) {
       this.setClientHeight();
       if (localStorage.getItem('lang') !== undefined) {
-        this.lang = localStorage.getItem('lang').toLowerCase();
+        this.lang = localStorage.getItem('lang');
       }
       let langOptions = [];
       let langLabel = '';
