@@ -589,7 +589,7 @@ export default {
       corpClaData: [],
       previewOriginalDialogVisible: false,
       resendEmailDialogVisible: false,
-      resendRow: '',
+      resendEmail: '',
       claData: '',
       activeName: 'first',
       uploadHeaders: {
@@ -948,20 +948,20 @@ export default {
       );
     },
     openResendPdf(row) {
-      this.resendRow = row;
+      this.resendEmail = row;
       this.resendEmailDialogVisible = true;
     },
-    openDeleteCorp(email) {
-      this.deleteCorpEmail = email;
+    openDeleteCorp(row) {
+      this.deleteCorpEmail = row;
       this.deleteCorpVisible = true;
     },
     resendPDF() {
-      let row = this.resendRow;
+      let row = this.resendEmail;
       let resend_url = '';
       resend_url = `${url.resend_pdf}/${this.$store.state.corpItem.link_id}/${row.id}`;
       http({
         url: resend_url,
-        method: 'post',
+        method: 'put',
       })
         .then(res => {
           this.resendEmailDialogVisible = false;
