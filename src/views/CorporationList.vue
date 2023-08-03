@@ -606,7 +606,6 @@ export default {
       item: '',
       currentPage: 1,
       tableTotal: 0,
-      id: '',
     };
   },
   inject: ['setClientHeight'],
@@ -615,7 +614,7 @@ export default {
       if (!(dataArr && dataArr.length)) {
         return;
       }
-      dataArr.forEach((item) => {
+      dataArr.forEach(item => {
         let dateNum = parseInt(item.date.replace(/-/g, ''));
         Object.assign(item, { dateNum: dateNum });
       });
@@ -659,7 +658,7 @@ export default {
         url: `${url.delCla}/${this.$store.state.corpItem.link_id}/${row.cla_id}`,
         method: 'delete',
       })
-        .then((res) => {
+        .then(res => {
           util.successMessage(this);
           if (this.delete_apply === 'individual') {
             this.getIndividualClaInfo();
@@ -667,7 +666,7 @@ export default {
             this.getCorpClaInfo();
           }
         })
-        .catch((err) => {
+        .catch(err => {
           util.catchErr(err, 'errorSet', this);
         });
     },
@@ -711,7 +710,7 @@ export default {
       }
     },
     addCorpCla(row) {
-      this.$store.commit('setAddBindFirst', true)
+      this.$store.commit('setAddBindFirst', true);
       this.setCorpPD(row);
       this.$router.push('/addCorpCla');
     },
@@ -764,12 +763,12 @@ export default {
       http({
         url: `${url.getCla}/${link_id}`,
       })
-        .then((res) => {
+        .then(res => {
           if (res.data && res.data.data.corp_clas) {
             this.corpClaData = res.data.data.corp_clas;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           util.catchErr(err, 'errorSet', this);
         });
     },
@@ -778,12 +777,12 @@ export default {
       http({
         url: `${url.getCla}/${link_id}`,
       })
-        .then((res) => {
+        .then(res => {
           if (res && res.data.data) {
             this.individualClaData = res.data.data.individual_clas;
           }
         })
-        .catch((err) => {
+        .catch(err => {
           util.catchErr(err, 'errorSet', this);
         });
     },
@@ -791,13 +790,12 @@ export default {
       http({
         url: `${url.getCorporationSigning}/${this.$store.state.corpItem.link_id}`,
       })
-        .then((resp) => {
+        .then(resp => {
           if (resp.data.data && resp.data.data.length) {
             let tableData = resp.data.data;
-            this.id = tableData[0].id;
             this.signedCompleted = [];
             this.signedNotCompleted = [];
-            tableData.forEach((item) => {
+            tableData.forEach(item => {
               if (item.admin_added) {
                 this.signedCompleted.push(item);
               } else {
@@ -808,7 +806,7 @@ export default {
             this.sortDate(this.signedNotCompleted);
           }
         })
-        .catch((err) => {
+        .catch(err => {
           util.catchErr(err, 'errorSet', this);
         });
     },
@@ -816,20 +814,20 @@ export default {
       http({
         url: `${url.getDeletedCorpInfo}/${this.$store.state.corpItem.link_id}`,
       })
-        .then((resp) => {
+        .then(resp => {
           this.deletedCorpInfo = resp.data.data;
           this.sortDate(this.deletedCorpInfo);
         })
-        .catch((err) => {
+        .catch(err => {
           util.catchErr(err, 'errorSet', this);
         });
     },
     previewClaFile(row) {
       http({
-        url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${this.id}`,
+        url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${row.id}`,
         responseType: 'blob',
       })
-        .then((res) => {
+        .then(res => {
           if (res && res.data) {
             let blob = new Blob([res.data], { type: 'application/pdf' });
             let url = window.URL.createObjectURL(blob);
@@ -840,16 +838,16 @@ export default {
             );
           }
         })
-        .catch((err) => {
+        .catch(err => {
           util.catchErr(err, 'errorSet', this);
         });
     },
     downloadClaFile(row) {
       http({
-        url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${this.id}`,
+        url: `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${row.id}`,
         responseType: 'blob',
       })
-        .then((res) => {
+        .then(res => {
           if (res.data) {
             let time = util.getNowDateToTime();
             const blob = new Blob([res.data], { type: 'application/pdf' });
@@ -861,12 +859,12 @@ export default {
             });
           }
         })
-        .catch((err) => {
+        .catch(err => {
           util.catchErr(err, 'errorSet', this);
         });
     },
     uploadClaFile(row) {
-      this.uploadUrl = `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${this.id}`;
+      this.uploadUrl = `${url.corporationPdf}/${this.$store.state.corpItem.link_id}/${row.id}`;
       this.uploadDialogVisible = true;
     },
     upload(fileObj) {
@@ -879,7 +877,7 @@ export default {
         method: 'post',
         data: formData,
       })
-        .then((res) => {
+        .then(res => {
           this.$refs.uploadPdf.clearFiles();
           this.clearFileList();
           this.uploadLoading.close();
@@ -887,7 +885,7 @@ export default {
           util.successMessage(this);
           this.getCorporationInfo();
         })
-        .catch((err) => {
+        .catch(err => {
           this.uploadLoading.close();
           util.catchErr(err, 'errorSet', this);
           this.uploadLoading.close();
@@ -958,80 +956,80 @@ export default {
       this.deleteCorpVisible = true;
     },
     resendPDF() {
-      let email = this.resendEmail;
+      let row = this.resendEmail;
       let resend_url = '';
-      resend_url = `${url.resend_pdf}/${this.$store.state.corpItem.link_id}/${this.id}`;
+      resend_url = `${url.resend_pdf}/${this.$store.state.corpItem.link_id}/${row.id}`;
       http({
         url: resend_url,
         method: 'post',
       })
-        .then((res) => {
+        .then(res => {
           this.resendEmailDialogVisible = false;
           util.successMessage(this);
         })
-        .catch((err) => {
+        .catch(err => {
           util.catchErr(err, 'errorSet', this);
         });
     },
     menuCommand(command) {
       switch (command.command) {
         case 'a':
-          this.createRoot(command.row.admin_email);
+          this.createRoot(command.row);
           break;
         case 'b':
-          this.openResendPdf(command.row.admin_email);
+          this.openResendPdf(command.row);
           break;
         case 'c':
-          this.openDeleteCorp(command.row.admin_email);
+          this.openDeleteCorp(command.row);
           break;
         case 'd':
-          this.reductionCorp(command.row.admin_email);
+          this.reductionCorp(command.row);
           break;
         case 'e':
-          this.deleteCompletely(command.row.admin_email);
+          this.deleteCompletely(command.row);
           break;
       }
     },
     deleteCompletely(email) {
       this.deleteCompleteVisible = true;
     },
-    reductionCorp(email) {
+    reductionCorp(row) {
       http({
-        url: `${url.corporationManager}/${this.$store.state.corpItem.link_id}/${this.id}`,
+        url: `${url.corporationManager}/${this.$store.state.corpItem.link_id}/${row.id}`,
         method: 'patch',
       })
-        .then((res) => {
+        .then(res => {
           util.successMessage(this);
           this.getCorporationInfo();
         })
-        .catch((err) => {
+        .catch(err => {
           util.catchErr(err, 'errorSet', this);
         });
     },
-    deleteCorp(email) {
+    deleteCorp(row) {
       this.deleteCorpVisible = false;
       http({
-        url: `${url.corporation_signing}/${this.$store.state.corpItem.link_id}/${this.id}`,
+        url: `${url.corporation_signing}/${this.$store.state.corpItem.link_id}/${row.id}`,
         method: 'delete',
       })
-        .then((res) => {
+        .then(res => {
           util.successMessage(this);
           this.getCorporationInfo();
         })
-        .catch((err) => {
+        .catch(err => {
           util.catchErr(err, 'errorSet', this);
         });
     },
-    createRoot(email) {
+    createRoot(row) {
       http({
-        url: `${url.corporationManager}/${this.$store.state.corpItem.link_id}/${this.id}`,
+        url: `${url.corporationManager}/${this.$store.state.corpItem.link_id}/${row.id}`,
         method: 'post',
       })
-        .then((res) => {
+        .then(res => {
           util.successMessage(this);
           this.getCorporationInfo();
         })
-        .catch((err) => {
+        .catch(err => {
           util.catchErr(err, 'errorSet', this);
         });
     },

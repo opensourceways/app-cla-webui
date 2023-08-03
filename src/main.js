@@ -15,7 +15,6 @@ import '../src/assets/css/global.css';
 
 const userAgent = navigator.userAgent.toLowerCase();
 const isMobile = /mobile|android|iphone|ipad|iemobile/.test(userAgent);
-console.log('isMobile:', isMobile);
 Vue.prototype.IS_MOBILE = isMobile;
 // Vue.prototype.IS_MOBILE = isMobile();
 Vue.use(ElementUI);
