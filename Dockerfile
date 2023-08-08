@@ -11,10 +11,7 @@ FROM nginx:1.20.0
 COPY --from=Builder /home/cla-webui/dist /usr/share/nginx/html/
 COPY ./deploy/default.conf /etc/nginx/conf.d/
 RUN chmod -R 755 /usr/share/nginx/html
-RUN touch /var/run/nginx.pid \
-    && chown -R nginx:nginx /var/log/nginx \ 
-    && chown -R nginx:nginx /var/run/nginx.pid \ 
-    && chown -R nginx:nginx /etc/nginx
+ENV RUN_USER nginx
+ENV RUN_GROUP nginx
 EXPOSE 8080
-USER nginx
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
