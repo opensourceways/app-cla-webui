@@ -3,11 +3,7 @@ import Cookies from "js-cookie";
 /**
  * safe window open
  */
-export const windowOpen = (
-  url?: string | URL | undefined,
-  target?: string | undefined,
-  features?: string | undefined
-) => {
+export const windowOpen = (url, target, features) => {
   const opener = window.open(url, target, features);
   opener && (opener.opener = null);
 };
@@ -17,7 +13,7 @@ export const windowOpen = (
  * @param key
  * @returns
  */
-export function getCustomCookie(key: string) {
+export function getCustomCookie(key) {
   return Cookies.get(key);
 }
 
@@ -27,18 +23,18 @@ export function getCustomCookie(key: string) {
  * @param value cookie的值
  * @param day cookie的过期时间 默认1天
  */
-export function setCustomCookie(key: string, value: string, day = 1) {
+export function setCustomCookie(key, value, day = 1) {
   Cookies.set(key, value, { expires: day, path: "/" });
 }
 
 /*
  * 浏览器内部转换器实现html解码
  */
-export function htmlFilterXSS(v: string) {
+export function htmlFilterXSS(v) {
   if (!v) {
     return;
   }
-  let temp: HTMLDivElement | null = document.createElement("div");
+  let temp = document.createElement("div");
   temp.innerHTML = v;
   let output = temp.innerText || temp.textContent;
   temp = null;
@@ -51,22 +47,21 @@ export function htmlFilterXSS(v: string) {
  */
 export const isClient = () => typeof window !== undefined;
 
-
 // 获取url 指定参数
-export function getUrlParam(paraName: string) {
+export function getUrlParam(paraName) {
   const url = document.location.toString();
-  const arrObj = url.split('?');
+  const arrObj = url.split("?");
   if (arrObj.length > 1) {
-    const arrPara = arrObj[1].split('&');
+    const arrPara = arrObj[1].split("&");
     let arr;
     for (let i = 0; i < arrPara.length; i++) {
-      arr = arrPara[i].split('=');
+      arr = arrPara[i].split("=");
       if (arr !== null && arr[0] === paraName) {
         return arr[1];
       }
     }
-    return '';
+    return "";
   } else {
-    return '';
+    return "";
   }
 }

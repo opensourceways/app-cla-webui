@@ -13,8 +13,6 @@ declare module '@vue/runtime-core' {
     ElDropdown: typeof import('element-plus/es')['ElDropdown']
     ElDropdownItem: typeof import('element-plus/es')['ElDropdownItem']
     ElDropdownMenu: typeof import('element-plus/es')['ElDropdownMenu']
-    ElIcon: typeof import('element-plus/es')['ElIcon']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     OIcon: typeof import('./src/components/OIcon.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

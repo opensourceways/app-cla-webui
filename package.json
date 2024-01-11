@@ -20,11 +20,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.5.0",
-    "@vitejs/plugin-vue-jsx": "^2.1.1",
-    "@vue/eslint-config-prettier": "^7.1.0",
-    "@vue/eslint-config-typescript": "^11.0.2",
     "@types/node": "20.5.9",
-    "typescript": "^5.2.2",
     "unplugin-auto-import": "^0.11.5",
     "unplugin-element-plus": "^0.4.1",
     "unplugin-icons": "^0.14.15",

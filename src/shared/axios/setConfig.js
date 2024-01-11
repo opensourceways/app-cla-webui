@@ -1,10 +1,8 @@
-import type { AxiosStatic } from 'axios';
-
 /**
  * @param {axios} axios实例
  * @param {config} 自定义配置对象，可覆盖掉默认的自定义配置
  */
-export default (axios: AxiosStatic, config = {}) => {
+export default (axios, config = {}) => {
   const defaultConfig = {
     baseURL: '',
     timeout: 20000,
