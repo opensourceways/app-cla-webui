@@ -1,0 +1,37 @@
+@charset 'UFT-8';
+@use './var.scss';
+.el-card {
+  padding: 40px;
+  color: var(--o-card-color);
+  border-radius: 0;
+  background-color: var(--o-card-bg);
+  transition: none;
+  border: none;
+
+  //TODO: 阴影颜色
+
+  &.is-always-shadow {
+    box-shadow: var(--o-card-shadow);
+  }
+
+  &.is-hover-shadow {
+    box-shadow: var(--o-card-shadow);
+    &:hover,
+    &:focus {
+      @media screen and (min-width: 1100px) {
+        box-shadow: var(--o-card-bg-hover);
+      }
+    }
+  }
+
+  .el-card__header {
+    padding: 0;
+    border-bottom-color: var(--o-card-division-color);
+    border-bottom: none;
+  }
+  .el-card__body {
+    padding: 0;
+    font-size: var(--o-card-body-font_size);
+    line-height: var(--o-card-body-line_height);
+  }
+}

@@ -1,0 +1,10 @@
+.el-tabs {
+  // tab item
+  --o-tabs-color: var(--o-color-text1);
+  --o-tabs-color-active: var(--o-color-primary1);
+  --o-tabs-line_height: var(--o-line_height-h8);
+
+  --o-tabs-header-font_size: var(--o-line-height-h8);
+  --o-tabs-content-font_size: var(--o-font_size-text);
+  --o-tabs-content-line_height: var(--o-line_height-text);
+}

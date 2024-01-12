@@ -1,0 +1,127 @@
+/* 全局变量，不随皮肤变化 */
+:root {
+  --o-size-l: 40px;
+  --o-size-m: 32px;
+  --o-size-s: 24px;
+
+  /* Exit */
+  --o-duration-s: 200ms;
+  /* Enter for standard-in */
+  --o-duration-m1: 250ms;
+  /* Begin and End for standard */
+  --o-duration-m2: 300ms;
+  /* Enter for emphasized-in */
+  --o-duration-m3: 400ms;
+  /* Begin and End for emphasized */
+  --o-duration-l: 500ms;
+  /* 轮播切换 for emphasized */
+  --o-duration-xl: 1000ms;
+
+  --o-easing-linear: cubic-bezier(0, 0, 1, 1);
+  /* 用于组件 */
+  --o-easing-standard: cubic-bezier(0.2, 0, 0, 1);
+  --o-easing-standard-in: cubic-bezier(0, 0, 0, 1);
+  --o-easing-standard-out: cubic-bezier(0.3, 0, 1, 1);
+  /* 用于大卡片、场景切换 */
+  --o-easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+  --o-easing-emphasized-in: cubic-bezier(0.3, 0, 0.8, 0.15);
+  --o-easing-emphasized-out: cubic-bezier(0.05, 0.7, 0.1, 1);
+}
+
+:root,
+:root[theme='light'] {
+  /* 品牌色 */
+  --o-color-primary1: #002fa7;
+  --o-color-primary2: #406fe7;
+  --o-color-primary3: #00288d;
+  --o-color-primary4: #b2c0e4;
+  /* 辅助色 */
+  --o-color-major1: #feb32a;
+  /* 成功色 */
+  --o-color-success1: #6dc335;
+  --o-color-success2: #93e95b;
+  --o-color-success3: #62af30;
+  --o-color-success4: #c5e7ae;
+  /* 告警色 */
+  --o-color-warning1: #ff8e36;
+  --o-color-warning2: #ffb45c;
+  --o-color-warning3: #ff801c;
+  --o-color-warning4: #ffd2af;
+  /* 错误色 */
+  --o-color-danger1: #f3524d;
+  --o-color-danger2: #ff7873;
+  --o-color-danger3: #f13b35;
+  --o-color-danger4: #fabab8;
+  /* info色 */
+  --o-color-info1: #e5e5e5;
+  --o-color-info2: #e5e8f0;
+  --o-color-info3: #cccccc;
+  --o-color-info4: #f7f8fa;
+  /* 背景色 */
+  --o-color-bg1: #f5f6f8;
+  --o-color-bg2: #ffffff;
+  --o-color-bg3: #f7f8fa;
+  --o-color-bg4: #e5e8f0;
+  /* 文字色 */
+  --o-color-text1: #000000;
+  --o-color-text1_inverse: #ffffff;
+  --o-color-text2: #3f3f3f;
+  --o-color-text2_inverse: #e5e5e5;
+  --o-color-text3: #707070;
+  --o-color-text3_inverse: #b2b2b2;
+  --o-color-text4: #cccccc;
+  --o-color-text4_inverse: #e5e5e5;
+  /* 遮罩色 */
+  --o-color-mask1: rgba(0, 0, 0, 0.5);
+  /* 边框色 */
+  --o-color-border1: #707070;
+  --o-color-border2: #e5e5e5;
+  /* 分隔线色 */
+  --o-color-division1: #707070;
+  /* 字号 */
+  --o-font_size-display1: 64px;
+  --o-font_size-display2: 54px;
+  --o-font_size-display3: 36px;
+  --o-font_size-display4: 28px;
+  --o-font_size-h1: 24px;
+  --o-font_size-h2: 20px;
+  --o-font_size-h3: 18px;
+  --o-font_size-h4: 16px;
+  --o-font_size-text: 14px;
+  --o-font_size-tip1: 12px;
+  --o-font_size-tip2: 10px;
+  /* 行高 */
+  --o-line_height-display1: 84px;
+  --o-line_height-display2: 76px;
+  --o-line_height-display3: 48px;
+  --o-line_height-display4: 36px;
+  --o-line_height-h1: 32px;
+  --o-line_height-h2: 28px;
+  --o-line_height-h3: 26px;
+  --o-line_height-h4: 24px;
+  --o-line_height-text: 22px;
+  --o-line_height-tip1: 18px;
+  --o-line_height-tip2: 14px;
+  /* 间距（组件间） */
+  --o-gap-1: 4px;
+  --o-gap-2: 8px;
+  --o-gap-3: 12px;
+  --o-gap-4: 16px;
+  --o-gap-5: 24px;
+  --o-gap-6: 32px;
+  --o-gap-7: 40px;
+  --o-gap-8: 64px;
+  /* 图标尺寸 */
+  --o-icon_size-l: 48px;
+  --o-icon_size-m: 32px;
+  --o-icon_size-s: 24px;
+  --o-icon_size-xs: 16px;
+  /* 圆角 */
+  --o-radius-l: 16px;
+  --o-radius-m: 8px;
+  --o-radius-s: 4px;
+  /* 阴影 */
+  --o-shadow-1: 0 1px 5px rgba(45, 47, 51, 0.1);
+  --o-shadow-2: 0 6px 18px rgba(0, 47, 167, 0.14);
+  --o-shadow-3: 0 10px 32px rgba(45, 47, 51, 0.18);
+}

@@ -1,0 +1,28 @@
+@charset 'UFT-8';
+@use './var.scss';
+
+.el-breadcrumb {
+  font-size: var(--o-breadcrumb-font_size);
+  line-height: var(--o-breadcrumb-line_height);
+  .el-breadcrumb__item {
+    .el-breadcrumb__inner {
+      color: var(--o-breadcrumb-color);
+      &.is-link {
+        font-weight: 500;
+        &:hover {
+          color: var(--o-breadcrumb-color-hover);
+          text-decoration: underline;
+        }
+      }
+    }
+    .el-breadcrumb__separator.el-icon {
+      margin: 0 4px;
+      font-size: var(--o-breadcrumb-icon-font_size);
+    }
+    &[aria-current] {
+      .el-breadcrumb__inner {
+        color: var(--o-breadcrumb-current-color);
+      }
+    }
+  }
+}

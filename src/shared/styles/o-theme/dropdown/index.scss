@@ -1,0 +1,12 @@
+@charset 'UFT-8';
+@use './var.scss';
+
+.el-dropdown__popper.is-light {
+  background-color: var(--o-dropdown-bg);
+  .el-dropdown-menu__item:not(.is-disabled):focus {
+    background-color: var(--o-dropdown-item-bg);
+  }
+  .el-dropdown-menu__item {
+    padding: 4px 8px;
+  }
+}

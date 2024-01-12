@@ -1,0 +1,42 @@
+@charset 'UFT-8';
+@use './var.scss';
+.el-input {
+  font-size: var(--o-input-font_size);
+  line-height: var(--o-input-line_height);
+  .el-input__wrapper {
+    border-radius: 0;
+    padding: 1px 14px;
+    background-color: var(--o-input-color-bg);
+    &:not(.is-focus) {
+      box-shadow: 0 0 0 1px var(--o-input-border-color) inset;
+      // &:hover {
+      //   box-shadow: 0 0 0 1px var(--o-input-border-color) inset;
+      // }
+    }
+    .el-input__inner {
+      height: var(--o-input-height);
+      line-height: var(--o-input-line_height);
+      color: var(--o-input-color);
+    }
+    .el-input__prefix {
+      color: var(--o-input-prefix-color);
+      font-size: var(--o-input-prefix-font_size);
+      line-height: var(--o-input-prefix-line_height);
+    }
+  }
+}
+
+.el-textarea {
+  font-size: var(--o-textarea-font_size);
+  line-height: var(--o-textarea-line_height);
+  .el-textarea__inner {
+    // TODO:间距
+    padding: 4px 14px;
+    border-radius: 0;
+    color: var(--o-textarea-color);
+    background-color: transparent;
+    &:not(:focus) {
+      box-shadow: 0 0 0 1px var(--o-textarea-border-color) inset;
+    }
+  }
+}

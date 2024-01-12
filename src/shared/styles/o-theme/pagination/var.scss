@@ -1,0 +1,18 @@
+.el-pagination {
+  --o-pagination-font_size: var(--o-font_size-text);
+  --o-pagination-color: var(--o-color-text1);
+
+  --o-pagination-bg: var(--o-color-info1);
+  // button
+  --o-pagination-button-font_size: var(--o-font_size-text);
+  // TODO: disable 文字颜色
+  --o-pagination-button-color-disabled: var(--o-color-text4);
+
+  //page
+  --o-pagination-page-bg-active: var(--o-color-primary1);
+  --o-pagination-page-font_color-active: var(--o-color-text1_inverse);
+  --o-pagination-page-line_height: var(--o-line_height-display4);
+  --o-pagination-page-font_color-hover: var(--o-color-text1_inverse);
+  //pagesize
+  --o-pagination-pagesizes-bg: var(--o-color-info1);
+}

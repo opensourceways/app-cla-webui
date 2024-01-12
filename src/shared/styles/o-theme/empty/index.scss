@@ -1,0 +1,13 @@
+@charset 'UFT-8';
+@use './var.scss';
+
+.el-empty {
+  padding: 0;
+  .el-empty__description {
+    margin-top: 16px;
+    p {
+      font-size: var(--o-empty-description-font_size);
+      color: var(--o-empty-description-color);
+    }
+  }
+}
