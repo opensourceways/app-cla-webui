@@ -1,0 +1,13 @@
+.el-radio {
+  // inner
+  --o-radio-inner-border: var(--o-color-border1);
+  --o-radio-inner-background: var(--o-color-bg2);
+  --o-radio-inner-after-background: var(--o-color-primary1);
+  // label
+  --o-radio-label-color: var(--o-color-text1);
+
+  //disabled
+  --o-radio-inner-border-disabled: var(--o-color-border2);
+  --o-radio-label-color: var(--o-color-text1);
+  --o-radio-label-color-disabled: var(--o-color-info1);
+}

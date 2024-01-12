@@ -1,0 +1,11 @@
+.el-select {
+  --o-select-font: var(--o-color-text3);
+  --o-select-color-bg: var(--o-color-bg2);
+  --o-select-shadow: var(--o-shadow-1);
+  --o-select-shadow_hover: var(--o-shadow-2);
+  // 禁用
+}
+
+.el-select-dropdown {
+  --o-select-color-disable: var(--o-color-text4);
+}

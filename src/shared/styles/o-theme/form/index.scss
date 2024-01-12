@@ -1,0 +1,13 @@
+@charset 'UFT-8';
+@use './var.scss';
+
+.el-form {
+  .el-form-item.is-error {
+    .el-input__wrapper {
+      box-shadow: 0 0 0 1px var(--el-color-danger) inset;
+    }
+    .el-textarea__inner {
+      box-shadow: 0 0 0 1px var(--el-color-danger) inset;
+    }
+  }
+}

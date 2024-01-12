@@ -1,0 +1,42 @@
+@charset 'UFT-8';
+@use './var.scss';
+body {
+  .el-select {
+    .el-input__wrapper {
+      padding: 3px 8px;
+      background-color: var(--o-select-color-bg);
+      border-radius: 0;
+    }
+
+    &:hover:not(.el-select--disabled) {
+      .el-input__wrapper {
+        box-shadow: 0 0 0 1px var(--o-input-border-color) inset;
+      }
+    }
+    .el-input__prefix-inner {
+      .o-icon {
+        display: flex;
+        align-items: center;
+      }
+    }
+    .el-input__suffix {
+      .el-icon {
+        svg {
+          color: var(--o-select-font);
+        }
+      }
+    }
+  }
+}
+
+.el-select__popper.el-popper {
+  .el-select-dropdown {
+    .el-select-dropdown__item {
+      padding: 0 8px;
+      &.is-disabled {
+        color: var(--o-select-color-disable);
+        background-color: inherit;
+      }
+    }
+  }
+}

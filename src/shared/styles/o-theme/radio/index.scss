@@ -1,0 +1,32 @@
+@charset 'UFT-8';
+@use './var.scss';
+
+.el-radio {
+  .el-radio__input {
+    .el-radio__inner {
+      width: 18px;
+      height: 18px;
+      border-color: var(--o-radio-inner-border);
+      background-color: var(--o-radio-inner-background);
+      &::after {
+        width: 12px;
+        height: 12px;
+        background-color: var(--o-radio-inner-after-background);
+      }
+    }
+  }
+  .el-checkbox__label {
+    color: var(--o-radio-label-color);
+  }
+
+  &.is-disabled {
+    .el-radio__input {
+      .el-radio__inner {
+        border-color: var(--o-radio-inner-border-disabled);
+      }
+    }
+    .el-checkbox__label {
+      color: var(--o-radio-label-color-disabled);
+    }
+  }
+}

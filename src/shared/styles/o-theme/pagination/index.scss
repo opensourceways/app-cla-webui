@@ -1,0 +1,90 @@
+@charset 'UFT-8';
+@use './var.scss';
+
+.el-pagination {
+  display: flex;
+  justify-content: center;
+  .el-select {
+    --el-select-border-color-hover: none;
+    --el-select-input-focus-border-color: none;
+    & .el-input .el-select__caret {
+      color: var(--o-pagination-color);
+    }
+  }
+
+  .el-pager {
+    gap: 0 8px;
+    .number {
+      color: var(--o-pagination-color);
+      border-radius: 0;
+      line-height: var(--o-pagination-page-line_height);
+      height: 36px;
+      width: 36px;
+      &:not(.is-active):not(:hover) {
+        background-color: var(--o-pagination-bg) !important;
+      }
+      &:hover {
+        color: var(--o-pagination-page-font_color-hover);
+        background-color: var(--o-pagination-page-bg-active);
+      }
+      &.is-active.number {
+        background-color: var(--o-pagination-page-bg-active);
+        color: var(--o-pagination-page-font_color-active);
+        font-weight: 400;
+      }
+    }
+  }
+
+  .btn-next,
+  .btn-prev {
+    width: 36px;
+    height: 36px;
+    border-radius: 0;
+    background: var(--o-pagination-bg);
+    &:not(.is-first) {
+      margin-left: 8px;
+    }
+
+    .el-icon {
+      font-size: var(--o-pagination-button-font_size);
+    }
+  }
+  button:disabled {
+    color: var(--o-pagination-button-color-disabled);
+    background-color: var(--o-pagination-bg);
+  }
+  .el-pagination__sizes {
+    margin-left: 8px;
+    .el-select {
+      .el-input {
+        width: fit-content;
+        .el-input__wrapper {
+          border-radius: 0;
+          height: 36px;
+          padding: 8px;
+          box-shadow: none;
+          background-color: var(--o-pagination-pagesizes-bg);
+          .el-input__inner {
+            width: 64px;
+          }
+        }
+      }
+    }
+  }
+  .el-pagination__jump {
+    height: 36px;
+    font-size: var(--o-font-size-text);
+    font-weight: 400;
+    line-height: var(--o-line-height-text);
+    border-radius: 0px;
+    .el-input__wrapper {
+      flex-grow: 0;
+      box-shadow: none;
+      border-radius: 0;
+      background-color: var(--o-pagination-pagesizes-bg);
+    }
+  }
+  .is-first {
+    margin-right: 8px;
+  }
+}

@@ -1,0 +1,32 @@
+@charset 'UFT-8';
+@use './var.scss';
+
+body {
+  .el-message {
+    justify-content: center;
+    top: 104px !important;
+    width: var(--o-message-width);
+    min-height: var(--o-message-height);
+    border-radius: 0;
+    background: var(--o-message-background);
+    box-shadow: var(--o-message-shadow);
+    --el-message-border-color: var(--o-color-bg2);
+
+    .el-message__icon {
+      margin-right: var(--o-gap-3);
+      font-size: var(--o-message-icon-font_size);
+    }
+
+    .el-message__content {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      line-clamp: 2;
+      color: var(--o-message-content-color);
+      font-size: var(--o-message-content-font_size);
+    }
+    .el-message__closeBtn {
+      color: #000;
+    }
+  }
+}
