@@ -1,0 +1,16 @@
+.el-checkbox {
+  --o-checkbox-color: var(--o-color-text1);
+  --o-checkbox-line_height: var(--o-line_height-text);
+  --o-checkbox-border: var(--o-color-border2);
+
+  //checkbox__input
+  --o-checkbox-input-width: 16px;
+  --o-checkbox-input-height: 16px;
+  --o-checkbox-input-radius: 0;
+  --o-checkbox-input-border: var(--o-color-border2);
+  --o-checkbox-input-border-disabled: var(--o-color-border1);
+  --o-checkbox-input-border-hover: var(--o-color-primary1);
+  --o-checkbox-input-border-checked: var(--o-color-primary1);
+
+  //disable
+}

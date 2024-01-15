@@ -1,0 +1,20 @@
+@charset 'UFT-8';
+@use './var.scss';
+
+.el-dialog {
+  color: var(--o-dialog-color);
+  background-color: var(--o-dialog-bg);
+  border-radius: 0;
+  box-shadow: var(--o-dialog-shadow);
+  animation: o-dialog-wrap-show 0.3s ease-in-out;
+  .el-dialog__header {
+    padding: 40px 40px 12px 40px;
+  }
+  .el-dialog__body {
+    color: var(--o-dialog-color);
+    padding: 12px 40px;
+  }
+  .el-dialog__footer {
+    padding: 12px 40px 40px;
+  }
+}

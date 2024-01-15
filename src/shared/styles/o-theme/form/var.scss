@@ -1,0 +1,14 @@
+.el-message {
+  --o-message-height: 112px;
+  --o-message-width: 380px;
+  --o-message-background: var(--o-color-bg2);
+  --o-message-shadow: var(--o-shadow-2);
+  --o-message-border-color: var(--o-color-bg2);
+
+  // icon
+  --o-message-icon-font_size: var(--o-font_size-h1);
+
+  //content
+  --o-message-content-color: var(--o-color-text1);
+  --o-message-content-font_size: var(--o-font_size-h3);
+}

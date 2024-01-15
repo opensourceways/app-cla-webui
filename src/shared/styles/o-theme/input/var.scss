@@ -1,0 +1,19 @@
+.el-input {
+  --o-input-height: 34px;
+  --o-input-border-color: var(--o-color-border1);
+  --o-input-color: var(--o-color-text1);
+  --o-input-font_size: var(--o-font_size-text);
+  --o-input-line_height: var(--o-line_height-text);
+  --o-input-bg: var(--o-color-bg2);
+  // prefix
+  --o-input-prefix-color: var(--o-color-text3);
+  --o-input-prefix-font_size: var(--o-font_size-h1);
+  --o-input-prefix-line_height: var(--o-line_height-h4);
+}
+
+.el-textarea {
+  --o-textarea-font_size: var(--o-font_size-text);
+  --o-textarea-line_height: var(--o-line_height-text);
+  --o-textarea-color: var(--o-color-text1);
+  --o-textarea-border-color: var(--o-color-border1);
+}
