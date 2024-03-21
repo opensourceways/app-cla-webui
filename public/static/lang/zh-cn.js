@@ -3,8 +3,8 @@ module.exports = {
         corp: '企业',
         emp: '员工',
         individual: '个人',
-        corpBt: '签署企业 CLA',
-        empBt: '签署员工 CLA',
+        corpBt: '签署法人 CLA',
+        empBt: '法人贡献者登记',
         individualBt: '签署个人 CLA',
         guideTitle: 'CLA 签署指引',
         mobileGuideTitle: '签署指引',
@@ -31,7 +31,7 @@ module.exports = {
     },
     signPage: {
         claTitle: '签署 CLA',
-        corp: '企业',
+        corp: '法人',
         emp: '员工',
         individual: '个人',
         requireText: '为必填项',
@@ -47,7 +47,15 @@ module.exports = {
         signing: '签 署 中',
         verifyCodeHolder: '请输入验证码',
         holder: '请输入{title}',
-        sendCodeTip: '发送验证码到邮箱'
+        sendCodeTip: '发送验证码到邮箱',
+        claContentTitle:'签署法人贡献者承诺函',
+        claContentSTitle:'法人贡献者承诺函',
+        claContent1:'本人承诺，本人已获得',
+        claContent2:'的授权，可以向openEuler项目提交贡献，并且本人通过',
+        claContent3:'向openEuler项目提交的任何贡献均代表',
+        claZ:'重要提示：',
+        claContentT:'如果您仅代表个人贡献，你应当签署个人CLA。如有任何疑问，您应当咨询您雇主的法律部门。',
+        claHolder:'建议使用公司邮箱'
     },
     tips: {
         failedTitle: '失败',
