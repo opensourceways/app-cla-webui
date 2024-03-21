@@ -1,4 +1,6 @@
-FROM node:18.12.1 as Builder
+FROM node:alpine as Builder
+
+MAINTAINER TommyLike<tommylikehu@gmail.com>
 
 RUN mkdir -p /home/cla-webui
 WORKDIR /home/cla-webui
@@ -7,7 +9,7 @@ RUN npm install -g vue && \
     npm install && \
     npm run build
 
-FROM nginx:1.20.0
+FROM nginx:1.19.2
 COPY --from=Builder /home/cla-webui/dist /usr/share/nginx/html/
 COPY ./deploy/default.conf /etc/nginx/conf.d/
 RUN chmod -R 755 /usr/share/nginx/html

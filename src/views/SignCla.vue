@@ -3,8 +3,24 @@
     <div id="singCla_section">
       <el-row class="content">
         <el-col>
-          <p class="contentTitle">{{ $t('signPage.claTitle') }}</p>
-          <el-row class="marginTop3rem" id="claBox">
+          <p class="contentTitle" v-if="showInput === 'employee'">
+            {{ $t('signPage.claContentTitle') }}
+          </p>
+          <p class="contentTitle" v-else>{{ $t('signPage.claTitle') }}</p>
+          <el-row class="marginTop3rem form" v-if="showInput === 'employee'">
+            <h3 style="text-align: center">
+              {{ $t('signPage.claContentSTitle') }}
+            </h3>
+            {{ $t('signPage.claContent1')
+            }}<span class="title">{{ companyName }}</span
+            >{{ $t('signPage.claContent2')
+            }}<span class="title">{{ myForm.email }}</span>
+            {{ $t('signPage.claContent3')
+            }}<span class="title">{{ companyName }}</span>
+            。<h3 style="display: inline-block">{{ $t('signPage.claZ') }}</h3>
+            {{ $t('signPage.claContentT') }}</el-row
+          >
+          <el-row class="marginTop3rem" id="claBox" v-else>
             <iframe
               id="pdf_iframe"
               ref="pdf_iframe"
@@ -45,7 +61,11 @@
                   <el-input
                     v-else
                     v-model="ruleForm[item.id]"
-                    :placeholder="$t('signPage.holder', { title: item.title })"
+                    :placeholder="
+                      item.type === 'email' && showInput === 'employee'
+                        ? $t('signPage.claHolder')
+                        : $t('signPage.holder', { title: item.title })
+                    "
                     size="small"
                     @blur="setMyForm(item.type, ruleForm[item.id])"
                   ></el-input>
@@ -70,6 +90,7 @@
                       :key="item.corp_signing_id"
                       :label="item.corp_name"
                       :value="item.corp_signing_id"
+                      @click.native="getCompany(item.corp_name)"
                     >
                     </el-option>
                   </el-select>
@@ -147,7 +168,11 @@
                   <el-input
                     v-else
                     v-model="ruleForm[item.id]"
-                    :placeholder="$t('signPage.holder', { title: item.title })"
+                    :placeholder="
+                      item.type === 'email' && showInput === 'employee'
+                        ? $t('signPage.claHolder')
+                        : $t('signPage.holder', { title: item.title })
+                    "
                     size="small"
                     @blur="setMyForm(item.type, ruleForm[item.id])"
                   ></el-input>
@@ -172,6 +197,7 @@
                       :key="item.corp_signing_id"
                       :label="item.corp_name"
                       :value="item.corp_signing_id"
+                      @click.native="getCompany(item.corp_name)"
                     >
                     </el-option>
                   </el-select>
@@ -328,7 +354,7 @@ export default {
           this.value = index;
           this.cla_hash = item.cla_id;
           this.cla_id = item.cla_id;
-          sessionStorage.setItem('cla_id',item.cla_id)
+          sessionStorage.setItem('cla_id', item.cla_id);
           this.$refs.pdf_iframe.contentWindow.postMessage(
             {
               link_id: this.link_id,
@@ -346,7 +372,7 @@ export default {
       });
       this.setSendBtText();
       this.$refs['ruleForm'] &&
-        this.$refs['ruleForm'].fields.forEach((item) => {
+        this.$refs['ruleForm'].fields.forEach(item => {
           if (item.validateState === 'error') {
             this.$refs['ruleForm'].validateField(item.labelFor);
           }
@@ -402,11 +428,15 @@ export default {
       orgValue: '',
       cla_id: '',
       showInput: sessionStorage.getItem('loginType'),
-      getOrg:true
+      getOrg: true,
+      companyName: '',
     };
   },
   methods: {
     ...mapActions(['setTokenAct', 'setRepoInfoAct']),
+    getCompany(val) {
+      this.companyName = val;
+    },
     setSendBtText() {
       if (
         this.sendBtTextFromLang === 'send code' ||
@@ -422,7 +452,7 @@ export default {
     setIframeEventListener() {
       window.addEventListener(
         'message',
-        (event) => {
+        event => {
           if (
             event.data instanceof Array &&
             event.origin === this.$store.state.domain
@@ -479,10 +509,10 @@ export default {
       }
       if (cla.EMAIL_REG.test(email)) {
         callback();
-        this.getOrg = false
+        this.getOrg = false;
       } else {
         callback(new Error(this.$t('tips.invalid_email')));
-        this.getOrg = true
+        this.getOrg = true;
       }
     },
     async verifyName(rule, value, callback) {
@@ -529,8 +559,8 @@ export default {
     },
     setMyForm(type, value) {
       this.myForm[type] = value;
-      if(!this.myForm.email){
-        this.getOrg = true
+      if (!this.myForm.email) {
+        this.getOrg = true;
       }
     },
     sendCode() {
@@ -550,7 +580,7 @@ export default {
           method: 'post',
           data: { email: this.myForm.email },
         })
-          .then((res) => {
+          .then(res => {
             this.$message.closeAll();
             this.$message.success({
               message: this.$t('tips.sending_email'),
@@ -570,14 +600,14 @@ export default {
               }
             }, 1000);
           })
-          .catch((err) => {
+          .catch(err => {
             util.catchErr(err, 'setSignReLogin', this);
           });
       } else {
         this.$message.closeAll();
-        if(EMAIL_REG.test(email)&&!this.orgValue){
+        if (EMAIL_REG.test(email) && !this.orgValue) {
           this.$message.error(this.$t('tips.not_fill_org'));
-        }else{
+        } else {
           this.$message.error(this.$t('tips.not_fill_email'));
         }
       }
@@ -671,10 +701,10 @@ export default {
       axios({
         url: `${url.getSignPage}/${this.$store.state.linkId}/${applyTo}`,
       })
-        .then((res) => {
+        .then(res => {
           this.setData(res, resolve);
         })
-        .catch((err) => {
+        .catch(err => {
           util.catchErr(err, 'setSignReLogin', this);
         });
     },
@@ -703,7 +733,7 @@ export default {
     setFieldsData() {
       let form = {};
       let rules = {};
-      this.fields.forEach((item) => {
+      this.fields.forEach(item => {
         Object.assign(form, { [item.id]: '' });
         if (item.type === 'name') {
           Object.assign(this.myForm, { name: '' });
@@ -861,7 +891,7 @@ export default {
           corp_signing_id: this.orgValue,
           cla_id: sessionStorage.getItem('cla_id'),
           cla_language: this.cla_lang,
-          privacy_checked:this.isRead
+          privacy_checked: this.isRead,
         };
       } else {
         if (this.$store.state.loginType === this.employee) {
@@ -873,7 +903,7 @@ export default {
             cla_id: sessionStorage.getItem('cla_id'),
             cla_language: this.cla_lang,
             corp_signing_id: this.orgValue,
-            privacy_checked:this.isRead
+            privacy_checked: this.isRead,
           };
         } else {
           obj = {
@@ -883,7 +913,7 @@ export default {
             info: info,
             cla_id: sessionStorage.getItem('cla_id'),
             cla_language: this.cla_lang,
-            privacy_checked:this.isRead
+            privacy_checked: this.isRead,
           };
         }
 
@@ -906,7 +936,7 @@ export default {
         method: 'post',
         data: obj,
       })
-        .then((res) => {
+        .then(res => {
           this.signText = 'sign';
           this.signButtonDisable = false;
           if (this.$store.state.loginType === this.corporation) {
@@ -921,14 +951,14 @@ export default {
             dialogMessage: this.tipsMessage,
           });
         })
-        .catch((err) => {
+        .catch(err => {
           this.signText = 'sign';
           this.signButtonDisable = false;
           util.catchErr(err, 'setSignReLogin', this);
         });
     },
     submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
+      this.$refs[formName].validate(valid => {
         if (valid) {
           if (this.isRead) {
             this.signCla();
@@ -952,10 +982,10 @@ export default {
         url: `${url.getCorporationSigning}/${this.link_id}/corps/${this.myForm.email}`,
         method: 'get',
       })
-        .then((res) => {
+        .then(res => {
           this.signingData = res.data.data;
         })
-        .catch((err) => {
+        .catch(err => {
           switch (err.status) {
             case 401:
               this.$store.commit('setOrgReLogin', {
@@ -1036,7 +1066,7 @@ export default {
     this.setIframeEventListener();
     new Promise((resolve, reject) => {
       this.getSignPage(resolve);
-    }).then((res) => {
+    }).then(res => {
       this.getNowDate();
     });
   },
@@ -1314,5 +1344,14 @@ export default {
       text-align: left;
     }
   }
+}
+.title {
+  border-bottom: 1px solid #000;
+  min-width: 50px;
+  display: inline-block;
+  width: fit-content;
+  color: #002fa7;
+  text-align: center;
+  margin: 0 5px;
 }
 </style>
