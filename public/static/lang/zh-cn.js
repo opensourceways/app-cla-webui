@@ -54,6 +54,7 @@ module.exports = {
         claContent2:'的授权，可以向openEuler项目提交贡献，并且本人通过',
         claContent3:'向openEuler项目提交的任何贡献均代表',
         claZ:'重要提示：',
+        claS:'。',
         claContentT:'如果您仅代表个人贡献，你应当签署个人CLA。如有任何疑问，您应当咨询您雇主的法律部门。',
         claHolder:'建议使用公司邮箱'
     },

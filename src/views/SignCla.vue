@@ -17,7 +17,7 @@
             }}<span class="title">{{ myForm.email }}</span>
             {{ $t('signPage.claContent3')
             }}<span class="title">{{ companyName }}</span>
-            。<h3 style="display: inline-block">{{ $t('signPage.claZ') }}</h3>
+            {{ $t('signPage.claS') }}<h3 style="display: inline-block">{{ $t('signPage.claZ') }}</h3>
             {{ $t('signPage.claContentT') }}</el-row
           >
           <el-row class="marginTop3rem" id="claBox" v-else>
@@ -355,7 +355,7 @@ export default {
           this.cla_hash = item.cla_id;
           this.cla_id = item.cla_id;
           sessionStorage.setItem('cla_id', item.cla_id);
-          this.$refs.pdf_iframe.contentWindow.postMessage(
+          this.$refs.pdf_iframe?.contentWindow.postMessage(
             {
               link_id: this.link_id,
               lang: this.lang,
@@ -710,8 +710,8 @@ export default {
     },
     setClaText(obj) {
       this.$nextTick(() => {
-        this.$refs.pdf_iframe.contentWindow.onload = () => {
-          this.$refs.pdf_iframe.contentWindow.postMessage(obj, this.claTextUrl);
+        this.$refs.pdf_iframe?.contentWindow.onload = () => {
+          this.$refs.pdf_iframe?.contentWindow.postMessage(obj, this.claTextUrl);
         };
       });
     },
@@ -1048,8 +1048,8 @@ export default {
         localStorage.setItem('lang', util.upperFirstCase(this.lang));
       }
       this.$emit('initHeader', util.upperFirstCase(this.lang));
-      this.$refs.pdf_iframe.contentWindow.onload = () => {
-        this.$refs.pdf_iframe.contentWindow.postMessage(
+      this.$refs.pdf_iframe?.contentWindow.onload = () => {
+        this.$refs.pdf_iframe?.contentWindow.postMessage(
           {
             link_id: this.link_id,
             lang: this.lang,

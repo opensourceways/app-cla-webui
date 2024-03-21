@@ -54,6 +54,7 @@ module.exports = {
         claContent2:'to submit contributions to the openEuler project and that any contributions I submit to the openEuler project via the',
         claContent3:'email address are on behalf of',
         claZ:'IMPORTANT NOTE:',
+        claS:'.',
         claContentT:'If you contributes individually on your own behalf, you should sign an individual CLA. If you are uncertain whether you should be contributing under a CCLA or an ICLA, you should consult your employer\'s legal department to discuss.',
         claHolder:'Please enter email'
     },
