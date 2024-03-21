@@ -710,8 +710,8 @@ export default {
     },
     setClaText(obj) {
       this.$nextTick(() => {
-        this.$refs.pdf_iframe?.contentWindow.onload = () => {
-          this.$refs.pdf_iframe?.contentWindow.postMessage(obj, this.claTextUrl);
+        this.$refs.pdf_iframe.contentWindow.onload = () => {
+          this.$refs.pdf_iframe.contentWindow.postMessage(obj, this.claTextUrl);
         };
       });
     },
@@ -1048,8 +1048,8 @@ export default {
         localStorage.setItem('lang', util.upperFirstCase(this.lang));
       }
       this.$emit('initHeader', util.upperFirstCase(this.lang));
-      this.$refs.pdf_iframe?.contentWindow.onload = () => {
-        this.$refs.pdf_iframe?.contentWindow.postMessage(
+      this.$refs.pdf_iframe.contentWindow.onload = () => {
+        this.$refs.pdf_iframe.contentWindow.postMessage(
           {
             link_id: this.link_id,
             lang: this.lang,
