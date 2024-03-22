@@ -17,7 +17,8 @@
             }}<span class="title">{{ myForm.email }}</span>
             {{ $t('signPage.claContent3')
             }}<span class="title">{{ companyName }}</span>
-            {{ $t('signPage.claS') }}<h3 style="display: inline-block">{{ $t('signPage.claZ') }}</h3>
+            {{ $t('signPage.claS') }}
+            <h3 style="display: inline-block">{{ $t('signPage.claZ') }}</h3>
             {{ $t('signPage.claContentT') }}</el-row
           >
           <el-row class="marginTop3rem" id="claBox" v-else>
@@ -56,7 +57,7 @@
                     readonly=""
                     v-model="ruleForm[item.id]"
                     size="small"
-                    @blur="setMyForm(item.type, ruleForm[item.id])"
+                    @input="setMyForm(item.type, ruleForm[item.id])"
                   ></el-input>
                   <el-input
                     v-else
@@ -67,7 +68,7 @@
                         : $t('signPage.holder', { title: item.title })
                     "
                     size="small"
-                    @blur="setMyForm(item.type, ruleForm[item.id])"
+                    @input="setMyForm(item.type, ruleForm[item.id])"
                   ></el-input>
                 </el-form-item>
                 <el-form-item
@@ -163,7 +164,7 @@
                     readonly=""
                     v-model="ruleForm[item.id]"
                     size="small"
-                    @blur="setMyForm(item.type, ruleForm[item.id])"
+                    @input="setMyForm(item.type, ruleForm[item.id])"
                   ></el-input>
                   <el-input
                     v-else
@@ -174,7 +175,7 @@
                         : $t('signPage.holder', { title: item.title })
                     "
                     size="small"
-                    @blur="setMyForm(item.type, ruleForm[item.id])"
+                    @input="setMyForm(item.type, ruleForm[item.id])"
                   ></el-input>
                 </el-form-item>
                 <el-form-item
@@ -558,6 +559,7 @@ export default {
       }
     },
     setMyForm(type, value) {
+      this.companyName = '';
       this.myForm[type] = value;
       if (!this.myForm.email) {
         this.getOrg = true;
