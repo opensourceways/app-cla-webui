@@ -44,3 +44,4 @@ export const authorizeEmail = '/v1/smtp/authorize';                             
 export const modifyAuthorizeEmail = '/v1/link/update';                                  //修改邮箱    方式 post  参数 /:link_id
 export const logout = '/v1/auth';                                                   //logout退出登录 
 export const sendDomainCode = '/v1/corporation-email-domain';                              //给管理员邮箱发送验证码 
+export const getCommunity = '/v1/link';       

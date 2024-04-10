@@ -13,9 +13,9 @@
             </h3>
             {{ $t('signPage.claContent1')
             }}<span class="title">{{ companyName }}</span
-            >{{ $t('signPage.claContent2')
+            >{{ $t('signPage.claContent2', { name: communityName })
             }}<span class="title">{{ myForm.email }}</span>
-            {{ $t('signPage.claContent3')
+            {{ $t('signPage.claContent3', { name: communityName })
             }}<span class="title">{{ companyName }}</span>
             {{ $t('signPage.claS') }}
             <h3 style="display: inline-block">{{ $t('signPage.claZ') }}</h3>
@@ -431,6 +431,7 @@ export default {
       showInput: sessionStorage.getItem('loginType'),
       getOrg: true,
       companyName: '',
+      communityName:''
     };
   },
   methods: {
@@ -1009,6 +1010,17 @@ export default {
           }
         });
     },
+    //获取社区名字
+    getCommunity(){
+      axios({
+        url: `${url.getCommunity}/${this.link_id}`,
+        method: 'get',
+      })
+        .then(res => {
+          this.communityName = res.data.data.org_alias;
+        })
+       
+    }
   },
   activated() {
     if (this.signPageData) {
@@ -1074,6 +1086,7 @@ export default {
   },
   mounted() {
     this.setClientHeight();
+    this. getCommunity()
   },
 };
 </script>

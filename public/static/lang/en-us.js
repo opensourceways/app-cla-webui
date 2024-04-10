@@ -51,7 +51,7 @@ module.exports = {
         sendCodeTip: 'Send verification code to email',
         claContentTitle:'Sign Corporate Contributor Commitment Letter',
         claContent1:'I represent that I have been authorized by',
-        claContent2:'to submit contributions to the openEuler project and that any contributions I submit to the openEuler project via the',
+        claContent2:'to submit contributions to the {name} project and that any contributions I submit to the {name} project via the',
         claContent3:'email address are on behalf of',
         claZ:'IMPORTANT NOTE:',
         claS:'.',
