@@ -18,6 +18,7 @@
             {{ $t('signPage.claContent3', { name: communityName })
             }}<span class="title">{{ companyName }}</span>
             {{ $t('signPage.claS') }}
+            <br>
             <h3 style="display: inline-block">{{ $t('signPage.claZ') }}</h3>
             {{ $t('signPage.claContentT') }}</el-row
           >
