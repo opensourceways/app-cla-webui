@@ -362,5 +362,17 @@ module.exports = {
         not_complete: 'Not Complete',
         complete: 'Complete',
         cla_format_err: 'CLA file must be pdf'
+    },
+
+    new: {
+        corporation: 'If you are contributing on behalf of a corporation or organization, or if you are a CLA administrator of a corporation or organization, click Corporate Contribution.',
+        individual:'If you are an independent contributor, click Individual Contribution.',
+        corp:'If you are authorized to sign the CLA on behalf of a corporation or organization, click Sign.',
+        employee:'If you want to register yourself as a contributor representing a corporation or organization that has signed the CLA, click Register.',
+        manager:'If you are a CLA administrator of your corporation or organization, click Manage to enter the management platform and review the contributors of the corporation or organization.',
+        sign:'CLA Signing',
+        contribution:'Corporate Contribution',
+        register:'Register',
+        manage:'Manage'
     }
 };

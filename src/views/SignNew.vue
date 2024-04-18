@@ -14,8 +14,14 @@
         <el-col>
           <el-row>
             <div class="titles">
-              <p>openEuler</p>
-              <p>Contributor License Agreement</p>
+              <el-breadcrumb :separator-icon="ArrowRight">
+                <el-breadcrumb-item :to="{ path: '/sign' }">{{
+                  $t('new.sign')
+                }}</el-breadcrumb-item>
+                <el-breadcrumb-item>{{
+                  $t('new.contribution')
+                }}</el-breadcrumb-item>
+              </el-breadcrumb>
             </div>
             <el-col :offset="1" :span="22" style="height: 100%">
               <el-row class="signType" style="height: 100%">
@@ -26,13 +32,14 @@
                         <el-col class="title" style="height: 100%">
                           <el-card>
                             <div class="cardPhone">
-                              <span>{{ $t('new.corporation') }}</span>
+                              <span>{{ $t('new.corp') }}</span>
                               <div class="btn">
                                 <button
+                                  :disabled="!isBindCorpCLA"
                                   class="button"
                                   @click="submit('corporation')"
                                 >
-                                  {{ $t('new.contribution') }}
+                                 {{ $t('org.toSign') }}
                                 </button>
                               </div>
                             </div>
@@ -43,13 +50,30 @@
                         <el-col class="title" style="height: 100%">
                           <el-card>
                             <div class="cardPhone">
-                              <span> {{ $t('new.individual') }}</span>
+                              <span>{{ $t('new.employee') }}</span>
                               <div class="btn">
                                 <button
                                   class="button"
-                                  @click="submit('individual')"
+                                  @click="submit('employee')"
                                 >
-                                  {{ $t('signType.individualBt') }}
+                                 {{ $t('new.register') }}
+                                </button>
+                              </div>
+                            </div>
+                          </el-card>
+                        </el-col>
+                      </el-row>
+                      <el-row style="height: 100%; margin-top: 20px">
+                        <el-col class="title" style="height: 100%">
+                          <el-card>
+                            <div class="cardPhone">
+                              <span> {{ $t('new.manager') }}</span>
+                              <div class="btn">
+                                <button
+                                  class="button"
+                                  @click="submit('corporationManager')"
+                                >
+                                  {{ $t('new.manage') }}
                                 </button>
                               </div>
                             </div>
@@ -115,7 +139,7 @@
                             <span
                               class="pointer"
                               @click="submit('corporation')"
-                              >{{ $t('new.contribution') }}</span
+                              >{{ $t('signType.corpBt') }}</span
                             >
                             <span>{{ $t('signType.corpStep1_2') }}</span>
                           </div>
@@ -437,40 +461,58 @@
         <el-col>
           <el-row class="actionBox">
             <div class="titles">
-              <p>openEuler</p>
-              <p>Contributor License Agreement</p>
+              <el-breadcrumb :separator-icon="ArrowRight">
+                <el-breadcrumb-item :to="{ path: '/sign' }">{{
+                  $t('new.sign')
+                }}</el-breadcrumb-item>
+                <el-breadcrumb-item>{{
+                  $t('new.contribution')
+                }}</el-breadcrumb-item>
+              </el-breadcrumb>
             </div>
-            <el-col :span="10" style="height: 60%">
-              <el-row style="height: 100%">
-                <el-col class="title" style="height: 100%">
-                  <el-card>
-                    <div class="card">
-                      <span>{{ $t('new.corporation') }}</span>
-                      <div class="btn">
-                        <button class="button" @click="submit('corporation')">
-                          {{ $t('new.contribution') }}
-                        </button>
-                      </div>
-                    </div>
-                  </el-card>
-                </el-col>
-              </el-row>
+
+            <el-col :span="8" style="height: 60%; padding-right: 20px">
+              <el-card>
+                <div class="card">
+                  <span>{{ $t('new.corp') }}</span>
+                  <div class="btn">
+                    <button
+                      :disabled="!isBindCorpCLA"
+                      class="button"
+                      @click="submit('corporation')"
+                    >
+                     {{ $t('org.toSign') }}
+                    </button>
+                  </div>
+                </div>
+              </el-card>
             </el-col>
-            <el-col :span="10" style="height: 60%; margin-left: 180px">
-              <el-row style="height: 100%">
-                <el-col class="title" style="height: 100%">
-                  <el-card>
-                    <div class="card">
-                      <span>{{ $t('new.individual') }}</span>
-                      <div class="btn">
-                        <button class="button" @click="submit('individual')">
-                          {{ $t('signType.individualBt') }}
-                        </button>
-                      </div>
-                    </div>
-                  </el-card>
-                </el-col>
-              </el-row>
+            <el-col :span="8" style="height: 60%; padding-right: 20px">
+              <el-card>
+                <div class="card">
+                  <span>{{ $t('new.employee') }}</span>
+                  <div class="btn">
+                    <button class="button" @click="submit('employee')">
+                     {{ $t('new.register') }}
+                    </button>
+                  </div>
+                </div>
+              </el-card>
+            </el-col>
+            <el-col :span="8" style="height: 60%; padding-right: 20px">
+              <el-card>
+                <div class="card">
+                  <span> {{ $t('new.manager') }}</span>
+                  <div class="btn">
+                    <button
+                      class="button"
+                      @click="submit('corporationManager')"
+                    >
+                      {{ $t('new.manage') }}
+                    </button>
+                  </div>
+                </div>
+              </el-card>
             </el-col>
           </el-row>
           <el-row>
@@ -782,7 +824,7 @@ import _axios from '../util/_axios';
 import { mapActions } from 'vuex';
 import ReTryDialog from '../components/ReTryDialog';
 import claConfig from '../lang/global';
-
+// import { ArrowRight } from '@element-plus/icons-vue'
 export default {
   name: 'SignType',
   components: {
@@ -875,19 +917,19 @@ export default {
     },
     getRepoInfo() {
       let linkId = this.$store.state.linkId;
-      let domain = window.location.origin;
-      if (domain === claConfig.OPENLOOKENG_SIGN_URL) {
-        linkId = claConfig.OPENLOOKENG_LINKID;
-      } else {
-        let urlParams = this.$route.params.params;
-        if (claConfig.STOCK_SIGN_LINK[urlParams]) {
-          linkId = claConfig.STOCK_SIGN_LINK[urlParams];
-        } else {
-          linkId = urlParams;
-        }
-      }
+      // let domain = window.location.origin;
+      // if (domain === claConfig.OPENLOOKENG_SIGN_URL) {
+      //   linkId = claConfig.OPENLOOKENG_LINKID;
+      // } else {
+      //   let urlParams = this.$route.params.params;
+      //   if (claConfig.STOCK_SIGN_LINK[urlParams]) {
+      //     linkId = claConfig.STOCK_SIGN_LINK[urlParams];
+      //   } else {
+      //     linkId = urlParams;
+      //   }
+      // }
       this.setLangLocale();
-      // this.getSignPage(linkId, 'corporation');
+      this.getSignPage(linkId, 'corporation');
       this.setLinkIdAct(linkId);
     },
     getSignPage(link_id, applyTo) {
@@ -908,15 +950,10 @@ export default {
 
     submit(loginType) {
       this.setLoginTypeAct(loginType);
-      // if (loginType === 'corporationManager') {
-      //   this.$router.push('/corporationManagerLogin');
-      // } else {
-      //   this.$router.push('/sign-cla');
-      // }
-      if (loginType === 'individual') {
-        this.$router.push('/sign-cla');
+      if (loginType === 'corporationManager') {
+        this.$router.push('/corporationManagerLogin');
       } else {
-        this.$router.push('/sign-corporate');
+        this.$router.push('/sign-cla');
       }
     },
     clickSignTypeGuide(type) {
@@ -967,7 +1004,7 @@ export default {
   },
 };
 </script>
-<style lang="less">
+<style lang="less" scoped>
 @import '../assets/font/css/Roboto-Bold.css';
 @import '../assets/font/css/Roboto-Black.css';
 @import '../assets/font/css/Roboto-Light.css';
@@ -991,7 +1028,7 @@ export default {
 @media screen and (min-width: 1200px) {
   #section {
     width: 1200px;
-    margin: auto;
+    margin: 0 auto;
   }
 
   .backgroundBox {
@@ -1017,9 +1054,9 @@ export default {
   #mobile_section {
     margin-bottom: 5rem;
     .titles {
-      font-size: 24px;
+      font-size: 12px;
       text-align: start;
-      padding-left: 36px;
+      padding: 16px 0px 0px 20px;
     }
   }
 
@@ -1042,6 +1079,7 @@ export default {
     .titles {
       font-size: 46px;
       text-align: start;
+      margin: 60px auto;
     }
   }
 
@@ -1336,7 +1374,8 @@ export default {
   font-size: 22px;
   min-height: 350px;
   position: relative;
-  margin: 30px 50px;
+  margin: 20px 20px;
+  text-align: start;
   .btn {
     position: absolute;
     bottom: 0;
