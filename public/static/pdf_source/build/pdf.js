@@ -792,7 +792,7 @@ exports.IsLittleEndianCached = IsLittleEndianCached;
 function isEvalSupported() {
   try {
     new Function("");
-    return true;
+    return false;
   } catch (e) {
     return false;
   }
