@@ -1,13 +1,11 @@
-FROM node:alpine as Builder
-
-MAINTAINER TommyLike<tommylikehu@gmail.com>
+FROM node:18.20.1 as Builder
 
 RUN mkdir -p /home/cla-webui
 WORKDIR /home/cla-webui
 COPY . /home/cla-webui
-RUN npm install -g vue && \
-    npm install && \
-    npm run build
+
+RUN npm install
+RUN npm build
 
 FROM nginx:1.19.2
 COPY --from=Builder /home/cla-webui/dist /usr/share/nginx/html/
