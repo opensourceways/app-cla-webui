@@ -5,7 +5,7 @@ WORKDIR /home/cla-webui
 COPY . /home/cla-webui
 
 RUN npm install
-RUN npm build
+RUN npm run build
 
 FROM nginx:1.19.2
 COPY --from=Builder /home/cla-webui/dist /usr/share/nginx/html/
