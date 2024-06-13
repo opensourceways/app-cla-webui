@@ -1,18 +1,18 @@
 <template>
   <el-row id="cla_pdf">
-    <pdf
+    <VuePdfEmbed
       class="pdfPage margin-bottom-1rem"
       ref="pdf"
       v-for="i in numPages"
       :key="i"
-      :src="claText"
+      :source="claText"
       :page="i"
-    ></pdf>
+    ></VuePdfEmbed>
   </el-row>
 </template>
 
 <script>
-import pdf from 'vue-pdf';
+ import VuePdfEmbed from 'vue-pdf-embed/dist/vue2-pdf-embed'
 import http from '../util/_axios';
 import * as url from '../util/api';
 import * as util from '../util/util';
@@ -20,7 +20,7 @@ import * as util from '../util/util';
 export default {
   name: 'ClaPdf',
   components: {
-    pdf,
+    VuePdfEmbed,
   },
   data() {
     return {
