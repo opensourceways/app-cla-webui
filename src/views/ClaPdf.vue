@@ -131,6 +131,9 @@ export default {
           util.catchErr(err, 'errorSet', this);
         });
     }
+  },
+  mounted() {
+    console.log('mounted');
   }
 };
 </script>
