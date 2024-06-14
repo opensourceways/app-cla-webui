@@ -2,7 +2,7 @@
   <el-row id="cla_pdf">
     <VuePdfEmbed
       class="pdfPage margin-bottom-1rem"
-      ref="pdfRef"
+      ref="pdf"
       v-for="i in numPages"
       :key="i"
       :source="claText"
@@ -55,8 +55,7 @@ export default {
         false
       );
     },
-    async getNumPages(url) {
-      this.numPages = this.$refs.pdfRef.pageCount;
+    getNumPages(url) {
       // let loadingTask = pdf.createLoadingTask(url);
       // loadingTask.promise
       //   .then((pdf) => {
@@ -65,15 +64,15 @@ export default {
       //   .catch((err) => {
       //     return 'pdf 加载失败';
       //   });
-      // const loadingTask = pdfjsLib.getDocument(url);
-      // loadingTask.promise
-      //   .then((pdf) => {
-      //     console.log(pdf);
-      //     this.numPages = pdf.numPages;
-      //   })
-      //   .catch((err) => {
-      //     return 'pdf 加载失败';
-      //   });
+      const loadingTask = pdfjsLib.getDocument(url);
+      loadingTask.promise
+        .then((pdf) => {
+          console.log(pdf);
+          this.numPages = pdf.numPages;
+        })
+        .catch((err) => {
+          return 'pdf 加载失败';
+        });
     },
     setClaText(obj) {
       let dataFromParent = obj;
@@ -118,9 +117,6 @@ export default {
           util.catchErr(err, 'errorSet', this);
         });
     }
-  },
-  mounted() {
-    console.log('mounted');
   }
 };
 </script>
