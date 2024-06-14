@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       claText: '',
-      numPages: 10
+      numPages: null
     };
   },
   computed: {
