@@ -1,18 +1,12 @@
 <template>
   <el-row id="cla_pdf">
-    <!-- <VuePdfEmbed
+    <VuePdfEmbed
       class="pdfPage margin-bottom-1rem"
       ref="pdf"
       v-for="i in numPages"
       :key="i"
       :source="claText"
       :page="i"
-    ></VuePdfEmbed> -->
-
-    <VuePdfEmbed
-      class="pdfPage margin-bottom-1rem"
-      ref="pdf"
-      :source="claText"
     ></VuePdfEmbed>
   </el-row>
 </template>
@@ -62,6 +56,8 @@ export default {
       );
     },
     async getNumPages(url) {
+      const doc = await VuePdfEmbed.getDocument(url).promise;
+      this.numPages = doc.numPages;
       // let loadingTask = pdf.createLoadingTask(url);
       // loadingTask.promise
       //   .then((pdf) => {
@@ -70,7 +66,6 @@ export default {
       //   .catch((err) => {
       //     return 'pdf 加载失败';
       //   });
-
       // const loadingTask = pdfjsLib.getDocument(url);
       // loadingTask.promise
       //   .then((pdf) => {
@@ -80,13 +75,6 @@ export default {
       //   .catch((err) => {
       //     return 'pdf 加载失败';
       //   });
-
-      const loadingTask = pdfjsLib.getDocument(url);
-      const pdfDoc = await loadingTask.promise;
-
-      // Get the base64 data of the PDF
-      const base64Data = await pdfDoc.getData();
-      this.claText = `data:application/pdf;base64,${base64Data}`;
     },
     setClaText(obj) {
       let dataFromParent = obj;
