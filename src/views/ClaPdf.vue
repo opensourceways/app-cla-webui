@@ -66,9 +66,14 @@ export default {
       //   });
 
       const loadingTask = PDFJS.getDocument(url);
-      loadingTask.promise.then((pdf) => {
-        this.numPages = pdf.numPages;
-      });
+      loadingTask.promise
+        .then((pdf) => {
+          console.log(pdf);
+          this.numPages = pdf.numPages;
+        })
+        .catch((err) => {
+          return 'pdf 加载失败';
+        });
     },
     setClaText(obj) {
       let dataFromParent = obj;
