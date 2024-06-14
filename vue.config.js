@@ -56,13 +56,20 @@ module.exports = {
 
     config.module
       .rule('mjs')
-      .test(/\.mjs$/)
+      .test(/\.m?js$/)
       .include.add(/node_modules\/pdfjs-dist/) // 只处理指定的目录，以加快构建速度
       .end()
       .use('babel-loader')
       .loader('babel-loader')
       .options({
-        presets: ['@babel/preset-env']
+        presets: ['@babel/preset-env'],
+        plugins: [
+          '@babel/plugin-proposal-class-properties', // 支持类属性声明
+          '@babel/plugin-proposal-private-methods', // 支持私有方法声明
+          '@babel/plugin-proposal-optional-chaining', // 支持可选链操作符
+          '@babel/plugin-syntax-dynamic-import', // 支持动态导入
+          '@babel/plugin-syntax-import-meta' // 支持import.meta
+        ]
       });
   }
 };

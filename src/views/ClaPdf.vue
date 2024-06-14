@@ -16,6 +16,7 @@ import VuePdfEmbed from 'vue-pdf-embed/dist/vue2-pdf-embed';
 import http from '../util/_axios';
 import * as url from '../util/api';
 import * as util from '../util/util';
+import PDFJS from 'pdfjs-dist';
 
 export default {
   name: 'ClaPdf',
@@ -54,7 +55,7 @@ export default {
         false
       );
     },
-    async getNumPages(url) {
+    getNumPages(url) {
       // let loadingTask = pdf.createLoadingTask(url);
       // loadingTask.promise
       //   .then((pdf) => {
@@ -64,16 +65,10 @@ export default {
       //     return 'pdf 加载失败';
       //   });
 
-      // const PDFJS = require('pdfjs-dist');
-      // PDFJS.GlobalWorkerOptions.workerSrc = require('pdfjs-dist/build/pdf.worker.min.mjs');
-      // const loadingTask = PDFJS.getDocument(url);
-      // loadingTask.promise.then((pdf) => {
-      //   this.numPages = pdf.numPages;
-      // });
-
-      const loadingTask = await PDFJS.getDocument(url);
-      const pdf = await loadingTask.promise;
-      this.numPages = pdf.numPages;
+      const loadingTask = PDFJS.getDocument(url);
+      loadingTask.promise.then((pdf) => {
+        this.numPages = pdf.numPages;
+      });
     },
     setClaText(obj) {
       let dataFromParent = obj;
