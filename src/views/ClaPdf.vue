@@ -12,7 +12,7 @@
 </template>
 
 <script>
- import VuePdfEmbed from 'vue-pdf-embed/dist/vue2-pdf-embed'
+import VuePdfEmbed from 'vue-pdf-embed/dist/vue2-pdf-embed';
 import http from '../util/_axios';
 import * as url from '../util/api';
 import * as util from '../util/util';
@@ -20,12 +20,12 @@ import * as util from '../util/util';
 export default {
   name: 'ClaPdf',
   components: {
-    VuePdfEmbed,
+    VuePdfEmbed
   },
   data() {
     return {
       claText: '',
-      numPages: null,
+      numPages: null
     };
   },
   computed: {
@@ -37,7 +37,7 @@ export default {
     },
     claTextUrl() {
       return this.$store.state.domain;
-    },
+    }
   },
   created() {
     this.getData();
@@ -55,14 +55,21 @@ export default {
       );
     },
     getNumPages(url) {
-      let loadingTask = pdf.createLoadingTask(url);
-      loadingTask.promise
-        .then((pdf) => {
-          this.numPages = pdf.numPages;
-        })
-        .catch((err) => {
-          return 'pdf 加载失败';
-        });
+      // let loadingTask = pdf.createLoadingTask(url);
+      // loadingTask.promise
+      //   .then((pdf) => {
+      //     this.numPages = pdf.numPages;
+      //   })
+      //   .catch((err) => {
+      //     return 'pdf 加载失败';
+      //   });
+
+      const PDFJS = require('pdfjs-dist');
+      PDFJS.GlobalWorkerOptions.workerSrc = require('pdfjs-dist/build/pdf.worker.entry.js');
+      const loadingTask = PDFJS.getDocument(url);
+      loadingTask.promise.then((pdf) => {
+        this.numPages = pdf.numPages;
+      });
     },
     setClaText(obj) {
       let dataFromParent = obj;
@@ -87,8 +94,10 @@ export default {
         return;
       }
       http({
-        url: `${url.getCLAPdf}/${dataFromParent.link_id}/${sessionStorage.getItem('cla_id')}`,
-        responseType: "blob",
+        url: `${url.getCLAPdf}/${
+          dataFromParent.link_id
+        }/${sessionStorage.getItem('cla_id')}`,
+        responseType: 'blob'
       })
         .then((res) => {
           if (res && res.data) {
@@ -104,8 +113,8 @@ export default {
         .catch((err) => {
           util.catchErr(err, 'errorSet', this);
         });
-    },
-  },
+    }
+  }
 };
 </script>
 
