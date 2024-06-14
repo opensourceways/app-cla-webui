@@ -3,10 +3,8 @@
     <VuePdfEmbed
       class="pdfPage margin-bottom-1rem"
       ref="pdf"
-      v-for="i in numPages"
-      :key="i"
       :source="claText"
-      :page="i"
+      :page="null"
     ></VuePdfEmbed>
   </el-row>
 </template>
@@ -54,27 +52,7 @@ export default {
         false
       );
     },
-    async getNumPages(url) {
-      // let loadingTask = pdf.createLoadingTask(url);
-      // loadingTask.promise
-      //   .then((pdf) => {
-      //     this.numPages = pdf.numPages;
-      //   })
-      //   .catch((err) => {
-      //     return 'pdf 加载失败';
-      //   });
-
-      // const PDFJS = require('pdfjs-dist');
-      // PDFJS.GlobalWorkerOptions.workerSrc = require('pdfjs-dist/build/pdf.worker.min.mjs');
-      // const loadingTask = PDFJS.getDocument(url);
-      // loadingTask.promise.then((pdf) => {
-      //   this.numPages = pdf.numPages;
-      // });
-
-      const loadingTask = await PDFJS.getDocument(url);
-      const pdf = await loadingTask.promise;
-      this.numPages = pdf.numPages;
-    },
+    getNumPages(url) {},
     setClaText(obj) {
       let dataFromParent = obj;
       if (dataFromParent.pdfData && dataFromParent.pdfData.length) {
