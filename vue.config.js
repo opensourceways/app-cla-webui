@@ -53,16 +53,5 @@ module.exports = {
     config.resolve.alias
       .set('@', resolve('src'))
       .set('@components', resolve('src/components'));
-
-    config.module
-      .rule('mjs')
-      .test(/\.mjs$/)
-      .include.add(/node_modules\/pdfjs-dist/) // 只处理指定的目录，以加快构建速度
-      .end()
-      .use('babel-loader')
-      .loader('babel-loader')
-      .options({
-        presets: ['@babel/preset-env']
-      });
   }
 };
