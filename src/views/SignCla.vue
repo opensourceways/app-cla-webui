@@ -18,7 +18,7 @@
             {{ $t('signPage.claContent3', { name: communityName })
             }}<span class="title">{{ companyName }}</span>
             {{ $t('signPage.claS') }}
-            <br>
+            <br />
             <h3 style="display: inline-block">{{ $t('signPage.claZ') }}</h3>
             {{ $t('signPage.claContentT') }}</el-row
           >
@@ -337,11 +337,11 @@ export default {
       },
       set: function (value) {
         this.sendBtText = value;
-      },
+      }
     },
     claTextUrl() {
       return `${this.$store.state.domain}/cla-pdf`;
-    },
+    }
   },
   watch: {
     '$i18n.locale'() {
@@ -362,7 +362,7 @@ export default {
               link_id: this.link_id,
               lang: this.lang,
               hash: this.cla_hash,
-              pdfData: this.pdfData,
+              pdfData: this.pdfData
             },
             this.claTextUrl
           );
@@ -374,12 +374,12 @@ export default {
       });
       this.setSendBtText();
       this.$refs['ruleForm'] &&
-        this.$refs['ruleForm'].fields.forEach(item => {
+        this.$refs['ruleForm'].fields.forEach((item) => {
           if (item.validateState === 'error') {
             this.$refs['ruleForm'].validateField(item.labelFor);
           }
         });
-    },
+    }
   },
   inject: ['setClientHeight'],
   components: {
@@ -387,7 +387,7 @@ export default {
     ReTryDialog,
     SignSuccessDialog,
     SignReLoginDialog,
-    HttpButton,
+    HttpButton
   },
   data() {
     return {
@@ -432,7 +432,7 @@ export default {
       showInput: sessionStorage.getItem('loginType'),
       getOrg: true,
       companyName: '',
-      communityName:''
+      communityName: ''
     };
   },
   methods: {
@@ -448,14 +448,14 @@ export default {
         this.sendBtTextFromLang = this.$t('signPage.sendCode');
       } else {
         this.sendBtTextFromLang = this.$t('signPage.reSendCode', {
-          second: this.second,
+          second: this.second
         });
       }
     },
     setIframeEventListener() {
       window.addEventListener(
         'message',
-        event => {
+        (event) => {
           if (
             event.data instanceof Array &&
             event.origin === this.$store.state.domain
@@ -582,20 +582,20 @@ export default {
         axios({
           url: _url,
           method: 'post',
-          data: { email: this.myForm.email },
+          data: { email: this.myForm.email }
         })
-          .then(res => {
+          .then((res) => {
             this.$message.closeAll();
             this.$message.success({
               message: this.$t('tips.sending_email'),
-              duration: 8000,
+              duration: 8000
             });
             this.second = 60;
             let codeInterval = setInterval(() => {
               if (this.second !== 0) {
                 this.second--;
                 this.sendBtTextFromLang = this.$t('signPage.reSendCode', {
-                  second: this.second,
+                  second: this.second
                 });
               } else {
                 this.sendBtTextFromLang = this.$t('signPage.sendCode');
@@ -604,7 +604,7 @@ export default {
               }
             }, 1000);
           })
-          .catch(err => {
+          .catch((err) => {
             util.catchErr(err, 'setSignReLogin', this);
           });
       } else {
@@ -630,7 +630,7 @@ export default {
         if (item.type === 'date') {
           this.myForm.date = year + '-' + month + '-' + day;
           Object.assign(this.ruleForm, {
-            [item.id]: year + '-' + month + '-' + day,
+            [item.id]: year + '-' + month + '-' + day
           });
           break;
         }
@@ -667,7 +667,7 @@ export default {
             link_id: this.link_id,
             lang: this.lang,
             hash: this.cla_hash,
-            pdfData: this.pdfData,
+            pdfData: this.pdfData
           });
           this.setFields(this.value);
           this.setFieldsData();
@@ -685,7 +685,7 @@ export default {
           }
           this.$store.commit('setSignReLogin', {
             dialogVisible: true,
-            dialogMessage: message,
+            dialogMessage: message
           });
         }
       }
@@ -698,17 +698,17 @@ export default {
       if (!this.$store.state.linkId) {
         this.$store.commit('errorCodeSet', {
           dialogVisible: true,
-          dialogMessage: this.$t('tips.page_error'),
+          dialogMessage: this.$t('tips.page_error')
         });
         return;
       }
       axios({
-        url: `${url.getSignPage}/${this.$store.state.linkId}/${applyTo}`,
+        url: `${url.getSignPage}/${this.$store.state.linkId}/${applyTo}`
       })
-        .then(res => {
+        .then((res) => {
           this.setData(res, resolve);
         })
-        .catch(err => {
+        .catch((err) => {
           util.catchErr(err, 'setSignReLogin', this);
         });
     },
@@ -737,7 +737,7 @@ export default {
     setFieldsData() {
       let form = {};
       let rules = {};
-      this.fields.forEach(item => {
+      this.fields.forEach((item) => {
         Object.assign(form, { [item.id]: '' });
         if (item.type === 'name') {
           Object.assign(this.myForm, { name: '' });
@@ -747,9 +747,9 @@ export default {
                 {
                   required: item.required,
                   validator: this.verifyName,
-                  trigger: ['blur', 'change'],
-                },
-              ],
+                  trigger: ['blur', 'change']
+                }
+              ]
             });
         } else if (item.type === 'corporationName') {
           Object.assign(this.myForm, { corporationName: '' });
@@ -759,9 +759,9 @@ export default {
                 {
                   required: item.required,
                   validator: this.verifyCorpName,
-                  trigger: ['blur', 'change'],
-                },
-              ],
+                  trigger: ['blur', 'change']
+                }
+              ]
             });
         } else if (item.type === 'title') {
           Object.assign(this.myForm, { title: '' });
@@ -771,9 +771,9 @@ export default {
                 {
                   required: item.required,
                   validator: this.verifyTitle,
-                  trigger: ['blur', 'change'],
-                },
-              ],
+                  trigger: ['blur', 'change']
+                }
+              ]
             });
         } else if (item.type === 'authorized') {
           Object.assign(this.myForm, { authorized: '' });
@@ -783,9 +783,9 @@ export default {
                 {
                   required: item.required,
                   validator: this.verifyAuthorized,
-                  trigger: ['blur', 'change'],
-                },
-              ],
+                  trigger: ['blur', 'change']
+                }
+              ]
             });
         } else if (item.type === 'date') {
           Object.assign(this.myForm, { date: '' });
@@ -795,9 +795,9 @@ export default {
                 {
                   required: item.required,
                   validator: this.verifyDate,
-                  trigger: ['blur', 'change'],
-                },
-              ],
+                  trigger: ['blur', 'change']
+                }
+              ]
             });
         } else if (item.type === 'email') {
           Object.assign(this.myForm, { email: '' });
@@ -807,9 +807,9 @@ export default {
                 {
                   required: item.required,
                   validator: this.verifyFormEmail,
-                  trigger: ['blur', 'change'],
-                },
-              ],
+                  trigger: ['blur', 'change']
+                }
+              ]
             });
         } else if (item.type === 'telephone') {
           Object.assign(this.myForm, { telephone: '' });
@@ -819,18 +819,18 @@ export default {
                 {
                   required: item.required,
                   validator: this.requireVerifyTel,
-                  trigger: ['blur', 'change'],
-                },
-              ],
+                  trigger: ['blur', 'change']
+                }
+              ]
             });
           } else {
             Object.assign(rules, {
               [item.id]: [
                 {
                   validator: this.verifyTel,
-                  trigger: ['blur', 'change'],
-                },
-              ],
+                  trigger: ['blur', 'change']
+                }
+              ]
             });
           }
         } else if (item.type === 'address') {
@@ -841,9 +841,9 @@ export default {
                 {
                   required: item.required,
                   validator: this.verifyAddr,
-                  trigger: ['blur', 'change'],
-                },
-              ],
+                  trigger: ['blur', 'change']
+                }
+              ]
             });
         } else if (item.type === 'fax') {
           Object.assign(this.myForm, { fax: '' });
@@ -853,9 +853,9 @@ export default {
                 {
                   required: item.required,
                   validator: this.verifyFax,
-                  trigger: ['blur', 'change'],
-                },
-              ],
+                  trigger: ['blur', 'change']
+                }
+              ]
             });
         }
       });
@@ -866,9 +866,9 @@ export default {
           {
             required: true,
             validator: this.verifyCodeCheck,
-            trigger: ['blur', 'change'],
-          },
-        ],
+            trigger: ['blur', 'change']
+          }
+        ]
       });
       this.ruleForm = form;
       this.rules = rules;
@@ -895,7 +895,7 @@ export default {
           corp_signing_id: this.orgValue,
           cla_id: sessionStorage.getItem('cla_id'),
           cla_language: this.cla_lang,
-          privacy_checked: this.isRead,
+          privacy_checked: this.isRead
         };
       } else {
         if (this.$store.state.loginType === this.employee) {
@@ -907,7 +907,7 @@ export default {
             cla_id: sessionStorage.getItem('cla_id'),
             cla_language: this.cla_lang,
             corp_signing_id: this.orgValue,
-            privacy_checked: this.isRead,
+            privacy_checked: this.isRead
           };
         } else {
           obj = {
@@ -917,7 +917,7 @@ export default {
             info: info,
             cla_id: sessionStorage.getItem('cla_id'),
             cla_language: this.cla_lang,
-            privacy_checked: this.isRead,
+            privacy_checked: this.isRead
           };
         }
 
@@ -938,9 +938,9 @@ export default {
       axios({
         url: myUrl,
         method: 'post',
-        data: obj,
+        data: obj
       })
-        .then(res => {
+        .then((res) => {
           this.signText = 'sign';
           this.signButtonDisable = false;
           if (this.$store.state.loginType === this.corporation) {
@@ -952,17 +952,17 @@ export default {
           }
           this.$store.commit('setSignSuccess', {
             dialogVisible: true,
-            dialogMessage: this.tipsMessage,
+            dialogMessage: this.tipsMessage
           });
         })
-        .catch(err => {
+        .catch((err) => {
           this.signText = 'sign';
           this.signButtonDisable = false;
           util.catchErr(err, 'setSignReLogin', this);
         });
     },
     submitForm(formName) {
-      this.$refs[formName].validate(valid => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           if (this.isRead) {
             this.signCla();
@@ -984,43 +984,41 @@ export default {
     getOrgsInfo() {
       axios({
         url: `${url.getCorporationSigning}/${this.link_id}/corps/${this.myForm.email}`,
-        method: 'get',
+        method: 'get'
       })
-        .then(res => {
+        .then((res) => {
           this.signingData = res.data.data;
         })
-        .catch(err => {
+        .catch((err) => {
           switch (err.status) {
             case 401:
               this.$store.commit('setOrgReLogin', {
                 dialogVisible: true,
-                dialogMessage: this.$t('tips.not_authorize_group'),
+                dialogMessage: this.$t('tips.not_authorize_group')
               });
               break;
             case 403:
               this.$store.commit('setOrgReLogin', {
                 dialogVisible: true,
-                dialogMessage: this.$t('tips.invalid_token'),
+                dialogMessage: this.$t('tips.invalid_token')
               });
               break;
             default:
               this.$store.commit('errorCodeSet', {
                 dialogVisible: true,
-                dialogMessage: this.$t('tips.system_error'),
+                dialogMessage: this.$t('tips.system_error')
               });
           }
         });
     },
     //获取社区名字
-    getCommunity(){
+    getCommunity() {
       axios({
         url: `${url.getCommunity}/${this.link_id}`,
-        method: 'get',
-      })
-        .then(res => {
-          this.communityName = res.data.data.org_alias;
-        })
-       
+        method: 'get'
+      }).then((res) => {
+        this.communityName = res.data.data.org_alias;
+      });
     }
   },
   activated() {
@@ -1043,7 +1041,7 @@ export default {
             link_id: this.link_id,
             lang: this.lang,
             hash: this.cla_hash,
-            pdfData: this.pdfData,
+            pdfData: this.pdfData
           });
           this.setFields(this.value);
         }
@@ -1057,7 +1055,7 @@ export default {
           link_id: this.link_id,
           lang: this.lang,
           hash: this.cla_hash,
-          pdfData: this.pdfData,
+          pdfData: this.pdfData
         });
         this.setFields(this.value);
         localStorage.setItem('lang', util.upperFirstCase(this.lang));
@@ -1069,7 +1067,7 @@ export default {
             link_id: this.link_id,
             lang: this.lang,
             hash: this.cla_hash,
-            pdfData: this.pdfData,
+            pdfData: this.pdfData
           },
           this.claTextUrl
         );
@@ -1081,15 +1079,14 @@ export default {
     this.setIframeEventListener();
     new Promise((resolve, reject) => {
       this.getSignPage(resolve);
-    }).then(res => {
+    }).then((res) => {
       this.getNowDate();
     });
   },
   mounted() {
-    console.log(5);
     this.setClientHeight();
-    this. getCommunity()
-  },
+    this.getCommunity();
+  }
 };
 </script>
 
