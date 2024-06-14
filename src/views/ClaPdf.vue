@@ -12,7 +12,7 @@
     <VuePdfEmbed
       class="pdfPage margin-bottom-1rem"
       ref="pdf"
-      :src="claText"
+      :source="claText"
     ></VuePdfEmbed>
   </el-row>
 </template>
