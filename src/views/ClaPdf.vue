@@ -2,7 +2,7 @@
   <el-row id="cla_pdf">
     <VuePdfEmbed
       class="pdfPage margin-bottom-1rem"
-      ref="pdf"
+      ref="pdfRef"
       v-for="i in numPages"
       :key="i"
       :source="claText"
@@ -56,8 +56,7 @@ export default {
       );
     },
     async getNumPages(url) {
-      const doc = await VuePdfEmbed.getDocument(url).promise;
-      this.numPages = doc.numPages;
+      this.numPages = this.$refs.pdfRef.pageCount;
       // let loadingTask = pdf.createLoadingTask(url);
       // loadingTask.promise
       //   .then((pdf) => {

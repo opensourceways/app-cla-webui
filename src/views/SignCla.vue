@@ -1084,7 +1084,7 @@ export default {
     });
   },
   mounted() {
-    console.log(11);
+    console.log(12);
     this.setClientHeight();
     this.getCommunity();
   }
