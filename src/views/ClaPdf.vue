@@ -16,7 +16,7 @@ import VuePdfEmbed from 'vue-pdf-embed/dist/vue2-pdf-embed';
 import http from '../util/_axios';
 import * as url from '../util/api';
 import * as util from '../util/util';
-import PDFJS from 'pdfjs-dist';
+import pdfjsLib from 'pdfjs-dist';
 
 export default {
   name: 'ClaPdf',
@@ -64,8 +64,8 @@ export default {
       //   .catch((err) => {
       //     return 'pdf 加载失败';
       //   });
-
-      const loadingTask = PDFJS.getDocument(url);
+      console.log('getNumPages：', url);
+      const loadingTask = pdfjsLib.getDocument(url);
       loadingTask.promise
         .then((pdf) => {
           console.log(pdf);
