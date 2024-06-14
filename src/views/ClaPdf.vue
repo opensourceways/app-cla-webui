@@ -9,11 +9,11 @@
       :page="i"
     ></VuePdfEmbed> -->
 
-    <vue-pdf-embed
+    <VuePdfEmbed
       class="pdfPage margin-bottom-1rem"
       ref="pdf"
       :src="claText"
-    ></vue-pdf-embed>
+    ></VuePdfEmbed>
   </el-row>
 </template>
 
