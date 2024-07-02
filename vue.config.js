@@ -20,7 +20,6 @@ module.exports = {
       https: true,
       proxy: {
         '/api': {
-          target: 'https://clasign.test.myopeninfra.com',
           secure: false,
           changeOrigin: true
           // pathRewrite: {

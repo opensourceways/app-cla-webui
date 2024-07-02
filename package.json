@@ -40,6 +40,11 @@
     "svg-sprite-loader": "^5.0.0",
     "vue-template-compiler": "2.7.10"
   },
+  "overrides": {
+    "braces":"3.0.3",
+    "markdown-it":"12.3.2",
+    "glob-parent":"5.1.2"
+  },
   "eslintConfig": {
     "root": true,
     "env": {
